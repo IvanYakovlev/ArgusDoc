@@ -13,7 +13,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("Main_window.fxml"));
         primaryStage.setTitle("ArgusDoc");
         primaryStage.setMinHeight(715);
-        primaryStage.setMinWidth(788);
+        primaryStage.setMinWidth(1000);
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
     }
