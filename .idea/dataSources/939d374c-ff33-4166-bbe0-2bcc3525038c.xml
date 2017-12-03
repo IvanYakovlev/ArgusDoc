@@ -47,7 +47,7 @@
     </database>
     <schema id="15" parent="2" name="dbo">
       <ObjectId>1</ObjectId>
-      <IntrospectionTimestamp>2017-12-01.14:16:38.667</IntrospectionTimestamp>
+      <IntrospectionTimestamp>2017-12-02.19:40:05.053</IntrospectionTimestamp>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -87,25 +87,25 @@
     <schema id="27" parent="2" name="db_denydatawriter">
       <ObjectId>16393</ObjectId>
     </schema>
-    <table id="28" parent="15" name="Departmens">
-      <ObjectId>1669580986</ObjectId>
-      <CreatedTimestamp>2017-12-01.11:32:00.980</CreatedTimestamp>
-      <ModifiedTimestamp>2017-12-01.14:15:34.037</ModifiedTimestamp>
+    <table id="28" parent="15" name="Departments">
+      <ObjectId>34099162</ObjectId>
+      <CreatedTimestamp>2017-12-02.18:32:16.260</CreatedTimestamp>
+      <ModifiedTimestamp>2017-12-02.19:25:41.880</ModifiedTimestamp>
     </table>
     <table id="29" parent="15" name="Documents">
       <ObjectId>1525580473</ObjectId>
       <CreatedTimestamp>2017-12-01.10:52:57.963</CreatedTimestamp>
-      <ModifiedTimestamp>2017-12-01.14:11:25.607</ModifiedTimestamp>
+      <ModifiedTimestamp>2017-12-02.19:20:53.427</ModifiedTimestamp>
     </table>
     <table id="30" parent="15" name="Employees">
       <ObjectId>1957582012</ObjectId>
       <CreatedTimestamp>2017-12-01.14:13:59.390</CreatedTimestamp>
-      <ModifiedTimestamp>2017-12-01.14:15:34.070</ModifiedTimestamp>
+      <ModifiedTimestamp>2017-12-02.19:25:41.887</ModifiedTimestamp>
     </table>
     <table id="31" parent="15" name="Tasks">
-      <ObjectId>1557580587</ObjectId>
-      <CreatedTimestamp>2017-12-01.10:59:49.970</CreatedTimestamp>
-      <ModifiedTimestamp>2017-12-01.14:15:34.073</ModifiedTimestamp>
+      <ObjectId>146099561</ObjectId>
+      <CreatedTimestamp>2017-12-02.18:57:29.740</CreatedTimestamp>
+      <ModifiedTimestamp>2017-12-02.19:23:06.017</ModifiedTimestamp>
     </table>
     <table id="32" parent="15" name="sysdiagrams">
       <ObjectId>261575970</ObjectId>
@@ -168,209 +168,249 @@
       <RoutineKind>procedure</RoutineKind>
       <RoutineType>proc</RoutineType>
     </routine>
-    <column id="41" parent="28" name="Departmen_id">
+    <column id="41" parent="28" name="Departmen_name">
       <Position>1</Position>
+      <DataType>nvarchar(100)|0</DataType>
+    </column>
+    <column id="42" parent="28" name="Department_id">
+      <Position>2</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="42" parent="28" name="Departmen_name">
-      <Position>2</Position>
-      <DataType>nchar(50)|0</DataType>
-    </column>
-    <index id="43" parent="28" name="PK_Departmens">
+    <index id="43" parent="28" name="PK_Departments_Department_id">
       <Position>1</Position>
-      <ColNames>Departmen_id</ColNames>
+      <ColNames>Department_id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="44" parent="28" name="PK_Departmens">
-      <ObjectId>1733581214</ObjectId>
-      <CreatedTimestamp>2017-12-01.11:37:58.117</CreatedTimestamp>
-      <ModifiedTimestamp>2017-12-01.11:37:58.117</ModifiedTimestamp>
-      <ColNames>Departmen_id</ColNames>
-      <UnderlyingIndexName>PK_Departmens</UnderlyingIndexName>
+    <index id="44" parent="28" name="Uniqu_department">
+      <Position>2</Position>
+      <ColNames>Departmen_name</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="45" parent="28" name="PK_Departments_Department_id">
+      <ObjectId>66099276</ObjectId>
+      <CreatedTimestamp>2017-12-02.18:36:18.480</CreatedTimestamp>
+      <ModifiedTimestamp>2017-12-02.18:36:18.480</ModifiedTimestamp>
+      <ColNames>Department_id</ColNames>
+      <UnderlyingIndexName>PK_Departments_Department_id</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="45" parent="29" name="Document_id">
-      <Position>1</Position>
-      <DataType>int|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="46" parent="29" name="Document_link">
+    <key id="46" parent="28" name="Uniqu_department">
+      <ObjectId>50099219</ObjectId>
+      <CreatedTimestamp>2017-12-02.18:32:16.287</CreatedTimestamp>
+      <ModifiedTimestamp>2017-12-02.18:32:16.287</ModifiedTimestamp>
+      <ColNames>Departmen_name</ColNames>
+      <UnderlyingIndexName>Uniqu_department</UnderlyingIndexName>
+    </key>
+    <column id="47" parent="29" name="Document_link">
       <Position>2</Position>
       <DataType>nvarchar(max)|0</DataType>
     </column>
-    <column id="47" parent="29" name="Department_id">
+    <column id="48" parent="29" name="Department_id">
       <Position>3</Position>
       <DataType>int|0</DataType>
     </column>
-    <index id="48" parent="29" name="PK_Documents">
+    <column id="49" parent="29" name="Document_id">
+      <Position>4</Position>
+      <DataType>int|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <index id="50" parent="29" name="PK_Documents_Document_id">
       <Position>1</Position>
       <ColNames>Document_id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="49" parent="29" name="PK_Documents">
-      <ObjectId>1749581271</ObjectId>
-      <CreatedTimestamp>2017-12-01.11:37:58.270</CreatedTimestamp>
-      <ModifiedTimestamp>2017-12-01.11:37:58.270</ModifiedTimestamp>
+    <key id="51" parent="29" name="PK_Documents_Document_id">
+      <ObjectId>82099333</ObjectId>
+      <CreatedTimestamp>2017-12-02.18:43:42.990</CreatedTimestamp>
+      <ModifiedTimestamp>2017-12-02.18:43:42.990</ModifiedTimestamp>
       <ColNames>Document_id</ColNames>
-      <UnderlyingIndexName>PK_Documents</UnderlyingIndexName>
+      <UnderlyingIndexName>PK_Documents_Document_id</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="50" parent="29" name="FK_Documents_Departmens">
-      <ObjectId>1941581955</ObjectId>
-      <CreatedTimestamp>2017-12-01.14:11:25.603</CreatedTimestamp>
-      <ModifiedTimestamp>2017-12-01.14:11:25.603</ModifiedTimestamp>
+    <foreign-key id="52" parent="29" name="FK_Documents_Departments">
+      <ObjectId>178099675</ObjectId>
+      <CreatedTimestamp>2017-12-02.19:20:53.400</CreatedTimestamp>
+      <ModifiedTimestamp>2017-12-02.19:20:53.400</ModifiedTimestamp>
       <ColNames>Department_id</ColNames>
-      <RefTableId>1669580986</RefTableId>
+      <RefTableId>34099162</RefTableId>
       <RefSchemaName>dbo</RefSchemaName>
-      <RefTableName>Departmens</RefTableName>
-      <RefKeyName>PK_Departmens</RefKeyName>
-      <RefColNames>Departmen_id</RefColNames>
+      <RefTableName>Departments</RefTableName>
+      <RefKeyName>PK_Departments_Department_id</RefKeyName>
+      <RefColNames>Department_id</RefColNames>
     </foreign-key>
-    <column id="51" parent="30" name="Employee_id">
-      <Position>1</Position>
-      <DataType>int|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="52" parent="30" name="Employee_name">
+    <column id="53" parent="30" name="Employee_name">
       <Position>2</Position>
       <DataType>nvarchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="53" parent="30" name="Employee_login">
+    <column id="54" parent="30" name="Employee_login">
       <Position>3</Position>
       <DataType>nvarchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="54" parent="30" name="Employee_password">
+    <column id="55" parent="30" name="Employee_password">
       <Position>4</Position>
       <DataType>nvarchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="55" parent="30" name="Department_id">
+    <column id="56" parent="30" name="Department_id">
       <Position>5</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="56" parent="30" name="PK_Employees">
-      <Position>1</Position>
-      <ColNames>Employee_id</ColNames>
-      <Clustering>1</Clustering>
-      <Unique>1</Unique>
-    </index>
-    <key id="57" parent="30" name="PK_Employees">
-      <ObjectId>1973582069</ObjectId>
-      <CreatedTimestamp>2017-12-01.14:14:41.210</CreatedTimestamp>
-      <ModifiedTimestamp>2017-12-01.14:14:41.210</ModifiedTimestamp>
-      <ColNames>Employee_id</ColNames>
-      <UnderlyingIndexName>PK_Employees</UnderlyingIndexName>
-      <Primary>1</Primary>
-    </key>
-    <foreign-key id="58" parent="30" name="FK_Employees_Departmens">
-      <ObjectId>1989582126</ObjectId>
-      <CreatedTimestamp>2017-12-01.14:15:34.037</CreatedTimestamp>
-      <ModifiedTimestamp>2017-12-01.14:15:34.037</ModifiedTimestamp>
-      <ColNames>Department_id</ColNames>
-      <RefTableId>1669580986</RefTableId>
-      <RefSchemaName>dbo</RefSchemaName>
-      <RefTableName>Departmens</RefTableName>
-      <RefKeyName>PK_Departmens</RefKeyName>
-      <RefColNames>Departmen_id</RefColNames>
-    </foreign-key>
-    <column id="59" parent="31" name="Task_id">
-      <Position>1</Position>
-      <DataType>int|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="60" parent="31" name="Task_name">
-      <Position>2</Position>
-      <DataType>nvarchar(100)|0</DataType>
-    </column>
-    <column id="61" parent="31" name="Task_text">
-      <Position>3</Position>
-      <DataType>nvarchar(max)|0</DataType>
-    </column>
-    <column id="62" parent="31" name="Task_attachment">
-      <Position>4</Position>
-      <DataType>varchar(max)|0</DataType>
-    </column>
-    <column id="63" parent="31" name="Task_from_employee">
-      <Position>5</Position>
-      <DataType>nvarchar(100)|0</DataType>
-    </column>
-    <column id="64" parent="31" name="Employee_id">
+    <column id="57" parent="30" name="Employee_id">
       <Position>6</Position>
       <DataType>int|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="65" parent="31" name="Task_term">
+    <index id="58" parent="30" name="PK_Employees_Employees_id">
+      <Position>1</Position>
+      <ColNames>Employee_id</ColNames>
+      <Clustering>1</Clustering>
+      <Unique>1</Unique>
+    </index>
+    <index id="59" parent="30" name="Employee_Unique_Name">
+      <Position>6</Position>
+      <ColNames>Employee_name</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="60" parent="30" name="Employee_Unique_Login">
       <Position>7</Position>
+      <ColNames>Employee_login</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="61" parent="30" name="PK_Employees_Employees_id">
+      <ObjectId>130099504</ObjectId>
+      <CreatedTimestamp>2017-12-02.18:50:02.920</CreatedTimestamp>
+      <ModifiedTimestamp>2017-12-02.18:50:02.920</ModifiedTimestamp>
+      <ColNames>Employee_id</ColNames>
+      <UnderlyingIndexName>PK_Employees_Employees_id</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <key id="62" parent="30" name="Employee_Unique_Name">
+      <ObjectId>98099390</ObjectId>
+      <CreatedTimestamp>2017-12-02.18:47:02.347</CreatedTimestamp>
+      <ModifiedTimestamp>2017-12-02.18:47:02.347</ModifiedTimestamp>
+      <ColNames>Employee_name</ColNames>
+      <UnderlyingIndexName>Employee_Unique_Name</UnderlyingIndexName>
+    </key>
+    <key id="63" parent="30" name="Employee_Unique_Login">
+      <ObjectId>114099447</ObjectId>
+      <CreatedTimestamp>2017-12-02.18:47:53.070</CreatedTimestamp>
+      <ModifiedTimestamp>2017-12-02.18:47:53.070</ModifiedTimestamp>
+      <ColNames>Employee_login</ColNames>
+      <UnderlyingIndexName>Employee_Unique_Login</UnderlyingIndexName>
+    </key>
+    <foreign-key id="64" parent="30" name="FK_Employees_Departments">
+      <ObjectId>258099960</ObjectId>
+      <CreatedTimestamp>2017-12-02.19:25:41.880</CreatedTimestamp>
+      <ModifiedTimestamp>2017-12-02.19:25:41.880</ModifiedTimestamp>
+      <ColNames>Department_id</ColNames>
+      <RefTableId>34099162</RefTableId>
+      <RefSchemaName>dbo</RefSchemaName>
+      <RefTableName>Departments</RefTableName>
+      <RefKeyName>PK_Departments_Department_id</RefKeyName>
+      <RefColNames>Department_id</RefColNames>
+    </foreign-key>
+    <column id="65" parent="31" name="Task_name">
+      <Position>1</Position>
+      <DataType>nvarchar(100)|0</DataType>
+    </column>
+    <column id="66" parent="31" name="Task_text">
+      <Position>2</Position>
+      <DataType>nvarchar(max)|0</DataType>
+    </column>
+    <column id="67" parent="31" name="Task_attachment">
+      <Position>3</Position>
+      <DataType>varchar(max)|0</DataType>
+    </column>
+    <column id="68" parent="31" name="Task_from_employee">
+      <Position>4</Position>
+      <DataType>nvarchar(100)|0</DataType>
+    </column>
+    <column id="69" parent="31" name="Employee_id">
+      <Position>5</Position>
+      <DataType>int|0</DataType>
+    </column>
+    <column id="70" parent="31" name="Task_term">
+      <Position>6</Position>
       <DataType>date|0</DataType>
     </column>
-    <index id="66" parent="31" name="PK_Tasks">
+    <column id="71" parent="31" name="Task_id">
+      <Position>7</Position>
+      <DataType>int|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <index id="72" parent="31" name="PK_Tasks_Task_id">
       <Position>1</Position>
       <ColNames>Task_id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="67" parent="31" name="PK_Tasks">
-      <ObjectId>1845581613</ObjectId>
-      <CreatedTimestamp>2017-12-01.11:42:10.270</CreatedTimestamp>
-      <ModifiedTimestamp>2017-12-01.11:42:10.270</ModifiedTimestamp>
+    <key id="73" parent="31" name="PK_Tasks_Task_id">
+      <ObjectId>162099618</ObjectId>
+      <CreatedTimestamp>2017-12-02.19:00:46.153</CreatedTimestamp>
+      <ModifiedTimestamp>2017-12-02.19:00:46.153</ModifiedTimestamp>
       <ColNames>Task_id</ColNames>
-      <UnderlyingIndexName>PK_Tasks</UnderlyingIndexName>
+      <UnderlyingIndexName>PK_Tasks_Task_id</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="68" parent="31" name="FK_Tasks_Employees">
-      <ObjectId>2005582183</ObjectId>
-      <CreatedTimestamp>2017-12-01.14:15:34.070</CreatedTimestamp>
-      <ModifiedTimestamp>2017-12-01.14:15:34.070</ModifiedTimestamp>
+    <foreign-key id="74" parent="31" name="FK_Tasks_Employees">
+      <ObjectId>226099846</ObjectId>
+      <CreatedTimestamp>2017-12-02.19:23:05.990</CreatedTimestamp>
+      <ModifiedTimestamp>2017-12-02.19:23:05.990</ModifiedTimestamp>
       <ColNames>Employee_id</ColNames>
       <RefTableId>1957582012</RefTableId>
       <RefSchemaName>dbo</RefSchemaName>
       <RefTableName>Employees</RefTableName>
-      <RefKeyName>PK_Employees</RefKeyName>
+      <RefKeyName>PK_Employees_Employees_id</RefKeyName>
       <RefColNames>Employee_id</RefColNames>
     </foreign-key>
-    <column id="69" parent="32" name="name">
+    <column id="75" parent="32" name="name">
       <Position>1</Position>
       <DataType>sysname|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="70" parent="32" name="principal_id">
+    <column id="76" parent="32" name="principal_id">
       <Position>2</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="71" parent="32" name="diagram_id">
+    <column id="77" parent="32" name="diagram_id">
       <Position>3</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="72" parent="32" name="version">
+    <column id="78" parent="32" name="version">
       <Position>4</Position>
       <DataType>int|0</DataType>
     </column>
-    <column id="73" parent="32" name="definition">
+    <column id="79" parent="32" name="definition">
       <Position>5</Position>
       <DataType>varbinary(max)|0</DataType>
     </column>
-    <index id="74" parent="32" name="PK__sysdiagr__C2B05B61AE4F006A">
+    <index id="80" parent="32" name="PK__sysdiagr__C2B05B61AE4F006A">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>diagram_id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <index id="75" parent="32" name="UK_principal_name">
+    <index id="81" parent="32" name="UK_principal_name">
       <Position>2</Position>
       <ColNames>principal_id
 name</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="76" parent="32" name="PK__sysdiagr__C2B05B61AE4F006A">
+    <key id="82" parent="32" name="PK__sysdiagr__C2B05B61AE4F006A">
       <ObjectId>277576027</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2017-10-17.11:07:12.750</CreatedTimestamp>
@@ -379,7 +419,7 @@ name</ColNames>
       <UnderlyingIndexName>PK__sysdiagr__C2B05B61AE4F006A</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <key id="77" parent="32" name="UK_principal_name">
+    <key id="83" parent="32" name="UK_principal_name">
       <ObjectId>293576084</ObjectId>
       <CreatedTimestamp>2017-10-17.11:07:12.753</CreatedTimestamp>
       <ModifiedTimestamp>2017-10-17.11:07:12.753</ModifiedTimestamp>
@@ -387,59 +427,59 @@ name</ColNames>
 name</ColNames>
       <UnderlyingIndexName>UK_principal_name</UnderlyingIndexName>
     </key>
-    <argument id="78" parent="33">
+    <argument id="84" parent="33">
       <ArgumentDirection>R</ArgumentDirection>
       <DataType>int|0</DataType>
     </argument>
-    <argument id="79" parent="34" name="@diagramname">
+    <argument id="85" parent="34" name="@diagramname">
       <DataType>sysname|0</DataType>
     </argument>
-    <argument id="80" parent="34" name="@owner_id">
+    <argument id="86" parent="34" name="@owner_id">
       <DataType>int|0</DataType>
     </argument>
-    <argument id="81" parent="34" name="@version">
+    <argument id="87" parent="34" name="@version">
       <DataType>int|0</DataType>
     </argument>
-    <argument id="82" parent="34" name="@definition">
+    <argument id="88" parent="34" name="@definition">
       <DataType>varbinary(max)|0</DataType>
     </argument>
-    <argument id="83" parent="35" name="@diagramname">
+    <argument id="89" parent="35" name="@diagramname">
       <DataType>sysname|0</DataType>
     </argument>
-    <argument id="84" parent="35" name="@owner_id">
+    <argument id="90" parent="35" name="@owner_id">
       <DataType>int|0</DataType>
     </argument>
-    <argument id="85" parent="35" name="@version">
+    <argument id="91" parent="35" name="@version">
       <DataType>int|0</DataType>
     </argument>
-    <argument id="86" parent="35" name="@definition">
+    <argument id="92" parent="35" name="@definition">
       <DataType>varbinary(max)|0</DataType>
     </argument>
-    <argument id="87" parent="36" name="@diagramname">
+    <argument id="93" parent="36" name="@diagramname">
       <DataType>sysname|0</DataType>
     </argument>
-    <argument id="88" parent="36" name="@owner_id">
+    <argument id="94" parent="36" name="@owner_id">
       <DataType>int|0</DataType>
     </argument>
-    <argument id="89" parent="37" name="@diagramname">
+    <argument id="95" parent="37" name="@diagramname">
       <DataType>sysname|0</DataType>
     </argument>
-    <argument id="90" parent="37" name="@owner_id">
+    <argument id="96" parent="37" name="@owner_id">
       <DataType>int|0</DataType>
     </argument>
-    <argument id="91" parent="38" name="@diagramname">
+    <argument id="97" parent="38" name="@diagramname">
       <DataType>sysname|0</DataType>
     </argument>
-    <argument id="92" parent="38" name="@owner_id">
+    <argument id="98" parent="38" name="@owner_id">
       <DataType>int|0</DataType>
     </argument>
-    <argument id="93" parent="39" name="@diagramname">
+    <argument id="99" parent="39" name="@diagramname">
       <DataType>sysname|0</DataType>
     </argument>
-    <argument id="94" parent="39" name="@owner_id">
+    <argument id="100" parent="39" name="@owner_id">
       <DataType>int|0</DataType>
     </argument>
-    <argument id="95" parent="39" name="@new_diagramname">
+    <argument id="101" parent="39" name="@new_diagramname">
       <DataType>sysname|0</DataType>
     </argument>
   </database-model>
