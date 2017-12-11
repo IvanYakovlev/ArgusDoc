@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c4f25f55-6c2a-4437-b8d2-41eb1602303e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/939d374c-ff33-4166-bbe0-2bcc3525038c.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/939d374c-ff33-4166-bbe0-2bcc3525038c.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/Controller.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/Controller.class" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ArgusDoc.iml" afterPath="$PROJECT_DIR$/ArgusDoc.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/Main_window.fxml" afterPath="$PROJECT_DIR$/src/main/resources/Main_window.fxml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -53,35 +57,223 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="26" column="1" lean-forward="true" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
+            <state relative-caret-position="272">
+              <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Controller.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Controller.java">
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+            <state relative-caret-position="255">
+              <caret line="48" column="16" lean-forward="false" selection-start-line="48" selection-start-column="16" selection-end-line="48" selection-end-column="16" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Main_window.fxml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Departments.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/model/Departments.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" column="39" lean-forward="false" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
+              <folding>
+                <element signature="e#346#347#0" expanded="true" />
+                <element signature="e#381#382#0" expanded="true" />
+                <element signature="e#434#435#0" expanded="true" />
+                <element signature="e#482#483#0" expanded="true" />
+                <element signature="e#523#524#0" expanded="true" />
+                <element signature="e#560#561#0" expanded="true" />
+                <element signature="e#620#621#0" expanded="true" />
+                <element signature="e#672#673#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Employees.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/model/Employees.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1279">
+              <caret line="76" column="18" lean-forward="false" selection-start-line="76" selection-start-column="18" selection-end-line="76" selection-end-column="18" />
+              <folding>
+                <element signature="e#610#611#0" expanded="true" />
+                <element signature="e#643#644#0" expanded="true" />
+                <element signature="e#692#693#0" expanded="true" />
+                <element signature="e#736#737#0" expanded="true" />
+                <element signature="e#775#776#0" expanded="true" />
+                <element signature="e#810#811#0" expanded="true" />
+                <element signature="e#866#867#0" expanded="true" />
+                <element signature="e#914#915#0" expanded="true" />
+                <element signature="e#954#955#0" expanded="true" />
+                <element signature="e#990#991#0" expanded="true" />
+                <element signature="e#1048#1049#0" expanded="true" />
+                <element signature="e#1098#1099#0" expanded="true" />
+                <element signature="e#1141#1142#0" expanded="true" />
+                <element signature="e#1180#1181#0" expanded="true" />
+                <element signature="e#1244#1245#0" expanded="true" />
+                <element signature="e#1300#1301#0" expanded="true" />
+                <element signature="e#1336#1337#0" expanded="true" />
+                <element signature="e#1371#1372#0" expanded="true" />
+                <element signature="e#1424#1425#0" expanded="true" />
+                <element signature="e#1472#1473#0" expanded="true" />
+                <element signature="e#1504#1505#0" expanded="true" />
+                <element signature="e#1535#1536#0" expanded="true" />
+                <element signature="e#1580#1581#0" expanded="true" />
+                <element signature="e#1620#1621#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Tasks.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/model/Tasks.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-803">
+              <caret line="28" column="29" lean-forward="false" selection-start-line="28" selection-start-column="29" selection-end-line="28" selection-end-column="29" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#667#668#0" expanded="true" />
+                <element signature="e#696#697#0" expanded="true" />
+                <element signature="e#738#739#0" expanded="true" />
+                <element signature="e#774#775#0" expanded="true" />
+                <element signature="e#809#810#0" expanded="true" />
+                <element signature="e#840#841#0" expanded="true" />
+                <element signature="e#888#889#0" expanded="true" />
+                <element signature="e#928#929#0" expanded="true" />
+                <element signature="e#963#964#0" expanded="true" />
+                <element signature="e#994#995#0" expanded="true" />
+                <element signature="e#1042#1043#0" expanded="true" />
+                <element signature="e#1082#1083#0" expanded="true" />
+                <element signature="e#1123#1124#0" expanded="true" />
+                <element signature="e#1160#1161#0" expanded="true" />
+                <element signature="e#1220#1221#0" expanded="true" />
+                <element signature="e#1272#1273#0" expanded="true" />
+                <element signature="e#1315#1316#0" expanded="true" />
+                <element signature="e#1354#1355#0" expanded="true" />
+                <element signature="e#1418#1419#0" expanded="true" />
+                <element signature="e#1474#1475#0" expanded="true" />
+                <element signature="e#1508#1509#0" expanded="true" />
+                <element signature="e#1541#1542#0" expanded="true" />
+                <element signature="e#1590#1591#0" expanded="true" />
+                <element signature="e#1634#1635#0" expanded="true" />
+                <element signature="e#1667#1668#0" expanded="true" />
+                <element signature="e#1698#1699#0" expanded="true" />
+                <element signature="e#1744#1745#0" expanded="true" />
+                <element signature="e#1784#1785#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Documents.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/model/Documents.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="15" column="29" lean-forward="true" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+              <folding>
+                <element signature="e#399#400#0" expanded="true" />
+                <element signature="e#432#433#0" expanded="true" />
+                <element signature="e#481#482#0" expanded="true" />
+                <element signature="e#525#526#0" expanded="true" />
+                <element signature="e#564#565#0" expanded="true" />
+                <element signature="e#599#600#0" expanded="true" />
+                <element signature="e#655#656#0" expanded="true" />
+                <element signature="e#703#704#0" expanded="true" />
+                <element signature="e#739#740#0" expanded="true" />
+                <element signature="e#774#775#0" expanded="true" />
+                <element signature="e#827#828#0" expanded="true" />
+                <element signature="e#875#876#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Access.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/model/Access.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="527">
+              <caret line="31" column="18" lean-forward="false" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="18" />
+              <folding>
+                <element signature="e#298#299#0" expanded="true" />
+                <element signature="e#329#330#0" expanded="true" />
+                <element signature="e#374#375#0" expanded="true" />
+                <element signature="e#414#415#0" expanded="true" />
+                <element signature="e#450#451#0" expanded="true" />
+                <element signature="e#482#483#0" expanded="true" />
+                <element signature="e#532#533#0" expanded="true" />
+                <element signature="e#574#575#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ArgusDoc.iml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ArgusDoc.iml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Main_window.fxml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/resources/Main_window.fxml">
+          <provider editor-type-id="text-editor">
+            <state relative-caret-position="2567">
+              <caret line="151" column="40" lean-forward="false" selection-start-line="151" selection-start-column="40" selection-end-line="151" selection-end-column="40" />
+              <folding>
+                <marker date="1512982022894" expanded="true" signature="4852:6005" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="4889:5974" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="5000:5936" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="5044:5892" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="6050:9640" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="6087:9609" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="6198:9571" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="6242:9527" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="6471:9482" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="6517:9433" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="6608:6894" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="6660:6840" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="6983:7269" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="7035:7215" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="7364:7650" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="7416:7596" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="7772:8070" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="7827:8014" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="8204:8502" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="8259:8446" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="8630:8928" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="8685:8872" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="9088:9386" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="9143:9330" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="9687:9906" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="9724:9875" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="9961:10180" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="9998:10149" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="10621:11205" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="10637:11188" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="10690:10813" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="10710:10795" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="10868:10992" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="10888:10974" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="11048:11171" ph="..." />
+                <marker date="1512982022894" expanded="true" signature="11068:11153" ph="..." />
+              </folding>
+            </state>
+          </provider>
           <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
             <state />
           </provider>
-          <provider editor-type-id="text-editor">
-            <state relative-caret-position="433">
-              <caret line="151" column="40" lean-forward="true" selection-start-line="151" selection-start-column="40" selection-end-line="151" selection-end-column="40" />
-              <folding>
-                <marker date="1512462940175" expanded="true" signature="2725:3261" ph="..." />
-              </folding>
-            </state>
+        </entry>
+      </file>
+      <file leaf-file-name="icon.jpg" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/icon.jpg">
+          <provider selected="true" editor-type-id="images">
+            <state />
           </provider>
         </entry>
       </file>
@@ -114,9 +306,14 @@
         <option value="$PROJECT_DIR$/src/sample/Main.java" />
         <option value="$PROJECT_DIR$/src/main/java/Controller.java" />
         <option value="$PROJECT_DIR$/src/main/java/Main_window.fxml" />
-        <option value="$PROJECT_DIR$/src/main/resources/Main_window.fxml" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/Main.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/model/Departments.java" />
+        <option value="$PROJECT_DIR$/src/main/java/model/Employees.java" />
+        <option value="$PROJECT_DIR$/src/main/java/model/Tasks.java" />
+        <option value="$PROJECT_DIR$/src/main/java/model/Documents.java" />
+        <option value="$PROJECT_DIR$/src/main/java/model/Access.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/Main_window.fxml" />
       </list>
     </option>
   </component>
@@ -138,8 +335,7 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
+    <option name="x" value="793" />
     <option name="width" value="814" />
     <option name="height" value="867" />
   </component>
@@ -162,7 +358,6 @@
     </navigator>
     <panes>
       <pane id="AndroidView" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -193,18 +388,32 @@
               <item name="ArgusDoc" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ArgusDoc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ArgusDoc" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ArgusDoc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ArgusDoc" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="C:/Program Files (x86)/Oracle/JavaFX Scene Builder 2.0/JavaFX Scene Builder 2.0.exe" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../sample-springboot-javafx" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -398,11 +607,13 @@
       <workItem from="1512284276121" duration="1014000" />
       <workItem from="1512312955449" duration="170000" />
       <workItem from="1512457017468" duration="5517000" />
+      <workItem from="1512528451283" duration="184000" />
+      <workItem from="1512963884348" duration="10412000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17929000" />
+    <option name="totallyTimeSpent" value="28525000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -410,25 +621,25 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32826087" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32702702" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32969153" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18243243" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17609255" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20115681" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20758355" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20115681" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19144145" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -475,23 +686,58 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="31" column="10" lean-forward="true" selection-start-line="31" selection-start-column="10" selection-end-line="31" selection-end-column="10" />
+        <state relative-caret-position="204">
+          <caret line="12" column="17" lean-forward="false" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/Main_window.fxml">
-      <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="2754">
           <caret line="162" column="13" lean-forward="false" selection-start-line="162" selection-start-column="13" selection-end-line="162" selection-end-column="13" />
           <folding>
-            <marker date="1512462940175" expanded="true" signature="2725:3261" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="4852:6005" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="4889:5974" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="5000:5936" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="5044:5892" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6050:9640" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6087:9609" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6198:9571" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6242:9527" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6471:9482" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6517:9433" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6608:6894" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6660:6840" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6983:7269" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7035:7215" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7364:7650" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7416:7596" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7772:8070" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7827:8014" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8204:8502" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8259:8446" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8630:8928" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8685:8872" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9088:9386" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9143:9330" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9687:9906" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9724:9875" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9961:10180" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9998:10149" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10621:11205" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10637:11188" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10690:10813" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10710:10795" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10868:10992" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10888:10974" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="11048:11171" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="11068:11153" ph="..." />
           </folding>
         </state>
+      </provider>
+      <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
@@ -526,60 +772,51 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/Main_window.fxml">
-      <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="2754">
-          <caret line="162" column="13" lean-forward="false" selection-start-line="162" selection-start-column="13" selection-end-line="162" selection-end-column="13" />
-          <folding>
-            <marker date="1512462940175" expanded="true" signature="2725:3261" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ArgusDoc.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="17" lean-forward="false" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/Main_window.fxml">
-      <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="2669">
           <caret line="157" column="13" lean-forward="true" selection-start-line="157" selection-start-column="13" selection-end-line="157" selection-end-column="13" />
           <folding>
-            <marker date="1512462940175" expanded="true" signature="2725:3261" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="4852:6005" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="4889:5974" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="5000:5936" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="5044:5892" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6050:9640" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6087:9609" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6198:9571" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6242:9527" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6471:9482" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6517:9433" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6608:6894" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6660:6840" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6983:7269" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7035:7215" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7364:7650" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7416:7596" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7772:8070" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7827:8014" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8204:8502" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8259:8446" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8630:8928" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8685:8872" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9088:9386" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9143:9330" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9687:9906" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9724:9875" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9961:10180" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9998:10149" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10621:11205" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10637:11188" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10690:10813" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10710:10795" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10868:10992" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10888:10974" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="11048:11171" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="11068:11153" ph="..." />
           </folding>
         </state>
+      </provider>
+      <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
@@ -614,16 +851,51 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/Main_window.fxml">
-      <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="2584">
           <caret line="152" column="20" lean-forward="true" selection-start-line="152" selection-start-column="20" selection-end-line="152" selection-end-column="20" />
           <folding>
-            <marker date="1512462940175" expanded="true" signature="2725:3261" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="4852:6005" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="4889:5974" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="5000:5936" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="5044:5892" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6050:9640" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6087:9609" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6198:9571" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6242:9527" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6471:9482" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6517:9433" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6608:6894" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6660:6840" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6983:7269" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7035:7215" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7364:7650" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7416:7596" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7772:8070" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7827:8014" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8204:8502" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8259:8446" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8630:8928" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8685:8872" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9088:9386" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9143:9330" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9687:9906" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9724:9875" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9961:10180" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9998:10149" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10621:11205" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10637:11188" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10690:10813" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10710:10795" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10868:10992" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10888:10974" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="11048:11171" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="11068:11153" ph="..." />
           </folding>
         </state>
+      </provider>
+      <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
@@ -650,16 +922,51 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/Main_window.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1512462940175" expanded="true" signature="2725:3261" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="4852:6005" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="4889:5974" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="5000:5936" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="5044:5892" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6050:9640" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6087:9609" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6198:9571" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6242:9527" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6471:9482" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6517:9433" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6608:6894" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6660:6840" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6983:7269" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7035:7215" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7364:7650" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7416:7596" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7772:8070" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7827:8014" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8204:8502" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8259:8446" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8630:8928" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8685:8872" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9088:9386" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9143:9330" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9687:9906" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9724:9875" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9961:10180" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9998:10149" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10621:11205" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10637:11188" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10690:10813" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10710:10795" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10868:10992" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10888:10974" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="11048:11171" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="11068:11153" ph="..." />
           </folding>
         </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
@@ -686,16 +993,51 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/Main_window.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1512462940175" expanded="true" signature="2725:3261" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="4852:6005" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="4889:5974" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="5000:5936" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="5044:5892" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6050:9640" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6087:9609" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6198:9571" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6242:9527" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6471:9482" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6517:9433" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6608:6894" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6660:6840" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6983:7269" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7035:7215" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7364:7650" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7416:7596" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7772:8070" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7827:8014" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8204:8502" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8259:8446" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8630:8928" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8685:8872" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9088:9386" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9143:9330" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9687:9906" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9724:9875" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9961:10180" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9998:10149" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10621:11205" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10637:11188" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10690:10813" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10710:10795" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10868:10992" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10888:10974" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="11048:11171" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="11068:11153" ph="..." />
           </folding>
         </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.java" />
@@ -708,31 +1050,11 @@
       </provider>
     </entry>
     <entry file="das://table:/361c7a01/939d374c-ff33-4166-bbe0-2bcc3525038c/ArgusDoc.dbo.Departments" />
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="30" lean-forward="false" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ArgusDoc.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="das://table:/361c7a01/939d374c-ff33-4166-bbe0-2bcc3525038c/ArgusDoc.dbo.sysdiagrams" />
     <entry file="das://table:/361c7a01/939d374c-ff33-4166-bbe0-2bcc3525038c/ArgusDoc.dbo.Documents" />
     <entry file="das://table:/361c7a01/939d374c-ff33-4166-bbe0-2bcc3525038c/ArgusDoc.dbo.Departmens" />
     <entry file="das://table:/361c7a01/939d374c-ff33-4166-bbe0-2bcc3525038c/ArgusDoc.dbo.Tasks" />
     <entry file="das://table:/4b583a21/939d374c-ff33-4166-bbe0-2bcc3525038c/ArgusDoc.dbo.Departmens" />
-    <entry file="file://$PROJECT_DIR$/src/main/resources/icon.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="das://table:/4b583a21/939d374c-ff33-4166-bbe0-2bcc3525038c/ArgusDoc.dbo.sysdiagrams" />
     <entry file="das://table:/4b583a21/939d374c-ff33-4166-bbe0-2bcc3525038c/ArgusDoc.dbo.Departments" />
     <entry file="das://table:/4b583a21/939d374c-ff33-4166-bbe0-2bcc3525038c/ArgusDoc.dbo.Documents" />
@@ -763,7 +1085,7 @@
           </nodes>
           <notes />
           <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="54.5" y="54.0" />
+          <settings layout="Hierarchic Group" zoom="1.0" x="55.0" y="54.0" />
           <SelectedNodes />
           <Categories>
             <Category>Fields</Category>
@@ -775,33 +1097,215 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/Main_window.fxml">
-      <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="433">
-          <caret line="151" column="40" lean-forward="true" selection-start-line="151" selection-start-column="40" selection-end-line="151" selection-end-column="40" />
-          <folding>
-            <marker date="1512462940175" expanded="true" signature="2725:3261" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
+    <entry file="file://$PROJECT_DIR$/ArgusDoc.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="26" column="1" lean-forward="true" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="13" lean-forward="false" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="13" />
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="48" column="16" lean-forward="false" selection-start-line="48" selection-start-column="16" selection-end-line="48" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/model/Tasks.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-803">
+          <caret line="28" column="29" lean-forward="false" selection-start-line="28" selection-start-column="29" selection-end-line="28" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#667#668#0" expanded="true" />
+            <element signature="e#696#697#0" expanded="true" />
+            <element signature="e#738#739#0" expanded="true" />
+            <element signature="e#774#775#0" expanded="true" />
+            <element signature="e#809#810#0" expanded="true" />
+            <element signature="e#840#841#0" expanded="true" />
+            <element signature="e#888#889#0" expanded="true" />
+            <element signature="e#928#929#0" expanded="true" />
+            <element signature="e#963#964#0" expanded="true" />
+            <element signature="e#994#995#0" expanded="true" />
+            <element signature="e#1042#1043#0" expanded="true" />
+            <element signature="e#1082#1083#0" expanded="true" />
+            <element signature="e#1123#1124#0" expanded="true" />
+            <element signature="e#1160#1161#0" expanded="true" />
+            <element signature="e#1220#1221#0" expanded="true" />
+            <element signature="e#1272#1273#0" expanded="true" />
+            <element signature="e#1315#1316#0" expanded="true" />
+            <element signature="e#1354#1355#0" expanded="true" />
+            <element signature="e#1418#1419#0" expanded="true" />
+            <element signature="e#1474#1475#0" expanded="true" />
+            <element signature="e#1508#1509#0" expanded="true" />
+            <element signature="e#1541#1542#0" expanded="true" />
+            <element signature="e#1590#1591#0" expanded="true" />
+            <element signature="e#1634#1635#0" expanded="true" />
+            <element signature="e#1667#1668#0" expanded="true" />
+            <element signature="e#1698#1699#0" expanded="true" />
+            <element signature="e#1744#1745#0" expanded="true" />
+            <element signature="e#1784#1785#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/model/Employees.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1279">
+          <caret line="76" column="18" lean-forward="false" selection-start-line="76" selection-start-column="18" selection-end-line="76" selection-end-column="18" />
+          <folding>
+            <element signature="e#610#611#0" expanded="true" />
+            <element signature="e#643#644#0" expanded="true" />
+            <element signature="e#692#693#0" expanded="true" />
+            <element signature="e#736#737#0" expanded="true" />
+            <element signature="e#775#776#0" expanded="true" />
+            <element signature="e#810#811#0" expanded="true" />
+            <element signature="e#866#867#0" expanded="true" />
+            <element signature="e#914#915#0" expanded="true" />
+            <element signature="e#954#955#0" expanded="true" />
+            <element signature="e#990#991#0" expanded="true" />
+            <element signature="e#1048#1049#0" expanded="true" />
+            <element signature="e#1098#1099#0" expanded="true" />
+            <element signature="e#1141#1142#0" expanded="true" />
+            <element signature="e#1180#1181#0" expanded="true" />
+            <element signature="e#1244#1245#0" expanded="true" />
+            <element signature="e#1300#1301#0" expanded="true" />
+            <element signature="e#1336#1337#0" expanded="true" />
+            <element signature="e#1371#1372#0" expanded="true" />
+            <element signature="e#1424#1425#0" expanded="true" />
+            <element signature="e#1472#1473#0" expanded="true" />
+            <element signature="e#1504#1505#0" expanded="true" />
+            <element signature="e#1535#1536#0" expanded="true" />
+            <element signature="e#1580#1581#0" expanded="true" />
+            <element signature="e#1620#1621#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/model/Documents.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="29" lean-forward="true" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+          <folding>
+            <element signature="e#399#400#0" expanded="true" />
+            <element signature="e#432#433#0" expanded="true" />
+            <element signature="e#481#482#0" expanded="true" />
+            <element signature="e#525#526#0" expanded="true" />
+            <element signature="e#564#565#0" expanded="true" />
+            <element signature="e#599#600#0" expanded="true" />
+            <element signature="e#655#656#0" expanded="true" />
+            <element signature="e#703#704#0" expanded="true" />
+            <element signature="e#739#740#0" expanded="true" />
+            <element signature="e#774#775#0" expanded="true" />
+            <element signature="e#827#828#0" expanded="true" />
+            <element signature="e#875#876#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/model/Departments.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="39" lean-forward="false" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
+          <folding>
+            <element signature="e#346#347#0" expanded="true" />
+            <element signature="e#381#382#0" expanded="true" />
+            <element signature="e#434#435#0" expanded="true" />
+            <element signature="e#482#483#0" expanded="true" />
+            <element signature="e#523#524#0" expanded="true" />
+            <element signature="e#560#561#0" expanded="true" />
+            <element signature="e#620#621#0" expanded="true" />
+            <element signature="e#672#673#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/model/Access.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="31" column="18" lean-forward="false" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="18" />
+          <folding>
+            <element signature="e#298#299#0" expanded="true" />
+            <element signature="e#329#330#0" expanded="true" />
+            <element signature="e#374#375#0" expanded="true" />
+            <element signature="e#414#415#0" expanded="true" />
+            <element signature="e#450#451#0" expanded="true" />
+            <element signature="e#482#483#0" expanded="true" />
+            <element signature="e#532#533#0" expanded="true" />
+            <element signature="e#574#575#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/icon.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/Main_window.fxml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="2567">
+          <caret line="151" column="40" lean-forward="false" selection-start-line="151" selection-start-column="40" selection-end-line="151" selection-end-column="40" />
+          <folding>
+            <marker date="1512982022894" expanded="true" signature="4852:6005" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="4889:5974" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="5000:5936" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="5044:5892" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6050:9640" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6087:9609" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6198:9571" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6242:9527" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6471:9482" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6517:9433" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6608:6894" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6660:6840" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="6983:7269" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7035:7215" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7364:7650" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7416:7596" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7772:8070" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="7827:8014" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8204:8502" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8259:8446" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8630:8928" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="8685:8872" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9088:9386" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9143:9330" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9687:9906" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9724:9875" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9961:10180" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="9998:10149" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10621:11205" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10637:11188" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10690:10813" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10710:10795" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10868:10992" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="10888:10974" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="11048:11171" ph="..." />
+            <marker date="1512982022894" expanded="true" signature="11068:11153" ph="..." />
+          </folding>
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
+        <state />
       </provider>
     </entry>
   </component>

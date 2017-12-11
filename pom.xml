@@ -9,6 +9,9 @@
     <artifactId>ArgusDoc</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
+
+
+    <!--JavaFx-->
     <build>
         <plugins>
             <plugin>
@@ -21,6 +24,21 @@
             </plugin>
         </plugins>
     </build>
+
+
+    <!-- Web -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+
+    <!-- БД -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+
+    <!--MS SQL server-->
     <dependencies>
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
@@ -28,5 +46,25 @@
             <version>6.1.0.jre8</version>
             <scope>test</scope>
         </dependency>
+        <!-- JPA -->
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <!-- Hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
     </dependencies>
+
 </project>

@@ -43,5 +43,8 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.bouncycastle:bcprov-jdk15on:1.51" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: com.google.code.gson:gson:2.2.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.slf4j:slf4j-api:1.7.5" level="project" />
+    <orderEntry type="library" name="Maven: javax.persistence:persistence-api:1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-core:${hibernate.version}" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-entitymanager:${hibernate.version}" level="project" />
   </component>
 </module>
