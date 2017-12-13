@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "DEPARTMENS")
-public class Departments {
+public class Department {
     @Id
     @Column(name = "Department_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +31,7 @@ public class Departments {
 
     @Override
     public String toString() {
-        return "Departments{" +
+        return "Department{" +
                 "departmentId=" + departmentId +
                 ", departmentName='" + departmentName + '\'' +
                 '}';

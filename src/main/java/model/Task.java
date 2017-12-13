@@ -4,7 +4,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "TASKS")
-public class Tasks {
+public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -89,7 +89,7 @@ public class Tasks {
 
     @Override
     public String toString() {
-        return "Tasks{" +
+        return "Task{" +
                 "taskID=" + taskID +
                 ", taskName='" + taskName + '\'' +
                 ", taskText='" + taskText + '\'' +

@@ -79,7 +79,11 @@
             <artifactId>spring-context</artifactId>
             <version>4.1.7.RELEASE</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
     </dependencies>
 
 </project>

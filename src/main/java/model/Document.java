@@ -3,7 +3,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name ="DOCUMENTS")
-public class Documents {
+public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Document_id")
@@ -42,7 +42,7 @@ public class Documents {
 
     @Override
     public String toString() {
-        return "Documents{" +
+        return "Document{" +
                 "documentId=" + documentId +
                 ", documentLink='" + documentLink + '\'' +
                 ", departmentId=" + departmentId +

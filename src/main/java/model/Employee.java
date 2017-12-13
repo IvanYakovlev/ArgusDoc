@@ -3,7 +3,7 @@ package model;
 import javax.persistence.*;
 @Entity
 @Table(name = "EMPLOYEES")
-public class Employees {
+public class Employee {
     @Id
     @Column(name = "Employee_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -75,7 +75,7 @@ public class Employees {
 
     @Override
     public String toString() {
-        return "Employees{" +
+        return "Employee{" +
                 "employeeId=" + employeeId +
                 ", employeeName='" + employeeName + '\'' +
                 ", employeeLogin='" + employeeLogin + '\'' +
