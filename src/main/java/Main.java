@@ -11,7 +11,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("Main_window.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("viewFXML/Main_window.fxml"));
         primaryStage.setTitle("ArgusDoc");
         primaryStage.setMinHeight(715);
         primaryStage.setMinWidth(1000);

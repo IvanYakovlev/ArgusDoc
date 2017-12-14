@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import java.lang.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -15,12 +16,13 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="687.0" prefWidth="775.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="687.0" prefWidth="775.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.MainController">
    <children>
       <AnchorPane layoutY="43.0" prefHeight="700.0" prefWidth="933.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="43.0">
          <children>
@@ -136,15 +138,10 @@
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TableView layoutX="7.0" layoutY="7.0" prefHeight="200.0" prefWidth="440.0">
-                                      <columns>
-                                        <TableColumn prefWidth="186.0" text="C1" />
-                                        <TableColumn prefWidth="206.0" text="C2" />
-                                      </columns>
-                                    </TableView>
-                                    <Button layoutX="296.0" layoutY="244.0" mnemonicParsing="false" text="Добавить" />
-                                    <Button layoutX="379.0" layoutY="244.0" mnemonicParsing="false" text="Удалить" />
-                                    <TextField layoutX="296.0" layoutY="213.0" />
+                                    <TableView fx:id="tableDepartment" layoutX="7.0" layoutY="7.0" prefHeight="200.0" prefWidth="440.0" />
+                                    <Button layoutX="296.0" layoutY="244.0" mnemonicParsing="false" onAction="#addDepartment" text="Добавить" />
+                                    <Button layoutX="379.0" layoutY="244.0" mnemonicParsing="false" onAction="#removeDepartment" text="Удалить" />
+                                    <TextField fx:id="txtDepartment" layoutX="291.0" layoutY="219.0" />
                                  </children></AnchorPane>
                            </content>
                         </Tab>
