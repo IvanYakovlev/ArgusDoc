@@ -1,6 +1,6 @@
 /*
 *Ivan Yakovlev*/
-import dbConnection.DBconnection;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,9 +10,7 @@ import javafx.stage.Stage;
 
 
 public class Main extends Application {
-    DBconnection dBconnection;
-
-    @Override
+        @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("viewFXML/Main_window.fxml"));
         primaryStage.setTitle("ArgusDoc");
@@ -21,9 +19,7 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
         primaryStage.getIcons().add(new Image("images/icon.jpg"));
-        dBconnection.connect();
-        System.out.println("пиу");
-        dBconnection.disconect();
+
     }
 
 
