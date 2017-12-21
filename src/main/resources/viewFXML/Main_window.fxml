@@ -138,10 +138,11 @@
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TableView fx:id="tableDepartment" layoutX="7.0" layoutY="7.0" prefHeight="200.0" prefWidth="440.0" />
-                                    <Button layoutX="296.0" layoutY="244.0" mnemonicParsing="false" onAction="#addDepartment" text="Добавить" />
-                                    <Button layoutX="379.0" layoutY="244.0" mnemonicParsing="false" onAction="#removeDepartment" text="Удалить" />
-                                    <TextField fx:id="txtDepartment" layoutX="291.0" layoutY="219.0" />
+                                    <TableView fx:id="tableDepartment" layoutX="7.0" layoutY="7.0" onMouseClicked="#clickTableDepartment" prefHeight="361.0" prefWidth="359.0" />
+                                    <Button layoutX="14.0" layoutY="421.0" mnemonicParsing="false" onAction="#addDepartment" text="Добавить" />
+                                    <Button layoutX="225.0" layoutY="421.0" mnemonicParsing="false" onAction="#removeDepartment" text="Удалить" />
+                                    <TextField fx:id="txtDepartment" layoutX="14.0" layoutY="376.0" prefHeight="25.0" prefWidth="352.0" />
+                                    <Button layoutX="116.0" layoutY="421.0" mnemonicParsing="false" text="Обновить" />
                                  </children></AnchorPane>
                            </content>
                         </Tab>
