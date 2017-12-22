@@ -138,11 +138,59 @@
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TableView fx:id="tableDepartment" layoutX="7.0" layoutY="7.0" onMouseClicked="#clickTableDepartment" prefHeight="361.0" prefWidth="359.0" />
-                                    <Button layoutX="14.0" layoutY="421.0" mnemonicParsing="false" onAction="#addDepartment" text="Добавить" />
-                                    <Button layoutX="225.0" layoutY="421.0" mnemonicParsing="false" onAction="#removeDepartment" text="Удалить" />
-                                    <TextField fx:id="txtDepartment" layoutX="14.0" layoutY="376.0" prefHeight="25.0" prefWidth="352.0" />
-                                    <Button layoutX="116.0" layoutY="421.0" mnemonicParsing="false" text="Обновить" />
+                                    <Accordion prefHeight="615.0" prefWidth="775.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <panes>
+                                        <TitledPane animated="false" text="Отделы">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="583.0" prefWidth="768.0">
+                                                   <children>
+                                                      <TableView fx:id="tableDepartment" layoutX="18.6" layoutY="48.6" onMouseClicked="#clickTableDepartment" prefHeight="425.0" prefWidth="715.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                      <Button layoutX="543.0" layoutY="505.0" mnemonicParsing="false" onAction="#addDepartment" text="Добавить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="145.0" />
+                                                      <Button layoutX="699.0" layoutY="505.0" mnemonicParsing="false" onAction="#removeDepartment" text="Удалить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                                                      <TextField fx:id="txtDepartment" layoutX="317.0" layoutY="468.0" prefHeight="25.0" prefWidth="442.0" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="5.0" />
+                                                      <Button layoutX="621.0" layoutY="505.0" mnemonicParsing="false" text="Обновить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="70.0" />
+                                                      <Label layoutX="206.0" layoutY="472.0" text="Название отдела:" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="471.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                          </content>
+                                        </TitledPane>
+                                        <TitledPane animated="false" text="Сотрудники">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <TableView prefHeight="436.0" prefWidth="775.0" AnchorPane.bottomAnchor="103.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                      <TextField layoutX="98.0" layoutY="477.0" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="520.0" />
+                                                      <TextField layoutX="98.0" layoutY="444.0" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="520.0" />
+                                                      <TextField layoutX="313.0" layoutY="444.0" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="300.0" />
+                                                      <ChoiceBox layoutX="313.0" layoutY="477.0" prefWidth="150.0" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="300.0" />
+                                                      <ChoiceBox layoutX="573.0" layoutY="444.0" prefWidth="150.0" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="5.0" />
+                                                      <Label layoutX="27.0" layoutY="444.0" text="ФИО:" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="680.0" />
+                                                      <Label layoutX="27.0" layoutY="477.0" text="Логин" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="680.0" />
+                                                      <Label layoutX="260.0" layoutY="448.0" text="Пароль" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="460.0" />
+                                                      <Label layoutX="260.0" layoutY="477.0" text="Отдел:" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="460.0" />
+                                                      <Label layoutX="518.0" layoutY="448.0" text="Доступ:" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="170.0" />
+                                                      <Button layoutX="613.0" layoutY="502.0" mnemonicParsing="false" text="Обновить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="70.0" />
+                                                      <Button layoutX="699.0" layoutY="502.0" mnemonicParsing="false" onAction="#removeDepartment" text="Удалить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                                                      <Button layoutX="470.0" layoutY="502.0" mnemonicParsing="false" onAction="#addDepartment" text="Добавить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="145.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                          </content>
+                                        </TitledPane>
+                                        <TitledPane animated="false" text="Документы">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <TableView layoutX="18.6" layoutY="19.6" prefHeight="430.0" prefWidth="754.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                      <Button layoutX="602.0" layoutY="484.0" mnemonicParsing="false" text="Добавить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="70.0" />
+                                                      <Button layoutX="699.0" layoutY="484.0" mnemonicParsing="false" text="Удалить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                                                      <TextField layoutX="608.0" layoutY="462.0" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="5.0" />
+                                                      <Label layoutX="542.0" layoutY="457.0" text="Название:" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="160.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                          </content>
+                                        </TitledPane>
+                                      </panes>
+                                    </Accordion>
                                  </children></AnchorPane>
                            </content>
                         </Tab>
