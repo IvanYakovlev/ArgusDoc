@@ -15,35 +15,48 @@ public class DepartmentDaoImpl implements DepartmentDao {
     DBconnection dBconnection;
 
 
+
     public void addDepartment(Department department) {
         this.dBconnection=new DBconnection();
 
         try {
-            PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("INSERT INTO Departments VALUE (?,?)");
-            preparedStatement.setInt(1,department.getDepartmentId());
+            PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("INSERT INTO Departments(Department_name) VALUES (?)");
             preparedStatement.setString(1,department.getDepartmentName());
             preparedStatement.execute();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void updateDepartment(Department department) {
-        dBconnection =new DBconnection();
+    @Override
+    public void updateDepartment(int id,String name) {
+        this.dBconnection =new DBconnection();
         PreparedStatement preparedStatement;
         try {
             preparedStatement = dBconnection.connect().prepareStatement("UPDATE Departments SET Department_name=? WHERE Department_id=?");
-            preparedStatement.setInt(2,department.getDepartmentId());
-            preparedStatement.setString(1,department.getDepartmentName());
+            preparedStatement.setInt(2,id);
+            preparedStatement.setString(1,name);
+            preparedStatement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+    public void removeDepartment(int id) {
+        dBconnection = new DBconnection();
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = dBconnection.connect().prepareStatement("DELETE FROM Departments WHERE Department_id = ?");
+            preparedStatement.setInt(1,id);
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-    }
-
-    public void removeDepartment(int id) {
-
     }
 
     public ObservableList<Department> listDepartments() {
