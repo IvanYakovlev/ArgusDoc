@@ -30,8 +30,16 @@ public class MainController {
     private TableColumn<Department, String> nameDep;
     // Variables
     private ObservableList<Department> data;
+
     private DBconnection dBconnection;
+
     private int idDepartment;
+
+    public int getIdEmployee() {
+        return idEmployee;
+    }
+
+    private int idEmployee;
 
     public int getIdDepartment() {
         return idDepartment;

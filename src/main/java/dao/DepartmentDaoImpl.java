@@ -32,9 +32,9 @@ public class DepartmentDaoImpl implements DepartmentDao {
     @Override
     public void updateDepartment(int id,String name) {
         this.dBconnection =new DBconnection();
-        PreparedStatement preparedStatement;
+
         try {
-            preparedStatement = dBconnection.connect().prepareStatement("UPDATE Departments SET Department_name=? WHERE Department_id=?");
+            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE Departments SET Department_name=? WHERE Department_id=?");
             preparedStatement.setInt(2,id);
             preparedStatement.setString(1,name);
             preparedStatement.execute();
@@ -49,9 +49,9 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
     public void removeDepartment(int id) {
         dBconnection = new DBconnection();
-        PreparedStatement preparedStatement;
+
         try {
-            preparedStatement = dBconnection.connect().prepareStatement("DELETE FROM Departments WHERE Department_id = ?");
+            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("DELETE FROM Departments WHERE Department_id = ?");
             preparedStatement.setInt(1,id);
             preparedStatement.execute();
         } catch (SQLException e) {
