@@ -1,57 +1,89 @@
 package controller;
 
-import dao.DepartmentDao;
-import dao.DepartmentDaoImpl;
+import dao.*;
 import dbConnection.DBconnection;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.StageStyle;
+import model.Access;
 import model.Department;
+import model.Employee;
 
 import java.sql.SQLException;
 
 
 public class MainController {
-
+//Department settings
     @FXML
     private TableView<Department> tableDepartment;
     @FXML
     private TextField txtDepartment;
-    @FXML
     private TableColumn<Department, String> idDep;
-    @FXML
     private TableColumn<Department, String> nameDep;
-    // Variables
-    private ObservableList<Department> data;
 
-    private DBconnection dBconnection;
+
+
+    // Variables
+    private ObservableList<Department> dataDepartment;
+
+    DepartmentDao departmentDao;
 
     private int idDepartment;
-
-    public int getIdEmployee() {
-        return idEmployee;
-    }
-
-    private int idEmployee;
 
     public int getIdDepartment() {
         return idDepartment;
     }
 
+
+//Employee settings
+
     @FXML
+    private ChoiceBox choiceBoxAccess;
+    @FXML
+    private ChoiceBox<Department> choiceBoxDepartment;
+    @FXML
+    private TextField txtFIOEmployee;
+    @FXML
+    private TextField txtLoginEmployee;
+    @FXML
+    private TextField txtPasswordEmployee;
+    @FXML
+    private TableView<Employee> tableEmployee;
+    private TableColumn<Employee, String> idEmpl;
+    private TableColumn<Employee, String> fioEmpl;
+    private TableColumn<Employee, String> loginEmpl;
+    private TableColumn<Employee, String> passwordEmpl;
+    private TableColumn<Employee, String> departmentEmpl;
+    private TableColumn<Employee, String> accessEmpl;
 
-    DepartmentDao departmentDao = new DepartmentDaoImpl();
 
+    //Variables
+
+    private EmployeeDao employeeDao;
+    private AccessDao accessDao;
+    private ObservableList<Employee> dataEmployee;
+
+    private int idEmployee;
+
+    public int getIdEmployee() {
+        return idEmployee;
+    }
+
+
+
+
+
+
+
+//Connection
+    private DBconnection dBconnection;
 
     public void initialize() {
-
+/*initialize Departments table*/
         departmentDao=new DepartmentDaoImpl();
         idDep= new TableColumn<Department, String>("id");
         idDep.setCellValueFactory(new PropertyValueFactory<Department, String>("departmentId"));
@@ -60,8 +92,31 @@ public class MainController {
 
         tableDepartment.getColumns().setAll(idDep,nameDep);
         tableDepartment.setItems((ObservableList<Department>) departmentDao.listDepartments());
+/*initialize Employee table*/
+    employeeDao = new EmployeeDaoImpl();
+    accessDao = new AccessDaoImpl();
+    idEmpl = new TableColumn<Employee, String>("id");
+    idEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeeId"));
+    fioEmpl = new TableColumn<Employee, String>("ФИО");
+    fioEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeeName"));
+    loginEmpl = new TableColumn<Employee, String>("Логин");
+    loginEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeeLogin"));
+    passwordEmpl = new TableColumn<Employee, String>("Пароль");
+    passwordEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeePassword"));
+    departmentEmpl = new TableColumn<Employee, String>("Отдел");
+    departmentEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("departmentID"));
+    accessEmpl = new TableColumn<Employee, String>("Уровень доступа");
+    accessEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("accessId"));
+
+    tableEmployee.getColumns().setAll(idEmpl,fioEmpl,loginEmpl,passwordEmpl,departmentEmpl,accessEmpl);
+    tableEmployee.setItems(employeeDao.listEmployees());
+
+    choiceBoxDepartment = new ChoiceBox<>();
 
 
+    choiceBoxAccess = new ChoiceBox<>();
+    choiceBoxAccess.getItems().addAll(accessDao.listAccessName());
+        System.out.println(accessDao.listAccessName());
 
     }
     private void dialog(Alert.AlertType alertType, String s){
@@ -70,32 +125,32 @@ public class MainController {
         alert.setTitle("Информация");
         alert.showAndWait();
     }
-
-    public void clearDepartment(){
+/*Departments CRUD*/
+    public void clearDepartmentText(){
         txtDepartment.setText("");
 
     }
 
     public void refreshTableDepartment(){
-        data = (ObservableList<Department>) departmentDao.listDepartments();
-        tableDepartment.setItems(data);
+        dataDepartment = (ObservableList<Department>) departmentDao.listDepartments();
+        tableDepartment.setItems(dataDepartment);
     }
-    public void addDepartment(ActionEvent actionEvent) throws SQLException {
+    public void addDepartmentButton(ActionEvent actionEvent) throws SQLException {
         if (txtDepartment.getText().isEmpty()){
             dialog(Alert.AlertType.INFORMATION, "Введите название отдела!");}
             else {
                 Department department = new Department();
                 department.setDepartmentName(txtDepartment.getText());
                 departmentDao.addDepartment(department);
-                clearDepartment();
+                clearDepartmentText();
                 refreshTableDepartment();
 
         }
 
     }
-    public void removeDepartment (ActionEvent actionEvent){
+    public void removeDepartmentButton(ActionEvent actionEvent){
         departmentDao.removeDepartment(this.idDepartment);
-        clearDepartment();
+        clearDepartmentText();
         refreshTableDepartment();
 
     }
@@ -106,9 +161,24 @@ public class MainController {
         this.idDepartment=department.getDepartmentId();
     }
 
-    public void updateDepartment(ActionEvent actionEvent) {
+    public void updateDepartmentButton(ActionEvent actionEvent) {
         departmentDao.updateDepartment(this.idDepartment, txtDepartment.getText());
-        clearDepartment();
+        clearDepartmentText();
         refreshTableDepartment();
+    }
+
+
+
+/*Employees CRUD*/
+    public void clickTableEmployee(MouseEvent mouseEvent) {
+    }
+
+    public void updateEmployeeButton(ActionEvent actionEvent) {
+    }
+
+    public void removeEmployeeButton(ActionEvent actionEvent) {
+    }
+
+    public void addEmployeeButton(ActionEvent actionEvent) {
     }
 }
