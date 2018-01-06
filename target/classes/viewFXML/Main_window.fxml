@@ -3,7 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -159,8 +159,6 @@
                                                       <TextField fx:id="txtLoginEmployee" layoutX="98.0" layoutY="477.0" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="520.0" />
                                                       <TextField fx:id="txtFIOEmployee" layoutX="98.0" layoutY="444.0" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="520.0" />
                                                       <TextField fx:id="txtPasswordEmployee" layoutX="313.0" layoutY="444.0" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="300.0" />
-                                                      <ChoiceBox fx:id="choiceBoxDepartment" layoutX="313.0" layoutY="477.0" prefWidth="150.0" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="300.0" />
-                                                      <ChoiceBox fx:id="choiceBoxAccess" layoutX="573.0" layoutY="444.0" prefWidth="150.0" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="5.0" />
                                                       <Label layoutX="27.0" layoutY="444.0" text="ФИО:" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="680.0" />
                                                       <Label layoutX="27.0" layoutY="477.0" text="Логин" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="680.0" />
                                                       <Label layoutX="260.0" layoutY="448.0" text="Пароль" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="460.0" />
@@ -169,6 +167,8 @@
                                                       <Button layoutX="613.0" layoutY="502.0" mnemonicParsing="false" onAction="#updateEmployeeButton" text="Обновить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="70.0" />
                                                       <Button layoutX="699.0" layoutY="502.0" mnemonicParsing="false" onAction="#removeEmployeeButton" text="Удалить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
                                                       <Button layoutX="470.0" layoutY="502.0" mnemonicParsing="false" onAction="#addEmployeeButton" text="Добавить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="145.0" />
+                                                      <ComboBox fx:id="comboBoxAccess" layoutX="602.0" layoutY="448.0" prefWidth="150.0" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="5.0" />
+                                                      <ComboBox fx:id="comboBoxDepartment" layoutX="314.0" layoutY="478.0" prefWidth="150.0" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="300.0" />
                                                    </children>
                                                 </AnchorPane>
                                           </content>

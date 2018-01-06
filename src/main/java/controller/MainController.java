@@ -2,6 +2,7 @@ package controller;
 
 import dao.*;
 import dbConnection.DBconnection;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,9 +43,9 @@ public class MainController {
 //Employee settings
 
     @FXML
-    private ChoiceBox choiceBoxAccess;
+    private ComboBox<String> comboBoxAccess;
     @FXML
-    private ChoiceBox<Department> choiceBoxDepartment;
+    private ComboBox<String> comboBoxDepartment;
     @FXML
     private TextField txtFIOEmployee;
     @FXML
@@ -81,7 +82,7 @@ public class MainController {
 
 //Connection
     private DBconnection dBconnection;
-
+    ObservableList<String> list = FXCollections.observableArrayList("1","2");
     public void initialize() {
 /*initialize Departments table*/
         departmentDao=new DepartmentDaoImpl();
@@ -111,12 +112,12 @@ public class MainController {
     tableEmployee.getColumns().setAll(idEmpl,fioEmpl,loginEmpl,passwordEmpl,departmentEmpl,accessEmpl);
     tableEmployee.setItems(employeeDao.listEmployees());
 
-    choiceBoxDepartment = new ChoiceBox<>();
 
 
-    choiceBoxAccess = new ChoiceBox<>();
-    choiceBoxAccess.getItems().addAll(accessDao.listAccessName());
+    comboBoxAccess = new ComboBox<String>();
+    comboBoxAccess.setItems(list);
         System.out.println(accessDao.listAccessName());
+        System.out.println(list);
 
     }
     private void dialog(Alert.AlertType alertType, String s){
