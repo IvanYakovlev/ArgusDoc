@@ -78,4 +78,20 @@ public class DepartmentDaoImpl implements DepartmentDao {
         return listData;
 
     }
+
+    @Override
+    public ObservableList<String> listDepartmentName() {
+        dBconnection = new DBconnection();
+        ObservableList<String> listData = FXCollections.observableArrayList();
+        try {
+            String sql = "SELECT DEPARTMENT_NAME FROM DEPARTMENTS";
+            ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
+            while (resultSet.next()) {
+                listData.addAll(resultSet.getString("DEPARTMENT_NAME"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listData;
+    }
 }

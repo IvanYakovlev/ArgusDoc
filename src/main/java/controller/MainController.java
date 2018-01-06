@@ -43,9 +43,9 @@ public class MainController {
 //Employee settings
 
     @FXML
-    private ComboBox<String> comboBoxAccess;
+    private ComboBox<String> comboBoxAccess = new ComboBox<>();
     @FXML
-    private ComboBox<String> comboBoxDepartment;
+    private ComboBox<String> comboBoxDepartment = new ComboBox<>();
     @FXML
     private TextField txtFIOEmployee;
     @FXML
@@ -64,8 +64,8 @@ public class MainController {
 
     //Variables
 
-    private EmployeeDao employeeDao;
-    private AccessDao accessDao;
+    EmployeeDao employeeDao;
+    AccessDao accessDao;
     private ObservableList<Employee> dataEmployee;
 
     private int idEmployee;
@@ -82,7 +82,7 @@ public class MainController {
 
 //Connection
     private DBconnection dBconnection;
-    ObservableList<String> list = FXCollections.observableArrayList("1","2");
+
     public void initialize() {
 /*initialize Departments table*/
         departmentDao=new DepartmentDaoImpl();
@@ -112,12 +112,9 @@ public class MainController {
     tableEmployee.getColumns().setAll(idEmpl,fioEmpl,loginEmpl,passwordEmpl,departmentEmpl,accessEmpl);
     tableEmployee.setItems(employeeDao.listEmployees());
 
+    comboBoxAccess.setItems(accessDao.listAccessName());
+    comboBoxDepartment.setItems(departmentDao.listDepartmentName());
 
-
-    comboBoxAccess = new ComboBox<String>();
-    comboBoxAccess.setItems(list);
-        System.out.println(accessDao.listAccessName());
-        System.out.println(list);
 
     }
     private void dialog(Alert.AlertType alertType, String s){
@@ -135,6 +132,8 @@ public class MainController {
     public void refreshTableDepartment(){
         dataDepartment = (ObservableList<Department>) departmentDao.listDepartments();
         tableDepartment.setItems(dataDepartment);
+        comboBoxDepartment.setItems(departmentDao.listDepartmentName());
+
     }
     public void addDepartmentButton(ActionEvent actionEvent) throws SQLException {
         if (txtDepartment.getText().isEmpty()){
@@ -178,8 +177,10 @@ public class MainController {
     }
 
     public void removeEmployeeButton(ActionEvent actionEvent) {
+
     }
 
     public void addEmployeeButton(ActionEvent actionEvent) {
+
     }
 }
