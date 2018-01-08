@@ -10,6 +10,6 @@ public interface DepartmentDao {
     public void updateDepartment(int id, String name);
     public void removeDepartment(int id);
     public List<Department> listDepartments();
-    public ObservableList<String> listDepartmentName();
+    public ObservableList<Integer> listDepartmentId();
 
 }

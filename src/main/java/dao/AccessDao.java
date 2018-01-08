@@ -8,7 +8,7 @@ public interface AccessDao {
     public void updateAccess();
     public void removeAccess();
     public ObservableList<Access> listAccess();
-    public ObservableList<String> listAccessName();
+    public ObservableList<Integer> listAccessId();
 
 
 }

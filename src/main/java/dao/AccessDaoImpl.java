@@ -46,15 +46,15 @@ public class AccessDaoImpl implements AccessDao{
     }
 
     @Override
-    public ObservableList<String> listAccessName() {
+    public ObservableList<Integer> listAccessId() {
         dBconnection = new DBconnection();
-        ObservableList<String> listData = FXCollections.observableArrayList();
+        ObservableList<Integer> listData = FXCollections.observableArrayList();
         try {
-            String sql = "SELECT Access_name FROM ACCESS";
+            String sql = "SELECT Access_id FROM ACCESS";
             ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
             while (resultSet.next()){
 
-                listData.add(resultSet.getString("Access_name"));
+                listData.add(resultSet.getInt("Access_id"));
             }
 
         } catch (SQLException e) {

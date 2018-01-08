@@ -18,14 +18,13 @@ import java.sql.SQLException;
 
 
 public class MainController {
-//Department settings
+    //Department settings
     @FXML
     private TableView<Department> tableDepartment;
     @FXML
     private TextField txtDepartment;
     private TableColumn<Department, String> idDep;
     private TableColumn<Department, String> nameDep;
-
 
 
     // Variables
@@ -43,9 +42,9 @@ public class MainController {
 //Employee settings
 
     @FXML
-    private ComboBox<String> comboBoxAccess = new ComboBox<>();
+    private ComboBox<Integer> comboBoxAccess = new ComboBox<>();
     @FXML
-    private ComboBox<String> comboBoxDepartment = new ComboBox<>();
+    private ComboBox<Integer> comboBoxDepartment = new ComboBox<>();
     @FXML
     private TextField txtFIOEmployee;
     @FXML
@@ -75,80 +74,79 @@ public class MainController {
     }
 
 
-
-
-
-
-
-//Connection
+    //Connection
     private DBconnection dBconnection;
 
     public void initialize() {
 /*initialize Departments table*/
-        departmentDao=new DepartmentDaoImpl();
-        idDep= new TableColumn<Department, String>("id");
+        departmentDao = new DepartmentDaoImpl();
+        idDep = new TableColumn<Department, String>("id");
         idDep.setCellValueFactory(new PropertyValueFactory<Department, String>("departmentId"));
         nameDep = new TableColumn<Department, String>("Название отдела");
         nameDep.setCellValueFactory(new PropertyValueFactory<Department, String>("departmentName"));
 
-        tableDepartment.getColumns().setAll(idDep,nameDep);
+        tableDepartment.getColumns().setAll(idDep, nameDep);
         tableDepartment.setItems((ObservableList<Department>) departmentDao.listDepartments());
 /*initialize Employee table*/
-    employeeDao = new EmployeeDaoImpl();
-    accessDao = new AccessDaoImpl();
-    idEmpl = new TableColumn<Employee, String>("id");
-    idEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeeId"));
-    fioEmpl = new TableColumn<Employee, String>("ФИО");
-    fioEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeeName"));
-    loginEmpl = new TableColumn<Employee, String>("Логин");
-    loginEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeeLogin"));
-    passwordEmpl = new TableColumn<Employee, String>("Пароль");
-    passwordEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeePassword"));
-    departmentEmpl = new TableColumn<Employee, String>("Отдел");
-    departmentEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("departmentID"));
-    accessEmpl = new TableColumn<Employee, String>("Уровень доступа");
-    accessEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("accessId"));
+        employeeDao = new EmployeeDaoImpl();
+        accessDao = new AccessDaoImpl();
+        idEmpl = new TableColumn<Employee, String>("id");
+        idEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeeId"));
+        fioEmpl = new TableColumn<Employee, String>("ФИО");
+        fioEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeeName"));
+        loginEmpl = new TableColumn<Employee, String>("Логин");
+        loginEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeeLogin"));
+        passwordEmpl = new TableColumn<Employee, String>("Пароль");
+        passwordEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeePassword"));
+        departmentEmpl = new TableColumn<Employee, String>("Отдел");
+        departmentEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("departmentID"));
+        accessEmpl = new TableColumn<Employee, String>("Уровень доступа");
+        accessEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("accessId"));
 
-    tableEmployee.getColumns().setAll(idEmpl,fioEmpl,loginEmpl,passwordEmpl,departmentEmpl,accessEmpl);
-    tableEmployee.setItems(employeeDao.listEmployees());
-
-    comboBoxAccess.setItems(accessDao.listAccessName());
-    comboBoxDepartment.setItems(departmentDao.listDepartmentName());
+        tableEmployee.getColumns().setAll(idEmpl, fioEmpl, loginEmpl, passwordEmpl, departmentEmpl, accessEmpl);
+        tableEmployee.setItems(employeeDao.listEmployees());
+/*initialize combobox employee tab*/
+        comboBoxAccess.setItems(accessDao.listAccessId());
+        comboBoxDepartment.setItems(departmentDao.listDepartmentId());
 
 
     }
-    private void dialog(Alert.AlertType alertType, String s){
-        Alert alert = new Alert(alertType,s);
+
+    private void dialog(Alert.AlertType alertType, String s) {
+        Alert alert = new Alert(alertType, s);
         alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Информация");
         alert.showAndWait();
     }
-/*Departments CRUD*/
-    public void clearDepartmentText(){
+
+    /*Departments tab CRUD*/
+    public void clearDepartmentText() {
         txtDepartment.setText("");
 
     }
 
-    public void refreshTableDepartment(){
+    public void refreshTableDepartment() {
         dataDepartment = (ObservableList<Department>) departmentDao.listDepartments();
         tableDepartment.setItems(dataDepartment);
-        comboBoxDepartment.setItems(departmentDao.listDepartmentName());
+        comboBoxDepartment.setItems(departmentDao.listDepartmentId());
 
     }
+
     public void addDepartmentButton(ActionEvent actionEvent) throws SQLException {
-        if (txtDepartment.getText().isEmpty()){
-            dialog(Alert.AlertType.INFORMATION, "Введите название отдела!");}
-            else {
-                Department department = new Department();
-                department.setDepartmentName(txtDepartment.getText());
-                departmentDao.addDepartment(department);
-                clearDepartmentText();
-                refreshTableDepartment();
+        if (txtDepartment.getText().isEmpty()) {
+            dialog(Alert.AlertType.INFORMATION, "Введите название отдела!");
+        } else {
+            Department department = new Department();
+            department.setDepartmentName(txtDepartment.getText());
+            departmentDao.addDepartment(department);
+            clearDepartmentText();
+            refreshTableDepartment();
 
         }
 
     }
-    public void removeDepartmentButton(ActionEvent actionEvent){
+
+    public void removeDepartmentButton(ActionEvent actionEvent) {
         departmentDao.removeDepartment(this.idDepartment);
         clearDepartmentText();
         refreshTableDepartment();
@@ -158,7 +156,7 @@ public class MainController {
     public void clickTableDepartment(MouseEvent mouseEvent) {
         Department department = tableDepartment.getSelectionModel().getSelectedItems().get(0);
         txtDepartment.setText(department.getDepartmentName());
-        this.idDepartment=department.getDepartmentId();
+        this.idDepartment = department.getDepartmentId();
     }
 
     public void updateDepartmentButton(ActionEvent actionEvent) {
@@ -168,19 +166,67 @@ public class MainController {
     }
 
 
+    /*Employees tab CRUD*/
+    public void clearEmployeeTab() {
+        txtFIOEmployee.setText("");
+        txtLoginEmployee.setText("");
+        txtPasswordEmployee.setText("");
+        comboBoxAccess.setItems(accessDao.listAccessId());
+        comboBoxDepartment.setItems(departmentDao.listDepartmentId());
 
-/*Employees CRUD*/
+    }
+
+    public void refreshTableEmployee() {
+        dataEmployee = employeeDao.listEmployees();
+        tableEmployee.setItems(dataEmployee);
+    }
+
     public void clickTableEmployee(MouseEvent mouseEvent) {
+        Employee employee = tableEmployee.getSelectionModel().getSelectedItems().get(0);
+        this.idEmployee=employee.getEmployeeId();
+        txtFIOEmployee.setText(employee.getEmployeeName());
+        txtLoginEmployee.setText(employee.getEmployeeLogin());
+        txtPasswordEmployee.setText(employee.getEmployeePassword());
+        comboBoxAccess.setValue(employee.getAccessId());
+        comboBoxDepartment.setValue(employee.getDepartmentID());
     }
 
     public void updateEmployeeButton(ActionEvent actionEvent) {
+        if (txtFIOEmployee.getText().isEmpty() || txtLoginEmployee.getText().isEmpty() || txtPasswordEmployee.getText().isEmpty() || comboBoxDepartment.isArmed() || comboBoxAccess.isArmed()) {
+            dialog(Alert.AlertType.INFORMATION, "Не все поля заполнены!");
+        } else {
+            Employee employee = new Employee();
+            employee.setEmployeeName(txtFIOEmployee.getText());
+            employee.setEmployeeLogin(txtLoginEmployee.getText());
+            employee.setEmployeePassword(txtPasswordEmployee.getText());
+            employee.setDepartmentID(comboBoxDepartment.getValue());
+            employee.setAccessId(comboBoxAccess.getValue());
+            employee.setEmployeeId(this.idEmployee);
+            employeeDao.updateEmployee(employee);
+
+            refreshTableEmployee();
+        }
     }
 
     public void removeEmployeeButton(ActionEvent actionEvent) {
-
+        employeeDao.removeEmployee(this.idEmployee);
+        clearEmployeeTab();
+        refreshTableEmployee();
     }
 
     public void addEmployeeButton(ActionEvent actionEvent) {
-
+        if (txtFIOEmployee.getText().isEmpty() || txtLoginEmployee.getText().isEmpty() || txtPasswordEmployee.getText().isEmpty() || comboBoxDepartment.isArmed() || comboBoxAccess.isArmed()) {
+            dialog(Alert.AlertType.INFORMATION, "Не все поля заполнены!");
+        } else {
+            Employee employee = new Employee();
+            employee.setEmployeeName(txtFIOEmployee.getText());
+            employee.setEmployeeLogin(txtLoginEmployee.getText());
+            employee.setEmployeePassword(txtPasswordEmployee.getText());
+            employee.setDepartmentID(comboBoxDepartment.getValue());
+            employee.setAccessId(comboBoxAccess.getValue());
+            employeeDao.addEmployee(employee);
+            clearEmployeeTab();
+            refreshTableEmployee();
+        }
     }
 }
