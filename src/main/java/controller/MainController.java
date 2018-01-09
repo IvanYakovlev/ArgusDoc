@@ -14,6 +14,8 @@ import model.Access;
 import model.Department;
 import model.Employee;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 
 
@@ -228,5 +230,12 @@ public class MainController {
             clearEmployeeTab();
             refreshTableEmployee();
         }
+    }
+
+
+    /*Documents tab CRUD*/
+    public void documentAddButton(ActionEvent actionEvent) throws IOException {
+        File file = new File("C:\\123.odt");
+        java.awt.Desktop.getDesktop().open(file);
     }
 }
