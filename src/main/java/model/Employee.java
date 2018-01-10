@@ -19,10 +19,10 @@ public class Employee {
     private String employeePassword;
 
     @Column(name = "Department_id")
-    private int departmentID;
+    private String departmentID;
 
     @Column(name = "Access_id")
-    private int accessId;
+    private String accessId;
 
 
     public int getEmployeeId() {
@@ -57,19 +57,19 @@ public class Employee {
         this.employeePassword = employeePassword;
     }
 
-    public int getDepartmentID() {
+    public String getDepartmentID() {
         return departmentID;
     }
 
-    public void setDepartmentID(int departmentID) {
+    public void setDepartmentID(String departmentID) {
         this.departmentID = departmentID;
     }
 
-    public int getAccessId() {
+    public String  getAccessId() {
         return accessId;
     }
 
-    public void setAccessId(int accessId) {
+    public void setAccessId(String accessId) {
         this.accessId = accessId;
     }
 

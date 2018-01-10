@@ -4,6 +4,8 @@ package dao;
 import dbConnection.DBconnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.stage.StageStyle;
 import model.Department;
 
 import java.sql.PreparedStatement;
@@ -14,7 +16,12 @@ import java.util.List;
 public class DepartmentDaoImpl implements DepartmentDao {
     DBconnection dBconnection;
 
-
+    private void dialog(Alert.AlertType alertType, String s) {
+        Alert alert = new Alert(alertType, s);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle("Информация");
+        alert.showAndWait();
+    }
 
     public void addDepartment(Department department) {
         this.dBconnection=new DBconnection();
@@ -25,22 +32,22 @@ public class DepartmentDaoImpl implements DepartmentDao {
             preparedStatement.execute();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            dialog(Alert.AlertType.INFORMATION, "Данный отдел уже существует!");
         }
     }
 
     @Override
-    public void updateDepartment(int id,String name) {
+    public void updateDepartment(Department department) {
         this.dBconnection =new DBconnection();
 
         try {
             PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE Departments SET Department_name=? WHERE Department_id=?");
-            preparedStatement.setInt(2,id);
-            preparedStatement.setString(1,name);
+            preparedStatement.setInt(2,department.getDepartmentId());
+            preparedStatement.setString(1,department.getDepartmentName());
             preparedStatement.execute();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            dialog(Alert.AlertType.INFORMATION, "Данный отдел уже существует!");
         }
     }
 
@@ -55,7 +62,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
             preparedStatement.setInt(1,id);
             preparedStatement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            dialog(Alert.AlertType.INFORMATION, "Удаление невозможно, так как есть пользователи в данном отделе!");
         }
     }
 
@@ -93,5 +100,24 @@ public class DepartmentDaoImpl implements DepartmentDao {
             e.printStackTrace();
         }
         return listData;
+    }
+
+    @Override
+    public Department getDepartmentById(int id)   {
+        dBconnection = new DBconnection();
+        Department department=null;
+        try {
+            String sql = "SELECT * FROM Departments WHERE Department_id="+id;
+            ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
+
+                department = new Department();
+                department.setDepartmentId(resultSet.getInt("Department_id"));
+                department.setDepartmentName(resultSet.getString("Department_name"));
+
+            } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return department;
     }
 }

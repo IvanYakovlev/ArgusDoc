@@ -2,6 +2,7 @@ package controller;
 
 import dao.*;
 import dbConnection.DBconnection;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -61,7 +62,6 @@ public class MainController {
     private TableColumn<Employee, String> passwordEmpl;
     private TableColumn<Employee, String> departmentEmpl;
     private TableColumn<Employee, String> accessEmpl;
-
 
     //Variables
 
@@ -157,14 +157,24 @@ public class MainController {
 
     public void clickTableDepartment(MouseEvent mouseEvent) {
         Department department = tableDepartment.getSelectionModel().getSelectedItems().get(0);
-        txtDepartment.setText(department.getDepartmentName());
-        this.idDepartment = department.getDepartmentId();
+        if (department!=null){
+            txtDepartment.setText(department.getDepartmentName());
+            this.idDepartment = department.getDepartmentId();
+        }
     }
 
     public void updateDepartmentButton(ActionEvent actionEvent) {
-        departmentDao.updateDepartment(this.idDepartment, txtDepartment.getText());
-        clearDepartmentText();
-        refreshTableDepartment();
+        if (txtDepartment.getText().isEmpty()) {
+            dialog(Alert.AlertType.INFORMATION, "Введите название отдела!");
+        } else {
+            Department department = new Department();
+            department.setDepartmentName(txtDepartment.getText());
+            department.setDepartmentId(this.idDepartment);
+            departmentDao.updateDepartment(department);
+            clearDepartmentText();
+            refreshTableDepartment();
+
+        }
     }
 
 
@@ -185,12 +195,14 @@ public class MainController {
 
     public void clickTableEmployee(MouseEvent mouseEvent) {
         Employee employee = tableEmployee.getSelectionModel().getSelectedItems().get(0);
-        this.idEmployee=employee.getEmployeeId();
-        txtFIOEmployee.setText(employee.getEmployeeName());
-        txtLoginEmployee.setText(employee.getEmployeeLogin());
-        txtPasswordEmployee.setText(employee.getEmployeePassword());
-        comboBoxAccess.setValue(employee.getAccessId());
-        comboBoxDepartment.setValue(employee.getDepartmentID());
+        if (employee!=null) {
+            this.idEmployee = employee.getEmployeeId();
+            txtFIOEmployee.setText(employee.getEmployeeName());
+            txtLoginEmployee.setText(employee.getEmployeeLogin());
+            txtPasswordEmployee.setText(employee.getEmployeePassword());
+          //  comboBoxAccess.setValue(employee.getAccessId());
+           // comboBoxDepartment.setValue(employee.getDepartmentID());
+        }
     }
 
     public void updateEmployeeButton(ActionEvent actionEvent) {
@@ -201,8 +213,8 @@ public class MainController {
             employee.setEmployeeName(txtFIOEmployee.getText());
             employee.setEmployeeLogin(txtLoginEmployee.getText());
             employee.setEmployeePassword(txtPasswordEmployee.getText());
-            employee.setDepartmentID(comboBoxDepartment.getValue());
-            employee.setAccessId(comboBoxAccess.getValue());
+          //  employee.setDepartmentID(comboBoxDepartment.getValue());
+          //  employee.setAccessId(comboBoxAccess.getValue());
             employee.setEmployeeId(this.idEmployee);
             employeeDao.updateEmployee(employee);
 
@@ -224,8 +236,8 @@ public class MainController {
             employee.setEmployeeName(txtFIOEmployee.getText());
             employee.setEmployeeLogin(txtLoginEmployee.getText());
             employee.setEmployeePassword(txtPasswordEmployee.getText());
-            employee.setDepartmentID(comboBoxDepartment.getValue());
-            employee.setAccessId(comboBoxAccess.getValue());
+           // employee.setDepartmentID(comboBoxDepartment.getValue());
+          //  employee.setAccessId(comboBoxAccess.getValue());
             employeeDao.addEmployee(employee);
             clearEmployeeTab();
             refreshTableEmployee();

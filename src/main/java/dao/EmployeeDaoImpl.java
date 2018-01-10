@@ -4,6 +4,8 @@ package dao;
 import dbConnection.DBconnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.stage.StageStyle;
 import model.Employee;
 
 import java.sql.PreparedStatement;
@@ -13,6 +15,12 @@ import java.util.List;
 
 public class EmployeeDaoImpl implements EmployeeDao{
     DBconnection dBconnection;
+    private void dialog(Alert.AlertType alertType, String s) {
+        Alert alert = new Alert(alertType, s);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle("Информация");
+        alert.showAndWait();
+    }
     public void addEmployee(Employee employee) {
         this.dBconnection = new DBconnection();
         try {
@@ -20,11 +28,11 @@ public class EmployeeDaoImpl implements EmployeeDao{
             preparedStatement.setString(1,employee.getEmployeeName());
             preparedStatement.setString(2,employee.getEmployeeLogin());
             preparedStatement.setString(3,employee.getEmployeePassword());
-            preparedStatement.setInt(4,employee.getDepartmentID());
-            preparedStatement.setInt(5,employee.getAccessId());
+            preparedStatement.setString(4,employee.getDepartmentID());
+            preparedStatement.setString(5,employee.getAccessId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            dialog(Alert.AlertType.INFORMATION, "Данный пользователь уже существует!");
         }
     }
 
@@ -36,12 +44,12 @@ public class EmployeeDaoImpl implements EmployeeDao{
             preparedStatement.setString(1,employee.getEmployeeName());
             preparedStatement.setString(2,employee.getEmployeeLogin());
             preparedStatement.setString(3,employee.getEmployeePassword());
-            preparedStatement.setInt(4,employee.getDepartmentID());
-            preparedStatement.setInt(5,employee.getAccessId());
+            preparedStatement.setString(4,employee.getDepartmentID());
+            preparedStatement.setString(5,employee.getAccessId());
             preparedStatement.setInt(6,employee.getEmployeeId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            dialog(Alert.AlertType.INFORMATION, "Данный пользователь уже существует!");
         }
     }
 
@@ -61,15 +69,15 @@ public class EmployeeDaoImpl implements EmployeeDao{
         this.dBconnection = new DBconnection();
         ObservableList<Employee> listData = FXCollections.observableArrayList();
         try {
-            ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT * FROM Employees");
+            ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT * FROM Employees, Departments,Access WHERE Employees.Department_id=Departments.Department_id AND Access.Access_id=Employees.Access_id");
             while (resultSet.next()){
                 Employee employee= new Employee();
                     employee.setEmployeeId(resultSet.getInt("Employee_id"));
                     employee.setEmployeeName(resultSet.getString("Employee_name"));
                     employee.setEmployeeLogin(resultSet.getString("Employee_login"));
                     employee.setEmployeePassword(resultSet.getString("Employee_password"));
-                    employee.setDepartmentID(resultSet.getInt("Department_id"));
-                    employee.setAccessId(resultSet.getInt("Access_id"));
+                    employee.setDepartmentID(resultSet.getString("Department_name"));
+                    employee.setAccessId(resultSet.getString("Access_name"));
                 listData.add(employee);
             }
         } catch (SQLException e) {
