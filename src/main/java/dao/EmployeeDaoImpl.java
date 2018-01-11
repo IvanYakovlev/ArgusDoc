@@ -11,7 +11,6 @@ import model.Employee;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 public class EmployeeDaoImpl implements EmployeeDao{
     DBconnection dBconnection;
@@ -28,8 +27,8 @@ public class EmployeeDaoImpl implements EmployeeDao{
             preparedStatement.setString(1,employee.getEmployeeName());
             preparedStatement.setString(2,employee.getEmployeeLogin());
             preparedStatement.setString(3,employee.getEmployeePassword());
-            preparedStatement.setString(4,employee.getDepartmentID());
-            preparedStatement.setString(5,employee.getAccessId());
+            preparedStatement.setString(4,employee.getDepartmentName());
+            preparedStatement.setString(5,employee.getAccessName());
             preparedStatement.execute();
         } catch (SQLException e) {
             dialog(Alert.AlertType.INFORMATION, "Данный пользователь уже существует!");
@@ -44,8 +43,8 @@ public class EmployeeDaoImpl implements EmployeeDao{
             preparedStatement.setString(1,employee.getEmployeeName());
             preparedStatement.setString(2,employee.getEmployeeLogin());
             preparedStatement.setString(3,employee.getEmployeePassword());
-            preparedStatement.setString(4,employee.getDepartmentID());
-            preparedStatement.setString(5,employee.getAccessId());
+            preparedStatement.setString(4,employee.getDepartmentName());
+            preparedStatement.setString(5,employee.getAccessName());
             preparedStatement.setInt(6,employee.getEmployeeId());
             preparedStatement.execute();
         } catch (SQLException e) {
@@ -76,8 +75,8 @@ public class EmployeeDaoImpl implements EmployeeDao{
                     employee.setEmployeeName(resultSet.getString("Employee_name"));
                     employee.setEmployeeLogin(resultSet.getString("Employee_login"));
                     employee.setEmployeePassword(resultSet.getString("Employee_password"));
-                    employee.setDepartmentID(resultSet.getString("Department_name"));
-                    employee.setAccessId(resultSet.getString("Access_name"));
+                    employee.setDepartmentName(resultSet.getString("Department_name"));
+                    employee.setAccessName(resultSet.getString("Access_name"));
                 listData.add(employee);
             }
         } catch (SQLException e) {

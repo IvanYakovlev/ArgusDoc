@@ -11,10 +11,20 @@ import model.Department;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DepartmentDaoImpl implements DepartmentDao {
     DBconnection dBconnection;
+    Map<Integer, String> mapDepartment = new HashMap<>();
+
+    public Map<Integer, String> getMapDepartment() {
+        return mapDepartment;
+    }
+
+    public void setMapDepartment(Map<Integer, String> mapDepartment) {
+        this.mapDepartment = mapDepartment;
+    }
 
     private void dialog(Alert.AlertType alertType, String s) {
         Alert alert = new Alert(alertType, s);
@@ -76,7 +86,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
                 Department department = new Department();
                 department.setDepartmentId(resultSet.getInt("Department_id"));
                 department.setDepartmentName(resultSet.getString("Department_name"));
-
+                mapDepartment.put(department.getDepartmentId(),department.getDepartmentName());
                 listData.add(department);
             }
         } catch (Exception ex) {
@@ -87,17 +97,10 @@ public class DepartmentDaoImpl implements DepartmentDao {
     }
 
     @Override
-    public ObservableList<Integer> listDepartmentId() {
-        dBconnection = new DBconnection();
-        ObservableList<Integer> listData = FXCollections.observableArrayList();
-        try {
-            String sql = "SELECT Department_id FROM DEPARTMENTS";
-            ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
-            while (resultSet.next()) {
-                listData.addAll(resultSet.getInt("Department_id"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public ObservableList<String> listDepartmentName() {
+        ObservableList<String> listData = FXCollections.observableArrayList();
+        for(Map.Entry<Integer, String> e : mapDepartment.entrySet()) {
+            listData.add(e.getValue());
         }
         return listData;
     }
@@ -114,10 +117,23 @@ public class DepartmentDaoImpl implements DepartmentDao {
                 department.setDepartmentId(resultSet.getInt("Department_id"));
                 department.setDepartmentName(resultSet.getString("Department_name"));
 
+
             } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return department;
+    }
+
+    @Override
+    public int getIddepartmentByName(String value) {
+        int key=0;
+        for(Map.Entry<Integer, String> e : mapDepartment.entrySet()) {
+
+            if (value.equals(e.getValue())) {
+                key = e.getKey();// нашли наше значение и возвращаем  ключ
+            }
+        }
+        return key;
     }
 }

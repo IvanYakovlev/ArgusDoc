@@ -18,12 +18,33 @@ public class Employee {
     @Column(name = "Employee_password")
     private String employeePassword;
 
+
+    private String departmentName;
+
+
+    private String accessName;
+
     @Column(name = "Department_id")
-    private String departmentID;
+    private int departmentId;
 
     @Column(name = "Access_id")
-    private String accessId;
+    private int accessId;
 
+    public int getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(int departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public int getAccessId() {
+        return accessId;
+    }
+
+    public void setAccessId(int accessId) {
+        this.accessId = accessId;
+    }
 
     public int getEmployeeId() {
         return employeeId;
@@ -57,20 +78,20 @@ public class Employee {
         this.employeePassword = employeePassword;
     }
 
-    public String getDepartmentID() {
-        return departmentID;
+    public String getDepartmentName() {
+        return departmentName;
     }
 
-    public void setDepartmentID(String departmentID) {
-        this.departmentID = departmentID;
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 
-    public String  getAccessId() {
-        return accessId;
+    public String getAccessName() {
+        return accessName;
     }
 
-    public void setAccessId(String accessId) {
-        this.accessId = accessId;
+    public void setAccessName(String accessName) {
+        this.accessName = accessName;
     }
 
     @Override
@@ -80,8 +101,8 @@ public class Employee {
                 ", employeeName='" + employeeName + '\'' +
                 ", employeeLogin='" + employeeLogin + '\'' +
                 ", employeePassword='" + employeePassword + '\'' +
-                ", departmentID=" + departmentID +
-                ", accessId=" + accessId +
+                ", departmentName=" + departmentName +
+                ", accessName=" + accessName +
                 '}';
     }
 }
