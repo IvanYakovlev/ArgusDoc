@@ -27,10 +27,11 @@ public class EmployeeDaoImpl implements EmployeeDao{
             preparedStatement.setString(1,employee.getEmployeeName());
             preparedStatement.setString(2,employee.getEmployeeLogin());
             preparedStatement.setString(3,employee.getEmployeePassword());
-            preparedStatement.setString(4,employee.getDepartmentName());
-            preparedStatement.setString(5,employee.getAccessName());
+            preparedStatement.setInt(4,employee.getDepartmentId());
+            preparedStatement.setInt(5,employee.getAccessId());
             preparedStatement.execute();
         } catch (SQLException e) {
+            //e.printStackTrace();
             dialog(Alert.AlertType.INFORMATION, "Данный пользователь уже существует!");
         }
     }
@@ -43,12 +44,13 @@ public class EmployeeDaoImpl implements EmployeeDao{
             preparedStatement.setString(1,employee.getEmployeeName());
             preparedStatement.setString(2,employee.getEmployeeLogin());
             preparedStatement.setString(3,employee.getEmployeePassword());
-            preparedStatement.setString(4,employee.getDepartmentName());
-            preparedStatement.setString(5,employee.getAccessName());
+            preparedStatement.setInt(4,employee.getDepartmentId());
+            preparedStatement.setInt(5,employee.getAccessId());
             preparedStatement.setInt(6,employee.getEmployeeId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            dialog(Alert.AlertType.INFORMATION, "Данный пользователь уже существует!");
+           e.printStackTrace();
+           //dialog(Alert.AlertType.INFORMATION, "Данный пользователь уже существует!");
         }
     }
 
@@ -61,6 +63,7 @@ public class EmployeeDaoImpl implements EmployeeDao{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
 
     }
 

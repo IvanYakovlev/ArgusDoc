@@ -71,6 +71,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
             PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("DELETE FROM Departments WHERE Department_id = ?");
             preparedStatement.setInt(1,id);
             preparedStatement.execute();
+            mapDepartment.remove(id);
         } catch (SQLException e) {
             dialog(Alert.AlertType.INFORMATION, "Удаление невозможно, так как есть пользователи в данном отделе!");
         }

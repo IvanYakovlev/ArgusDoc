@@ -197,15 +197,15 @@ public class MainController {
     }
 
     public void updateEmployeeButton(ActionEvent actionEvent) {
-        if (txtFIOEmployee.getText().isEmpty() || txtLoginEmployee.getText().isEmpty() || txtPasswordEmployee.getText().isEmpty() || comboBoxDepartment.isArmed() || comboBoxAccess.isArmed()) {
+        if (txtFIOEmployee.getText().isEmpty() || txtLoginEmployee.getText().isEmpty() || txtPasswordEmployee.getText().isEmpty() || comboBoxDepartment.getValue()==null || comboBoxAccess.getValue()==null) {
             dialog(Alert.AlertType.INFORMATION, "Не все поля заполнены!");
         } else {
             Employee employee = new Employee();
             employee.setEmployeeName(txtFIOEmployee.getText());
             employee.setEmployeeLogin(txtLoginEmployee.getText());
             employee.setEmployeePassword(txtPasswordEmployee.getText());
-          //  employee.setDepartmentName(comboBoxDepartment.getValue());
-          //  employee.setAccessName(comboBoxAccess.getValue());
+            employee.setDepartmentId(departmentDao.getIddepartmentByName(comboBoxDepartment.getValue()));
+            employee.setAccessId(accessDao.getIdAccessByName(comboBoxAccess.getValue()));
             employee.setEmployeeId(this.idEmployee);
             employeeDao.updateEmployee(employee);
 
@@ -215,18 +215,17 @@ public class MainController {
 
     public void removeEmployeeButton(ActionEvent actionEvent) {
         employeeDao.removeEmployee(this.idEmployee);
+
         clearEmployeeTab();
         refreshTableEmployee();
     }
 
     public void addEmployeeButton(ActionEvent actionEvent) {
-        if (txtFIOEmployee.getText().isEmpty() || txtLoginEmployee.getText().isEmpty() || txtPasswordEmployee.getText().isEmpty() || comboBoxDepartment.isArmed() || comboBoxAccess.isArmed()) {
+        if (txtFIOEmployee.getText().isEmpty() || txtLoginEmployee.getText().isEmpty() || txtPasswordEmployee.getText().isEmpty() || comboBoxDepartment.getValue()==null || comboBoxAccess.getValue()==null) {
             dialog(Alert.AlertType.INFORMATION, "Не все поля заполнены!");
         } else {
-            System.out.println(departmentDao.getIddepartmentByName(comboBoxDepartment.getValue()));
-            System.out.println(accessDao.getIdAccessByName(comboBoxAccess.getValue()));
-            Employee employee = new Employee();
 
+            Employee employee = new Employee();
             employee.setEmployeeName(txtFIOEmployee.getText());
             employee.setEmployeeLogin(txtLoginEmployee.getText());
             employee.setEmployeePassword(txtPasswordEmployee.getText());
