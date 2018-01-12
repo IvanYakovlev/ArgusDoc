@@ -64,7 +64,7 @@ public class AccessDaoImpl implements AccessDao{
         for(Map.Entry<Integer, String> e : mapAccess.entrySet()) {
 
             if (value.equals(e.getValue())) {
-                key = e.getKey();// нашли наше значение и возвращаем  ключ
+                key = e.getKey();
             }
         }
         return key;

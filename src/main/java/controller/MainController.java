@@ -204,7 +204,7 @@ public class MainController {
             employee.setEmployeeName(txtFIOEmployee.getText());
             employee.setEmployeeLogin(txtLoginEmployee.getText());
             employee.setEmployeePassword(txtPasswordEmployee.getText());
-            employee.setDepartmentId(departmentDao.getIddepartmentByName(comboBoxDepartment.getValue()));
+            employee.setDepartmentId(departmentDao.getIdDepartmentByName(comboBoxDepartment.getValue()));
             employee.setAccessId(accessDao.getIdAccessByName(comboBoxAccess.getValue()));
             employee.setEmployeeId(this.idEmployee);
             employeeDao.updateEmployee(employee);
@@ -229,7 +229,7 @@ public class MainController {
             employee.setEmployeeName(txtFIOEmployee.getText());
             employee.setEmployeeLogin(txtLoginEmployee.getText());
             employee.setEmployeePassword(txtPasswordEmployee.getText());
-            employee.setDepartmentId(departmentDao.getIddepartmentByName(comboBoxDepartment.getValue()));
+            employee.setDepartmentId(departmentDao.getIdDepartmentByName(comboBoxDepartment.getValue()));
             employee.setAccessId(accessDao.getIdAccessByName(comboBoxAccess.getValue()));
             employeeDao.addEmployee(employee);
             clearEmployeeTab();

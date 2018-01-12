@@ -12,7 +12,6 @@ public interface DepartmentDao {
     public void removeDepartment(int id);
     public List<Department> listDepartments();
     public ObservableList<String> listDepartmentName();
-    public Department getDepartmentById(int id);
-    public int getIddepartmentByName(String value);
+    public int getIdDepartmentByName(String value);
 
 }

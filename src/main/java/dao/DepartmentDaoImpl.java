@@ -106,33 +106,14 @@ public class DepartmentDaoImpl implements DepartmentDao {
         return listData;
     }
 
-    @Override
-    public Department getDepartmentById(int id)   {
-        dBconnection = new DBconnection();
-        Department department=null;
-        try {
-            String sql = "SELECT * FROM Departments WHERE Department_id="+id;
-            ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
-
-                department = new Department();
-                department.setDepartmentId(resultSet.getInt("Department_id"));
-                department.setDepartmentName(resultSet.getString("Department_name"));
-
-
-            } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return department;
-    }
 
     @Override
-    public int getIddepartmentByName(String value) {
+    public int getIdDepartmentByName(String value) {
         int key=0;
         for(Map.Entry<Integer, String> e : mapDepartment.entrySet()) {
 
             if (value.equals(e.getValue())) {
-                key = e.getKey();// нашли наше значение и возвращаем  ключ
+                key = e.getKey();
             }
         }
         return key;
