@@ -1,5 +1,8 @@
 package model;
 import javax.persistence.*;
+import javax.print.attribute.standard.MediaSize;
+import java.io.File;
+import java.io.FileInputStream;
 
 @Entity
 @Table(name ="DOCUMENTS")
@@ -9,12 +12,14 @@ public class Document {
     @Column(name = "Document_id")
     private int documentId;
 
-    @Column(name = "Document_link")
-    private String documentLink;
+    @Column(name = "Document_name")
+    private String documentName;
+
+    @Column(name = "Document_file")
+    private File documentFile;
 
     @Column(name = "Department_id")
     private int departmentId;
-
 
     public int getDocumentId() {
         return documentId;
@@ -24,12 +29,20 @@ public class Document {
         this.documentId = documentId;
     }
 
-    public String getDocumentLink() {
-        return documentLink;
+    public String getDocumentName() {
+        return documentName;
     }
 
-    public void setDocumentLink(String documentLink) {
-        this.documentLink = documentLink;
+    public void setDocumentName(String documentName) {
+        this.documentName = documentName;
+    }
+
+    public File getDocumentFile() {
+        return documentFile;
+    }
+
+    public void setDocumentFile(File documentFile) {
+        this.documentFile = documentFile;
     }
 
     public int getDepartmentId() {
@@ -40,12 +53,24 @@ public class Document {
         this.departmentId = departmentId;
     }
 
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
+
+    private String departmentName;
+
     @Override
     public String toString() {
         return "Document{" +
                 "documentId=" + documentId +
-                ", documentLink='" + documentLink + '\'' +
+                ", documentName='" + documentName + '\'' +
+                ", documentFile=" + documentFile +
                 ", departmentId=" + departmentId +
+                ", departmentName='" + departmentName + '\'' +
                 '}';
     }
 }

@@ -1,11 +1,11 @@
 package dao;
 
 
+import dialog.ADInfo;
 import dbConnection.DBconnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-import javafx.stage.StageStyle;
 import model.Employee;
 
 import java.sql.PreparedStatement;
@@ -13,13 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class EmployeeDaoImpl implements EmployeeDao{
+    ADInfo info = new ADInfo();
     DBconnection dBconnection;
-    private void dialog(Alert.AlertType alertType, String s) {
-        Alert alert = new Alert(alertType, s);
-        alert.initStyle(StageStyle.UTILITY);
-        alert.setTitle("Информация");
-        alert.showAndWait();
-    }
+
     public void addEmployee(Employee employee) {
         this.dBconnection = new DBconnection();
         try {
@@ -32,7 +28,7 @@ public class EmployeeDaoImpl implements EmployeeDao{
             preparedStatement.execute();
         } catch (SQLException e) {
             //e.printStackTrace();
-            dialog(Alert.AlertType.INFORMATION, "Данный пользователь уже существует!");
+            info.dialog(Alert.AlertType.ERROR, "Данный пользователь уже существует!");
         }
     }
 
@@ -50,7 +46,7 @@ public class EmployeeDaoImpl implements EmployeeDao{
             preparedStatement.execute();
         } catch (SQLException e) {
            e.printStackTrace();
-           //dialog(Alert.AlertType.INFORMATION, "Данный пользователь уже существует!");
+           info.dialog(Alert.AlertType.ERROR, "Данный пользователь уже существует!");
         }
     }
 

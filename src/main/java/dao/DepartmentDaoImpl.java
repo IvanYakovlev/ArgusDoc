@@ -1,11 +1,11 @@
 package dao;
 
 
+import dialog.ADInfo;
 import dbConnection.DBconnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-import javafx.stage.StageStyle;
 import model.Department;
 
 import java.sql.PreparedStatement;
@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DepartmentDaoImpl implements DepartmentDao {
+    ADInfo info = new ADInfo();
     DBconnection dBconnection;
     Map<Integer, String> mapDepartment = new HashMap<>();
 
@@ -26,14 +27,8 @@ public class DepartmentDaoImpl implements DepartmentDao {
         this.mapDepartment = mapDepartment;
     }
 
-    private void dialog(Alert.AlertType alertType, String s) {
-        Alert alert = new Alert(alertType, s);
-        alert.initStyle(StageStyle.UTILITY);
-        alert.setTitle("Информация");
-        alert.showAndWait();
-    }
-
     public void addDepartment(Department department) {
+
         this.dBconnection=new DBconnection();
 
         try {
@@ -42,7 +37,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
             preparedStatement.execute();
 
         } catch (SQLException e) {
-            dialog(Alert.AlertType.INFORMATION, "Данный отдел уже существует!");
+            info.dialog(Alert.AlertType.ERROR, "Отдел с таким названием уже существует!");
         }
     }
 
@@ -57,7 +52,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
             preparedStatement.execute();
 
         } catch (SQLException e) {
-            dialog(Alert.AlertType.INFORMATION, "Данный отдел уже существует!");
+            info.dialog(Alert.AlertType.ERROR, "Отдел с таким названием уже существует!");
         }
     }
 
@@ -73,7 +68,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
             preparedStatement.execute();
             mapDepartment.remove(id);
         } catch (SQLException e) {
-            dialog(Alert.AlertType.INFORMATION, "Удаление невозможно, так как есть пользователи в данном отделе!");
+            info.dialog(Alert.AlertType.ERROR, "Удаление невозможно, так как есть пользователи в данном отделе!");
         }
     }
 

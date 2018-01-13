@@ -8,16 +8,18 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.StageStyle;
+import javafx.stage.FileChooser;
 import model.Department;
+import model.Document;
 import model.Employee;
-
-import java.io.File;
+import dialog.ADInfo;
 import java.io.IOException;
 import java.sql.SQLException;
 
 
 public class MainController {
+    //dialog allert
+    ADInfo info = new ADInfo();
     //Department settings
     @FXML
     private TableView<Department> tableDepartment;
@@ -38,9 +40,9 @@ public class MainController {
 //Employee settings
 
     @FXML
-    private ComboBox<String> comboBoxAccess = new ComboBox<>();
+    private ComboBox<String> comboBoxEmployee_Access = new ComboBox<>();
     @FXML
-    private ComboBox<String> comboBoxDepartment = new ComboBox<>();
+    private ComboBox<String> comboBoxEmployee_Department = new ComboBox<>();
     @FXML
     private TextField txtFIOEmployee;
     @FXML
@@ -59,14 +61,36 @@ public class MainController {
     //Variables
 
     EmployeeDao employeeDao;
+
     AccessDao accessDao;
+
     private ObservableList<Employee> dataEmployee;
 
     private int idEmployee;
+//Documents settings
+    private int idDocument;
+    private ObservableList<Document> dataDocument;
 
+    DocumentDao documentDao;
+
+    final FileChooser fileChooser=new FileChooser();
+
+    @FXML
+    private TableView<Document> tableDocument;
+    private TableColumn<Document, String> idDoc;
+    private TableColumn<Document, String> nameDoc;
+    private TableColumn<Document, String> departmentDoc;
+
+    @FXML
+    private Button documentButtonId;
+    @FXML
+    private TextField txtDocumentName;
+    @FXML
+    private ComboBox<String> comboBoxDocument_Department = new ComboBox<>();
 
     //Connection
     private DBconnection dBconnection;
+
 
     public void initialize() {
 /*initialize Departments table*/
@@ -96,20 +120,26 @@ public class MainController {
 
         tableEmployee.getColumns().setAll(idEmpl, fioEmpl, loginEmpl, passwordEmpl, departmentEmpl, accessEmpl);
         tableEmployee.setItems(employeeDao.listEmployees());
-/*initialize combobox employee tab*/
+/*initialize combobox Employee tab*/
         accessDao.listAccess();
-        comboBoxAccess.setItems(accessDao.listAccessName());
+        comboBoxEmployee_Access.setItems(accessDao.listAccessName());
 
-        comboBoxDepartment.setItems(departmentDao.listDepartmentName());
+        comboBoxEmployee_Department.setItems(departmentDao.listDepartmentName());
+/*initialize Document table*/
+        documentDao = new DocumentDaoImpl();
+        idDoc = new TableColumn<Document, String>("id");
+        idDoc.setCellValueFactory(new PropertyValueFactory<Document, String>("documentId"));
+        nameDoc = new TableColumn<Document, String>("Название документа");
+        nameDoc.setCellValueFactory(new PropertyValueFactory<Document, String>("documentName"));
+        departmentDoc = new TableColumn<Document, String>("Отдел");
+        departmentDoc.setCellValueFactory(new PropertyValueFactory<Document, String>("departmentName"));
 
+        tableDocument.getColumns().setAll(idDoc,nameDoc,departmentDoc);
+        tableDocument.setItems(documentDao.listDocuments());
+/*initialize combobox Document tab*/
 
-    }
+        comboBoxDocument_Department.setItems(departmentDao.listDepartmentName());
 
-    private void dialog(Alert.AlertType alertType, String s) {
-        Alert alert = new Alert(alertType, s);
-        alert.initStyle(StageStyle.UTILITY);
-        alert.setTitle("Информация");
-        alert.showAndWait();
     }
 
     /*Departments tab CRUD*/
@@ -121,13 +151,14 @@ public class MainController {
     public void refreshTableDepartment() {
         dataDepartment = (ObservableList<Department>) departmentDao.listDepartments();
         tableDepartment.setItems(dataDepartment);
-        comboBoxDepartment.setItems(departmentDao.listDepartmentName());
+        comboBoxEmployee_Department.setItems(departmentDao.listDepartmentName());
+        comboBoxDocument_Department.setItems(departmentDao.listDepartmentName());
 
     }
 
     public void addDepartmentButton(ActionEvent actionEvent) throws SQLException {
         if (txtDepartment.getText().isEmpty()) {
-            dialog(Alert.AlertType.INFORMATION, "Введите название отдела!");
+            info.dialog(Alert.AlertType.WARNING, "Введите название отдела!");
         } else {
             Department department = new Department();
             department.setDepartmentName(txtDepartment.getText());
@@ -156,7 +187,7 @@ public class MainController {
 
     public void updateDepartmentButton(ActionEvent actionEvent) {
         if (txtDepartment.getText().isEmpty()) {
-            dialog(Alert.AlertType.INFORMATION, "Введите название отдела!");
+            info.dialog(Alert.AlertType.WARNING, "Введите название отдела!");
         } else {
             Department department = new Department();
             department.setDepartmentName(txtDepartment.getText());
@@ -174,8 +205,8 @@ public class MainController {
         txtFIOEmployee.setText("");
         txtLoginEmployee.setText("");
         txtPasswordEmployee.setText("");
-        comboBoxAccess.setItems(accessDao.listAccessName());
-        comboBoxDepartment.setItems(departmentDao.listDepartmentName());
+        comboBoxEmployee_Access.setValue(null);
+        comboBoxEmployee_Department.setValue(null);
 
     }
 
@@ -191,21 +222,21 @@ public class MainController {
             txtFIOEmployee.setText(employee.getEmployeeName());
             txtLoginEmployee.setText(employee.getEmployeeLogin());
             txtPasswordEmployee.setText(employee.getEmployeePassword());
-            comboBoxAccess.setValue(employee.getAccessName());
-            comboBoxDepartment.setValue(employee.getDepartmentName());
+            comboBoxEmployee_Access.setValue(employee.getAccessName());
+            comboBoxEmployee_Department.setValue(employee.getDepartmentName());
         }
     }
 
     public void updateEmployeeButton(ActionEvent actionEvent) {
-        if (txtFIOEmployee.getText().isEmpty() || txtLoginEmployee.getText().isEmpty() || txtPasswordEmployee.getText().isEmpty() || comboBoxDepartment.getValue()==null || comboBoxAccess.getValue()==null) {
-            dialog(Alert.AlertType.INFORMATION, "Не все поля заполнены!");
+        if (txtFIOEmployee.getText().isEmpty() || txtLoginEmployee.getText().isEmpty() || txtPasswordEmployee.getText().isEmpty() || comboBoxEmployee_Department.getValue()==null || comboBoxEmployee_Access.getValue()==null) {
+            info.dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
             Employee employee = new Employee();
             employee.setEmployeeName(txtFIOEmployee.getText());
             employee.setEmployeeLogin(txtLoginEmployee.getText());
             employee.setEmployeePassword(txtPasswordEmployee.getText());
-            employee.setDepartmentId(departmentDao.getIdDepartmentByName(comboBoxDepartment.getValue()));
-            employee.setAccessId(accessDao.getIdAccessByName(comboBoxAccess.getValue()));
+            employee.setDepartmentId(departmentDao.getIdDepartmentByName(comboBoxEmployee_Department.getValue()));
+            employee.setAccessId(accessDao.getIdAccessByName(comboBoxEmployee_Access.getValue()));
             employee.setEmployeeId(this.idEmployee);
             employeeDao.updateEmployee(employee);
 
@@ -221,16 +252,16 @@ public class MainController {
     }
 
     public void addEmployeeButton(ActionEvent actionEvent) {
-        if (txtFIOEmployee.getText().isEmpty() || txtLoginEmployee.getText().isEmpty() || txtPasswordEmployee.getText().isEmpty() || comboBoxDepartment.getValue()==null || comboBoxAccess.getValue()==null) {
-            dialog(Alert.AlertType.INFORMATION, "Не все поля заполнены!");
+        if (txtFIOEmployee.getText().isEmpty() || txtLoginEmployee.getText().isEmpty() || txtPasswordEmployee.getText().isEmpty() || comboBoxEmployee_Department.getValue()==null || comboBoxEmployee_Access.getValue()==null) {
+            info.dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
 
             Employee employee = new Employee();
             employee.setEmployeeName(txtFIOEmployee.getText());
             employee.setEmployeeLogin(txtLoginEmployee.getText());
             employee.setEmployeePassword(txtPasswordEmployee.getText());
-            employee.setDepartmentId(departmentDao.getIdDepartmentByName(comboBoxDepartment.getValue()));
-            employee.setAccessId(accessDao.getIdAccessByName(comboBoxAccess.getValue()));
+            employee.setDepartmentId(departmentDao.getIdDepartmentByName(comboBoxEmployee_Department.getValue()));
+            employee.setAccessId(accessDao.getIdAccessByName(comboBoxEmployee_Access.getValue()));
             employeeDao.addEmployee(employee);
             clearEmployeeTab();
             refreshTableEmployee();
@@ -239,8 +270,51 @@ public class MainController {
 
 
     /*Documents tab CRUD*/
-    public void documentAddButton(ActionEvent actionEvent) throws IOException {
-        File file = new File("C:\\123.odt");
-        java.awt.Desktop.getDesktop().open(file);
+    public void addDocumentButton(ActionEvent actionEvent) throws IOException {
+        if (txtDocumentName.getText().isEmpty()||comboBoxDocument_Department.getValue()==null) {
+            info.dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
+        } else {
+                Document document = new Document();
+                document.setDocumentName(txtDocumentName.getText());
+                document.setDocumentFile(fileChooser.showOpenDialog(documentButtonId.getScene().getWindow()));
+                document.setDepartmentId(departmentDao.getIdDepartmentByName(comboBoxDocument_Department.getValue()));
+                documentDao.addDocument(document);
+                clearDocumentTab();
+                refreshTableDocument();
+        }
+
+
+
+        //File file = fileChooser.showOpenDialog(documentButtonId.getScene().getWindow());
+        //java.awt.Desktop.getDesktop().open(file);
+
+
+    }
+
+    private void refreshTableDocument() {
+        dataDocument = documentDao.listDocuments();
+        tableDocument.setItems(dataDocument);
+    }
+
+    private void clearDocumentTab() {
+        txtDocumentName.setText("");
+        comboBoxDocument_Department.setValue(null);
+    }
+
+    public void removeDocumentButton(ActionEvent actionEvent) {
+        documentDao.removeDocument(this.idDocument);
+
+        clearDocumentTab();
+        refreshTableDocument();
+    }
+
+    public void clickTableDocument(MouseEvent mouseEvent) {
+        Document document = tableDocument.getSelectionModel().getSelectedItems().get(0);
+        if (document!=null) {
+            this.idDocument = document.getDocumentId();
+            txtDocumentName.setText(document.getDocumentName());
+            comboBoxDocument_Department.setValue(document.getDepartmentName());
+
+        }
     }
 }
