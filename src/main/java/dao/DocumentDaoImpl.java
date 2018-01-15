@@ -7,13 +7,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import model.Document;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.*;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -125,5 +120,54 @@ public class DocumentDaoImpl implements DocumentDao {
             e.printStackTrace();
         }
         return listData;
+    }
+
+    @Override
+    public void openDocument(int id)  {
+        File file1 = new File("E:\\" + mapDocument.get(id));
+        if (file1.exists()) {
+            try {
+                java.awt.Desktop.getDesktop().open(file1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            InputStream FileInputStream = null;
+            try {
+                dBconnection = new DBconnection();
+                String sql = "SELECT Document_file, Document_name FROM DOCUMENTS WHERE Document_id=" + id;
+                ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
+                if (resultSet.next()) {
+                    Blob file = resultSet.getBlob("Document_file");
+                    String name = resultSet.getString("Document_name");
+                    FileInputStream = file.getBinaryStream();
+                    int size = FileInputStream.available();
+                    byte b[] = new byte[size];
+                    FileInputStream.read(b);
+
+                    try (OutputStream targetFile = new FileOutputStream("E:\\" + name)) {
+                        targetFile.write(b);
+                        File file2 = new File("E:\\" + name);
+                        java.awt.Desktop.getDesktop().open(file2);
+                    }
+                }
+            } catch (SQLException | IOException e) {
+                System.out.println("Exception :" + e);
+            } finally {
+
+                try {
+                    FileInputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                }
+
+            }
+        }
+    }
+
+    @Override
+    public void printDocument(int id) {
+
     }
 }

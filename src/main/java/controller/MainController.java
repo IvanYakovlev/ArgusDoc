@@ -83,8 +83,7 @@ public class MainController {
 
     @FXML
     private Button documentButtonId;
-    @FXML
-    private TextField txtDocumentName;
+
     @FXML
     private ComboBox<String> comboBoxDocument_Department = new ComboBox<>();
 //Documents view Tab
@@ -287,12 +286,13 @@ public class MainController {
 
     /*Documents tab CRUD*/
     public void addDocumentButton(ActionEvent actionEvent) throws IOException {
-        if (txtDocumentName.getText().isEmpty()||comboBoxDocument_Department.getValue()==null) {
+        if (comboBoxDocument_Department.getValue()==null) {
             info.dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
                 Document document = new Document();
-                document.setDocumentName(txtDocumentName.getText());
+
                 document.setDocumentFile(fileChooser.showOpenDialog(documentButtonId.getScene().getWindow()));
+                document.setDocumentName(document.getDocumentFile().getName());
                 document.setDepartmentId(departmentDao.getIdDepartmentByName(comboBoxDocument_Department.getValue()));
                 documentDao.addDocument(document);
                 clearDocumentTab();
@@ -310,10 +310,11 @@ public class MainController {
     private void refreshTableDocument() {
         dataDocument = documentDao.listDocuments();
         tableDocument.setItems(dataDocument);
+        tableDocumentTemplate.setItems(dataDocument);
     }
 
     private void clearDocumentTab() {
-        txtDocumentName.setText("");
+
         comboBoxDocument_Department.setValue(null);
     }
 
@@ -328,7 +329,6 @@ public class MainController {
         Document document = tableDocument.getSelectionModel().getSelectedItems().get(0);
         if (document!=null) {
             this.idDocument = document.getDocumentId();
-            txtDocumentName.setText(document.getDocumentName());
             comboBoxDocument_Department.setValue(document.getDepartmentName());
 
         }
@@ -341,12 +341,17 @@ public class MainController {
     }
 
     public void openDocumentButton(ActionEvent actionEvent) {
-
+        documentDao.openDocument(this.idDocument);
     }
 
     public void printDocumentButton(ActionEvent actionEvent) {
     }
 
     public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
+        Document document = tableDocumentTemplate.getSelectionModel().getSelectedItems().get(0);
+        if (document!=null) {
+            this.idDocument = document.getDocumentId();
+
+        }
     }
 }
