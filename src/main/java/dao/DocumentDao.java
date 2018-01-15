@@ -13,4 +13,5 @@ public interface DocumentDao {
     public ObservableList<Document> listDocuments();
     public ObservableList<String> listDocumentName();
     public int getIdDocumentByName(String value);
+    public ObservableList<Document> listDocumentsByDepartment(String value);
 }

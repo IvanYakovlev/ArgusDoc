@@ -20,7 +20,7 @@ import java.sql.SQLException;
 public class MainController {
     //dialog allert
     ADInfo info = new ADInfo();
-    //Department settings
+//Department settings
     @FXML
     private TableView<Department> tableDepartment;
     @FXML
@@ -87,13 +87,19 @@ public class MainController {
     private TextField txtDocumentName;
     @FXML
     private ComboBox<String> comboBoxDocument_Department = new ComboBox<>();
+//Documents view Tab
+    @FXML
+    private TableView<Document> tableDocumentTemplate;
+    private TableColumn<Document, String> documentNameTemplate;
+    @FXML
+    private ComboBox<String> comboBoxDocument_Template = new ComboBox<>();
 
     //Connection
     private DBconnection dBconnection;
 
 
     public void initialize() {
-/*initialize Departments table*/
+/*initialize Departments settings table*/
         departmentDao = new DepartmentDaoImpl();
         idDep = new TableColumn<Department, String>("id");
         idDep.setCellValueFactory(new PropertyValueFactory<Department, String>("departmentId"));
@@ -102,7 +108,7 @@ public class MainController {
 
         tableDepartment.getColumns().setAll(idDep, nameDep);
         tableDepartment.setItems((ObservableList<Department>) departmentDao.listDepartments());
-/*initialize Employee table*/
+/*initialize Employee settings table*/
         employeeDao = new EmployeeDaoImpl();
         accessDao = new AccessDaoImpl();
         idEmpl = new TableColumn<Employee, String>("id");
@@ -120,12 +126,12 @@ public class MainController {
 
         tableEmployee.getColumns().setAll(idEmpl, fioEmpl, loginEmpl, passwordEmpl, departmentEmpl, accessEmpl);
         tableEmployee.setItems(employeeDao.listEmployees());
-/*initialize combobox Employee tab*/
+/*initialize combobox Employee settings tab*/
         accessDao.listAccess();
         comboBoxEmployee_Access.setItems(accessDao.listAccessName());
 
         comboBoxEmployee_Department.setItems(departmentDao.listDepartmentName());
-/*initialize Document table*/
+/*initialize Document settings table*/
         documentDao = new DocumentDaoImpl();
         idDoc = new TableColumn<Document, String>("id");
         idDoc.setCellValueFactory(new PropertyValueFactory<Document, String>("documentId"));
@@ -136,9 +142,19 @@ public class MainController {
 
         tableDocument.getColumns().setAll(idDoc,nameDoc,departmentDoc);
         tableDocument.setItems(documentDao.listDocuments());
-/*initialize combobox Document tab*/
+/*initialize combobox Document settings tab*/
 
         comboBoxDocument_Department.setItems(departmentDao.listDepartmentName());
+/*initialize table Document Template tab*/
+        documentNameTemplate = new TableColumn<Document, String>("Название документа");
+        documentNameTemplate.setCellValueFactory(new PropertyValueFactory<Document, String>("documentName"));
+        tableDocumentTemplate.getColumns().setAll(documentNameTemplate);
+        tableDocumentTemplate.setItems(documentDao.listDocuments());
+/*initialize combobox Document template tab*/
+        comboBoxDocument_Template.setItems(departmentDao.listDepartmentName());
+        comboBoxDocument_Template.setPromptText("Выберите отдел:");
+
+
 
     }
 
@@ -316,5 +332,21 @@ public class MainController {
             comboBoxDocument_Department.setValue(document.getDepartmentName());
 
         }
+    }
+
+/*Document template tab*/
+    public void choiceDepartmentDocument(ActionEvent actionEvent) {
+        tableDocumentTemplate.setItems(documentDao.listDocumentsByDepartment(comboBoxDocument_Template.getValue()));
+
+    }
+
+    public void openDocumentButton(ActionEvent actionEvent) {
+
+    }
+
+    public void printDocumentButton(ActionEvent actionEvent) {
+    }
+
+    public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
     }
 }

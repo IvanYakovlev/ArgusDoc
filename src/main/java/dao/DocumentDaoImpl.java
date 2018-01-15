@@ -108,4 +108,22 @@ public class DocumentDaoImpl implements DocumentDao {
         }
         return key;
     }
+
+    @Override
+    public ObservableList<Document> listDocumentsByDepartment(String value) {
+        dBconnection = new DBconnection();
+        ObservableList<Document> listData = FXCollections.observableArrayList();
+        try {
+            String sql = "SELECT * FROM DOCUMENTS WHERE (Department_id =(SELECT Department_id FROM DEPARTMENTS WHERE (Department_name = '"+value+"')))";
+            ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
+            while (resultSet.next()) {
+                Document document = new Document();
+                document.setDocumentName((resultSet.getString("Document_name")));
+                listData.add(document);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listData;
+    }
 }
