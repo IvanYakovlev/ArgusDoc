@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class EmployeeDaoImpl implements EmployeeDao{
-    ADInfo info = new ADInfo();
+
     DBconnection dBconnection;
 
     public void addEmployee(Employee employee) {
@@ -28,7 +28,7 @@ public class EmployeeDaoImpl implements EmployeeDao{
             preparedStatement.execute();
         } catch (SQLException e) {
             //e.printStackTrace();
-            info.dialog(Alert.AlertType.ERROR, "Данный пользователь уже существует!");
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Данный пользователь уже существует!");
         }
     }
 
@@ -46,7 +46,7 @@ public class EmployeeDaoImpl implements EmployeeDao{
             preparedStatement.execute();
         } catch (SQLException e) {
            e.printStackTrace();
-           info.dialog(Alert.AlertType.ERROR, "Данный пользователь уже существует!");
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Данный пользователь уже существует!");
         }
     }
 

@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DepartmentDaoImpl implements DepartmentDao {
-    ADInfo info = new ADInfo();
+
     DBconnection dBconnection;
     Map<Integer, String> mapDepartment = new HashMap<>();
 
@@ -37,7 +37,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
             preparedStatement.execute();
 
         } catch (SQLException e) {
-            info.dialog(Alert.AlertType.ERROR, "Отдел с таким названием уже существует!");
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Отдел с таким названием уже существует!");
         }
     }
 
@@ -52,7 +52,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
             preparedStatement.execute();
 
         } catch (SQLException e) {
-            info.dialog(Alert.AlertType.ERROR, "Отдел с таким названием уже существует!");
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Отдел с таким названием уже существует!");
         }
     }
 
@@ -68,7 +68,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
             preparedStatement.execute();
             mapDepartment.remove(id);
         } catch (SQLException e) {
-            info.dialog(Alert.AlertType.ERROR, "Удаление невозможно, так как есть пользователи в данном отделе!");
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Удаление невозможно, так как есть пользователи в данном отделе!");
         }
     }
 

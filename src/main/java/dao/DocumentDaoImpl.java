@@ -13,14 +13,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DocumentDaoImpl implements DocumentDao {
-    ADInfo info = new ADInfo();
     DBconnection dBconnection;
     Map<Integer, String> mapDocument = new HashMap<>();
 
     public void addDocument(Document document) throws IOException {
-        if (document.getDocumentFile()==null){
-            info.dialog(Alert.AlertType.INFORMATION,"Документ не загружен!");
-        }else {
+
             this.dBconnection = new DBconnection();
             File file;
             FileInputStream fileInputStream = null;
@@ -28,13 +25,20 @@ public class DocumentDaoImpl implements DocumentDao {
 
                 file = document.getDocumentFile();
                 fileInputStream = new FileInputStream(file);
-                PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("INSERT INTO Documents(Document_name,Document_file,Department_id) VALUES (?,?,?)");
-                preparedStatement.setString(1, document.getDocumentName());
-                preparedStatement.setBinaryStream(2, fileInputStream);
-                preparedStatement.setInt(3, document.getDepartmentId());
-                preparedStatement.execute();
+                long length = file.length();
+                if (length>50000000){
+                    ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Размер загружаемого документа не должен превышать 50мб!");
+                }else {
+                    System.out.println(length);
+                    PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("INSERT INTO Documents(Document_name,Document_file,Department_id) VALUES (?,?,?)");
+                    preparedStatement.setString(1, document.getDocumentName());
+                    preparedStatement.setBinaryStream(2, fileInputStream, length);
+                    preparedStatement.setInt(3, document.getDepartmentId());
+                    preparedStatement.execute();
+                }
+
             } catch (SQLException e) {
-                info.dialog(Alert.AlertType.ERROR, "Документ с таким названием уже существует!");
+                ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Документ с таким названием уже существует!");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } finally {
@@ -44,7 +48,6 @@ public class DocumentDaoImpl implements DocumentDao {
                     e.printStackTrace();
                 }
             }
-        }
     }
 
     public void removeDocument(int id) {
@@ -124,7 +127,7 @@ public class DocumentDaoImpl implements DocumentDao {
 
     @Override
     public void openDocument(int id)  {
-        File file1 = new File("E:\\" + mapDocument.get(id));
+        File file1 = new File("C:\\Temp\\" + mapDocument.get(id));
         if (file1.exists()) {
             try {
                 java.awt.Desktop.getDesktop().open(file1);
@@ -132,7 +135,7 @@ public class DocumentDaoImpl implements DocumentDao {
                 e.printStackTrace();
             }
         } else {
-            InputStream FileInputStream = null;
+            InputStream inputStream = null;
             try {
                 dBconnection = new DBconnection();
                 String sql = "SELECT Document_file, Document_name FROM DOCUMENTS WHERE Document_id=" + id;
@@ -140,14 +143,18 @@ public class DocumentDaoImpl implements DocumentDao {
                 if (resultSet.next()) {
                     Blob file = resultSet.getBlob("Document_file");
                     String name = resultSet.getString("Document_name");
-                    FileInputStream = file.getBinaryStream();
-                    int size = FileInputStream.available();
+                    inputStream = file.getBinaryStream();
+                    int size = inputStream.available();
+                    System.out.println(size);
                     byte b[] = new byte[size];
-                    FileInputStream.read(b);
 
-                    try (OutputStream targetFile = new FileOutputStream("E:\\" + name)) {
-                        targetFile.write(b);
-                        File file2 = new File("E:\\" + name);
+
+                    try (OutputStream targetFile = new FileOutputStream("C:\\Temp\\" + name)) {
+                        while (inputStream.available()>0){
+                            inputStream.read(b);
+                            targetFile.write(b);
+                        }
+                        File file2 = new File("C:\\Temp\\" + name);
                         java.awt.Desktop.getDesktop().open(file2);
                     }
                 }
@@ -156,7 +163,7 @@ public class DocumentDaoImpl implements DocumentDao {
             } finally {
 
                 try {
-                    FileInputStream.close();
+                    inputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
 
@@ -168,6 +175,49 @@ public class DocumentDaoImpl implements DocumentDao {
 
     @Override
     public void printDocument(int id) {
+        File file1 = new File("C:\\Temp\\" + mapDocument.get(id));
+        if (file1.exists()) {
+            try {
+                java.awt.Desktop.getDesktop().print(file1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            InputStream inputStream = null;
+            try {
+                dBconnection = new DBconnection();
+                String sql = "SELECT Document_file, Document_name FROM DOCUMENTS WHERE Document_id=" + id;
+                ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
+                if (resultSet.next()) {
+                    Blob file = resultSet.getBlob("Document_file");
+                    String name = resultSet.getString("Document_name");
+                    inputStream = file.getBinaryStream();
+                    int size = inputStream.available();
+                    System.out.println(size);
+                    byte b[] = new byte[size];
 
+
+                    try (OutputStream targetFile = new FileOutputStream("C:\\Temp\\" + name)) {
+                        while (inputStream.available()>0){
+                            inputStream.read(b);
+                            targetFile.write(b);
+                        }
+                        File file2 = new File("C:\\Temp\\" + name);
+                        java.awt.Desktop.getDesktop().print(file2);
+                    }
+                }
+            } catch (SQLException | IOException e) {
+                System.out.println("Exception :" + e);
+            } finally {
+
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                }
+
+            }
+        }
     }
 }

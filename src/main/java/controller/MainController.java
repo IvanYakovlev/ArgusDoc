@@ -19,7 +19,6 @@ import java.sql.SQLException;
 
 public class MainController {
     //dialog allert
-    ADInfo info = new ADInfo();
 //Department settings
     @FXML
     private TableView<Department> tableDepartment;
@@ -89,13 +88,16 @@ public class MainController {
 //Documents view Tab
     @FXML
     private TableView<Document> tableDocumentTemplate;
+
     private TableColumn<Document, String> documentNameTemplate;
+
     @FXML
     private ComboBox<String> comboBoxDocument_Template = new ComboBox<>();
 
     //Connection
     private DBconnection dBconnection;
-
+//Tasks tab
+    @FXML
 
     public void initialize() {
 /*initialize Departments settings table*/
@@ -173,7 +175,7 @@ public class MainController {
 
     public void addDepartmentButton(ActionEvent actionEvent) throws SQLException {
         if (txtDepartment.getText().isEmpty()) {
-            info.dialog(Alert.AlertType.WARNING, "Введите название отдела!");
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Введите название отдела!");
         } else {
             Department department = new Department();
             department.setDepartmentName(txtDepartment.getText());
@@ -202,7 +204,7 @@ public class MainController {
 
     public void updateDepartmentButton(ActionEvent actionEvent) {
         if (txtDepartment.getText().isEmpty()) {
-            info.dialog(Alert.AlertType.WARNING, "Введите название отдела!");
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Введите название отдела!");
         } else {
             Department department = new Department();
             department.setDepartmentName(txtDepartment.getText());
@@ -244,7 +246,7 @@ public class MainController {
 
     public void updateEmployeeButton(ActionEvent actionEvent) {
         if (txtFIOEmployee.getText().isEmpty() || txtLoginEmployee.getText().isEmpty() || txtPasswordEmployee.getText().isEmpty() || comboBoxEmployee_Department.getValue()==null || comboBoxEmployee_Access.getValue()==null) {
-            info.dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
             Employee employee = new Employee();
             employee.setEmployeeName(txtFIOEmployee.getText());
@@ -268,7 +270,7 @@ public class MainController {
 
     public void addEmployeeButton(ActionEvent actionEvent) {
         if (txtFIOEmployee.getText().isEmpty() || txtLoginEmployee.getText().isEmpty() || txtPasswordEmployee.getText().isEmpty() || comboBoxEmployee_Department.getValue()==null || comboBoxEmployee_Access.getValue()==null) {
-            info.dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
 
             Employee employee = new Employee();
@@ -287,18 +289,22 @@ public class MainController {
     /*Documents tab CRUD*/
     public void addDocumentButton(ActionEvent actionEvent) throws IOException {
         if (comboBoxDocument_Department.getValue()==null) {
-            info.dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
-                Document document = new Document();
+            Document document = new Document();
 
-                document.setDocumentFile(fileChooser.showOpenDialog(documentButtonId.getScene().getWindow()));
+            document.setDocumentFile(fileChooser.showOpenDialog(documentButtonId.getScene().getWindow()));
+            if (document.getDocumentFile() == null) {
+                ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Документ не загружен!");
+            } else {
                 document.setDocumentName(document.getDocumentFile().getName());
+
                 document.setDepartmentId(departmentDao.getIdDepartmentByName(comboBoxDocument_Department.getValue()));
                 documentDao.addDocument(document);
                 clearDocumentTab();
                 refreshTableDocument();
+            }
         }
-
 
 
         //File file = fileChooser.showOpenDialog(documentButtonId.getScene().getWindow());
@@ -345,6 +351,7 @@ public class MainController {
     }
 
     public void printDocumentButton(ActionEvent actionEvent) {
+        documentDao.printDocument(this.idDocument);
     }
 
     public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
