@@ -10,5 +10,6 @@ public interface TaskDao {
     public void removeTask(int id);
     public Task getTaskById(int id);
     public List<Task> listTasks();
+    public void completeTask(int id);
 
 }

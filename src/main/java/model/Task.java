@@ -29,6 +29,26 @@ public class Task {
     @Column(name = "Task_term")
     private Date taskTerm;
 
+    @Column(name = "Status_task")
+    private int statusTaskId;
+
+    private String statusTaskName;
+
+    public int getStatusTaskId() {
+        return statusTaskId;
+    }
+
+    public void setStatusTaskId(int statusTaskId) {
+        this.statusTaskId = statusTaskId;
+    }
+
+    public String getStatusTaskName() {
+        return statusTaskName;
+    }
+
+    public void setStatusTaskName(String statusTaskName) {
+        this.statusTaskName = statusTaskName;
+    }
 
     public int getTaskID() {
         return taskID;
