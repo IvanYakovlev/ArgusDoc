@@ -30,6 +30,17 @@ public class Employee {
     @Column(name = "Access_id")
     private int accessId;
 
+    @Column(name = "Employee_online")
+    private int employeeOnline;
+
+    public int getEmployeeOnline() {
+        return employeeOnline;
+    }
+
+    public void setEmployeeOnline(int employeeOnline) {
+        this.employeeOnline = employeeOnline;
+    }
+
     public int getDepartmentId() {
         return departmentId;
     }

@@ -29,10 +29,14 @@ public class Task {
     @Column(name = "Task_term")
     private Date taskTerm;
 
-    @Column(name = "Status_task")
+    @Column(name = "Status_task_id")
     private int statusTaskId;
 
     private String statusTaskName;
+
+
+
+
 
     public int getStatusTaskId() {
         return statusTaskId;
