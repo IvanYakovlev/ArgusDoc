@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="321.0" prefWidth="593.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditTaskController">
+   <children>
+      <Button layoutX="455.0" layoutY="278.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="49.0" text="ОК" />
+      <Button layoutX="516.0" layoutY="278.0" mnemonicParsing="false" text="Отмена" />
+      <TextArea layoutX="26.0" layoutY="63.0" prefHeight="200.0" prefWidth="549.0" promptText="Введите текст" />
+      <TextField layoutX="28.0" layoutY="26.0" promptText="Название задачи" />
+      <ComboBox layoutX="197.0" layoutY="26.0" prefWidth="150.0" promptText="Исполнитель" />
+      <DatePicker layoutX="362.0" layoutY="26.0" promptText="Выберите срок" />
+      <Button layoutX="545.0" layoutY="26.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="31.0" text="..." />
+   </children>
+</AnchorPane>

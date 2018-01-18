@@ -9,7 +9,7 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Task_id")
-    private int taskID;
+    private int taskId;
 
     @Column(name = "Task_name")
     private String taskName;
@@ -24,19 +24,24 @@ public class Task {
     private String taskFromEmployee;
 
     @Column(name = "Employee_id")
-    private int employeeID;
+    private int employeeId;
+    private String employeeName;
 
     @Column(name = "Task_term")
     private Date taskTerm;
 
     @Column(name = "Status_task_id")
     private int statusTaskId;
-
     private String statusTaskName;
 
 
+    public String getEmployeeName() {
+        return employeeName;
+    }
 
-
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
 
     public int getStatusTaskId() {
         return statusTaskId;
@@ -54,13 +59,13 @@ public class Task {
         this.statusTaskName = statusTaskName;
     }
 
-    public int getTaskID() {
-        return taskID;
+    public int getTaskId() {
+        return taskId;
     }
 
 
-    public void setTaskID(int taskID) {
-        this.taskID = taskID;
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
     }
 
     public String getTaskName() {
@@ -95,12 +100,12 @@ public class Task {
         this.taskFromEmployee = taskFromEmployee;
     }
 
-    public int getEmployeeID() {
-        return employeeID;
+    public int getEmployeeId() {
+        return employeeId;
     }
 
-    public void setEmployeeID(int employeeID) {
-        this.employeeID = employeeID;
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
     }
 
     public Date getTaskTerm() {
@@ -114,12 +119,12 @@ public class Task {
     @Override
     public String toString() {
         return "Task{" +
-                "taskID=" + taskID +
+                "taskId=" + taskId +
                 ", taskName='" + taskName + '\'' +
                 ", taskText='" + taskText + '\'' +
                 ", taskAttachment='" + taskAttachment + '\'' +
                 ", taskFromEmployee='" + taskFromEmployee + '\'' +
-                ", employeeID=" + employeeID +
+                ", employeeId=" + employeeId +
                 ", taskTerm=" + taskTerm +
                 '}';
     }

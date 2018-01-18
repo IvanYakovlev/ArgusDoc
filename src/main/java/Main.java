@@ -7,6 +7,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import model.StatusTask;
+import user.UserAuth;
 
 
 public class Main extends Application {
@@ -25,7 +27,9 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-
+        UserAuth user = new UserAuth("4434");
+        System.out.println(user.toString());
         launch(args);
+
     }
 }

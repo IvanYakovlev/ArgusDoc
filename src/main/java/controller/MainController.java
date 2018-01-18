@@ -13,12 +13,15 @@ import model.Department;
 import model.Document;
 import model.Employee;
 import dialog.ADInfo;
+import model.Task;
+import user.UserAuth;
+
 import java.io.IOException;
 import java.sql.SQLException;
 
 
 public class MainController {
-    //dialog allert
+
 //Department settings
     @FXML
     private TableView<Department> tableDepartment;
@@ -28,7 +31,7 @@ public class MainController {
     private TableColumn<Department, String> nameDep;
 
 
-    // Variables
+// Variables
     private ObservableList<Department> dataDepartment;
 
     DepartmentDao departmentDao;
@@ -98,6 +101,17 @@ public class MainController {
     private DBconnection dBconnection;
 //Tasks tab
     @FXML
+    private TableView<Task> tableTask;
+    private TableColumn<Task, String> idTask;
+    private TableColumn<Task, String> nameTask;
+    private TableColumn<Task, String> textTask;
+    private TableColumn<Task, String> attachmentTask;
+    private TableColumn<Task, String> employeeTask;
+    private TableColumn<Task, String> termTask;
+    private TableColumn<Task, String> statusTask;
+
+
+    private UserAuth userAuth = new UserAuth("4434");
 
     public void initialize() {
 /*initialize Departments settings table*/
@@ -154,8 +168,25 @@ public class MainController {
 /*initialize combobox Document template tab*/
         comboBoxDocument_Template.setItems(departmentDao.listDepartmentName());
         comboBoxDocument_Template.setPromptText("Выберите отдел:");
+/*initialize Task tab*/
+        TaskDao taskDao = new TaskDaoImpl();
+        idTask = new TableColumn<Task, String>("Id");
+        idTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskId"));
+        nameTask = new TableColumn<Task,String>("Название задачи");
+        nameTask.setCellValueFactory(new PropertyValueFactory<Task,String>("taskName"));
+        textTask = new TableColumn<Task, String>("Текст задачи");
+        textTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskText"));
+        attachmentTask = new TableColumn<Task, String>("Прикрепленный файл");
+        attachmentTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskAttachment"));
+        employeeTask = new TableColumn<Task, String>("Сотрудник");
+        employeeTask.setCellValueFactory(new PropertyValueFactory<Task,String>("employeeName"));
+        termTask = new TableColumn<Task, String>("Срок выполнения");
+        termTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskTerm"));
+        statusTask = new TableColumn<Task, String>("Статус задачи");
+        statusTask.setCellValueFactory(new PropertyValueFactory<Task, String>("statusTaskName"));
 
-
+        tableTask.getColumns().setAll(idTask, nameTask, textTask, attachmentTask, employeeTask, termTask, statusTask);
+        tableTask.setItems(taskDao.listTasks());
 
     }
 
@@ -305,11 +336,6 @@ public class MainController {
                 refreshTableDocument();
             }
         }
-
-
-        //File file = fileChooser.showOpenDialog(documentButtonId.getScene().getWindow());
-        //java.awt.Desktop.getDesktop().open(file);
-
 
     }
 
