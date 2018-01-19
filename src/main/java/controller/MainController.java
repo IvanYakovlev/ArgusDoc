@@ -20,7 +20,7 @@ import model.Document;
 import model.Employee;
 import dialog.ADInfo;
 import model.Task;
-import user.UserAuth;
+
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -117,7 +117,7 @@ public class MainController {
     private TableColumn<Task, String> statusTask;
 
 
-    private UserAuth userAuth = new UserAuth("4434");
+
 
     public void initialize() {
 /*initialize Departments settings table*/
