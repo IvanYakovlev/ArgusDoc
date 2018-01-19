@@ -45,9 +45,9 @@
                                     <Button layoutX="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Мои задачи" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                     <Button layoutX="125.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Мои поручения" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="0.0" />
                                     <Button layoutX="225.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Архив" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="0.0" />
-                                    <Button layoutX="439.0" layoutY="565.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Новая задача" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="211.0" />
-                                    <Button layoutX="548.0" layoutY="565.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Редактировать" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="108.0" />
-                                    <Button layoutX="663.0" layoutY="565.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Выполнение" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                                    <Button layoutX="439.0" layoutY="565.0" mnemonicParsing="false" onAction="#openAddTaskButton" prefHeight="25.0" prefWidth="100.0" text="Новая задача" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="211.0" />
+                                    <Button layoutX="548.0" layoutY="565.0" mnemonicParsing="false" onAction="#openEditTaskButton" prefHeight="25.0" prefWidth="100.0" text="Редактировать" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="108.0" />
+                                    <Button layoutX="663.0" layoutY="565.0" mnemonicParsing="false" onAction="#openDoneTaskButton" prefHeight="25.0" prefWidth="100.0" text="Выполнение" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
                                  </children>
                                  <cursor>
                                     <Cursor fx:constant="DEFAULT" />

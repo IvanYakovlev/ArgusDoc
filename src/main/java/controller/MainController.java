@@ -5,10 +5,16 @@ import dbConnection.DBconnection;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.Department;
 import model.Document;
 import model.Employee;
@@ -385,6 +391,61 @@ public class MainController {
         if (document!=null) {
             this.idDocument = document.getDocumentId();
 
+        }
+    }
+
+    public void openAddTaskButton(ActionEvent actionEvent) throws IOException {
+        try {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/viewFXML/Add_task_window.fxml"));
+            stage.setTitle("Создание задачи");
+            stage.setMinHeight(150);
+            stage.setMinWidth(300);
+            stage.setResizable(false);
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void openEditTaskButton(ActionEvent actionEvent) {
+        try {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/viewFXML/Edit_task_window.fxml"));
+            stage.setTitle("Редактирование задачи");
+            stage.setMinHeight(150);
+            stage.setMinWidth(300);
+            stage.setResizable(false);
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openDoneTaskButton(ActionEvent actionEvent) {
+        try {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/viewFXML/Done_task_window.fxml"));
+            stage.setTitle("Выполнение задачи");
+            stage.setMinHeight(150);
+            stage.setMinWidth(300);
+            stage.setResizable(false);
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
