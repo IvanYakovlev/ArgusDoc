@@ -1,5 +1,6 @@
 package controller;
 
+import com.jfoenix.controls.JFXPasswordField;
 import dbConnection.DBconnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,7 +22,7 @@ import java.sql.SQLException;
 
 public class AuthorizationController {
     @FXML
-    private TextField txtPasswordEnter;
+    private JFXPasswordField txtPasswordEnter;
     DBconnection dBconnection;
     Employee user;
 

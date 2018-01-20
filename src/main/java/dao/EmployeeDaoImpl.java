@@ -11,10 +11,13 @@ import model.Employee;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EmployeeDaoImpl implements EmployeeDao{
 
     DBconnection dBconnection;
+    Map<Integer, String> mapEmployee = new HashMap<Integer, String>();
 
     public void addEmployee(Employee employee) {
         this.dBconnection = new DBconnection();
@@ -76,11 +79,24 @@ public class EmployeeDaoImpl implements EmployeeDao{
                     employee.setEmployeePassword(resultSet.getString("Employee_password"));
                     employee.setDepartmentName(resultSet.getString("Department_name"));
                     employee.setAccessName(resultSet.getString("Access_name"));
+                    mapEmployee.put(employee.getEmployeeId(),employee.getEmployeeName());
                 listData.add(employee);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return listData;
+    }
+
+    @Override
+    public int getIdEmployeeByName(String value) {
+        int key=0;
+        for(Map.Entry<Integer, String> e : mapEmployee.entrySet()) {
+
+            if (value.equals(e.getValue())) {
+                key = e.getKey();
+            }
+        }
+        return key;
     }
 }

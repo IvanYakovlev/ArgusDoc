@@ -1,5 +1,6 @@
 package model;
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -25,10 +26,11 @@ public class Task {
 
     @Column(name = "Employee_id")
     private int employeeId;
+
     private String employeeName;
 
     @Column(name = "Task_term")
-    private Date taskTerm;
+    private java.sql.Date taskTerm;
 
     @Column(name = "Status_task_id")
     private int statusTaskId;
@@ -108,11 +110,11 @@ public class Task {
         this.employeeId = employeeId;
     }
 
-    public Date getTaskTerm() {
+    public java.sql.Date getTaskTerm() {
         return taskTerm;
     }
 
-    public void setTaskTerm(Date taskTerm) {
+    public void setTaskTerm(java.sql.Date taskTerm) {
         this.taskTerm = taskTerm;
     }
 

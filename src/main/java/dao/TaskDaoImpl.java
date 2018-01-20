@@ -6,12 +6,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.StatusTask;
 import model.Task;
-import user.UserAuth;
+
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class TaskDaoImpl implements TaskDao{
 DBconnection dBconnection;
@@ -25,7 +26,7 @@ DBconnection dBconnection;
             preparedStatement.setString(3, task.getTaskAttachment());
             preparedStatement.setString(4, task.getTaskFromEmployee());
             preparedStatement.setInt(5, task.getEmployeeId());
-            preparedStatement.setDate(6, (Date) task.getTaskTerm());
+            preparedStatement.setDate(6, task.getTaskTerm());
             preparedStatement.setInt(7, StatusTask.NOT_DONE);
             preparedStatement.execute();
 
@@ -43,7 +44,7 @@ DBconnection dBconnection;
             preparedStatement.setString(3, task.getTaskAttachment());
             preparedStatement.setString(4, task.getTaskFromEmployee());
             preparedStatement.setInt(5, task.getEmployeeId());
-            preparedStatement.setDate(6, (Date) task.getTaskTerm());
+            preparedStatement.setDate(6,task.getTaskTerm());
             preparedStatement.setInt(7, task.getStatusTaskId());
             preparedStatement.setInt(7, task.getTaskId());
             preparedStatement.execute();
