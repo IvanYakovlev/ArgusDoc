@@ -12,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import model.Employee;
 import model.Task;
 
@@ -29,7 +30,8 @@ public class AddTaskController {
     private JFXTimePicker timePickerTask;
     @FXML
     private JFXTextArea textAreaTask;
-
+    @FXML
+    private JFXButton cancelAddTaskButton;
     private TaskDao taskDao;
     private EmployeeDao employeeDao;
 
@@ -50,6 +52,8 @@ public class AddTaskController {
     }
 
     public void cancelAddTaskButton(ActionEvent actionEvent) {
+        Stage stage = (Stage) cancelAddTaskButton.getScene().getWindow();
+        stage.close();
 
     }
 

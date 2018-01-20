@@ -5,7 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="108.0" prefWidth="211.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AuthorizationController">
+<AnchorPane prefHeight="108.0" prefWidth="211.0" xmlns="http://javafx.com/javafx/8.0.162" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AuthorizationController">
    <children>
       <Label layoutX="62.0" layoutY="14.0" text="Введите пароль:" textFill="#1c75ed" />
       <JFXPasswordField fx:id="txtPasswordEnter" layoutX="16.0" layoutY="42.0" prefHeight="25.0" prefWidth="176.0" />

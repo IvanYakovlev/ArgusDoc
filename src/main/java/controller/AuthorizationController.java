@@ -3,6 +3,7 @@ package controller;
 import com.jfoenix.controls.JFXPasswordField;
 import dbConnection.DBconnection;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -12,7 +13,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import model.Employee;
 
 
@@ -25,7 +28,8 @@ public class AuthorizationController {
     private JFXPasswordField txtPasswordEnter;
     DBconnection dBconnection;
     Employee user;
-
+    private double xOffset;
+    private double yOffset;
     public void loginButton(ActionEvent actionEvent) {
 
 
@@ -54,6 +58,7 @@ public class AuthorizationController {
                 dialog.ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Пользователь не найден");
             } else {
                 try {
+                    ((Node) actionEvent.getSource()).getScene().getWindow().hide();
                     Stage stage = new Stage();
                     Parent root = FXMLLoader.load(getClass().getResource("/viewFXML/Main_window.fxml"));
                     stage.setTitle("Аргус");
@@ -61,8 +66,23 @@ public class AuthorizationController {
                     stage.setMinWidth(1000);
                     stage.getIcons().add(new Image("images/icon.jpg"));
                     stage.setScene(new Scene(root));
-                    ((Node) actionEvent.getSource()).getScene().getWindow().hide();
 
+                    stage.initStyle(StageStyle.TRANSPARENT);
+
+                    root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            xOffset = event.getSceneX();
+                            yOffset = event.getSceneY();
+                        }
+                    });
+                    root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            stage.setX(event.getScreenX() - xOffset);
+                            stage.setY(event.getScreenY() - yOffset);
+                        }
+                    });
                     stage.show();
                 } catch (IOException e) {
                     e.printStackTrace();

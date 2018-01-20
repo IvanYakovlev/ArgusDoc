@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane prefHeight="358.0" prefWidth="595.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DoneTaskController">
+<AnchorPane prefHeight="358.0" prefWidth="595.0" xmlns="http://javafx.com/javafx/8.0.162" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DoneTaskController">
    <children>
       <Button layoutX="481.0" layoutY="322.0" mnemonicParsing="false" text="Отмена" />
       <Button layoutX="548.0" layoutY="322.0" mnemonicParsing="false" text="ОК" />

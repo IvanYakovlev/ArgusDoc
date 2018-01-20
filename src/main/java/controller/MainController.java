@@ -2,8 +2,11 @@ package controller;
 
 import dao.*;
 import dbConnection.DBconnection;
+
+
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -15,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import model.Department;
 import model.Document;
 import model.Employee;
@@ -27,6 +31,10 @@ import java.sql.SQLException;
 
 
 public class MainController {
+
+    private double xOffset;
+    private double yOffset;
+
 
 //Department settings
     @FXML
@@ -404,7 +412,22 @@ public class MainController {
             stage.setResizable(false);
             stage.setScene(new Scene(root));
             stage.initModality(Modality.WINDOW_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
             stage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
+            root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    xOffset = event.getSceneX();
+                    yOffset = event.getSceneY();
+                }
+            });
+            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    stage.setX(event.getScreenX() - xOffset);
+                    stage.setY(event.getScreenY() - yOffset);
+                }
+            });
             stage.show();
 
         } catch (IOException e) {
@@ -447,5 +470,12 @@ public class MainController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+
+    public void closeMainIcon(MouseEvent mouseEvent) {
+        Stage stage = (Stage) txtFIOEmployee.getScene().getWindow();
+        stage.close();
     }
 }
