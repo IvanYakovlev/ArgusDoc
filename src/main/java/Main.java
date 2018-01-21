@@ -42,8 +42,8 @@ public class Main extends Application {
                 primaryStage.setY(event.getScreenY() - yOffset);
             }
         });
-
-        primaryStage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
         primaryStage.show();
 
 

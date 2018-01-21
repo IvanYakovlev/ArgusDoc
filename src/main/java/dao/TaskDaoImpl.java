@@ -66,11 +66,11 @@ DBconnection dBconnection;
 
     }
 
-    public ObservableList<Task> listTasks() {
+    public ObservableList<Task> listTasks(int id) {
         this.dBconnection = new DBconnection();
         ObservableList<Task> listData = FXCollections.observableArrayList();
         try {
-            ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT * FROM TASKS,EMPLOYEES,STATUS_TASKS WHERE TASKS.Employee_id=EMPLOYEES.Employee_id AND TASKs.status_task_id=STATUS_TASKS.Status_task_id");
+            ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT * FROM TASKS,EMPLOYEES,STATUS_TASKS WHERE TASKS.Employee_id=EMPLOYEES.Employee_id AND TASKs.status_task_id=STATUS_TASKS.Status_task_id AND TASKS.Employee_id='"+id+"'");
             while (resultSet.next()){
                 Task task= new Task();
                 task.setTaskId(resultSet.getInt("Task_id"));

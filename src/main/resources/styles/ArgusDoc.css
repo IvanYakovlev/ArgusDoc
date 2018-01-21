@@ -1,0 +1,48 @@
+.AnchorPane{
+    -fx-background-color: #222930;
+    -fx-text-fill: #ffffff;
+}
+
+.JFXButton{
+    -fx-background-color: #4EB1BA;
+    -fx-text-fill: #ffffff;
+}
+
+.JFXDatePicker{
+    -fx-background-color: #4EB1BA;
+    -jfx-default-color: #4d4d4d;
+}
+
+.JFXTimePicker{
+
+    -fx-background-color: #4EB1BA;
+    -jfx-default-color: #4d4d4d;
+}
+
+.JFXTextField{
+    -fx-text-fill: #ffffff;
+    -jfx-focus-color: #4EB1BA;
+    -jfx-unfocus-color: #4d4d4d;
+}
+
+.JFXTextArea{
+    -fx-text-fill: #ffffff;
+    -jfx-focus-color: #4EB1BA;
+    -jfx-unfocus-color: #4d4d4d;
+}
+.label{
+    -fx-text-fill: #ffffff;
+}
+.password-field{
+    -fx-text-fill: #ffffff;
+
+    -jfx-focus-color: #4EB1BA;
+    -jfx-unfocus-color: #4d4d4d;
+}
+
+/*
+#222930
+#4EB1BA
+#E9E9E9
+#4d4d4d
+*/

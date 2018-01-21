@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="321.0" prefWidth="593.0" xmlns="http://javafx.com/javafx/8.0.162" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditTaskController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="600.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditTaskController">
    <children>
-      <Button layoutX="455.0" layoutY="278.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="49.0" text="ОК" />
-      <Button layoutX="516.0" layoutY="278.0" mnemonicParsing="false" text="Отмена" />
-      <TextArea layoutX="26.0" layoutY="63.0" prefHeight="200.0" prefWidth="549.0" promptText="Введите текст" />
-      <TextField layoutX="28.0" layoutY="26.0" promptText="Название задачи" />
-      <ComboBox layoutX="197.0" layoutY="26.0" prefWidth="150.0" promptText="Исполнитель" />
-      <DatePicker layoutX="362.0" layoutY="26.0" promptText="Выберите срок" />
-      <Button layoutX="545.0" layoutY="26.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="31.0" text="..." />
+      <JFXButton fx:id="cancelEditTaskButton" layoutX="534.0" layoutY="349.0" onAction="#cancelEditTaskButton" styleClass="JFXButton" text="Отмена" />
+      <JFXButton fx:id="editTaskButton" layoutX="472.0" layoutY="349.0" onAction="#editTaskButton" prefHeight="25.0" prefWidth="58.0" styleClass="JFXButton" text="Ок" />
+      <JFXButton fx:id="attachmentTaskButton" layoutX="14.0" layoutY="349.0" onAction="#attachmentTaskButton" styleClass="JFXButton" text="Прикрепить файл" />
+      <JFXTextArea fx:id="textAreaTask" focusColor="#4eb1ba" layoutX="14.0" layoutY="94.0" prefHeight="233.0" prefWidth="578.0" promptText="Введите текст задачи" styleClass="JFXTextArea" />
+      <JFXTextField fx:id="txtTaskName" focusColor="#4eb1ba" layoutX="14.0" layoutY="21.0" prefHeight="25.0" prefWidth="219.0" promptText="Введите название" styleClass="JFXTextField" />
+      <JFXComboBox fx:id="comboBoxEmployee" focusColor="#4eb1ba" layoutX="247.0" layoutY="21.0" prefHeight="25.0" prefWidth="149.0" promptText="Выберите исполнителя" />
+      <JFXDatePicker fx:id="datePickerTask" defaultColor="#4eb1ba" layoutX="415.0" layoutY="21.0" promptText="Выберите дату" styleClass="JFXDatePicker" />
+      <JFXTimePicker fx:id="timePickerTask" defaultColor="#4eb1ba" layoutX="415.0" layoutY="61.0" promptText="Выберите время" styleClass="JFXTimePicker" />
    </children>
 </AnchorPane>

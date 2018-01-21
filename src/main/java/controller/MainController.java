@@ -1,5 +1,6 @@
 package controller;
 
+import authorizedUser.AuthorizedUser;
 import dao.*;
 import dbConnection.DBconnection;
 
@@ -34,9 +35,18 @@ public class MainController {
 
     private double xOffset;
     private double yOffset;
+    private Employee userAuth;
+
+    public void setUserAuth(Employee userAuth) {
+        this.userAuth = userAuth;
+    }
+
+    public Employee getUserAuth() {
+        return userAuth;
+    }
 
 
-//Department settings
+    //Department settings
     @FXML
     private TableView<Department> tableDepartment;
     @FXML
@@ -123,11 +133,14 @@ public class MainController {
     private TableColumn<Task, String> employeeTask;
     private TableColumn<Task, String> termTask;
     private TableColumn<Task, String> statusTask;
-
+    @FXML
+    private Label labelUserAuth;
 
 
 
     public void initialize() {
+
+
 /*initialize Departments settings table*/
         departmentDao = new DepartmentDaoImpl();
         idDep = new TableColumn<Department, String>("id");
@@ -199,9 +212,13 @@ public class MainController {
         statusTask = new TableColumn<Task, String>("Статус задачи");
         statusTask.setCellValueFactory(new PropertyValueFactory<Task, String>("statusTaskName"));
 
-        tableTask.getColumns().setAll(idTask, nameTask, textTask, attachmentTask, employeeTask, termTask, statusTask);
-        tableTask.setItems(taskDao.listTasks());
 
+
+        tableTask.getColumns().setAll(idTask, nameTask, textTask, attachmentTask, employeeTask, termTask, statusTask);
+
+        tableTask.setItems(taskDao.listTasks(AuthorizedUser.getUser().getEmployeeId()));
+
+        labelUserAuth.setText(AuthorizedUser.getUser().getEmployeeName());
     }
 
     /*Departments tab CRUD*/
@@ -412,8 +429,8 @@ public class MainController {
             stage.setResizable(false);
             stage.setScene(new Scene(root));
             stage.initModality(Modality.WINDOW_MODAL);
-            stage.initStyle(StageStyle.TRANSPARENT);
             stage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
+            stage.initStyle(StageStyle.TRANSPARENT);
             root.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
@@ -447,6 +464,21 @@ public class MainController {
             stage.setScene(new Scene(root));
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
+            stage.initStyle(StageStyle.TRANSPARENT);
+            root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    xOffset = event.getSceneX();
+                    yOffset = event.getSceneY();
+                }
+            });
+            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    stage.setX(event.getScreenX() - xOffset);
+                    stage.setY(event.getScreenY() - yOffset);
+                }
+            });
             stage.show();
 
         } catch (IOException e) {
@@ -465,6 +497,21 @@ public class MainController {
             stage.setScene(new Scene(root));
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
+            stage.initStyle(StageStyle.TRANSPARENT);
+            root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    xOffset = event.getSceneX();
+                    yOffset = event.getSceneY();
+                }
+            });
+            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    stage.setX(event.getScreenX() - xOffset);
+                    stage.setY(event.getScreenY() - yOffset);
+                }
+            });
             stage.show();
 
         } catch (IOException e) {

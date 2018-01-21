@@ -1,3 +1,0 @@
-Manifest-Version: 1.0
-Main-Class: C:\Program Files\Java\jdk1.8.0_162\jre\lib\ext\jfxrt.jar
-

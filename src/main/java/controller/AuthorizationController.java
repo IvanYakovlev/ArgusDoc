@@ -1,5 +1,6 @@
 package controller;
 
+import authorizedUser.AuthorizedUser;
 import com.jfoenix.controls.JFXPasswordField;
 import dbConnection.DBconnection;
 import javafx.event.ActionEvent;
@@ -10,7 +11,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 
 import javafx.scene.input.MouseEvent;
@@ -27,9 +27,24 @@ public class AuthorizationController {
     @FXML
     private JFXPasswordField txtPasswordEnter;
     DBconnection dBconnection;
-    Employee user;
+
+        public JFXPasswordField getTxtPasswordEnter() {
+        return txtPasswordEnter;
+    }
+
+    private Employee userAuth=null;
+
+
+
+
     private double xOffset;
     private double yOffset;
+
+
+    public Employee getUserAuth() {
+        return userAuth;
+    }
+
     public void loginButton(ActionEvent actionEvent) {
 
 
@@ -38,29 +53,35 @@ public class AuthorizationController {
                 this.dBconnection = new DBconnection();
 
                 ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT * FROM Employees, Departments,Access WHERE Employees.Department_id=Departments.Department_id AND Access.Access_id=Employees.Access_id AND Employee_password = '"+txtPasswordEnter.getText()+"'");
-                this.user = new Employee();
                 while (resultSet.next()) {
-                    this.user.setEmployeeId(resultSet.getInt("Employee_id"));
-                    this.user.setEmployeeName(resultSet.getString("Employee_name"));
-                    this.user.setEmployeeLogin(resultSet.getString("Employee_login"));
-                    this.user.setEmployeePassword(resultSet.getString("Employee_password"));
-                    this.user.setDepartmentName(resultSet.getString("Department_name"));
-                    this.user.setAccessName(resultSet.getString("Access_name"));
-                    this.user.setDepartmentId(resultSet.getInt("Department_id"));
-                    this.user.setAccessId(resultSet.getInt("Access_id"));
-                    this.user.setEmployeeOnline(resultSet.getByte("Employee_online"));
+                    userAuth = new Employee();
+                    userAuth.setEmployeeId(resultSet.getInt("Employee_id"));
+                    userAuth.setEmployeeName(resultSet.getString("Employee_name"));
+                    userAuth.setEmployeeLogin(resultSet.getString("Employee_login"));
+                    userAuth.setEmployeePassword(resultSet.getString("Employee_password"));
+                    userAuth.setDepartmentName(resultSet.getString("Department_name"));
+                    userAuth.setAccessName(resultSet.getString("Access_name"));
+                    userAuth.setDepartmentId(resultSet.getInt("Department_id"));
+                    userAuth.setAccessId(resultSet.getInt("Access_id"));
+                    userAuth.setEmployeeOnline(resultSet.getByte("Employee_online"));
+                    AuthorizedUser.setUser(userAuth);
+
                 }
 
             } catch (SQLException e) {
 
             }
-            if (user.getEmployeeLogin()==null){
+            if (userAuth.getEmployeeLogin()==null){
                 dialog.ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Пользователь не найден");
             } else {
                 try {
+
                     ((Node) actionEvent.getSource()).getScene().getWindow().hide();
+
                     Stage stage = new Stage();
-                    Parent root = FXMLLoader.load(getClass().getResource("/viewFXML/Main_window.fxml"));
+                    FXMLLoader loader = new FXMLLoader();
+
+                    Parent root = loader.load(getClass().getResource("/viewFXML/Main_window.fxml"));
                     stage.setTitle("Аргус");
                     stage.setMinHeight(715);
                     stage.setMinWidth(1000);
@@ -83,10 +104,14 @@ public class AuthorizationController {
                             stage.setY(event.getScreenY() - yOffset);
                         }
                     });
+
+
                     stage.show();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
     }
+
+
 }

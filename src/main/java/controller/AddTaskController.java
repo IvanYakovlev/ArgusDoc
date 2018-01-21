@@ -1,5 +1,6 @@
 package controller;
 
+import authorizedUser.AuthorizedUser;
 import com.jfoenix.controls.*;
 import dao.EmployeeDao;
 import dao.EmployeeDaoImpl;
@@ -44,6 +45,7 @@ public class AddTaskController {
             Task task = new Task();
             task.setTaskName(txtTaskName.getText());
             task.setEmployeeId(employeeDao.getIdEmployeeByName(comboBoxEmployee.getValue()));
+            task.setTaskFromEmployee(AuthorizedUser.getUser().getEmployeeName());
             task.setTaskTerm(java.sql.Date.valueOf(datePickerTask.getValue()));
             task.setTaskText(textAreaTask.getText());
             taskDao.addTask(task);
