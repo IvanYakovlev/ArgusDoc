@@ -123,7 +123,7 @@ public class MainController {
 //Tasks tab
     @FXML
     private TableView<Task> tableTask;
-    private TableColumn<Task, String> idTask;
+    private TableColumn<Task, String> taskId;
     private TableColumn<Task, String> nameTask;
     private TableColumn<Task, String> textTask;
     private TableColumn<Task, String> attachmentTask;
@@ -135,7 +135,11 @@ public class MainController {
     @FXML
     private Label labelUserAuth;
     TaskDao taskDao;
+    private int idTask;
 
+    public int getIdTask() {
+        return idTask;
+    }
 
     public void initialize() {
 
@@ -196,8 +200,8 @@ public class MainController {
         comboBoxDocument_Template.setPromptText("Выберите отдел:");
 /*initialize Task tab*/
         TaskDao taskDao = new TaskDaoImpl();
-        idTask = new TableColumn<Task, String>("Id");
-        idTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskId"));
+        taskId = new TableColumn<Task, String>("Id");
+        taskId.setCellValueFactory(new PropertyValueFactory<Task, String>("taskId"));
         nameTask = new TableColumn<Task,String>("Название задачи");
         nameTask.setCellValueFactory(new PropertyValueFactory<Task,String>("taskName"));
         textTask = new TableColumn<Task, String>("Текст задачи");
@@ -216,7 +220,7 @@ public class MainController {
 
 
 
-        tableTask.getColumns().setAll(idTask, nameTask, textTask, attachmentTask, employeeTask, sender, termTask, statusTask);
+        tableTask.getColumns().setAll(taskId, nameTask, textTask, attachmentTask, employeeTask, sender, termTask, statusTask);
 
         tableTask.setItems(taskDao.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
 
@@ -426,6 +430,8 @@ public class MainController {
         tableTask.setItems(taskDao.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
 
     }
+
+
     public void openAddTaskButton(ActionEvent actionEvent) throws IOException {
         try {
             Stage stage = new Stage();
@@ -547,5 +553,12 @@ public class MainController {
         taskDao = new TaskDaoImpl();
         tableTask.setItems(taskDao.listDoneTasks(StatusTask.DONE));
 
+    }
+
+    public void clickTableTask(MouseEvent mouseEvent) {
+        Task task = tableTask.getSelectionModel().getSelectedItems().get(0);
+        if (task!=null){
+            idTask = task.getTaskId();
+        }
     }
 }

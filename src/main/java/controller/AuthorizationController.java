@@ -32,7 +32,7 @@ public class AuthorizationController {
         return txtPasswordEnter;
     }
 
-    private Employee userAuth=null;
+    private Employee userAuth=new Employee();
 
 
 
@@ -54,7 +54,6 @@ public class AuthorizationController {
 
                 ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT * FROM Employees, Departments,Access WHERE Employees.Department_id=Departments.Department_id AND Access.Access_id=Employees.Access_id AND Employee_password = '"+txtPasswordEnter.getText()+"'");
                 while (resultSet.next()) {
-                    userAuth = new Employee();
                     userAuth.setEmployeeId(resultSet.getInt("Employee_id"));
                     userAuth.setEmployeeName(resultSet.getString("Employee_name"));
                     userAuth.setEmployeeLogin(resultSet.getString("Employee_login"));
@@ -71,7 +70,7 @@ public class AuthorizationController {
             } catch (SQLException e) {
 
             }
-            if (userAuth.getEmployeeLogin()==null){
+            if (userAuth.getEmployeeName()==null){
                 dialog.ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Пользователь не найден");
             } else {
                 try {

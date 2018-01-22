@@ -26,7 +26,7 @@ public class AddTaskController {
     @FXML
     private JFXDatePicker datePickerTask;
     @FXML
-    private JFXTimePicker timePickerTask;
+    private JFXTimePicker timePickerTask = new JFXTimePicker();
     @FXML
     private JFXTextArea textAreaTask;
     @FXML
@@ -41,6 +41,7 @@ public class AddTaskController {
         taskDao = new TaskDaoImpl();
         employeeDao.listEmployees();
         comboBoxEmployee.setItems(employeeDao.listEmployeesName());
+        timePickerTask.setIs24HourView(true);
 
     }
 
