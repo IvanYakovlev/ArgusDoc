@@ -89,6 +89,15 @@ public class EmployeeDaoImpl implements EmployeeDao{
     }
 
     @Override
+    public ObservableList<String> listEmployeesName() {
+        ObservableList<String> listData = FXCollections.observableArrayList();
+        for(Map.Entry<Integer, String> e : mapEmployee.entrySet()) {
+            listData.add(e.getValue());
+        }
+        return listData;
+    }
+
+    @Override
     public int getIdEmployeeByName(String value) {
         int key=0;
         for(Map.Entry<Integer, String> e : mapEmployee.entrySet()) {

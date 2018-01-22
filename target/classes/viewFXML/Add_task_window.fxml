@@ -8,14 +8,14 @@
 <?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="600.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddTaskController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="600.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddTaskController">
    <children>
       <JFXButton fx:id="cancelAddTaskButton" layoutX="534.0" layoutY="349.0" onAction="#cancelAddTaskButton" styleClass="JFXButton" text="Отмена" />
-      <JFXButton layoutX="472.0" layoutY="349.0" onAction="#addTaskButton" prefHeight="25.0" prefWidth="58.0" styleClass="JFXButton" text="Ок" />
+      <JFXButton fx:id="addTaskButton" layoutX="472.0" layoutY="349.0" onAction="#addTaskButton" prefHeight="25.0" prefWidth="58.0" styleClass="JFXButton" text="Ок" />
       <JFXButton fx:id="attachmentFileButton" layoutX="14.0" layoutY="349.0" styleClass="JFXButton" text="Прикрепить файл" />
       <JFXTextArea fx:id="textAreaTask" focusColor="#4eb1ba" layoutX="14.0" layoutY="94.0" prefHeight="233.0" prefWidth="578.0" promptText="Введите текст задачи" styleClass="JFXTextArea" />
       <JFXTextField fx:id="txtTaskName" focusColor="#4eb1ba" layoutX="14.0" layoutY="21.0" prefHeight="25.0" prefWidth="219.0" promptText="Введите название" styleClass="JFXTextField" />
-      <JFXComboBox fx:id="comboBoxEmployee" focusColor="#4eb1ba" layoutX="247.0" layoutY="21.0" prefHeight="25.0" prefWidth="149.0" promptText="Выберите исполнителя" />
+      <JFXComboBox fx:id="comboBoxEmployee" layoutX="247.0" layoutY="21.0" prefHeight="25.0" prefWidth="149.0" promptText="Выберите исполнителя" styleClass="JFXTextField" />
       <JFXDatePicker fx:id="datePickerTask" defaultColor="#4eb1ba" layoutX="415.0" layoutY="21.0" promptText="Выберите дату" styleClass="JFXDatePicker" />
       <JFXTimePicker fx:id="timePickerTask" defaultColor="#4eb1ba" layoutX="415.0" layoutY="61.0" promptText="Выберите время" styleClass="JFXTimePicker" />
    </children>

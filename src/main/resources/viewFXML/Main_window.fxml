@@ -15,7 +15,7 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="715.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="715.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
       <AnchorPane layoutY="43.0" prefHeight="700.0" prefWidth="933.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="43.0">
          <children>
@@ -32,9 +32,9 @@
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                        </columnResizePolicy>
                                     </TableView>
-                                    <Button layoutX="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Мои задачи" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                    <Button layoutX="125.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Мои поручения" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="0.0" />
-                                    <Button layoutX="225.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Архив" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="0.0" />
+                                    <Button fx:id="myTasksButton" layoutX="14.0" mnemonicParsing="false" onAction="#myTasksButton" prefHeight="50.0" prefWidth="120.0" text="Мои задачи" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <Button fx:id="fromEmpTasjButton" layoutX="117.0" mnemonicParsing="false" onAction="#fromEmpTasjButton" prefHeight="50.0" prefWidth="141.0" text="Назначенные задачи" AnchorPane.leftAnchor="117.0" AnchorPane.topAnchor="0.0" />
+                                    <Button fx:id="archiveTasks" layoutX="258.0" mnemonicParsing="false" onAction="#archiveTasks" prefHeight="50.0" prefWidth="132.0" text="Архив" AnchorPane.leftAnchor="258.0" AnchorPane.topAnchor="0.0" />
                                     <Button layoutX="439.0" layoutY="565.0" mnemonicParsing="false" onAction="#openAddTaskButton" prefHeight="25.0" prefWidth="100.0" text="Новая задача" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="211.0" />
                                     <Button layoutX="548.0" layoutY="565.0" mnemonicParsing="false" onAction="#openEditTaskButton" prefHeight="25.0" prefWidth="100.0" text="Редактировать" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="108.0" />
                                     <Button layoutX="663.0" layoutY="565.0" mnemonicParsing="false" onAction="#openDoneTaskButton" prefHeight="25.0" prefWidth="100.0" text="Выполнение" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />

@@ -10,5 +10,6 @@ public interface EmployeeDao {
     public void updateEmployee(Employee employee);
     public void removeEmployee(int id);
     public ObservableList<Employee> listEmployees();
+    public ObservableList<String> listEmployeesName();
     public int getIdEmployeeByName(String value);
 }

@@ -2,10 +2,7 @@ package controller;
 
 import authorizedUser.AuthorizedUser;
 import com.jfoenix.controls.*;
-import dao.EmployeeDao;
-import dao.EmployeeDaoImpl;
-import dao.TaskDao;
-import dao.TaskDaoImpl;
+import dao.*;
 import dialog.ADInfo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +12,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Employee;
+import model.StatusTask;
 import model.Task;
 
 import java.awt.*;
@@ -24,7 +22,7 @@ public class AddTaskController {
     @FXML
     private JFXTextField txtTaskName;
     @FXML
-    private JFXComboBox<String> comboBoxEmployee;
+    private JFXComboBox<String> comboBoxEmployee = new JFXComboBox<String>();
     @FXML
     private JFXDatePicker datePickerTask;
     @FXML
@@ -33,22 +31,40 @@ public class AddTaskController {
     private JFXTextArea textAreaTask;
     @FXML
     private JFXButton cancelAddTaskButton;
+    @FXML
+    private JFXButton addTaskButton;
     private TaskDao taskDao;
     private EmployeeDao employeeDao;
+
+    public  void initialize(){
+        employeeDao = new EmployeeDaoImpl();
+        taskDao = new TaskDaoImpl();
+        employeeDao.listEmployees();
+        comboBoxEmployee.setItems(employeeDao.listEmployeesName());
+
+    }
 
     public void addTaskButton(ActionEvent actionEvent) {
         if (txtTaskName.getText().isEmpty() ||  comboBoxEmployee.getValue()==null || datePickerTask.getValue()==null||textAreaTask.getText().isEmpty()) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
-            taskDao = new TaskDaoImpl();
-            employeeDao = new EmployeeDaoImpl();
+
+
             Task task = new Task();
             task.setTaskName(txtTaskName.getText());
-            task.setEmployeeId(employeeDao.getIdEmployeeByName(comboBoxEmployee.getValue()));
-            task.setTaskFromEmployee(AuthorizedUser.getUser().getEmployeeName());
-            task.setTaskTerm(java.sql.Date.valueOf(datePickerTask.getValue()));
             task.setTaskText(textAreaTask.getText());
+            task.setTaskAttachment("file");
+            task.setTaskFromEmployee(AuthorizedUser.getUser().getEmployeeName());
+            task.setEmployeeId(employeeDao.getIdEmployeeByName(comboBoxEmployee.getValue()));
+            task.setTaskTerm(java.sql.Date.valueOf(datePickerTask.getValue()));
+            task.setStatusTaskId(StatusTask.NOT_DONE);
+
             taskDao.addTask(task);
+
+
+
+            Stage stage = (Stage) addTaskButton.getScene().getWindow();
+            stage.close();
 
         }
     }

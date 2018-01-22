@@ -20,11 +20,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import model.Department;
-import model.Document;
-import model.Employee;
+import model.*;
 import dialog.ADInfo;
-import model.Task;
 
 
 import java.io.IOException;
@@ -133,9 +130,11 @@ public class MainController {
     private TableColumn<Task, String> employeeTask;
     private TableColumn<Task, String> termTask;
     private TableColumn<Task, String> statusTask;
+    private TableColumn<Task, String> sender;
+
     @FXML
     private Label labelUserAuth;
-
+    TaskDao taskDao;
 
 
     public void initialize() {
@@ -211,12 +210,15 @@ public class MainController {
         termTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskTerm"));
         statusTask = new TableColumn<Task, String>("Статус задачи");
         statusTask.setCellValueFactory(new PropertyValueFactory<Task, String>("statusTaskName"));
+        sender = new TableColumn<Task, String>("Отправитель");
+        sender.setCellValueFactory(new PropertyValueFactory<Task, String>("taskFromEmployee"));
 
 
 
-        tableTask.getColumns().setAll(idTask, nameTask, textTask, attachmentTask, employeeTask, termTask, statusTask);
 
-        tableTask.setItems(taskDao.listTasks(AuthorizedUser.getUser().getEmployeeId()));
+        tableTask.getColumns().setAll(idTask, nameTask, textTask, attachmentTask, employeeTask, sender, termTask, statusTask);
+
+        tableTask.setItems(taskDao.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
 
         labelUserAuth.setText(AuthorizedUser.getUser().getEmployeeName());
     }
@@ -418,7 +420,12 @@ public class MainController {
 
         }
     }
+/*Tasks  tab*/
+    public void refreshTaskTab(){
 
+        tableTask.setItems(taskDao.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
+
+    }
     public void openAddTaskButton(ActionEvent actionEvent) throws IOException {
         try {
             Stage stage = new Stage();
@@ -524,5 +531,21 @@ public class MainController {
     public void closeMainIcon(MouseEvent mouseEvent) {
         Stage stage = (Stage) txtFIOEmployee.getScene().getWindow();
         stage.close();
+    }
+
+    public void myTasksButton(ActionEvent actionEvent) {
+        taskDao = new TaskDaoImpl();
+        tableTask.setItems(taskDao.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
+    }
+
+    public void fromEmpTasjButton(ActionEvent actionEvent) {
+        taskDao = new TaskDaoImpl();
+        tableTask.setItems(taskDao.listFromEmpTasks((AuthorizedUser.getUser().getEmployeeName())));
+    }
+
+    public void archiveTasks(ActionEvent actionEvent) {
+        taskDao = new TaskDaoImpl();
+        tableTask.setItems(taskDao.listDoneTasks(StatusTask.DONE));
+
     }
 }

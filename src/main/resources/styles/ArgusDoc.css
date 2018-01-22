@@ -1,43 +1,50 @@
 .AnchorPane{
-    -fx-background-color: #222930;
-    -fx-text-fill: #ffffff;
+    -fx-background-color: #E4DBBF;
+    -fx-text-fill: #221E1D;
+
 }
 
 .JFXButton{
-    -fx-background-color: #4EB1BA;
-    -fx-text-fill: #ffffff;
+    -fx-background-color: #DC5B21;
+    -fx-text-fill: #E4DBBF;
 }
 
 .JFXDatePicker{
-    -fx-background-color: #4EB1BA;
-    -jfx-default-color: #4d4d4d;
+
+    -fx-text-fill: #E4DBBF;
+    -jfx-default-color: #DC5B21;
 }
 
 .JFXTimePicker{
 
-    -fx-background-color: #4EB1BA;
-    -jfx-default-color: #4d4d4d;
+    -jfx-default-color: #DC5B21;
+    -fx-text-fill: #E4DBBF;
 }
 
-.JFXTextField{
-    -fx-text-fill: #ffffff;
-    -jfx-focus-color: #4EB1BA;
-    -jfx-unfocus-color: #4d4d4d;
+.JFXTextField {
+    -fx-text-fill: #221E1D;
+    -jfx-focus-color: #DC5B21;
+    -jfx-unfocus-color: #383127;
+}
+.JFXComboBox{
+    -fx-text-fill: #221E1D;
+    -jfx-focus-color: #DC5B21;
+    -jfx-unfocus-color: #383127;
 }
 
 .JFXTextArea{
-    -fx-text-fill: #ffffff;
-    -jfx-focus-color: #4EB1BA;
-    -jfx-unfocus-color: #4d4d4d;
+    -fx-text-fill: #221E1D;
+    -jfx-focus-color: #DC5B21;
+    -jfx-unfocus-color: #383127;
 }
 .label{
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #221E1D;
 }
 .password-field{
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #221E1D;
 
-    -jfx-focus-color: #4EB1BA;
-    -jfx-unfocus-color: #4d4d4d;
+    -jfx-focus-color: #DC5B21;
+    -jfx-unfocus-color: #383127;
 }
 
 /*
