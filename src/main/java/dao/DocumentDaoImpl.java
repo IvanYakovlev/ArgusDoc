@@ -117,6 +117,8 @@ public class DocumentDaoImpl implements DocumentDao {
             while (resultSet.next()) {
                 Document document = new Document();
                 document.setDocumentName((resultSet.getString("Document_name")));
+                document.setDocumentId((resultSet.getInt("Document_id")));
+
                 listData.add(document);
             }
         } catch (Exception e) {
