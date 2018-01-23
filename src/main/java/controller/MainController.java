@@ -208,7 +208,7 @@ public class MainController {
         textTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskText"));
         attachmentTask = new TableColumn<Task, String>("Прикрепленный файл");
         attachmentTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskAttachment"));
-        employeeTask = new TableColumn<Task, String>("Сотрудник");
+        employeeTask = new TableColumn<Task, String>("Исполнитель");
         employeeTask.setCellValueFactory(new PropertyValueFactory<Task,String>("employeeName"));
         termTask = new TableColumn<Task, String>("Срок выполнения");
         termTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskTerm"));
