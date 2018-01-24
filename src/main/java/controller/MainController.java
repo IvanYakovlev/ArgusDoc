@@ -404,6 +404,13 @@ public class MainController {
     }
 
 /*Document template tab*/
+public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
+    Document document = tableDocumentTemplate.getSelectionModel().getSelectedItems().get(0);
+    if (document!=null) {
+        idDocument = document.getDocumentId();
+
+    }
+}
     public void choiceDepartmentDocument(ActionEvent actionEvent) {
         tableDocumentTemplate.setItems(documentDao.listDocumentsByDepartment(comboBoxDocument_Template.getValue()));
 
@@ -417,13 +424,7 @@ public class MainController {
         documentDao.printDocument(this.idDocument);
     }
 
-    public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
-        Document document = tableDocumentTemplate.getSelectionModel().getSelectedItems().get(0);
-        if (document!=null) {
-            this.idDocument = document.getDocumentId();
 
-        }
-    }
 /*Tasks  tab*/
     public void refreshTaskTab(){
 

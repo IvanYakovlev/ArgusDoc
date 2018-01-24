@@ -116,7 +116,10 @@ public class DocumentDaoImpl implements DocumentDao {
             ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
             while (resultSet.next()) {
                 Document document = new Document();
+                document.setDocumentId((resultSet.getInt("Document_id")));
                 document.setDocumentName((resultSet.getString("Document_name")));
+                document.setDepartmentId(resultSet.getInt("Department_id"));
+
                 listData.add(document);
             }
         } catch (Exception e) {
