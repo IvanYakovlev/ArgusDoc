@@ -143,8 +143,9 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <Label layoutX="741.0" layoutY="14.0" text="логин:" AnchorPane.rightAnchor="224.0" />
       <Label fx:id="labelUserAuth" layoutX="707.0" layoutY="14.0" prefHeight="17.0" prefWidth="164.0" AnchorPane.rightAnchor="50.0" />
       <FontAwesomeIconView fx:id="closeMainIcon" glyphName="CLOSE" layoutX="970.0" layoutY="29.0" onMouseClicked="#closeMainIcon" size="20" />
+      <FontAwesomeIconView glyphName="USER" layoutX="761.0" layoutY="29.0" size="20" text="" wrappingWidth="15.714287757873535" />
+      <FontAwesomeIconView glyphName="BARS" layoutX="14.0" layoutY="27.0" size="20" />
    </children>
 </AnchorPane>
