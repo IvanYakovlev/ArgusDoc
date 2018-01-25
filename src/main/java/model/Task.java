@@ -1,5 +1,6 @@
 package model;
 import javax.persistence.*;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -32,10 +33,21 @@ public class Task {
     @Column(name = "Task_term")
     private java.sql.Date taskTerm;
 
+    @Column(name = "Task_time")
+    private java.sql.Time taskTime;
+
     @Column(name = "Status_task_id")
     private int statusTaskId;
     private String statusTaskName;
 
+
+    public Time getTaskTime() {
+        return taskTime;
+    }
+
+    public void setTaskTime(Time taskTime) {
+        this.taskTime = taskTime;
+    }
 
     public String getEmployeeName() {
         return employeeName;
@@ -121,7 +133,7 @@ public class Task {
     @Override
     public String toString() {
         return "Task{" +
-                "taskId=" + taskId +
+                "idTask=" + taskId +
                 ", taskName='" + taskName + '\'' +
                 ", taskText='" + taskText + '\'' +
                 ", taskAttachment='" + taskAttachment + '\'' +

@@ -20,7 +20,7 @@ DBconnection dBconnection;
         dBconnection=new DBconnection();
 
         try {
-            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("INSERT INTO TASKS(Task_name, Task_text, Task_attachment, Task_from_employee, Employee_id, Task_term, Status_task_id) VALUES(?,?,?,?,?,?,?)");
+            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("INSERT INTO TASKS(Task_name, Task_text, Task_attachment, Task_from_employee, Employee_id, Task_term, Status_task_id, Task_time) VALUES(?,?,?,?,?,?,?,?)");
             preparedStatement.setString(1, task.getTaskName());
             preparedStatement.setString(2, task.getTaskText());
             preparedStatement.setString(3, task.getTaskAttachment());
@@ -28,6 +28,7 @@ DBconnection dBconnection;
             preparedStatement.setInt(5, task.getEmployeeId());
             preparedStatement.setDate(6, task.getTaskTerm());
             preparedStatement.setInt(7, StatusTask.NOT_DONE);
+            preparedStatement.setTime(8,task.getTaskTime());
             preparedStatement.execute();
 
         } catch (SQLException e) {
@@ -38,7 +39,7 @@ DBconnection dBconnection;
     public void updateTask(Task task) {
         dBconnection=new DBconnection();
         try {
-            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE TASKS SET Task_name=?, Task_text=?, Task_attachment=?, Task_from_employee=?, Employee_id=?, Task_term=?, Status_task_id=? WHERE  Task_id =?");
+            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE TASKS SET Task_name=?, Task_text=?, Task_attachment=?, Task_from_employee=?, Employee_id=?, Task_term=?, Status_task_id=?, Task_time=? WHERE  Task_id =?");
             preparedStatement.setString(1, task.getTaskName());
             preparedStatement.setString(2, task.getTaskText());
             preparedStatement.setString(3, task.getTaskAttachment());
@@ -46,7 +47,8 @@ DBconnection dBconnection;
             preparedStatement.setInt(5, task.getEmployeeId());
             preparedStatement.setDate(6,task.getTaskTerm());
             preparedStatement.setInt(7, task.getStatusTaskId());
-            preparedStatement.setInt(7, task.getTaskId());
+            preparedStatement.setTime(8,task.getTaskTime());
+            preparedStatement.setInt(9, task.getTaskId());
             preparedStatement.execute();
 
         } catch (SQLException e) {
@@ -82,6 +84,7 @@ DBconnection dBconnection;
                 task.setTaskTerm(resultSet.getDate("Task_term"));
                 task.setStatusTaskName(resultSet.getString("Status_task_name"));
                 task.setTaskFromEmployee(resultSet.getString("Task_from_employee"));
+                task.setTaskTime(resultSet.getTime("Task_time"));
                 listData.add(task);
             }
         } catch (SQLException e) {
@@ -106,7 +109,9 @@ DBconnection dBconnection;
                 task.setEmployeeName(resultSet.getString("Employee_name"));
                 task.setTaskTerm(resultSet.getDate("Task_term"));
                 task.setStatusTaskName(resultSet.getString("Status_task_name"));
+                task.setTaskTime(resultSet.getTime("Task_time"));
                 task.setTaskFromEmployee(resultSet.getString("Task_from_employee"));
+
                 listData.add(task);
             }
         } catch (SQLException e) {
@@ -128,10 +133,12 @@ DBconnection dBconnection;
                 task.setTaskText(resultSet.getString("Task_text"));
                 task.setTaskAttachment(resultSet.getString("Task_attachment"));
                 task.setEmployeeId(resultSet.getInt("Employee_id"));
-                task.setEmployeeName(resultSet.getString("Employee_name"));
+
                 task.setTaskTerm(resultSet.getDate("Task_term"));
+                task.setEmployeeName(resultSet.getString("Employee_name"));
                 task.setStatusTaskName(resultSet.getString("Status_task_name"));
                 task.setTaskFromEmployee(resultSet.getString("Task_from_employee"));
+                task.setTaskTime(resultSet.getTime("Task_time"));
                 listData.add(task);
             }
         } catch (SQLException e) {

@@ -123,7 +123,7 @@ public class MainController {
 //Tasks tab
     @FXML
     private TableView<Task> tableTask;
-    private TableColumn<Task, String> taskId;
+    private TableColumn<Task, String> idTask;
     private TableColumn<Task, String> nameTask;
     private TableColumn<Task, String> textTask;
     private TableColumn<Task, String> attachmentTask;
@@ -131,15 +131,15 @@ public class MainController {
     private TableColumn<Task, String> termTask;
     private TableColumn<Task, String> statusTask;
     private TableColumn<Task, String> sender;
+    private TableColumn<Task, String> timeTask;
 
     @FXML
     private Label labelUserAuth;
     TaskDao taskDao;
-    private int idTask;
+    private Task task= new Task();
 
-    public int getIdTask() {
-        return idTask;
-    }
+
+
 
     public void initialize() {
 
@@ -200,8 +200,8 @@ public class MainController {
         comboBoxDocument_Template.setPromptText("Выберите отдел:");
 /*initialize Task tab*/
         TaskDao taskDao = new TaskDaoImpl();
-        taskId = new TableColumn<Task, String>("Id");
-        taskId.setCellValueFactory(new PropertyValueFactory<Task, String>("taskId"));
+        idTask = new TableColumn<Task, String>("Id");
+        idTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskId"));
         nameTask = new TableColumn<Task,String>("Название задачи");
         nameTask.setCellValueFactory(new PropertyValueFactory<Task,String>("taskName"));
         textTask = new TableColumn<Task, String>("Текст задачи");
@@ -216,11 +216,12 @@ public class MainController {
         statusTask.setCellValueFactory(new PropertyValueFactory<Task, String>("statusTaskName"));
         sender = new TableColumn<Task, String>("Отправитель");
         sender.setCellValueFactory(new PropertyValueFactory<Task, String>("taskFromEmployee"));
+        timeTask = new TableColumn<Task, String>("Время выполнения");
+        timeTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskTime"));
 
 
 
-
-        tableTask.getColumns().setAll(taskId, nameTask, textTask, attachmentTask, employeeTask, sender, termTask, statusTask);
+        tableTask.getColumns().setAll(idTask, nameTask, textTask, attachmentTask, employeeTask, sender, termTask,timeTask, statusTask);
 
         tableTask.setItems(taskDao.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
 
@@ -468,35 +469,51 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
     }
 
     public void openEditTaskButton(ActionEvent actionEvent) {
-        try {
-            Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("/viewFXML/Edit_task_window.fxml"));
-            stage.setTitle("Редактирование задачи");
-            stage.setMinHeight(150);
-            stage.setMinWidth(300);
-            stage.setResizable(false);
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
-            stage.initStyle(StageStyle.TRANSPARENT);
-            root.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    xOffset = event.getSceneX();
-                    yOffset = event.getSceneY();
-                }
-            });
-            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    stage.setX(event.getScreenX() - xOffset);
-                    stage.setY(event.getScreenY() - yOffset);
-                }
-            });
-            stage.show();
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (task!=null) {
+            EditTaskController editTaskController = new EditTaskController();
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/viewFXML/Edit_task_window.fxml"));
+            try {
+
+                fxmlLoader.load();
+                Stage stage = new Stage();
+                Parent root = fxmlLoader.getRoot();
+                stage.setScene(new Scene(root));
+                EditTaskController editController = fxmlLoader.getController();
+                editController.task =task;
+                editController.initTab(task);
+
+                stage.setTitle("Редактирование задачи");
+                stage.setMinHeight(150);
+                stage.setMinWidth(300);
+                stage.setResizable(false);
+
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+                stage.initStyle(StageStyle.TRANSPARENT);
+                root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        xOffset = event.getSceneX();
+                        yOffset = event.getSceneY();
+                    }
+                });
+                root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        stage.setX(event.getScreenX() - xOffset);
+                        stage.setY(event.getScreenY() - yOffset);
+                    }
+                });
+                stage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            System.out.println("Empty selection");
         }
     }
 
@@ -559,7 +576,7 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
     public void clickTableTask(MouseEvent mouseEvent) {
         Task task = tableTask.getSelectionModel().getSelectedItems().get(0);
         if (task!=null){
-            idTask = task.getTaskId();
+            this.task = task;
         }
     }
 }

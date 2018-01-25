@@ -16,6 +16,7 @@ import model.StatusTask;
 import model.Task;
 
 import java.awt.*;
+import java.sql.Time;
 import java.util.Date;
 
 public class AddTaskController {
@@ -58,6 +59,7 @@ public class AddTaskController {
             task.setTaskFromEmployee(AuthorizedUser.getUser().getEmployeeName());
             task.setEmployeeId(employeeDao.getIdEmployeeByName(comboBoxEmployee.getValue()));
             task.setTaskTerm(java.sql.Date.valueOf(datePickerTask.getValue()));
+            task.setTaskTime(java.sql.Time.valueOf(timePickerTask.getValue()));
             task.setStatusTaskId(StatusTask.NOT_DONE);
 
             taskDao.addTask(task);
