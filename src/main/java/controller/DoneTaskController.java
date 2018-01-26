@@ -1,11 +1,17 @@
 package controller;
 
+import authorizedUser.AuthorizedUser;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
+import dao.TaskDao;
+import dao.TaskDaoImpl;
+import dialog.ADInfo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import model.StatusTask;
 import model.Task;
 
 public class DoneTaskController {
@@ -26,7 +32,11 @@ public class DoneTaskController {
     private Label labelNameTask = new Label();
     @FXML
     private JFXTextArea textAreaTask = new JFXTextArea();
-
+    @FXML
+    private JFXTextArea textAreaTaskDone;
+    @FXML
+    private JFXButton doneTaskButton = new JFXButton();
+    private TaskDao taskDao = new TaskDaoImpl();
 
     public void cancelDoneTaskButton(ActionEvent actionEvent) {
         Stage stage = (Stage) cancelDoneTaskButton.getScene().getWindow();
@@ -34,6 +44,26 @@ public class DoneTaskController {
     }
 
     public void doneTaskButton(ActionEvent actionEvent) {
+        if (textAreaTaskDone.getText().isEmpty()) {
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
+        } else {
+
+
+            Task task = new Task();
+            task.setTaskId(this.task.getTaskId());
+            task.setTaskText(textAreaTaskDone.getText());
+            task.setStatusTaskId(StatusTask.DONE);
+            task.setTaskAttachment("newfile");
+
+
+            taskDao.doneTask(task);
+
+
+
+            Stage stage = (Stage) doneTaskButton.getScene().getWindow();
+            stage.close();
+
+        }
     }
 
     public void attachmentFileButton(ActionEvent actionEvent) {

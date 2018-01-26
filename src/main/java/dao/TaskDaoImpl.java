@@ -72,7 +72,7 @@ DBconnection dBconnection;
         this.dBconnection = new DBconnection();
         ObservableList<Task> listData = FXCollections.observableArrayList();
         try {
-            ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT * FROM TASKS,EMPLOYEES,STATUS_TASKS WHERE TASKS.Employee_id=EMPLOYEES.Employee_id AND TASKs.status_task_id=STATUS_TASKS.Status_task_id AND TASKS.Employee_id='"+id+"'");
+            ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT * FROM TASKS,EMPLOYEES,STATUS_TASKS WHERE TASKS.Employee_id=EMPLOYEES.Employee_id AND TASKs.status_task_id=STATUS_TASKS.Status_task_id AND TASKS.Employee_id='"+id+"' AND STATUS_TASKS.Status_task_id!="+StatusTask.DONE);
             while (resultSet.next()){
                 Task task= new Task();
                 task.setTaskId(resultSet.getInt("Task_id"));
@@ -148,12 +148,14 @@ DBconnection dBconnection;
     }
 
     @Override
-    public void doneTask(int id) {
+    public void doneTask(Task task) {
         dBconnection=new DBconnection();
         try {
-            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE TASKS SET Status_task_id=? WHERE  Task_id =?");
-            preparedStatement.setInt(1, StatusTask.DONE);
-            preparedStatement.setInt(2, id);
+            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE TASKS SET Status_task_id=?, Task_text=?, Task_attachment=? WHERE  Task_id =?");
+            preparedStatement.setInt(1, task.getStatusTaskId());
+            preparedStatement.setString(2, task.getTaskText());
+            preparedStatement.setString(3, task.getTaskAttachment());
+            preparedStatement.setInt(4, task.getTaskId());
 
             preparedStatement.execute();
 
