@@ -583,7 +583,7 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
 
     public void archiveTasks(ActionEvent actionEvent) {
         taskDao = new TaskDaoImpl();
-        tableTask.setItems(taskDao.listDoneTasks(StatusTask.DONE));
+        tableTask.setItems(taskDao.listArchiveTasks(StatusTask.CANCELED));
 
     }
 
@@ -592,5 +592,19 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
         if (task!=null){
             this.task = task;
         }
+    }
+
+    public void canceledTaskButton(ActionEvent actionEvent) {
+        taskDao.canceledTask(task.getTaskId());
+    }
+
+    public void myDoneTasksButton(ActionEvent actionEvent) {
+        taskDao = new TaskDaoImpl();
+        tableTask.setItems(taskDao.listMyDoneTasks(AuthorizedUser.getUser().getEmployeeId()));
+    }
+
+    public void deleteTaskButton(ActionEvent actionEvent) {
+        taskDao = new TaskDaoImpl();
+        taskDao.removeTask(task.getTaskId());
     }
 }

@@ -32,12 +32,15 @@
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                        </columnResizePolicy>
                                     </TableView>
-                                    <Button fx:id="myTasksButton" layoutX="14.0" mnemonicParsing="false" onAction="#myTasksButton" prefHeight="50.0" prefWidth="120.0" text="Мои задачи" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                    <Button fx:id="fromEmpTasjButton" layoutX="117.0" mnemonicParsing="false" onAction="#fromEmpTasjButton" prefHeight="50.0" prefWidth="141.0" text="Назначенные задачи" AnchorPane.leftAnchor="117.0" AnchorPane.topAnchor="0.0" />
-                                    <Button fx:id="archiveTasks" layoutX="258.0" mnemonicParsing="false" onAction="#archiveTasks" prefHeight="50.0" prefWidth="132.0" text="Архив" AnchorPane.leftAnchor="258.0" AnchorPane.topAnchor="0.0" />
-                                    <Button layoutX="439.0" layoutY="565.0" mnemonicParsing="false" onAction="#openAddTaskButton" prefHeight="25.0" prefWidth="100.0" text="Новая задача" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="211.0" />
-                                    <Button layoutX="548.0" layoutY="565.0" mnemonicParsing="false" onAction="#openEditTaskButton" prefHeight="25.0" prefWidth="100.0" text="Редактировать" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="108.0" />
-                                    <Button layoutX="663.0" layoutY="565.0" mnemonicParsing="false" onAction="#openDoneTaskButton" prefHeight="25.0" prefWidth="100.0" text="Выполнение" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                                    <Button fx:id="myTasksButton" layoutX="14.0" mnemonicParsing="false" onAction="#myTasksButton" prefHeight="50.0" prefWidth="120.0" text="Текущие" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <Button fx:id="fromEmpTasjButton" layoutX="240.0" mnemonicParsing="false" onAction="#fromEmpTasjButton" prefHeight="50.0" prefWidth="141.0" text="Назначенные" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="0.0" />
+                                    <Button fx:id="archiveTasks" layoutX="381.0" mnemonicParsing="false" onAction="#archiveTasks" prefHeight="50.0" prefWidth="132.0" text="Архив" AnchorPane.leftAnchor="381.0" AnchorPane.topAnchor="0.0" />
+                                    <Button layoutX="500.0" layoutY="609.0" mnemonicParsing="false" onAction="#openAddTaskButton" prefHeight="25.0" prefWidth="100.0" text="Новая задача" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="400.0" />
+                                    <Button layoutX="600.0" layoutY="609.0" mnemonicParsing="false" onAction="#openEditTaskButton" prefHeight="25.0" prefWidth="100.0" text="Редактировать" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="300.0" />
+                                    <Button layoutX="700.0" layoutY="609.0" mnemonicParsing="false" onAction="#openDoneTaskButton" prefHeight="25.0" prefWidth="100.0" text="Выполнение" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="200.0" />
+                                    <Button fx:id="canceledTaskButton" layoutX="800.0" layoutY="609.0" mnemonicParsing="false" onAction="#canceledTaskButton" prefHeight="25.0" prefWidth="100.0" text="В архив" />
+                                    <Button fx:id="myDoneTasksButton" layoutX="120.0" mnemonicParsing="false" onAction="#myDoneTasksButton" prefHeight="50.0" prefWidth="120.0" text="Выполненные" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS" />
+                                    <Button fx:id="deleteTaskButton" layoutX="900.0" layoutY="609.0" mnemonicParsing="false" onAction="#deleteTaskButton" prefHeight="25.0" prefWidth="100.0" text="Удалить" />
                                  </children>
                                  <cursor>
                                     <Cursor fx:constant="DEFAULT" />

@@ -10,8 +10,9 @@ public interface TaskDao {
     public void updateTask(Task task);
     public void removeTask(int id);
     public ObservableList<Task> listMyTasks(int id);
+    public ObservableList<Task> listMyDoneTasks(int id);
     public ObservableList<Task> listFromEmpTasks(String userName);
-    public ObservableList<Task> listDoneTasks(int idStatus);
+    public ObservableList<Task> listArchiveTasks(int idStatus);
     public void doneTask(Task task);
     public void performedTask(int id);
     public void overdueTask(int id);

@@ -72,7 +72,7 @@ DBconnection dBconnection;
         this.dBconnection = new DBconnection();
         ObservableList<Task> listData = FXCollections.observableArrayList();
         try {
-            ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT * FROM TASKS,EMPLOYEES,STATUS_TASKS WHERE TASKS.Employee_id=EMPLOYEES.Employee_id AND TASKs.status_task_id=STATUS_TASKS.Status_task_id AND TASKS.Employee_id='"+id+"' AND STATUS_TASKS.Status_task_id!="+StatusTask.DONE);
+            ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT * FROM TASKS,EMPLOYEES,STATUS_TASKS WHERE TASKS.Employee_id=EMPLOYEES.Employee_id AND TASKs.status_task_id=STATUS_TASKS.Status_task_id AND TASKS.Employee_id='"+id+"' AND STATUS_TASKS.Status_task_id!="+StatusTask.DONE+"AND STATUS_TASKS.Status_task_id!="+StatusTask.CANCELED);
             while (resultSet.next()){
                 Task task= new Task();
                 task.setTaskId(resultSet.getInt("Task_id"));
@@ -80,6 +80,32 @@ DBconnection dBconnection;
                 task.setTaskText(resultSet.getString("Task_text"));
                 task.setTaskAttachment(resultSet.getString("Task_attachment"));
                 task.setEmployeeId(resultSet.getInt("Employee_id"));
+                task.setEmployeeName(resultSet.getString("Employee_name"));
+                task.setTaskTerm(resultSet.getDate("Task_term"));
+                task.setStatusTaskName(resultSet.getString("Status_task_name"));
+                task.setTaskFromEmployee(resultSet.getString("Task_from_employee"));
+                task.setTaskTime(resultSet.getTime("Task_time"));
+                listData.add(task);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listData;
+    }
+
+    @Override
+    public ObservableList<Task> listMyDoneTasks(int id) {
+        this.dBconnection = new DBconnection();
+        ObservableList<Task> listData = FXCollections.observableArrayList();
+        try {
+            ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT * FROM TASKS,EMPLOYEES,STATUS_TASKS WHERE TASKS.Employee_id=EMPLOYEES.Employee_id AND TASKs.status_task_id=STATUS_TASKS.Status_task_id AND TASKS.Employee_id='"+id+"' AND STATUS_TASKS.Status_task_id="+StatusTask.DONE);
+            while (resultSet.next()){
+                Task task= new Task();
+                task.setTaskId(resultSet.getInt("Task_id"));
+                task.setTaskName(resultSet.getString("Task_name"));
+                task.setTaskText(resultSet.getString("Task_text"));
+                task.setEmployeeId(resultSet.getInt("Employee_id"));
+                task.setTaskAttachment(resultSet.getString("Task_attachment"));
                 task.setEmployeeName(resultSet.getString("Employee_name"));
                 task.setTaskTerm(resultSet.getDate("Task_term"));
                 task.setStatusTaskName(resultSet.getString("Status_task_name"));
@@ -98,7 +124,7 @@ DBconnection dBconnection;
         this.dBconnection = new DBconnection();
         ObservableList<Task> listData = FXCollections.observableArrayList();
         try {
-            ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT * FROM TASKS,EMPLOYEES,STATUS_TASKS WHERE TASKS.Employee_id=EMPLOYEES.Employee_id AND TASKs.status_task_id=STATUS_TASKS.Status_task_id AND TASKS.Task_from_employee='"+userName+"'");
+            ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT * FROM TASKS,EMPLOYEES,STATUS_TASKS WHERE TASKS.Employee_id=EMPLOYEES.Employee_id AND TASKs.status_task_id=STATUS_TASKS.Status_task_id AND TASKS.Task_from_employee='"+userName+"' AND STATUS_TASKS.Status_task_id!="+StatusTask.CANCELED);
             while (resultSet.next()){
                 Task task= new Task();
                 task.setTaskId(resultSet.getInt("Task_id"));
@@ -121,7 +147,7 @@ DBconnection dBconnection;
     }
 
     @Override
-    public ObservableList<Task> listDoneTasks(int idStatus) {
+    public ObservableList<Task> listArchiveTasks(int idStatus) {
         this.dBconnection = new DBconnection();
         ObservableList<Task> listData = FXCollections.observableArrayList();
         try {

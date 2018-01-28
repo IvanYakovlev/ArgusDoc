@@ -1,8 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="526.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="viewFXML.MainWindow2">
-
+<AnchorPane prefHeight="526.0" prefWidth="846.0" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+   <children>
+      <AnchorPane layoutX="-1.0" prefHeight="528.0" prefWidth="33.0" styleClass="AnchorPane3">
+         <children>
+            <FontAwesomeIconView fill="WHITE" glyphName="BARS" layoutX="8.0" layoutY="31.0" size="20" />
+            <FontAwesomeIconView fill="WHITE" glyphName="QUESTION" layoutX="11.0" layoutY="490.0" size="20" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="31.0" prefHeight="528.0" prefWidth="165.0" styleClass="AnchorPane2">
+         <children>
+            <JFXButton alignment="BOTTOM_LEFT" layoutX="4.0" layoutY="103.0" prefHeight="46.0" prefWidth="158.0" styleClass="JFXButton" text="Задачи">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="TASKS" size="16" />
+               </graphic></JFXButton>
+            <JFXButton alignment="BOTTOM_LEFT" layoutX="4.0" layoutY="149.0" prefHeight="46.0" prefWidth="158.0" styleClass="JFXButton" text="Чат">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="WECHAT" size="16" />
+               </graphic></JFXButton>
+            <JFXButton alignment="BOTTOM_LEFT" layoutX="4.0" layoutY="195.0" prefHeight="46.0" prefWidth="158.0" styleClass="JFXButton" text="Шаблоны">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="BOOK" size="16" />
+               </graphic></JFXButton>
+            <JFXButton alignment="BOTTOM_LEFT" layoutX="4.0" layoutY="241.0" prefHeight="46.0" prefWidth="158.0" styleClass="JFXButton" text="Календарь">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="CALENDAR" size="16" />
+               </graphic></JFXButton>
+            <JFXButton alignment="BOTTOM_LEFT" layoutX="4.0" layoutY="287.0" prefHeight="46.0" prefWidth="158.0" styleClass="JFXButton" text="Настройки">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="WRENCH" size="16" />
+               </graphic></JFXButton>
+            <Label layoutX="37.0" layoutY="45.0" prefHeight="17.0" prefWidth="73.0" text="Аргус">
+               <font>
+                  <Font name="Gentium Basic" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="196.0" layoutY="24.0" prefHeight="504.0" prefWidth="651.0" styleClass="AnchorPane" />
+      <FontAwesomeIconView glyphName="CLOSE" layoutX="825.0" layoutY="20.0" size="20" />
+      <MaterialDesignIconView glyphName="WINDOW_MINIMIZE" layoutX="785.0" layoutY="25.0" size="20" text="" wrappingWidth="20.0" />
+      <MaterialDesignIconView glyphName="WINDOW_RESTORE" layoutX="805.0" layoutY="21.0" size="20" visible="false" />
+      <MaterialDesignIconView glyphName="WINDOW_MAXIMIZE" layoutX="805.0" layoutY="21.0" size="20" />
+      <FontAwesomeIconView fill="#001068" glyphName="USER" layoutX="210.0" layoutY="20.0" size="20" />
+   </children>
 </AnchorPane>
