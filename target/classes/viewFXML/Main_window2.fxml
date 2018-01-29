@@ -1,39 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="526.0" prefWidth="846.0" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<AnchorPane prefHeight="526.0" prefWidth="846.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController2">
    <children>
-      <AnchorPane layoutX="-1.0" prefHeight="528.0" prefWidth="33.0" styleClass="AnchorPane3">
+      <AnchorPane layoutX="-1.0" prefHeight="528.0" prefWidth="30.0" styleClass="AnchorPane3" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <FontAwesomeIconView fill="WHITE" glyphName="BARS" layoutX="8.0" layoutY="31.0" size="20" />
-            <FontAwesomeIconView fill="WHITE" glyphName="QUESTION" layoutX="11.0" layoutY="490.0" size="20" />
+            <FontAwesomeIconView fill="WHITE" glyphName="BARS" layoutX="8.0" layoutY="31.0" size="20" AnchorPane.topAnchor="20.0" />
+            <FontAwesomeIconView fill="WHITE" glyphName="QUESTION" layoutX="11.0" layoutY="490.0" size="20" AnchorPane.bottomAnchor="30.0" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="31.0" prefHeight="528.0" prefWidth="165.0" styleClass="AnchorPane2">
+      <AnchorPane layoutX="31.0" prefHeight="528.0" prefWidth="60.0" styleClass="AnchorPane2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="0.0">
          <children>
-            <JFXButton alignment="BOTTOM_LEFT" layoutX="4.0" layoutY="103.0" prefHeight="46.0" prefWidth="158.0" styleClass="JFXButton" text="Задачи" />
-            <JFXButton alignment="BOTTOM_LEFT" layoutX="4.0" layoutY="149.0" prefHeight="46.0" prefWidth="158.0" styleClass="JFXButton" text="Чат" />
-            <JFXButton alignment="BOTTOM_LEFT" layoutX="4.0" layoutY="195.0" prefHeight="46.0" prefWidth="158.0" styleClass="JFXButton" text="Шаблоны" />
-            <JFXButton alignment="BOTTOM_LEFT" layoutX="4.0" layoutY="241.0" prefHeight="46.0" prefWidth="158.0" styleClass="JFXButton" text="Календарь" />
-            <JFXButton alignment="BOTTOM_LEFT" layoutX="4.0" layoutY="287.0" prefHeight="46.0" prefWidth="158.0" styleClass="JFXButton" text="Настройки" />
             <Label layoutX="37.0" layoutY="45.0" prefHeight="17.0" prefWidth="73.0" text="Аргус">
                <font>
                   <Font name="Gentium Basic" size="24.0" />
                </font>
             </Label>
+            <VBox layoutY="99.0" prefHeight="415.0" prefWidth="0.0" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="99.0">
+               <children>
+                  <JFXButton alignment="BOTTOM_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="40.0" minWidth="-Infinity" onAction="#a" prefHeight="40.0" prefWidth="160.0" styleClass="JFXButton" text="Задачи">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="TASKS" size="16" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton alignment="BOTTOM_LEFT" onAction="#b" prefHeight="29.0" prefWidth="165.0" styleClass="JFXButton" text="      Текущие" />
+                  <JFXButton alignment="BOTTOM_LEFT" onAction="#c" prefHeight="29.0" prefWidth="165.0" styleClass="JFXButton" text="      Выполненные" />
+                  <JFXButton alignment="BOTTOM_LEFT" onAction="#d" prefHeight="29.0" prefWidth="165.0" styleClass="JFXButton" text="      Назначенные" />
+                  <JFXButton alignment="BOTTOM_LEFT" onAction="#e" prefHeight="29.0" prefWidth="165.0" styleClass="JFXButton" text="      Архив" />
+                  <JFXButton alignment="BOTTOM_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="40.0" minWidth="-Infinity" onAction="#y" prefHeight="40.0" prefWidth="160.0" styleClass="JFXButton" text="Шаблоны">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="BOOK" size="16" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton alignment="BOTTOM_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="40.0" minWidth="-Infinity" prefHeight="40.0" prefWidth="160.0" styleClass="JFXButton" text="Календарь">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="CALENDAR" size="16" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton alignment="BOTTOM_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="40.0" minWidth="-Infinity" prefHeight="40.0" prefWidth="160.0" styleClass="JFXButton" text="Чат">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="WECHAT" size="16" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton alignment="BOTTOM_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="40.0" minWidth="-Infinity" prefHeight="40.0" prefWidth="160.0" styleClass="JFXButton" text="Настройки">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="WRENCH" size="16" />
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </VBox>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="196.0" layoutY="24.0" prefHeight="504.0" prefWidth="651.0" styleClass="AnchorPane" />
-      <FontAwesomeIconView glyphName="CLOSE" layoutX="825.0" layoutY="20.0" size="20" />
-      <MaterialDesignIconView glyphName="WINDOW_MINIMIZE" layoutX="785.0" layoutY="25.0" size="20" text="" wrappingWidth="20.0" />
+      <FontAwesomeIconView glyphName="CLOSE" layoutX="825.0" layoutY="20.0" size="20" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0" />
+      <MaterialDesignIconView glyphName="WINDOW_MINIMIZE" layoutX="785.0" layoutY="25.0" size="20" text="" wrappingWidth="20.0" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="8.0" />
       <MaterialDesignIconView glyphName="WINDOW_RESTORE" layoutX="805.0" layoutY="21.0" size="20" visible="false" />
-      <MaterialDesignIconView glyphName="WINDOW_MAXIMIZE" layoutX="805.0" layoutY="21.0" size="20" />
-      <FontAwesomeIconView fill="#757575" glyphName="USER" layoutX="210.0" layoutY="20.0" size="20" />
+      <MaterialDesignIconView glyphName="WINDOW_MAXIMIZE" layoutX="805.0" layoutY="21.0" size="20" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="3.0" />
+      <FontAwesomeIconView fill="#001068" glyphName="USER" layoutX="210.0" layoutY="20.0" size="20" />
+      <Label layoutX="235.0" layoutY="5.0" prefHeight="17.0" prefWidth="57.0" styleClass="label2" />
+      <AnchorPane layoutX="190.0" layoutY="37.0" prefHeight="504.0" prefWidth="657.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+         <children>
+            <Pane fx:id="paneTask" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <AnchorPane fx:id="cp" layoutY="461.0" prefHeight="40.0" prefWidth="656.0" style="-fx-background-color: #ffffff;">
+                     <children>
+                        <JFXButton layoutX="586.0" layoutY="8.0" styleClass="JFXButton" text="Редактировать" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                     </children>
+                  </AnchorPane>
+                  <JFXTreeTableView prefHeight="501.0" prefWidth="656.0" />
+                  <AnchorPane fx:id="bp" layoutY="461.0" prefHeight="40.0" prefWidth="656.0" style="-fx-background-color: #ffffff;">
+                     <children>
+                        <JFXButton layoutX="489.0" layoutY="8.0" styleClass="JFXButton" text="Просмотр" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="72.0" />
+                        <JFXButton layoutX="586.0" layoutY="8.0" styleClass="JFXButton" text="Принять" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="ep" layoutY="461.0" prefHeight="40.0" prefWidth="656.0" style="-fx-background-color: #ffffff;">
+                     <children>
+                        <JFXButton layoutX="599.0" layoutY="8.0" styleClass="JFXButton" text="Удалить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                        <JFXButton layoutX="494.0" layoutY="8.0" styleClass="JFXButton" text="Редактировать" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="70.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="dp" layoutY="461.0" prefHeight="40.0" prefWidth="656.0" style="-fx-background-color: #ffffff;">
+                     <children>
+                        <JFXButton layoutX="426.0" layoutY="8.0" styleClass="JFXButton" text="Создать" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="238.0" />
+                        <JFXButton layoutX="599.0" layoutY="8.0" styleClass="JFXButton" text="Удалить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="70.0" />
+                        <JFXButton layoutX="494.0" layoutY="8.0" styleClass="JFXButton" text="Редактировать" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="135.0" />
+                        <JFXButton layoutX="356.0" layoutY="9.0" styleClass="JFXButton" text="В архив" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </Pane>
+            <Pane fx:id="paneTemplate" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <AnchorPane prefHeight="501.0" prefWidth="656.0" styleClass="AnchorPane">
+                     <children>
+                        <JFXComboBox layoutX="6.0" layoutY="14.0" prefHeight="25.0" prefWidth="519.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="130.0" />
+                        <JFXButton layoutX="440.0" layoutY="14.0" styleClass="JFXButton" text="Печать" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="70.0" />
+                        <JFXButton layoutX="590.0" layoutY="18.0" styleClass="JFXButton" text="Открыть" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                        <JFXTreeTableView layoutX="6.0" layoutY="80.0" prefHeight="461.0" prefWidth="656.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

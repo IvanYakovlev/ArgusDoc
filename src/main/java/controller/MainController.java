@@ -7,6 +7,7 @@ import dbConnection.DBconnection;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -607,4 +608,6 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
         taskDao = new TaskDaoImpl();
         taskDao.removeTask(task.getTaskId());
     }
+
+
 }
