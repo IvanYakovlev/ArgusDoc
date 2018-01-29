@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -13,38 +17,38 @@
    <children>
       <AnchorPane layoutX="31.0" prefHeight="500.0" prefWidth="170.0" styleClass="AnchorPane2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="37.0" layoutY="45.0" prefHeight="17.0" prefWidth="73.0" text="Аргус">
+            <Label layoutX="72.0" layoutY="46.0" prefHeight="17.0" prefWidth="73.0" text="Аргус">
                <font>
                   <Font name="Gentium Basic" size="24.0" />
                </font>
             </Label>
             <VBox layoutX="30.0" layoutY="75.0" prefHeight="425.0" prefWidth="140.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="75.0">
                <children>
-                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#a" styleClass="JFXButton" text="Задачи">
+                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#myTasksButton" styleClass="JFXButton" text="Задачи">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="TASKS" size="16" />
                      </graphic>
                   </JFXButton>
-                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="30.0" onAction="#b" styleClass="JFXButton" text="      Текущие" />
-                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="30.0" onAction="#c" styleClass="JFXButton" text="      Выполненные" />
-                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="30.0" onAction="#d" styleClass="JFXButton" text="      Назначенные" />
-                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="30.0" onAction="#e" styleClass="JFXButton" text="      Архив" />
-                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#y" styleClass="JFXButton" text="Шаблоны">
+                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="30.0" onAction="#myTasksButton" styleClass="JFXButton" text="      Текущие" />
+                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="30.0" onAction="#myDoneTasksButton" styleClass="JFXButton" text="      Выполненные" />
+                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="30.0" onAction="#fromEmpTasjButton" styleClass="JFXButton" text="      Назначенные" />
+                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="30.0" onAction="#archiveTasks" styleClass="JFXButton" text="      Архив" />
+                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#templateTabButton" styleClass="JFXButton" text="Шаблоны">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="BOOK" size="16" />
                      </graphic>
                   </JFXButton>
-                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" styleClass="JFXButton" text="Календарь">
+                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#calendarTabButton" styleClass="JFXButton" text="Календарь">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="CALENDAR" size="16" />
                      </graphic>
                   </JFXButton>
-                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" styleClass="JFXButton" text="Чат">
+                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#letterTabButton" styleClass="JFXButton" text="Письма">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="WECHAT" size="16" />
                      </graphic>
                   </JFXButton>
-                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" styleClass="JFXButton" text="Настройки">
+                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#settingTabButton" styleClass="JFXButton" text="Настройки">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="WRENCH" size="16" />
                      </graphic>
@@ -56,27 +60,119 @@
                   <FontAwesomeIconView fill="WHITE" glyphName="BARS" layoutX="8.0" layoutY="31.0" size="20" AnchorPane.topAnchor="20.0" />
                   <FontAwesomeIconView fill="WHITE" glyphName="QUESTION" layoutX="11.0" layoutY="490.0" size="20" AnchorPane.bottomAnchor="30.0" />
                </children>
-               <effect>
-                  <DropShadow />
-               </effect>
             </AnchorPane>
          </children>
-         <effect>
-            <DropShadow />
-         </effect>
       </AnchorPane>
       <AnchorPane layoutX="171.0" prefHeight="500.0" prefWidth="630.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="171.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <FontAwesomeIconView glyphName="CLOSE" size="20" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0" />
-            <MaterialDesignIconView glyphName="WINDOW_MINIMIZE" size="20" text="" wrappingWidth="20.0" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="8.0" />
+            <MaterialDesignIconView glyphName="WINDOW_MINIMIZE" size="20" text="" wrappingWidth="20.0" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="6.0" />
             <MaterialDesignIconView glyphName="WINDOW_RESTORE" size="20" visible="false" />
             <MaterialDesignIconView glyphName="WINDOW_MAXIMIZE" size="20" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="3.0" />
             <FontAwesomeIconView fill="#001068" glyphName="USER" layoutX="12.0" layoutY="30.0" size="20" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
             <Label layoutX="52.0" layoutY="15.0" prefHeight="17.0" prefWidth="57.0" styleClass="label2" text="login" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="15.0" />
+            <AnchorPane fx:id="anchorTask" layoutY="32.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+               <children>
+                  <JFXTreeTableView prefHeight="433.0" prefWidth="629.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <ButtonBar fx:id="myTaskBtnBar" layoutY="447.0" prefHeight="29.0" prefWidth="629.0" styleClass="ButtonBar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <buttons>
+                        <JFXButton styleClass="JFXButtonTab" text="Показать" />
+                        <JFXButton styleClass="JFXButtonTab" text="Принять" />
+                    </buttons>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </ButtonBar>
+                  <ButtonBar fx:id="myTaskDoneBtnBar" layoutX="10.0" layoutY="457.0" prefHeight="29.0" prefWidth="629.0" styleClass="ButtonBar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <buttons>
+                        <JFXButton styleClass="JFXButtonTab" text="Редактировать" />
+                     </buttons>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </ButtonBar>
+                  <ButtonBar fx:id="fromEmpTaskBtnBar" layoutX="20.0" layoutY="467.0" prefHeight="29.0" prefWidth="629.0" styleClass="ButtonBar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <buttons>
+                        <JFXButton styleClass="JFXButtonTab" text="Создать" />
+                        <JFXButton styleClass="JFXButtonTab" text="Редактировать" />
+                        <JFXButton styleClass="JFXButtonTab" text="В архив" />
+                        <JFXButton styleClass="JFXButtonTab" text="Удалить" />
+                     </buttons>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </ButtonBar>
+                  <ButtonBar fx:id="archiveTaskBtnBar" layoutX="30.0" layoutY="477.0" prefHeight="29.0" prefWidth="629.0" styleClass="ButtonBar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <buttons>
+                        <JFXButton styleClass="JFXButtonTab" text="Просмотр" />
+                        <JFXButton styleClass="JFXButtonTab" text="Удалить" />
+                     </buttons>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </ButtonBar>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="anchorTemplate" layoutX="10.0" layoutY="42.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+               <children>
+                  <JFXTreeTableView prefHeight="433.0" prefWidth="629.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <ButtonBar fx:id="archiveTaskBtnBar1" layoutX="30.0" layoutY="477.0" prefHeight="29.0" prefWidth="629.0" styleClass="ButtonBar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <buttons>
+                        <JFXButton styleClass="JFXButtonTab" text="Печать" />
+                        <JFXButton styleClass="JFXButtonTab" text="Открыть" />
+                     </buttons>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </ButtonBar>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="anchorCalendar" layoutX="20.0" layoutY="52.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+               <children>
+                  <Label layoutX="226.0" layoutY="175.0" styleClass="label2" text="Календарь" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="anchorLetter" layoutX="30.0" layoutY="62.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+               <children>
+                  <Label layoutX="226.0" layoutY="175.0" styleClass="label2" text="Письма" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="anchorSetting" layoutX="40.0" layoutY="72.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+               <children>
+                  <JFXTabPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <tabs>
+                        <Tab text="Отделы">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <JFXTreeTableView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab text="Сотрудники">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <JFXTreeTableView layoutX="7.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="Документы">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <JFXTreeTableView layoutX="-29.0" layoutY="-42.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                     </tabs>
+                  </JFXTabPane>
+               </children>
+            </AnchorPane>
          </children>
-         <effect>
-            <DropShadow />
-         </effect>
       </AnchorPane>
    </children>
 </AnchorPane>

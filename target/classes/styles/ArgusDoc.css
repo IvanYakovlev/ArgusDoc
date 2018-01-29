@@ -10,9 +10,31 @@
 .AnchorPane3{
     -fx-background-color: #303F9F;
 }
+.Pane{
+    -fx-background-color: #FFFFFF;
+}
+.ButtonBar{
+    -fx-background-color: #FFFFFF;
+
+}
+.jfx-tab-pane .headers-region {
+    -fx-background-color: #536DFE
+}
+.jfx-tab-pane .tab-header-background {
+    -fx-background-color: #536DFE;
+}
+.jfx-tab-pane .tab-selected-line {
+    -fx-stroke: #FFFFFF;
+    -fx-stroke-width: 3pt;
+}
+
 
 .JFXButton{
     -fx-background-color: #3F51B5;
+    -fx-text-fill: #FFFFFF;
+}
+.JFXButtonTab{
+    -fx-background-color: #536DFE;
     -fx-text-fill: #FFFFFF;
 }
 
@@ -53,7 +75,7 @@
 .password-field{
     -fx-text-fill: #221E1D;
 
-    -jfx-focus-color: #DC5B21;
+    -jfx-focus-color: #536DFE;
     -jfx-unfocus-color: #383127;
 }
 

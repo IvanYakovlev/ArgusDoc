@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
@@ -11,72 +12,59 @@ import javafx.scene.layout.Pane;
 public class MainController2 {
 
     @FXML
-    private JFXButton a = new JFXButton();
+    private ButtonBar myTaskBtnBar = new ButtonBar();
     @FXML
-    private JFXButton b = new JFXButton();
+    private ButtonBar myTaskDoneBtnBar = new ButtonBar();
     @FXML
-    private JFXButton c = new JFXButton();
+    private ButtonBar fromEmpTaskBtnBar = new ButtonBar();
     @FXML
-    private JFXButton d = new JFXButton();
+    private ButtonBar archiveTaskBtnBar = new ButtonBar();
     @FXML
-    private Pane paneTask = new Pane();
+    private AnchorPane anchorTask = new AnchorPane();
     @FXML
-    private AnchorPane bp = new AnchorPane();
+    private AnchorPane anchorTemplate = new AnchorPane();
     @FXML
-    private AnchorPane cp = new AnchorPane();
+    private AnchorPane anchorCalendar = new AnchorPane();
     @FXML
-    private AnchorPane dp = new AnchorPane();
+    private AnchorPane anchorLetter = new AnchorPane();
     @FXML
-    private AnchorPane ep = new AnchorPane();
-    private Pane  paneTemplate = new Pane();
-    public void myTasksTab(Event event) {
-        System.out.println("my");
+    private AnchorPane anchorSetting = new AnchorPane();
+
+
+
+    public void myTasksButton(ActionEvent actionEvent) {
+        anchorTask.toFront();
+        myTaskBtnBar.toFront();
     }
 
-    public void doneMyTask(Event event) {
-        System.out.println("done");
+    public void myDoneTasksButton(ActionEvent actionEvent) {
+        anchorTask.toFront();
+        myTaskDoneBtnBar.toFront();
     }
 
-    public void fromEmpTask(Event event) {
-        System.out.println("task");
+    public void fromEmpTasjButton(ActionEvent actionEvent) {
+        anchorTask.toFront();
+        fromEmpTaskBtnBar.toFront();
     }
 
-    public void Archive(Event event) {
-        System.out.println("archive");
+    public void archiveTasks(ActionEvent actionEvent) {
+        anchorTask.toFront();
+        archiveTaskBtnBar.toFront();
     }
 
-    public void aMewnu(ActionEvent actionEvent) {
-        b.setMinSize(0,0);
-        c.setMinSize(0,0);
-
+    public void templateTabButton(ActionEvent actionEvent) {
+        anchorTemplate.toFront();
     }
 
-    public void b(ActionEvent actionEvent) {
-        paneTask.toFront();
-        bp.toFront();
+    public void calendarTabButton(ActionEvent actionEvent) {
+        anchorCalendar.toFront();
     }
 
-    public void c(ActionEvent actionEvent) {
-        paneTask.toFront();
-        cp.toFront();
+    public void letterTabButton(ActionEvent actionEvent) {
+        anchorLetter.toFront();
     }
 
-    public void d(ActionEvent actionEvent) {
-        paneTask.toFront();
-        dp.toFront();
-    }
-
-    public void e(ActionEvent actionEvent) {
-        paneTask.toFront();
-        ep.toFront();
-    }
-
-    public void a(ActionEvent actionEvent) {
-        paneTask.toFront();
-        bp.toFront();
-    }
-
-    public void y(ActionEvent actionEvent) {
-        paneTemplate.toFront();
+    public void settingTabButton(ActionEvent actionEvent) {
+        anchorSetting.toFront();
     }
 }
