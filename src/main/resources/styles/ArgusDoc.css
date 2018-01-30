@@ -27,7 +27,11 @@
     -fx-stroke: #FFFFFF;
     -fx-stroke-width: 3pt;
 }
+.TableView{
+    -fx-background-color:#FFFFFF ;
+    -fx-text-fill: #221E1D;
 
+}
 
 .JFXButton{
     -fx-background-color: #3F51B5;

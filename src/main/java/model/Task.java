@@ -1,4 +1,6 @@
 package model;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+
 import javax.persistence.*;
 import java.sql.Time;
 import java.time.LocalDate;
@@ -6,7 +8,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "TASKS")
-public class Task {
+public class Task extends RecursiveTreeObject<Task> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

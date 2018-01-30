@@ -1,10 +1,14 @@
 package controller;
 
 import authorizedUser.AuthorizedUser;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTreeTableColumn;
+import com.jfoenix.controls.JFXTreeTableView;
 import dao.*;
 import dbConnection.DBconnection;
 
 
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -17,10 +21,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Callback;
 import model.*;
 import dialog.ADInfo;
 
@@ -42,16 +48,33 @@ public class MainController {
     public Employee getUserAuth() {
         return userAuth;
     }
-
+    @FXML
+    private ButtonBar myTaskBtnBar = new ButtonBar();
+    @FXML
+    private ButtonBar myTaskDoneBtnBar = new ButtonBar();
+    @FXML
+    private ButtonBar fromEmpTaskBtnBar = new ButtonBar();
+    @FXML
+    private ButtonBar archiveTaskBtnBar = new ButtonBar();
+    @FXML
+    private AnchorPane anchorTask = new AnchorPane();
+    @FXML
+    private AnchorPane anchorTemplate = new AnchorPane();
+    @FXML
+    private AnchorPane anchorCalendar = new AnchorPane();
+    @FXML
+    private AnchorPane anchorLetter = new AnchorPane();
+    @FXML
+    private AnchorPane anchorSetting = new AnchorPane();
 
     //Department settings
     @FXML
     private TableView<Department> tableDepartment;
-    @FXML
-    private TextField txtDepartment;
     private TableColumn<Department, String> idDep;
     private TableColumn<Department, String> nameDep;
 
+    @FXML
+    private JFXTextField txtDepartment;
 
 // Variables
     private ObservableList<Department> dataDepartment;
@@ -148,6 +171,7 @@ public class MainController {
 /*initialize Departments settings table*/
         departmentDao = new DepartmentDaoImpl();
         idDep = new TableColumn<Department, String>("id");
+
         idDep.setCellValueFactory(new PropertyValueFactory<Department, String>("departmentId"));
         nameDep = new TableColumn<Department, String>("Название отдела");
         nameDep.setCellValueFactory(new PropertyValueFactory<Department, String>("departmentName"));
@@ -567,22 +591,31 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
 
 
 
-    public void closeMainIcon(MouseEvent mouseEvent) {
-        Stage stage = (Stage) txtFIOEmployee.getScene().getWindow();
-        stage.close();
-    }
+
 
     public void myTasksButton(ActionEvent actionEvent) {
+        anchorTask.toFront();
+        myTaskBtnBar.toFront();
         taskDao = new TaskDaoImpl();
         tableTask.setItems(taskDao.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
     }
 
+    public void myDoneTasksButton(ActionEvent actionEvent) {
+        anchorTask.toFront();
+        myTaskDoneBtnBar.toFront();
+        taskDao = new TaskDaoImpl();
+        tableTask.setItems(taskDao.listMyDoneTasks(AuthorizedUser.getUser().getEmployeeId()));
+    }
     public void fromEmpTasjButton(ActionEvent actionEvent) {
+        anchorTask.toFront();
+        fromEmpTaskBtnBar.toFront();
         taskDao = new TaskDaoImpl();
         tableTask.setItems(taskDao.listFromEmpTasks((AuthorizedUser.getUser().getEmployeeName())));
     }
 
     public void archiveTasks(ActionEvent actionEvent) {
+        anchorTask.toFront();
+        archiveTaskBtnBar.toFront();
         taskDao = new TaskDaoImpl();
         tableTask.setItems(taskDao.listArchiveTasks(StatusTask.CANCELED));
 
@@ -599,15 +632,29 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
         taskDao.canceledTask(task.getTaskId());
     }
 
-    public void myDoneTasksButton(ActionEvent actionEvent) {
-        taskDao = new TaskDaoImpl();
-        tableTask.setItems(taskDao.listMyDoneTasks(AuthorizedUser.getUser().getEmployeeId()));
-    }
 
     public void deleteTaskButton(ActionEvent actionEvent) {
         taskDao = new TaskDaoImpl();
         taskDao.removeTask(task.getTaskId());
     }
+    public void templateTabButton(ActionEvent actionEvent) {
+        anchorTemplate.toFront();
+    }
 
+    public void calendarTabButton(ActionEvent actionEvent) {
+        anchorCalendar.toFront();
+    }
 
+    public void letterTabButton(ActionEvent actionEvent) {
+        anchorLetter.toFront();
+    }
+
+    public void settingTabButton(ActionEvent actionEvent) {
+        anchorSetting.toFront();
+    }
+
+    public void closeMainIcon(MouseEvent mouseEvent) {
+        Stage stage = (Stage) txtFIOEmployee.getScene().getWindow();
+        stage.close();
+    }
 }
