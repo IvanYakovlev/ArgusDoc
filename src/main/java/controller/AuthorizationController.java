@@ -80,7 +80,7 @@ public class AuthorizationController {
                     Stage stage = new Stage();
                     FXMLLoader loader = new FXMLLoader();
 
-                    Parent root = loader.load(getClass().getResource("/viewFXML/Main_window2.fxml"));
+                    Parent root = loader.load(getClass().getResource("/viewFXML/Main_window.fxml"));
                     stage.setTitle("Аргус");
                     stage.setMinHeight(715);
                     stage.setMinWidth(1000);

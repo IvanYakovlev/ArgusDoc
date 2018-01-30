@@ -1,156 +1,203 @@
-<!--
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Accordion?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="715.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController3">
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
-      <AnchorPane layoutY="43.0" prefHeight="700.0" prefWidth="933.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="43.0">
+      <AnchorPane layoutX="31.0" prefHeight="500.0" prefWidth="170.0" styleClass="AnchorPane2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Label layoutX="72.0" layoutY="46.0" prefHeight="17.0" prefWidth="73.0" text="Аргус">
+               <font>
+                  <Font name="Gentium Basic" size="24.0" />
+               </font>
+            </Label>
+            <VBox layoutX="30.0" layoutY="75.0" prefHeight="425.0" prefWidth="140.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="75.0">
                <children>
-                  <TabPane layoutY="-1.0" prefHeight="645.0" prefWidth="775.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0">
-                     <tabs>
-                        <Tab text="Задачи(1)">
-                           <content>
-                              <AnchorPane prefHeight="593.0" prefWidth="781.0">
-                                 <children>
-                                    <TableView fx:id="tableTask" layoutY="49.0" onMouseClicked="#clickTableTask" prefHeight="528.0" prefWidth="775.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
-                                       <columnResizePolicy>
-                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                       </columnResizePolicy>
-                                    </TableView>
-                                    <Button fx:id="myTasksButton" layoutX="14.0" mnemonicParsing="false" onAction="#myTasksButton" prefHeight="50.0" prefWidth="120.0" text="Текущие" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                    <Button fx:id="fromEmpTasjButton" layoutX="240.0" mnemonicParsing="false" onAction="#fromEmpTasjButton" prefHeight="50.0" prefWidth="141.0" text="Назначенные" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="0.0" />
-                                    <Button fx:id="archiveTasks" layoutX="381.0" mnemonicParsing="false" onAction="#archiveTasks" prefHeight="50.0" prefWidth="132.0" text="Архив" AnchorPane.leftAnchor="381.0" AnchorPane.topAnchor="0.0" />
-                                    <Button layoutX="500.0" layoutY="609.0" mnemonicParsing="false" onAction="#openAddTaskButton" prefHeight="25.0" prefWidth="100.0" text="Новая задача" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="400.0" />
-                                    <Button layoutX="600.0" layoutY="609.0" mnemonicParsing="false" onAction="#openEditTaskButton" prefHeight="25.0" prefWidth="100.0" text="Редактировать" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="300.0" />
-                                    <Button layoutX="700.0" layoutY="609.0" mnemonicParsing="false" onAction="#openDoneTaskButton" prefHeight="25.0" prefWidth="100.0" text="Выполнение" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="200.0" />
-                                    <Button fx:id="canceledTaskButton" layoutX="800.0" layoutY="609.0" mnemonicParsing="false" onAction="#canceledTaskButton" prefHeight="25.0" prefWidth="100.0" text="В архив" />
-                                    <Button fx:id="myDoneTasksButton" layoutX="120.0" mnemonicParsing="false" onAction="#myDoneTasksButton" prefHeight="50.0" prefWidth="120.0" text="Выполненные" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS" />
-                                    <Button fx:id="deleteTaskButton" layoutX="900.0" layoutY="609.0" mnemonicParsing="false" onAction="#deleteTaskButton" prefHeight="25.0" prefWidth="100.0" text="Удалить" />
-                                 </children>
-                                 <cursor>
-                                    <Cursor fx:constant="DEFAULT" />
-                                 </cursor>
-                              </AnchorPane>
-                           </content>
-                        </Tab>
-                        <Tab text="Чат(2)">
-                           <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <TextArea prefHeight="499.0" prefWidth="587.0" AnchorPane.bottomAnchor="117.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="188.0" AnchorPane.topAnchor="0.0" />
-                                    <TextArea layoutX="587.0" prefHeight="603.0" prefWidth="185.0" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="0.0" />
-                                    <TextArea layoutY="499.0" prefHeight="104.0" prefWidth="511.0" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="264.0" />
-                                    <Button layoutX="509.0" layoutY="499.0" mnemonicParsing="false" prefHeight="104.0" prefWidth="78.0" text="Отправить" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="188.0" />
-                                 </children>
-                              </AnchorPane>
-                           </content>
-                        </Tab>
-                        <Tab text="Шаблоны">
-                           <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <TableView fx:id="tableDocumentTemplate" layoutX="21.0" layoutY="48.0" onMouseClicked="#clickTableDocumentTemplate" prefHeight="534.0" prefWidth="775.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
-                                       <columns>
-                                          <TableColumn editable="false" maxWidth="1.7976931348623157E308" prefWidth="775.0" text="Название Документа" />
-                                       </columns></TableView>
-                                    <ComboBox fx:id="comboBoxDocument_Template" layoutX="14.0" layoutY="14.0" onAction="#choiceDepartmentDocument" prefHeight="25.0" prefWidth="357.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
-                                    <Button layoutX="695.0" layoutY="568.0" mnemonicParsing="false" onAction="#openDocumentButton" text="Открыть" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
-                                    <Button layoutX="630.0" layoutY="568.0" mnemonicParsing="false" onAction="#printDocumentButton" text="Печать" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="70.0" />
-                                 </children>
-                              </AnchorPane>
-                           </content>
-                        </Tab>
-                        <Tab text="Календарь">
-                           <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                           </content>
-                        </Tab>
-                        <Tab text="Администрирование">
-                           <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <Accordion prefHeight="615.0" prefWidth="775.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                      <panes>
-                                        <TitledPane animated="false" text="Отделы">
-                                          <content>
-                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="583.0" prefWidth="768.0">
-                                                   <children>
-                                                      <TableView fx:id="tableDepartment" layoutX="18.6" layoutY="48.6" onMouseClicked="#clickTableDepartment" prefHeight="425.0" prefWidth="715.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                                      <Button layoutX="543.0" layoutY="505.0" mnemonicParsing="false" onAction="#addDepartmentButton" text="Добавить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="145.0" />
-                                                      <Button layoutX="699.0" layoutY="505.0" mnemonicParsing="false" onAction="#removeDepartmentButton" text="Удалить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
-                                                      <TextField fx:id="txtDepartment" layoutX="317.0" layoutY="468.0" prefHeight="25.0" prefWidth="442.0" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="5.0" />
-                                                      <Button layoutX="621.0" layoutY="505.0" mnemonicParsing="false" onAction="#updateDepartmentButton" text="Обновить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="70.0" />
-                                                      <Label layoutX="206.0" layoutY="472.0" text="Название отдела:" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="471.0" />
-                                                   </children>
-                                                </AnchorPane>
-                                          </content>
-                                        </TitledPane>
-                                        <TitledPane animated="false" text="Сотрудники">
-                                          <content>
-                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                                   <children>
-                                                      <TableView fx:id="tableEmployee" onMouseClicked="#clickTableEmployee" prefHeight="436.0" prefWidth="775.0" AnchorPane.bottomAnchor="103.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                                      <TextField fx:id="txtLoginEmployee" layoutX="98.0" layoutY="477.0" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="520.0" />
-                                                      <TextField fx:id="txtFIOEmployee" layoutX="98.0" layoutY="444.0" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="520.0" />
-                                                      <TextField fx:id="txtPasswordEmployee" layoutX="313.0" layoutY="444.0" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="300.0" />
-                                                      <Label layoutX="27.0" layoutY="444.0" text="ФИО:" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="680.0" />
-                                                      <Label layoutX="27.0" layoutY="477.0" text="Логин" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="680.0" />
-                                                      <Label layoutX="260.0" layoutY="448.0" text="Пароль" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="460.0" />
-                                                      <Label layoutX="260.0" layoutY="477.0" text="Отдел:" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="460.0" />
-                                                      <Label layoutX="518.0" layoutY="448.0" text="Доступ:" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="170.0" />
-                                                      <Button layoutX="613.0" layoutY="502.0" mnemonicParsing="false" onAction="#updateEmployeeButton" text="Обновить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="70.0" />
-                                                      <Button layoutX="699.0" layoutY="502.0" mnemonicParsing="false" onAction="#removeEmployeeButton" text="Удалить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
-                                                      <Button layoutX="470.0" layoutY="502.0" mnemonicParsing="false" onAction="#addEmployeeButton" text="Добавить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="145.0" />
-                                                      <ComboBox fx:id="comboBoxEmployee_Access" layoutX="602.0" layoutY="448.0" prefWidth="150.0" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="5.0" />
-                                                      <ComboBox fx:id="comboBoxEmployee_Department" layoutX="314.0" layoutY="478.0" prefWidth="150.0" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="300.0" />
-                                                   </children>
-                                                </AnchorPane>
-                                          </content>
-                                        </TitledPane>
-                                        <TitledPane animated="false" text="Документы">
-                                          <content>
-                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                                   <children>
-                                                      <TableView fx:id="tableDocument" layoutX="18.6" layoutY="19.6" onMouseClicked="#clickTableDocument" prefHeight="430.0" prefWidth="754.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                                      <Button fx:id="documentButtonId" layoutX="602.0" layoutY="484.0" mnemonicParsing="false" onAction="#addDocumentButton" text="Добавить файл" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="70.0" />
-                                                      <Button layoutX="699.0" layoutY="484.0" mnemonicParsing="false" onAction="#removeDocumentButton" text="Удалить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
-                                                      <ComboBox fx:id="comboBoxDocument_Department" layoutX="378.0" layoutY="468.0" prefHeight="25.0" prefWidth="227.0" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="5.0" />
-                                                      <Label layoutX="484.0" layoutY="468.0" text="Отдел:" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="240.0" />
-                                                   </children>
-                                                </AnchorPane>
-                                          </content>
-                                        </TitledPane>
-                                      </panes>
-                                    </Accordion>
-                                 </children></AnchorPane>
-                           </content>
-                        </Tab>
-                     </tabs>
-                  </TabPane>
+                  <JFXButton fx:id="myTasksButton" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#myTasksButton" styleClass="JFXButton" text="Задачи">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="TASKS" size="16" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="30.0" onAction="#myTasksButton" styleClass="JFXButton" text="         Текущие" />
+                  <JFXButton fx:id="myDoneTasksButton" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="30.0" onAction="#myDoneTasksButton" styleClass="JFXButton" text="         Выполненные" />
+                  <JFXButton fx:id="fromEmpTasjButton" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="30.0" onAction="#fromEmpTasjButton" styleClass="JFXButton" text="         Назначенные" />
+                  <JFXButton fx:id="archiveTasks" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="30.0" onAction="#archiveTasks" styleClass="JFXButton" text="         Архив" />
+                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#templateTabButton" styleClass="JFXButton" text="Шаблоны">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="BOOK" size="16" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#calendarTabButton" styleClass="JFXButton" text="Календарь">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="CALENDAR" size="16" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#letterTabButton" styleClass="JFXButton" text="Письма">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="WECHAT" size="16" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#settingTabButton" styleClass="JFXButton" text="Настройки">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="WRENCH" size="16" />
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </VBox>
+            <AnchorPane prefHeight="528.0" prefWidth="30.0" styleClass="AnchorPane3" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <FontAwesomeIconView fill="WHITE" glyphName="BARS" layoutX="8.0" layoutY="31.0" size="20" AnchorPane.topAnchor="20.0" />
+                  <FontAwesomeIconView fill="WHITE" glyphName="QUESTION" layoutX="11.0" layoutY="490.0" size="20" AnchorPane.bottomAnchor="30.0" />
                </children>
             </AnchorPane>
          </children>
       </AnchorPane>
-      <Label fx:id="labelUserAuth" layoutX="707.0" layoutY="14.0" prefHeight="17.0" prefWidth="164.0" AnchorPane.rightAnchor="50.0" />
-      <FontAwesomeIconView fx:id="closeMainIcon" glyphName="CLOSE" layoutX="970.0" layoutY="29.0" onMouseClicked="#closeMainIcon" size="20" />
-      <FontAwesomeIconView glyphName="USER" layoutX="761.0" layoutY="29.0" size="20" text="" wrappingWidth="15.714287757873535" />
-      <FontAwesomeIconView glyphName="BARS" layoutX="14.0" layoutY="27.0" size="20" />
+      <AnchorPane layoutX="171.0" prefHeight="500.0" prefWidth="630.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="171.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <FontAwesomeIconView fx:id="closeMainIcon" glyphName="CLOSE" onMouseClicked="#closeMainIcon" size="20" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0" />
+            <MaterialDesignIconView glyphName="WINDOW_MINIMIZE" size="20" text="" wrappingWidth="20.0" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="3.0" />
+            <MaterialDesignIconView glyphName="WINDOW_RESTORE" size="20" visible="false" />
+            <MaterialDesignIconView glyphName="WINDOW_MAXIMIZE" size="20" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="3.0" />
+            <FontAwesomeIconView fill="#001068" glyphName="USER" layoutX="12.0" layoutY="30.0" size="20" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0" />
+            <Label fx:id="labelUserAuth" layoutX="52.0" layoutY="15.0" prefHeight="17.0" prefWidth="308.0" styleClass="label2" text="ФИО" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="10.0" />
+            <AnchorPane fx:id="anchorTask" layoutY="32.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+               <children>
+                  <ButtonBar fx:id="myTaskBtnBar" layoutY="447.0" prefHeight="29.0" prefWidth="629.0" styleClass="ButtonBar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <buttons>
+                        <JFXButton onAction="#openDoneTaskButton" styleClass="JFXButtonTab" text="Показать" />
+                        <JFXButton styleClass="JFXButtonTab" text="Принять" />
+                    </buttons>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </ButtonBar>
+                  <ButtonBar fx:id="myTaskDoneBtnBar" layoutX="10.0" layoutY="457.0" prefHeight="29.0" prefWidth="629.0" styleClass="ButtonBar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <buttons>
+                        <JFXButton onAction="#openEditTaskButton" styleClass="JFXButtonTab" text="Редактировать" />
+                     </buttons>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </ButtonBar>
+                  <ButtonBar fx:id="fromEmpTaskBtnBar" layoutX="20.0" layoutY="467.0" prefHeight="29.0" prefWidth="629.0" styleClass="ButtonBar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <buttons>
+                        <JFXButton onAction="#openAddTaskButton" styleClass="JFXButtonTab" text="Создать" />
+                        <JFXButton onAction="#openEditTaskButton" styleClass="JFXButtonTab" text="Редактировать" />
+                        <JFXButton fx:id="canceledTaskButton" onAction="#canceledTaskButton" styleClass="JFXButtonTab" text="В архив" />
+                        <JFXButton fx:id="deleteTaskButton" onAction="#deleteTaskButton" styleClass="JFXButtonTab" text="Удалить" />
+                     </buttons>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </ButtonBar>
+                  <ButtonBar fx:id="archiveTaskBtnBar" layoutX="30.0" layoutY="477.0" prefHeight="29.0" prefWidth="629.0" styleClass="ButtonBar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <buttons>
+                        <JFXButton onAction="#openDoneTaskButton" styleClass="JFXButtonTab" text="Просмотр" />
+                        <JFXButton fx:id="" onAction="#deleteTaskButton" styleClass="JFXButtonTab" text="Удалить" />
+                     </buttons>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </ButtonBar>
+                  <TableView fx:id="tableTask" onMouseClicked="#clickTableTask" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="anchorTemplate" layoutX="10.0" layoutY="42.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+               <children>
+                  <ButtonBar fx:id="archiveTaskBtnBar1" layoutX="30.0" layoutY="477.0" prefHeight="29.0" prefWidth="629.0" styleClass="ButtonBar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <buttons>
+                        <JFXButton onAction="#printDocumentButton" styleClass="JFXButtonTab" text="Печать" />
+                        <JFXButton onAction="#openDocumentButton" styleClass="JFXButtonTab" text="Открыть" />
+                     </buttons>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </ButtonBar>
+                  <JFXComboBox fx:id="comboBoxDocument_Template" onAction="#choiceDepartmentDocument" prefHeight="25.0" prefWidth="333.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" />
+                  <TableView fx:id="tableDocumentTemplate" onMouseClicked="#clickTableDocumentTemplate" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="anchorCalendar" layoutX="20.0" layoutY="52.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+               <children>
+                  <Label layoutX="226.0" layoutY="175.0" styleClass="label2" text="Календарь" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="anchorLetter" layoutX="30.0" layoutY="62.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+               <children>
+                  <Label layoutX="226.0" layoutY="175.0" styleClass="label2" text="Письма" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="anchorSetting" layoutX="40.0" layoutY="72.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+               <children>
+                  <JFXTabPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <tabs>
+                        <Tab text="Отделы">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label layoutX="236.0" layoutY="370.0" styleClass="label2" text="Название отдела" AnchorPane.bottomAnchor="5.0" />
+                                    <JFXTextField fx:id="txtDepartment" layoutX="345.0" layoutY="366.0" prefHeight="25.0" prefWidth="270.0" styleClass="JFXTextField" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="220.0" />
+                                    <JFXButton layoutX="394.0" layoutY="399.0" onAction="#addDepartmentButton" styleClass="JFXButton" text="Добавить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="144.0" />
+                                    <JFXButton layoutX="480.0" layoutY="399.0" onAction="#updateDepartmentButton" styleClass="JFXButton" text="Обновить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="69.0" />
+                                    <JFXButton layoutX="555.0" layoutY="399.0" onAction="#removeDepartmentButton" styleClass="JFXButton" text="Удалить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                                    <TableView fx:id="tableDepartment" onMouseClicked="#clickTableDepartment" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab text="Сотрудники">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <JFXButton layoutX="563.0" layoutY="396.0" onAction="#removeEmployeeButton" styleClass="JFXButton" text="Удалить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                                    <JFXButton layoutX="480.0" layoutY="396.0" onAction="#updateEmployeeButton" styleClass="JFXButton" text="Обновить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="69.0" />
+                                    <JFXButton layoutX="403.0" layoutY="396.0" onAction="#addEmployeeButton" styleClass="JFXButton" text="Добавить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="145.0" />
+                                    <JFXTextField fx:id="txtLoginEmployee" layoutX="75.0" layoutY="359.0" prefHeight="25.0" prefWidth="244.0" styleClass="JFXTextField" AnchorPane.bottomAnchor="42.0" />
+                                    <JFXTextField fx:id="txtFIOEmployee" layoutX="75.0" layoutY="325.0" prefHeight="25.0" prefWidth="243.0" styleClass="JFXTextField" AnchorPane.bottomAnchor="80.0" />
+                                    <JFXTextField fx:id="txtPasswordEmployee" layoutX="75.0" layoutY="396.0" prefHeight="25.0" prefWidth="245.0" styleClass="JFXTextField" AnchorPane.bottomAnchor="5.0" />
+                                    <JFXComboBox fx:id="comboBoxEmployee_Department" layoutX="465.0" layoutY="325.0" prefHeight="25.0" prefWidth="218.0" styleClass="JFXComboBox" AnchorPane.bottomAnchor="80.0" AnchorPane.rightAnchor="5.0" />
+                                    <JFXComboBox fx:id="comboBoxEmployee_Access" layoutX="465.0" layoutY="359.0" prefHeight="25.0" prefWidth="219.0" styleClass="JFXComboBox" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="5.0" />
+                                    <Label layoutX="28.0" layoutY="342.0" styleClass="label2" text="ФИО" />
+                                    <Label layoutX="24.0" layoutY="368.0" styleClass="label2" text="Логин" />
+                                    <Label layoutX="20.0" layoutY="405.0" styleClass="label2" text="Пароль" />
+                                    <Label layoutX="364.0" layoutY="376.0" styleClass="label2" text="Доступ" AnchorPane.bottomAnchor="42.0" />
+                                    <Label layoutX="366.0" layoutY="342.0" styleClass="label2" text="Отдел" />
+                                    <TableView fx:id="tableEmployee" onMouseClicked="#clickTableEmployee" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="Документы">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <JFXComboBox fx:id="comboBoxDocument_Department" layoutX="429.0" layoutY="361.0" prefHeight="25.0" prefWidth="266.0" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="5.0" />
+                                    <JFXButton fx:id="documentButtonId" layoutX="484.0" layoutY="400.0" onAction="#addDocumentButton" styleClass="JFXButton" text="Добавить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="70.0" />
+                                    <JFXButton layoutX="553.0" layoutY="400.0" onAction="#removeDocumentButton" styleClass="JFXButton" text="Удалить" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                                    <Label layoutX="371.0" layoutY="374.0" styleClass="label2" text="Отдел" />
+                                    <TableView fx:id="tableDocument" onMouseClicked="#clickTableDocument" prefHeight="200.0" prefWidth="200.0" styleClass="TableView" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                     </tabs>
+                  </JFXTabPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
--->
