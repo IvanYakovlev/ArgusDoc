@@ -549,6 +549,7 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
     public void openDoneTaskButton(ActionEvent actionEvent) {
         if (task!=null) {
             FXMLLoader fxmlLoader = new FXMLLoader();
+
             fxmlLoader.setLocation(getClass().getResource("/viewFXML/Done_task_window.fxml"));
             try {
 
