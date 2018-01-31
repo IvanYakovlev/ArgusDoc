@@ -1,9 +1,13 @@
 package model;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.StringProperty;
+
 import javax.persistence.*;
 
 @Entity
 @Table
-public class Access {
+public class Access extends RecursiveTreeObject<Access> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Access_id")
@@ -11,6 +15,7 @@ public class Access {
 
     @Column(name = "Access_name")
     private String accesName;
+
 
     public int getAccessId() {
         return accessId;

@@ -4,11 +4,14 @@ import authorizedUser.AuthorizedUser;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
+import com.jfoenix.controls.RecursiveTreeItem;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import dao.*;
 import dbConnection.DBconnection;
 
 
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -20,6 +23,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
@@ -162,14 +166,14 @@ public class MainController {
     TaskDao taskDao;
     private Task task= new Task();
 
-
-
-
     public void initialize() {
-
-
-/*initialize Departments settings table*/
+        accessDao = new AccessDaoImpl();
+        employeeDao = new EmployeeDaoImpl();
         departmentDao = new DepartmentDaoImpl();
+        documentDao = new DocumentDaoImpl();
+        taskDao = new TaskDaoImpl();
+/*initialize Departments settings table*/
+
         idDep = new TableColumn<Department, String>("id");
 
         idDep.setCellValueFactory(new PropertyValueFactory<Department, String>("departmentId"));
@@ -179,8 +183,8 @@ public class MainController {
         tableDepartment.getColumns().setAll(idDep, nameDep);
         tableDepartment.setItems((ObservableList<Department>) departmentDao.listDepartments());
 /*initialize Employee settings table*/
-        employeeDao = new EmployeeDaoImpl();
-        accessDao = new AccessDaoImpl();
+
+
         idEmpl = new TableColumn<Employee, String>("id");
         idEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeeId"));
         fioEmpl = new TableColumn<Employee, String>("ФИО");
@@ -202,7 +206,7 @@ public class MainController {
 
         comboBoxEmployee_Department.setItems(departmentDao.listDepartmentName());
 /*initialize Document settings table*/
-        documentDao = new DocumentDaoImpl();
+
         idDoc = new TableColumn<Document, String>("id");
         idDoc.setCellValueFactory(new PropertyValueFactory<Document, String>("documentId"));
         nameDoc = new TableColumn<Document, String>("Название документа");
@@ -224,7 +228,7 @@ public class MainController {
         comboBoxDocument_Template.setItems(departmentDao.listDepartmentName());
         comboBoxDocument_Template.setPromptText("Выберите отдел:");
 /*initialize Task tab*/
-        TaskDao taskDao = new TaskDaoImpl();
+
         idTask = new TableColumn<Task, String>("Id");
         idTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskId"));
         nameTask = new TableColumn<Task,String>("Название задачи");
