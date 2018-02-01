@@ -51,17 +51,17 @@
                         <FontAwesomeIconView fill="WHITE" glyphName="BOOK" size="16" />
                      </graphic>
                   </JFXButton>
-                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#letterTabButton" styleClass="JFXButton" text="   Письма">
-                     <graphic>
-                        <FontAwesomeIconView fill="WHITE" glyphName="ENVELOPE" size="16" />
-                     </graphic>
-                  </JFXButton>
                   <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#calendarTabButton" styleClass="JFXButton" text="   Календарь">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="CALENDAR" size="16" />
                      </graphic>
                   </JFXButton>
-                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#settingTabButton" styleClass="JFXButton" text="   Настройки">
+                  <JFXButton fx:id="letterTabButton" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#letterTabButton" styleClass="JFXButton" text="   Письма" visible="false">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="ENVELOPE" size="16" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="settingTabButton" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#settingTabButton" styleClass="JFXButton" text="   Настройки" visible="false">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="WRENCH" size="16" />
                      </graphic>
@@ -84,21 +84,6 @@
             <AnchorPane fx:id="anchorCalendar" layoutX="20.0" layoutY="52.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
                <children>
                   <Label layoutX="226.0" layoutY="175.0" styleClass="label2" text="Календарь" />
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="anchorTemplate" layoutX="10.0" layoutY="42.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
-               <children>
-                  <ButtonBar fx:id="archiveTaskBtnBar1" layoutX="30.0" layoutY="477.0" prefHeight="29.0" prefWidth="629.0" styleClass="ButtonBar" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0">
-                     <buttons>
-                        <JFXButton onAction="#printDocumentButton" styleClass="blue-btn" text="Печать" />
-                        <JFXButton onAction="#openDocumentButton" styleClass="blue-btn" text="Открыть" />
-                     </buttons>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </ButtonBar>
-                  <JFXComboBox fx:id="comboBoxDocument_Template" onAction="#choiceDepartmentDocument" prefHeight="25.0" prefWidth="372.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
-                  <TableView fx:id="tableDocumentTemplate" onMouseClicked="#clickTableDocumentTemplate" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="anchorSetting" layoutX="40.0" layoutY="72.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
@@ -158,6 +143,35 @@
                   </JFXTabPane>
                </children>
             </AnchorPane>
+            <AnchorPane fx:id="anchorLetter" layoutX="30.0" layoutY="62.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
+               <children>
+                  <TableView layoutX="446.0" layoutY="46.0" prefHeight="524.0" prefWidth="809.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <HBox layoutX="14.0" layoutY="14.0" prefHeight="30.0" prefWidth="334.0">
+                     <children>
+                        <FontAwesomeIconView glyphName="SEARCH" size="24" />
+                        <JFXTextField prefHeight="25.0" prefWidth="345.0" />
+                     </children>
+                  </HBox>
+                  <JFXButton layoutX="569.0" layoutY="608.0" onAction="#openLetter" styleClass="blue-btn" text="Просмотр" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="103.0" />
+                  <JFXButton layoutX="437.0" layoutY="608.0" onAction="#openAddLetterWindow" styleClass="blue-btn" text="Новое письмо" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="210.0" />
+                  <JFXButton layoutX="705.0" layoutY="608.0" onAction="#removeLetter" styleClass="blue-btn" text="Удалить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="anchorTemplate" layoutX="10.0" layoutY="42.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
+               <children>
+                  <ButtonBar fx:id="archiveTaskBtnBar1" layoutX="30.0" layoutY="477.0" prefHeight="29.0" prefWidth="629.0" styleClass="ButtonBar" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0">
+                     <buttons>
+                        <JFXButton onAction="#printDocumentButton" styleClass="blue-btn" text="Печать" />
+                        <JFXButton onAction="#openDocumentButton" styleClass="blue-btn" text="Открыть" />
+                     </buttons>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </ButtonBar>
+                  <JFXComboBox fx:id="comboBoxDocument_Template" onAction="#choiceDepartmentDocument" prefHeight="25.0" prefWidth="372.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+                  <TableView fx:id="tableDocumentTemplate" onMouseClicked="#clickTableDocumentTemplate" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
             <AnchorPane fx:id="anchorTask" layoutY="32.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
                <children>
                   <ButtonBar fx:id="myTaskBtnBar" layoutY="447.0" prefHeight="29.0" prefWidth="629.0" styleClass="ButtonBar" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0">
@@ -198,20 +212,6 @@
                      </opaqueInsets>
                   </ButtonBar>
                   <TableView fx:id="tableTask" onMouseClicked="#clickTableTask" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="anchorLetter" layoutX="30.0" layoutY="62.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
-               <children>
-                  <TableView layoutX="446.0" layoutY="46.0" prefHeight="524.0" prefWidth="809.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                  <HBox layoutX="14.0" layoutY="14.0" prefHeight="30.0" prefWidth="334.0">
-                     <children>
-                        <FontAwesomeIconView glyphName="SEARCH" size="24" />
-                        <JFXTextField prefHeight="25.0" prefWidth="345.0" />
-                     </children>
-                  </HBox>
-                  <JFXButton layoutX="569.0" layoutY="608.0" onAction="#openLetter" styleClass="blue-btn" text="Просмотр" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="103.0" />
-                  <JFXButton layoutX="437.0" layoutY="608.0" onAction="#openAddLetterWindow" styleClass="blue-btn" text="Новое письмо" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="210.0" />
-                  <JFXButton layoutX="705.0" layoutY="608.0" onAction="#removeLetter" styleClass="blue-btn" text="Удалить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
                </children>
             </AnchorPane>
          </children>
