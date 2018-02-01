@@ -6,13 +6,17 @@
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTimePicker?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="600.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditTaskController">
    <children>
-      <JFXButton fx:id="cancelEditTaskButton" layoutX="534.0" layoutY="349.0" onAction="#cancelEditTaskButton" styleClass="JFXButton" text="Отмена" />
-      <JFXButton fx:id="editTaskButton" layoutX="472.0" layoutY="349.0" onAction="#editTaskButton" prefHeight="25.0" prefWidth="58.0" styleClass="JFXButton" text="Ок" />
-      <JFXButton fx:id="attachmentTaskButton" layoutX="14.0" layoutY="349.0" onAction="#attachmentTaskButton" styleClass="JFXButton" text="Прикрепить файл" />
+      <JFXButton fx:id="cancelEditTaskButton" layoutX="534.0" layoutY="349.0" onAction="#cancelEditTaskButton" styleClass="blue-btn" text="Отмена" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+      <JFXButton fx:id="editTaskButton" layoutX="436.0" layoutY="349.0" onAction="#editTaskButton" prefHeight="25.0" prefWidth="58.0" styleClass="blue-btn" text="Ок" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="95.0" />
+      <JFXButton fx:id="attachmentTaskButton" layoutX="14.0" layoutY="349.0" onAction="#attachmentTaskButton" styleClass="blue-btn" text="Прикрепить файл" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0">
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="PAPERCLIP" size="20" />
+         </graphic></JFXButton>
       <JFXTextArea fx:id="textAreaTask" focusColor="#4eb1ba" layoutX="14.0" layoutY="94.0" prefHeight="233.0" prefWidth="578.0" promptText="Введите текст задачи" styleClass="JFXTextArea" />
       <JFXTextField fx:id="txtTaskName" focusColor="#4eb1ba" layoutX="14.0" layoutY="21.0" prefHeight="25.0" prefWidth="219.0" promptText="Введите название" styleClass="JFXTextField" />
       <JFXComboBox fx:id="comboBoxEmployee" focusColor="#4eb1ba" layoutX="247.0" layoutY="21.0" prefHeight="25.0" prefWidth="149.0" promptText="Выберите исполнителя" />

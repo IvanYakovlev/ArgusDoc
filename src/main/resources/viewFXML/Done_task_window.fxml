@@ -2,23 +2,30 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextArea?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="617.0" prefWidth="600.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DoneTaskController">
    <children>
-      <JFXButton fx:id="cancelDoneTaskButton" layoutX="531.0" layoutY="578.0" onAction="#cancelDoneTaskButton" styleClass="JFXButton" text="Отмена" />
-      <JFXButton fx:id="doneTaskButton" layoutX="469.0" layoutY="578.0" onAction="#doneTaskButton" prefHeight="25.0" prefWidth="58.0" styleClass="JFXButton" text="Ок" />
-      <JFXButton fx:id="attachmentFileButton" layoutX="11.0" layoutY="578.0" onAction="#attachmentFileButton" styleClass="JFXButton" text="Прикрепить файл" />
+      <JFXButton fx:id="cancelDoneTaskButton" layoutX="531.0" layoutY="578.0" onAction="#cancelDoneTaskButton" styleClass="blue-btn" text="Отмена" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+      <JFXButton fx:id="doneTaskButton" layoutX="469.0" layoutY="578.0" onAction="#doneTaskButton" prefHeight="25.0" prefWidth="58.0" styleClass="blue-btn" text="Ок" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="95.0" />
+      <JFXButton fx:id="attachmentFileButton" layoutX="11.0" layoutY="578.0" onAction="#attachmentFileButton" styleClass="blue-btn" text="Прикрепить файл" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0">
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="PAPERCLIP" size="20" />
+         </graphic></JFXButton>
       <JFXTextArea fx:id="textAreaTaskDone" focusColor="#4eb1ba" layoutX="11.0" layoutY="343.0" prefHeight="213.0" prefWidth="578.0" promptText="Введите текст" styleClass="JFXTextArea" />
-      <JFXTextArea fx:id="textAreaTask" editable="false" focusColor="#4eb1ba" layoutX="11.0" layoutY="43.0" prefHeight="213.0" prefWidth="578.0" styleClass="JFXTextArea" />
-      <Label layoutX="15.0" layoutY="301.0" prefHeight="17.0" prefWidth="570.0" text="Результат выполнения задачи:">
+      <JFXTextArea fx:id="textAreaTask" editable="false" focusColor="#4eb1ba" layoutX="11.0" layoutY="55.0" prefHeight="219.0" prefWidth="578.0" styleClass="JFXTextArea" />
+      <Label layoutX="15.0" layoutY="301.0" prefHeight="17.0" prefWidth="570.0" styleClass="label2" text="Результат выполнения задачи:">
          <font>
             <Font name="System Italic" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="labelNameTask" layoutX="15.0" layoutY="14.0" prefHeight="17.0" prefWidth="462.0" />
-      <JFXButton fx:id="attachmentFileButton1" layoutX="498.0" layoutY="10.0" onAction="#attachmentFileButton" styleClass="JFXButton" text="Скачать файл" />
+      <Label fx:id="labelNameTask" layoutX="15.0" layoutY="14.0" prefHeight="17.0" prefWidth="462.0" styleClass="label2" />
+      <JFXButton fx:id="attachmentFileButton1" layoutX="460.0" layoutY="13.0" onAction="#attachmentFileButton" styleClass="blue-btn" text="Скачать файл" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="DOWNLOAD" size="20" />
+         </graphic></JFXButton>
    </children>
 </AnchorPane>

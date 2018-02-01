@@ -542,7 +542,7 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
             }
         }
         else {
-            System.out.println("Empty selection");
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Задача не выбрана!");
         }
     }
 
@@ -590,7 +590,7 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
             }
         }
         else {
-            System.out.println("Empty selection");
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Задача не выбрана!");
         }
     }
 
@@ -599,6 +599,7 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
 
 
     public void myTasksButton(ActionEvent actionEvent) {
+        task=null;
         anchorTask.toFront();
         myTaskBtnBar.toFront();
         taskDao = new TaskDaoImpl();
@@ -606,12 +607,14 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
     }
 
     public void myDoneTasksButton(ActionEvent actionEvent) {
+        task=null;
         anchorTask.toFront();
         myTaskDoneBtnBar.toFront();
         taskDao = new TaskDaoImpl();
         tableTask.setItems(taskDao.listMyDoneTasks(AuthorizedUser.getUser().getEmployeeId()));
     }
     public void fromEmpTasjButton(ActionEvent actionEvent) {
+        task=null;
         anchorTask.toFront();
         fromEmpTaskBtnBar.toFront();
         taskDao = new TaskDaoImpl();
@@ -619,6 +622,7 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
     }
 
     public void archiveTasks(ActionEvent actionEvent) {
+        task=null;
         anchorTask.toFront();
         archiveTaskBtnBar.toFront();
         taskDao = new TaskDaoImpl();
@@ -634,13 +638,23 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
     }
 
     public void canceledTaskButton(ActionEvent actionEvent) {
-        taskDao.canceledTask(task.getTaskId());
+        if (task!=null) {
+            taskDao.canceledTask(task.getTaskId());
+        } else
+        {
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Задача не выбрана!");
+        }
     }
 
 
     public void deleteTaskButton(ActionEvent actionEvent) {
-        taskDao = new TaskDaoImpl();
-        taskDao.removeTask(task.getTaskId());
+        if (task!=null){
+            taskDao = new TaskDaoImpl();
+            taskDao.removeTask(task.getTaskId());
+        } else
+        {
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Задача не выбрана!");
+        }
     }
     public void templateTabButton(ActionEvent actionEvent) {
         anchorTemplate.toFront();
@@ -661,5 +675,59 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
     public void closeMainIcon(MouseEvent mouseEvent) {
         Stage stage = (Stage) txtFIOEmployee.getScene().getWindow();
         stage.close();
+    }
+//Letter Tab
+    public void openLetter(ActionEvent actionEvent) {
+    }
+
+    public void openAddLetterWindow(ActionEvent actionEvent) {
+        if (true) {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+
+            fxmlLoader.setLocation(getClass().getResource("/viewFXML/Add_letter_window.fxml"));
+            try {
+
+                fxmlLoader.load();
+                Stage stage = new Stage();
+                Parent root = fxmlLoader.getRoot();
+                stage.setScene(new Scene(root));
+               /* DoneTaskController doneController = fxmlLoader.getController();
+                doneController.setTask(task);
+                doneController.initTab(task);*/
+
+                stage.setTitle("Новая задача");
+                stage.setMinHeight(150);
+                stage.setMinWidth(300);
+                stage.setResizable(false);
+
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+                stage.initStyle(StageStyle.TRANSPARENT);
+                root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        xOffset = event.getSceneX();
+                        yOffset = event.getSceneY();
+                    }
+                });
+                root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        stage.setX(event.getScreenX() - xOffset);
+                        stage.setY(event.getScreenY() - yOffset);
+                    }
+                });
+                stage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Задача не выбрана!");
+        }
+    }
+
+    public void removeLetter(ActionEvent actionEvent) {
     }
 }
