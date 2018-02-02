@@ -173,60 +173,6 @@ public class MainController {
         departmentDao = new DepartmentDaoImpl();
         documentDao = new DocumentDaoImpl();
         taskDao = new TaskDaoImpl();
-// If access - administrator
-if (AuthorizedUser.getUser().getAccessId()==1)
-{
-    /*initialize Departments settings table*/
-    settingTabButton.setVisible(true);
-    letterTabButton.setVisible(true);
-
-
-    idDep = new TableColumn<Department, String>("id");
-
-    idDep.setCellValueFactory(new PropertyValueFactory<Department, String>("departmentId"));
-    nameDep = new TableColumn<Department, String>("Название отдела");
-    nameDep.setCellValueFactory(new PropertyValueFactory<Department, String>("departmentName"));
-
-    tableDepartment.getColumns().setAll(idDep, nameDep);
-    tableDepartment.setItems((ObservableList<Department>) departmentDao.listDepartments());
-    /*initialize Employee settings table*/
-
-
-    idEmpl = new TableColumn<Employee, String>("id");
-    idEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeeId"));
-    fioEmpl = new TableColumn<Employee, String>("ФИО");
-    fioEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeeName"));
-    loginEmpl = new TableColumn<Employee, String>("Логин");
-    loginEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeeLogin"));
-    passwordEmpl = new TableColumn<Employee, String>("Пароль");
-    passwordEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeePassword"));
-    departmentEmpl = new TableColumn<Employee, String>("Отдел");
-    departmentEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("departmentName"));
-    accessEmpl = new TableColumn<Employee, String>("Уровень доступа");
-    accessEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("accessName"));
-
-    tableEmployee.getColumns().setAll(idEmpl, fioEmpl, loginEmpl, passwordEmpl, departmentEmpl, accessEmpl);
-    tableEmployee.setItems(employeeDao.listEmployees());
-    /*initialize combobox Employee settings tab*/
-    accessDao.listAccess();
-    comboBoxEmployee_Access.setItems(accessDao.listAccessName());
-
-    comboBoxEmployee_Department.setItems(departmentDao.listDepartmentName());
-    /*initialize Document settings table*/
-
-    idDoc = new TableColumn<Document, String>("id");
-    idDoc.setCellValueFactory(new PropertyValueFactory<Document, String>("documentId"));
-    nameDoc = new TableColumn<Document, String>("Название документа");
-    nameDoc.setCellValueFactory(new PropertyValueFactory<Document, String>("documentName"));
-    departmentDoc = new TableColumn<Document, String>("Отдел");
-    departmentDoc.setCellValueFactory(new PropertyValueFactory<Document, String>("departmentName"));
-
-    tableDocument.getColumns().setAll(idDoc, nameDoc, departmentDoc);
-    tableDocument.setItems(documentDao.listDocuments());
-    /*initialize combobox Document settings tab*/
-
-    comboBoxDocument_Department.setItems(departmentDao.listDepartmentName());
-}
 
 
 
@@ -236,6 +182,8 @@ if (AuthorizedUser.getUser().getAccessId()==1)
     tableDocumentTemplate.getColumns().setAll(documentNameTemplate);
     tableDocumentTemplate.setItems(documentDao.listDocuments());
     /*initialize combobox Document template tab*/
+
+    departmentDao.listDepartments();
     comboBoxDocument_Template.setItems(departmentDao.listDepartmentName());
     comboBoxDocument_Template.setPromptText("Выберите отдел:");
     /*initialize Task tab*/
@@ -265,7 +213,61 @@ if (AuthorizedUser.getUser().getAccessId()==1)
     tableTask.setItems(taskDao.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
 
     labelUserAuth.setText(AuthorizedUser.getUser().getEmployeeName());
+// If access - administrator
+        if (AuthorizedUser.getUser().getAccessId()==1) {
+    /*initialize Departments settings table*/
+            settingTabButton.setVisible(true);
+            letterTabButton.setVisible(true);
 
+
+            idDep = new TableColumn<Department, String>("id");
+            idDep.setCellValueFactory(new PropertyValueFactory<Department, String>("departmentId"));
+            nameDep = new TableColumn<Department, String>("Название отдела");
+            nameDep.setCellValueFactory(new PropertyValueFactory<Department, String>("departmentName"));
+
+            tableDepartment.getColumns().setAll(idDep, nameDep);
+            tableDepartment.setItems(departmentDao.listDepartments());
+
+    /*initialize Employee settings table*/
+
+
+            idEmpl = new TableColumn<Employee, String>("id");
+            idEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeeId"));
+            fioEmpl = new TableColumn<Employee, String>("ФИО");
+            fioEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeeName"));
+            loginEmpl = new TableColumn<Employee, String>("Логин");
+            loginEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeeLogin"));
+            passwordEmpl = new TableColumn<Employee, String>("Пароль");
+            passwordEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeePassword"));
+            departmentEmpl = new TableColumn<Employee, String>("Отдел");
+            departmentEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("departmentName"));
+            accessEmpl = new TableColumn<Employee, String>("Уровень доступа");
+            accessEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("accessName"));
+
+            tableEmployee.getColumns().setAll(idEmpl, fioEmpl, loginEmpl, passwordEmpl, departmentEmpl, accessEmpl);
+            tableEmployee.setItems(employeeDao.listEmployees());
+    /*initialize combobox Employee settings tab*/
+            accessDao.listAccess();
+            comboBoxEmployee_Access.setItems(accessDao.listAccessName());
+
+            comboBoxEmployee_Department.setItems(departmentDao.listDepartmentName());
+    /*initialize Document settings table*/
+
+            idDoc = new TableColumn<Document, String>("id");
+            idDoc.setCellValueFactory(new PropertyValueFactory<Document, String>("documentId"));
+            nameDoc = new TableColumn<Document, String>("Название документа");
+            nameDoc.setCellValueFactory(new PropertyValueFactory<Document, String>("documentName"));
+            departmentDoc = new TableColumn<Document, String>("Отдел");
+            departmentDoc.setCellValueFactory(new PropertyValueFactory<Document, String>("departmentName"));
+
+            tableDocument.getColumns().setAll(idDoc, nameDoc, departmentDoc);
+            tableDocument.setItems(documentDao.listDocuments());
+
+    /*initialize combobox Document settings tab*/
+
+            comboBoxDocument_Department.setItems(departmentDao.listDepartmentName());
+
+        }
     }
 
     /*Departments tab CRUD*/
@@ -275,7 +277,7 @@ if (AuthorizedUser.getUser().getAccessId()==1)
     }
 
     public void refreshTableDepartment() {
-        dataDepartment = (ObservableList<Department>) departmentDao.listDepartments();
+        dataDepartment = departmentDao.listDepartments();
         tableDepartment.setItems(dataDepartment);
         comboBoxEmployee_Department.setItems(departmentDao.listDepartmentName());
         comboBoxDocument_Department.setItems(departmentDao.listDepartmentName());

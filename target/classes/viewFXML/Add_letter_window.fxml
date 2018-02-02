@@ -26,10 +26,10 @@
          <graphic>
             <FontAwesomeIconView fill="WHITE" glyphName="PAPERCLIP" size="20" />
          </graphic></JFXButton>
-      <JFXTextArea fx:id="textAreaTask" focusColor="#4eb1ba" layoutX="14.0" layoutY="112.0" prefHeight="215.0" prefWidth="578.0" promptText="Введите текст резолюции" styleClass="JFXTextArea" />
-      <JFXTextField fx:id="txtTaskName" focusColor="#4eb1ba" layoutX="14.0" layoutY="21.0" prefHeight="25.0" prefWidth="385.0" promptText="Введите тему письма" styleClass="JFXTextField" />
-      <JFXDatePicker fx:id="datePickerTask" defaultColor="#4eb1ba" layoutX="415.0" layoutY="61.0" promptText="Выберите дату" styleClass="JFXDatePicker" />
-      <JFXTextField fx:id="txtTaskName1" focusColor="#4eb1ba" layoutX="415.0" layoutY="21.0" prefHeight="25.0" prefWidth="171.0" promptText="Введите пароль объекта" styleClass="JFXTextField" />
-      <CheckComboBox layoutX="14.0" layoutY="61.0" prefHeight="25.0" prefWidth="385.0" />
+      <JFXTextArea fx:id="textAreaLetter" focusColor="#4eb1ba" layoutX="14.0" layoutY="112.0" prefHeight="215.0" prefWidth="578.0" promptText="Введите текст резолюции" styleClass="JFXTextArea" />
+      <JFXTextField fx:id="txtLetterName" focusColor="#4eb1ba" layoutX="14.0" layoutY="21.0" prefHeight="25.0" prefWidth="385.0" promptText="Введите тему письма" styleClass="JFXTextField" />
+      <JFXDatePicker fx:id="datePickerLetter" defaultColor="#4eb1ba" layoutX="415.0" layoutY="61.0" promptText="Выберите дату" styleClass="JFXDatePicker" />
+      <JFXTextField fx:id="txtLetterPassword" focusColor="#4eb1ba" layoutX="415.0" layoutY="21.0" prefHeight="25.0" prefWidth="171.0" promptText="Введите пароль объекта" styleClass="JFXTextField" />
+      <CheckComboBox fx:id="checkComboBoxEmployee" layoutX="14.0" layoutY="61.0" prefHeight="25.0" prefWidth="385.0" />
    </children>
 </AnchorPane>
