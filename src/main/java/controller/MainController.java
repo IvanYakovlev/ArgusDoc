@@ -166,6 +166,20 @@ public class MainController {
     private Label labelUserAuth;
     TaskDao taskDao;
     private Task task= new Task();
+//Letter Tab
+
+    @FXML
+    private TableView<Letter> tableLetter;
+    private TableColumn<Letter, String> idLetter;
+    private TableColumn<Letter, String> nameLetter;
+    private TableColumn<Letter, String> passwordLetter;
+    private TableColumn<Letter, String> numberLetter;
+    private TableColumn<Letter, String> filePathLetter;
+
+
+    private LetterDao letterDao = new LetterDaoImpl();
+
+
 
     public void initialize() {
         accessDao = new AccessDaoImpl();
@@ -266,6 +280,22 @@ public class MainController {
     /*initialize combobox Document settings tab*/
 
             comboBoxDocument_Department.setItems(departmentDao.listDepartmentName());
+    /*initialize Letter  tab*/
+
+            idLetter = new TableColumn<Letter, String>("id");
+            idLetter.setCellValueFactory(new PropertyValueFactory<Letter, String>("letterId"));
+            nameLetter = new TableColumn<Letter, String>("Название");
+            nameLetter.setCellValueFactory(new PropertyValueFactory<Letter, String>("letterName"));
+            passwordLetter = new TableColumn<Letter, String>("Пароль");
+            passwordLetter.setCellValueFactory(new PropertyValueFactory<Letter, String>("letterPassword"));
+            numberLetter = new TableColumn<Letter, String>("Номер");
+            numberLetter.setCellValueFactory(new PropertyValueFactory<Letter, String>("letterNumber"));
+            filePathLetter = new TableColumn<Letter, String>("файл");
+            filePathLetter.setCellValueFactory(new PropertyValueFactory<Letter, String>("letterFilePath"));
+
+            tableLetter.getColumns().setAll(idLetter,nameLetter,passwordLetter,numberLetter,filePathLetter);
+            tableLetter.setItems(letterDao.listLetter());
+
 
         }
     }
@@ -679,7 +709,9 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
     }
 
     public void letterTabButton(ActionEvent actionEvent) {
+
         anchorLetter.toFront();
+        tableLetter.setItems(letterDao.listLetter());
     }
 
     public void settingTabButton(ActionEvent actionEvent) {

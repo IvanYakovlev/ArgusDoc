@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import java.io.File;
 import java.sql.Date;
 
 @Entity
@@ -12,20 +13,24 @@ public class Letter {
     @Column(name = "Letter_id")
     private int letterId;
 
-    @Column
+    @Column(name = "Letter_name")
     private String letterName;
 
-    @Column
-    private int letterNumber;
+    @Column(name = "Letter_number")
+    private String letterNumber;
 
-    @Column
-    private String letterFile;
+    @Column(name = "Letter_filepath")
+    private String letterFilePath;
 
-    @Column
+    @Column(name = "Letter_password")
     private int letterPassword;
 
-    @Column
+    @Column(name = "Letter_date")
     private java.sql.Date letterDate;
+
+    private File attachmentFile;
+
+
 
     public int getLetterId() {
         return letterId;
@@ -43,20 +48,28 @@ public class Letter {
         this.letterName = letterName;
     }
 
-    public int getLetterNumber() {
+    public String getLetterNumber() {
         return letterNumber;
     }
 
-    public void setLetterNumber(int letterNumber) {
+    public void setLetterNumber(String letterNumber) {
         this.letterNumber = letterNumber;
     }
 
-    public String getLetterFile() {
-        return letterFile;
+    public String getLetterFilePath() {
+        return letterFilePath;
     }
 
-    public void setLetterFile(String letterFile) {
-        this.letterFile = letterFile;
+    public void setLetterFilePath(String letterFilePath) {
+        this.letterFilePath = letterFilePath;
+    }
+
+    public File getAttachmentFile() {
+        return attachmentFile;
+    }
+
+    public void setAttachmentFile(File attachmentFile) {
+        this.attachmentFile = attachmentFile;
     }
 
     public int getLetterPassword() {

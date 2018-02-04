@@ -5,25 +5,27 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
-import dao.EmployeeDao;
-import dao.EmployeeDaoImpl;
-import dao.TaskDao;
-import dao.TaskDaoImpl;
+import dao.*;
 import dialog.ADInfo;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Employee;
+import model.Letter;
 import model.StatusTask;
 import model.Task;
 import org.controlsfx.control.CheckComboBox;
+import sun.util.calendar.LocalGregorianCalendar;
 
-import java.io.File;
+import java.io.*;
+import java.sql.Date;
+import java.util.Calendar;
 
 public class AddLetterController {
-    File attachmentFile;
+
     @FXML
     CheckComboBox<String> checkComboBoxEmployee;
     @FXML
@@ -39,13 +41,20 @@ public class AddLetterController {
     private JFXDatePicker datePickerLetter;
     @FXML
     private JFXTextArea textAreaLetter;
+    @FXML
+    private JFXTextField txtLetterNumber;
 
     private TaskDao taskDao;
     private EmployeeDao employeeDao;
+    private LetterDao letterDao;
     final FileChooser fileChooser=new FileChooser();
+    File attachmentFile;
+    String filePath="E:/ArgusDoc/Letters/";
+
     public  void initialize(){
         employeeDao = new EmployeeDaoImpl();
         taskDao = new TaskDaoImpl();
+        letterDao = new LetterDaoImpl();
         employeeDao.listEmployees();
         checkComboBoxEmployee.getItems().setAll(employeeDao.listEmployeesName());
 
@@ -54,34 +63,50 @@ public class AddLetterController {
     @FXML
     private JFXButton cancelAddLetterButton = new JFXButton();
 
+
+
     public void cancelAddLetterButton(ActionEvent actionEvent) {
         Stage stage = (Stage) cancelAddLetterButton.getScene().getWindow();
         stage.close();
     }
 
-    public void addLetterButton(ActionEvent actionEvent) {
-        if (txtLetterName.getText().isEmpty() ||  checkComboBoxEmployee.getItems().isEmpty() || datePickerLetter.getValue()==null||textAreaLetter.getText().isEmpty()) {
+    public void addLetterButton(ActionEvent actionEvent) throws IOException {
+        if (txtLetterName.getText().isEmpty() ||  checkComboBoxEmployee.getItems().isEmpty() || datePickerLetter.getValue()==null||textAreaLetter.getText().isEmpty()||attachmentFile==null) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
-           for (int i = 0; i<checkComboBoxEmployee.getCheckModel().getCheckedIndices().size();i++) {
+            for (int i = 0; i < checkComboBoxEmployee.getCheckModel().getCheckedIndices().size(); i++) {
 
-            Task task = new Task();
-            task.setTaskName(txtLetterName.getText());
-            task.setTaskText(textAreaLetter.getText());
-            task.setTaskAttachment("file");
-            task.setTaskFromEmployee(AuthorizedUser.getUser().getEmployeeName());
-            task.setEmployeeId(employeeDao.getIdEmployeeByName(checkComboBoxEmployee.getItems().get(checkComboBoxEmployee.getCheckModel().getCheckedIndices().get(i))));
-            task.setTaskTerm(java.sql.Date.valueOf(datePickerLetter.getValue()));
-            task.setStatusTaskId(StatusTask.NOT_DONE);
-            task.setTaskTime(null);
-            taskDao.addTask(task);
+                Task task = new Task();
+                task.setTaskName(txtLetterName.getText());
+                task.setTaskText(textAreaLetter.getText());
+                task.setTaskAttachment(filePath + attachmentFile.getName());
+                task.setTaskFromEmployee(AuthorizedUser.getUser().getEmployeeName());
+                task.setEmployeeId(employeeDao.getIdEmployeeByName(checkComboBoxEmployee.getItems().get(checkComboBoxEmployee.getCheckModel().getCheckedIndices().get(i))));
+                task.setTaskTerm(java.sql.Date.valueOf(datePickerLetter.getValue()));
+                task.setStatusTaskId(StatusTask.NOT_DONE);
+                task.setTaskTime(null);
+                taskDao.addTask(task);
 
 
+            }
 
+
+            Letter letter = new Letter();
+
+            letter.setLetterName(txtLetterName.getText());
+            letter.setLetterDate(Date.valueOf(datePickerLetter.getValue()));
+            letter.setAttachmentFile(attachmentFile);
+            letter.setLetterPassword(Integer.parseInt(txtLetterPassword.getText()));
+            letter.setLetterNumber(txtLetterNumber.getText());
+            letter.setLetterFilePath(filePath+attachmentFile.getName());
+            letterDao.addLetter(letter);
+
+
+            Stage stage = (Stage) addLetterButton.getScene().getWindow();
+            stage.close();
         }
-        Stage stage = (Stage) addLetterButton.getScene().getWindow();
-        stage.close();
-    }
+
+
 
     }
 
@@ -91,9 +116,8 @@ public class AddLetterController {
         if (file == null) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Письмо не выбрано!");
         } else {
-           attachmentFile= file;
-            System.out.println(attachmentFile.getName());
-            System.out.println(attachmentFile.getPath());
+
+            attachmentFile=file;
         }
     }
 }

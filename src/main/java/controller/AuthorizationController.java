@@ -98,7 +98,8 @@ public class AuthorizationController {
                 stage.getIcons().add(new Image("images/icon.jpg"));
                 stage.setScene(new Scene(root));
 
-                //stage.initStyle(StageStyle.TRANSPARENT);
+
+         /*       stage.initStyle(StageStyle.TRANSPARENT);
 
                 root.setOnMousePressed(new EventHandler<MouseEvent>() {
                     @Override
@@ -113,7 +114,7 @@ public class AuthorizationController {
                         stage.setX(event.getScreenX() - xOffset);
                         stage.setY(event.getScreenY() - yOffset);
                     }
-                });
+                });*/
 
 
                 stage.show();
