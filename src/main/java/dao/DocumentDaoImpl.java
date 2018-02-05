@@ -8,6 +8,9 @@ import javafx.scene.control.Alert;
 import model.Document;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +21,31 @@ public class DocumentDaoImpl implements DocumentDao {
 
     public void addDocument(Document document) throws IOException {
 
-            this.dBconnection = new DBconnection();
+        this.dBconnection = new DBconnection();
+        try {
+
+
+            if (document.getDocumentFile().length() > 50000000) {
+                ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Размер загружаемого документа не должен превышать 50мб!");
+            } else {
+                //добавляем запись в таблицу Documents
+                PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("INSERT INTO Documents(Document_name,Document_filepath,Department_id) VALUES (?,?,?)");
+                preparedStatement.setString(1, document.getDocumentName());
+                preparedStatement.setString(2, document.getDocumentFilePath());
+                preparedStatement.setInt(3, document.getDepartmentId());
+                preparedStatement.execute();
+
+
+                //Копируем файл на сервер
+                File destFile = new File(document.getDocumentFilePath());
+                Files.copy(document.getDocumentFile().toPath(), destFile.toPath());
+
+            }
+        } catch (SQLException e) {
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Документ с таким названием уже существует!");
+        }
+    }
+           /* this.dBconnection = new DBconnection();
             File file;
             FileInputStream fileInputStream = null;
             try {
@@ -30,7 +57,7 @@ public class DocumentDaoImpl implements DocumentDao {
                     ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Размер загружаемого документа не должен превышать 50мб!");
                 }else {
                     System.out.println(length);
-                    PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("INSERT INTO Documents(Document_name,Document_file,Department_id) VALUES (?,?,?)");
+                    PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("INSERT INTO Documents(Document_name,Document_filepath,Department_id) VALUES (?,?,?)");
                     preparedStatement.setString(1, document.getDocumentName());
                     preparedStatement.setBinaryStream(2, fileInputStream, length);
                     preparedStatement.setInt(3, document.getDepartmentId());
@@ -47,17 +74,28 @@ public class DocumentDaoImpl implements DocumentDao {
                 } catch (RuntimeException e) {
                     e.printStackTrace();
                 }
-            }
-    }
+            }*/
 
-    public void removeDocument(int id) {
+
+    public void removeDocument(int id, String filePath) {
         dBconnection = new DBconnection();
 
         try {
+            //удаляем запись в таблице
             PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("DELETE FROM DOCUMENTS WHERE Document_id = ?");
             preparedStatement.setInt(1,id);
             preparedStatement.execute();
             mapDocument.remove(id);
+
+            //удаляем файл с сервера
+            Path path = Paths.get(filePath);
+            try {
+                Files.delete(path);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -76,6 +114,7 @@ public class DocumentDaoImpl implements DocumentDao {
                 document.setDocumentName((resultSet.getString("Document_name")));
                 document.setDepartmentId(resultSet.getInt("Department_id"));
                 document.setDepartmentName(resultSet.getString("Department_name"));
+                document.setDocumentFilePath(resultSet.getString("Document_filepath"));
                 mapDocument.put(document.getDocumentId(),document.getDocumentName());
                 listData.add(document);
             }
@@ -132,7 +171,27 @@ public class DocumentDaoImpl implements DocumentDao {
 
     @Override
     public void openDocument(int id)  {
-        File file1 = new File("C:\\Temp\\" + mapDocument.get(id));
+
+        dBconnection = new DBconnection();
+        try {
+            String sql = "SELECT Document_filepath FROM DOCUMENTS WHERE Document_id=" + id;
+            ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
+            if (resultSet.next()) {
+
+                String filepath = resultSet.getString("Document_filepath");
+
+                File file = new File(filepath);
+                java.awt.Desktop.getDesktop().open(file);
+             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+        /*File file1 = new File("C:\\Temp\\" + mapDocument.get(id));
         if (file1.exists()) {
             try {
                 java.awt.Desktop.getDesktop().open(file1);
@@ -143,7 +202,7 @@ public class DocumentDaoImpl implements DocumentDao {
             InputStream inputStream = null;
             try {
                 dBconnection = new DBconnection();
-                String sql = "SELECT Document_file, Document_name FROM DOCUMENTS WHERE Document_id=" + id;
+                String sql = "SELECT Document_filepath, Document_name FROM DOCUMENTS WHERE Document_id=" + id;
                 ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
                 if (resultSet.next()) {
                     Blob file = resultSet.getBlob("Document_file");
@@ -175,12 +234,30 @@ public class DocumentDaoImpl implements DocumentDao {
                 }
 
             }
-        }
+        }*/
     }
 
     @Override
     public void printDocument(int id) {
-        File file1 = new File("C:\\Temp\\" + mapDocument.get(id));
+        dBconnection = new DBconnection();
+        try {
+            String sql = "SELECT Document_filepath FROM DOCUMENTS WHERE Document_id=" + id;
+            ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
+            if (resultSet.next()) {
+
+                String filepath = resultSet.getString("Document_filepath");
+
+                File file = new File(filepath);
+                java.awt.Desktop.getDesktop().print(file);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    /*    File file1 = new File("C:\\Temp\\" + mapDocument.get(id));
         if (file1.exists()) {
             try {
                 java.awt.Desktop.getDesktop().print(file1);
@@ -191,7 +268,7 @@ public class DocumentDaoImpl implements DocumentDao {
             InputStream inputStream = null;
             try {
                 dBconnection = new DBconnection();
-                String sql = "SELECT Document_file, Document_name FROM DOCUMENTS WHERE Document_id=" + id;
+                String sql = "SELECT Document_filepath, Document_name FROM DOCUMENTS WHERE Document_id=" + id;
                 ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
                 if (resultSet.next()) {
                     Blob file = resultSet.getBlob("Document_file");
@@ -223,6 +300,6 @@ public class DocumentDaoImpl implements DocumentDao {
                 }
 
             }
-        }
+        }*/
     }
 }

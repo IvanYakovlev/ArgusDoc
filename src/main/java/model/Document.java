@@ -15,11 +15,15 @@ public class Document {
     @Column(name = "Document_name")
     private String documentName;
 
-    @Column(name = "Document_file")
+    @Column(name = "Document_filepath")
+    private String documentFilePath;
+
     private File documentFile;
 
     @Column(name = "Department_id")
     private int departmentId;
+
+    private String departmentName;
 
     public int getDocumentId() {
         return documentId;
@@ -35,6 +39,14 @@ public class Document {
 
     public void setDocumentName(String documentName) {
         this.documentName = documentName;
+    }
+
+    public String getDocumentFilePath() {
+        return documentFilePath;
+    }
+
+    public void setDocumentFilePath(String documentFilePath) {
+        this.documentFilePath = documentFilePath;
     }
 
     public File getDocumentFile() {
@@ -61,13 +73,12 @@ public class Document {
         this.departmentName = departmentName;
     }
 
-    private String departmentName;
-
     @Override
     public String toString() {
         return "Document{" +
                 "documentId=" + documentId +
                 ", documentName='" + documentName + '\'' +
+                ", documentFilePath='" + documentFilePath + '\'' +
                 ", documentFile=" + documentFile +
                 ", departmentId=" + departmentId +
                 ", departmentName='" + departmentName + '\'' +

@@ -1,5 +1,6 @@
 package controller;
 
+import argusDocSettings.serverFilePath;
 import authorizedUser.AuthorizedUser;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
@@ -32,27 +33,43 @@ import model.*;
 import dialog.ADInfo;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
 
 public class MainController {
+    //Connection
+    private DBconnection dBconnection;
 
     private double xOffset;
     private double yOffset;
-    private Employee userAuth;
 
-    public void setUserAuth(Employee userAuth) {
-        this.userAuth = userAuth;
-    }
+    private Task task= new Task();
+    private int idEmployee;
+    private Document document = new Document();
+    private int idDepartment;
+
+    DepartmentDao departmentDao;
+    EmployeeDao employeeDao;
+    AccessDao accessDao;
+    DocumentDao documentDao;
+    LetterDao letterDao;
+    TaskDao taskDao;
+
+    private ObservableList<Department> dataDepartment;
+    private ObservableList<Employee> dataEmployee;
+    private ObservableList<Document> dataDocument;
+
+    final FileChooser fileChooser=new FileChooser();
+
+
+// Window control
+
     @FXML
     private JFXButton settingTabButton = new JFXButton();
     @FXML
     private JFXButton letterTabButton = new JFXButton();
-
-    public Employee getUserAuth() {
-        return userAuth;
-    }
     @FXML
     private ButtonBar myTaskBtnBar = new ButtonBar();
     @FXML
@@ -72,22 +89,14 @@ public class MainController {
     @FXML
     private AnchorPane anchorSetting = new AnchorPane();
 
-    //Department settings
+//Department settings
+
     @FXML
     private TableView<Department> tableDepartment;
     private TableColumn<Department, String> idDep;
     private TableColumn<Department, String> nameDep;
-
     @FXML
     private JFXTextField txtDepartment;
-
-// Variables
-    private ObservableList<Department> dataDepartment;
-
-    DepartmentDao departmentDao;
-
-    private int idDepartment;
-
 
 //Employee settings
 
@@ -110,46 +119,30 @@ public class MainController {
     private TableColumn<Employee, String> departmentEmpl;
     private TableColumn<Employee, String> accessEmpl;
 
-    //Variables
-
-    EmployeeDao employeeDao;
-
-    AccessDao accessDao;
-
-    private ObservableList<Employee> dataEmployee;
-
-    private int idEmployee;
 //Documents settings
-    private int idDocument;
-    private ObservableList<Document> dataDocument;
-
-    DocumentDao documentDao;
-
-    final FileChooser fileChooser=new FileChooser();
 
     @FXML
     private TableView<Document> tableDocument;
     private TableColumn<Document, String> idDoc;
     private TableColumn<Document, String> nameDoc;
     private TableColumn<Document, String> departmentDoc;
-
+    private TableColumn<Document, String> filePathDoc;
     @FXML
     private Button documentButtonId;
-
     @FXML
     private ComboBox<String> comboBoxDocument_Department = new ComboBox<>();
+
 //Documents view Tab
+
     @FXML
     private TableView<Document> tableDocumentTemplate;
-
     private TableColumn<Document, String> documentNameTemplate;
-
+    private TableColumn<Document, String> documentFilePathTemplate;
     @FXML
     private ComboBox<String> comboBoxDocument_Template = new ComboBox<>();
 
-    //Connection
-    private DBconnection dBconnection;
 //Tasks tab
+
     @FXML
     private TableView<Task> tableTask;
     private TableColumn<Task, String> idTask;
@@ -161,11 +154,9 @@ public class MainController {
     private TableColumn<Task, String> statusTask;
     private TableColumn<Task, String> sender;
     private TableColumn<Task, String> timeTask;
-
     @FXML
     private Label labelUserAuth;
-    TaskDao taskDao;
-    private Task task= new Task();
+
 //Letter Tab
 
     @FXML
@@ -176,24 +167,22 @@ public class MainController {
     private TableColumn<Letter, String> numberLetter;
     private TableColumn<Letter, String> filePathLetter;
 
-
-    private LetterDao letterDao = new LetterDaoImpl();
-
-
-
     public void initialize() {
         accessDao = new AccessDaoImpl();
         employeeDao = new EmployeeDaoImpl();
         departmentDao = new DepartmentDaoImpl();
         documentDao = new DocumentDaoImpl();
         taskDao = new TaskDaoImpl();
-
+        letterDao = new LetterDaoImpl();
 
 
     /*initialize table Document Template tab*/
     documentNameTemplate = new TableColumn<Document, String>("Название документа");
     documentNameTemplate.setCellValueFactory(new PropertyValueFactory<Document, String>("documentName"));
-    tableDocumentTemplate.getColumns().setAll(documentNameTemplate);
+    documentFilePathTemplate = new TableColumn<Document, String>("Путь файла");
+    documentFilePathTemplate.setCellValueFactory(new PropertyValueFactory<Document, String>("documentFilePath"));
+
+    tableDocumentTemplate.getColumns().setAll(documentNameTemplate,documentFilePathTemplate);
     tableDocumentTemplate.setItems(documentDao.listDocuments());
     /*initialize combobox Document template tab*/
 
@@ -273,8 +262,10 @@ public class MainController {
             nameDoc.setCellValueFactory(new PropertyValueFactory<Document, String>("documentName"));
             departmentDoc = new TableColumn<Document, String>("Отдел");
             departmentDoc.setCellValueFactory(new PropertyValueFactory<Document, String>("departmentName"));
+            filePathDoc = new TableColumn<Document, String>("Путь файла");
+            filePathDoc.setCellValueFactory(new PropertyValueFactory<Document, String>("documentFilePath"));
 
-            tableDocument.getColumns().setAll(idDoc, nameDoc, departmentDoc);
+            tableDocument.getColumns().setAll(idDoc, nameDoc, departmentDoc, filePathDoc);
             tableDocument.setItems(documentDao.listDocuments());
 
     /*initialize combobox Document settings tab*/
@@ -433,14 +424,14 @@ public class MainController {
         if (comboBoxDocument_Department.getValue()==null) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
-            Document document = new Document();
-
-            document.setDocumentFile(fileChooser.showOpenDialog(documentButtonId.getScene().getWindow()));
-            if (document.getDocumentFile() == null) {
+            File choseFile = fileChooser.showOpenDialog(documentButtonId.getScene().getWindow());
+            if (choseFile == null) {
                 ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Документ не загружен!");
-            } else {
-                document.setDocumentName(document.getDocumentFile().getName());
-
+                } else {
+                Document document = new Document();
+                document.setDocumentName(choseFile.getName());
+                document.setDocumentFile(choseFile);
+                document.setDocumentFilePath(serverFilePath.DOCUMENTS_FILE_PATH+choseFile.getName());
                 document.setDepartmentId(departmentDao.getIdDepartmentByName(comboBoxDocument_Department.getValue()));
                 documentDao.addDocument(document);
                 clearDocumentTab();
@@ -462,28 +453,32 @@ public class MainController {
     }
 
     public void removeDocumentButton(ActionEvent actionEvent) {
-        documentDao.removeDocument(this.idDocument);
+        if (document.getDocumentFilePath()!=null) {
+            documentDao.removeDocument(document.getDocumentId(), document.getDocumentFilePath());
 
-        clearDocumentTab();
-        refreshTableDocument();
+            clearDocumentTab();
+            refreshTableDocument();
+        }
     }
 
     public void clickTableDocument(MouseEvent mouseEvent) {
-        Document document = tableDocument.getSelectionModel().getSelectedItems().get(0);
-        if (document!=null) {
-            this.idDocument = document.getDocumentId();
-            comboBoxDocument_Department.setValue(document.getDepartmentName());
+        Document clickDocument = tableDocument.getSelectionModel().getSelectedItems().get(0);
+        System.out.println(clickDocument);
 
-        }
+            document = clickDocument;
+            if (document!=null) {
+                comboBoxDocument_Department.setValue(document.getDepartmentName());
+            }
+
     }
 
 /*Document template tab*/
 public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
-    Document document = tableDocumentTemplate.getSelectionModel().getSelectedItems().get(0);
-    if (document!=null) {
-        idDocument = document.getDocumentId();
+    Document clickDocument = tableDocumentTemplate.getSelectionModel().getSelectedItems().get(0);
 
-    }
+        document = clickDocument;
+
+
 }
     public void choiceDepartmentDocument(ActionEvent actionEvent) {
         tableDocumentTemplate.setItems(documentDao.listDocumentsByDepartment(comboBoxDocument_Template.getValue()));
@@ -491,11 +486,17 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
     }
 
     public void openDocumentButton(ActionEvent actionEvent) {
-        documentDao.openDocument(this.idDocument);
+        if (document.getDocumentName()!=null) {
+            documentDao.openDocument(document.getDocumentId());
+        }
+
     }
 
     public void printDocumentButton(ActionEvent actionEvent) {
-        documentDao.printDocument(this.idDocument);
+        if (document.getDocumentName()!=null) {
+            documentDao.printDocument(document.getDocumentId());
+        }
+
     }
 
 

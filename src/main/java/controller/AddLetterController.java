@@ -1,5 +1,6 @@
 package controller;
 
+import argusDocSettings.serverFilePath;
 import authorizedUser.AuthorizedUser;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
@@ -49,7 +50,6 @@ public class AddLetterController {
     private LetterDao letterDao;
     final FileChooser fileChooser=new FileChooser();
     File attachmentFile;
-    String filePath="E:/ArgusDoc/Letters/";
 
     public  void initialize(){
         employeeDao = new EmployeeDaoImpl();
@@ -75,11 +75,11 @@ public class AddLetterController {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
             for (int i = 0; i < checkComboBoxEmployee.getCheckModel().getCheckedIndices().size(); i++) {
-
+//формируем задачи для исполнителей
                 Task task = new Task();
                 task.setTaskName(txtLetterName.getText());
                 task.setTaskText(textAreaLetter.getText());
-                task.setTaskAttachment(filePath + attachmentFile.getName());
+                task.setTaskAttachment(serverFilePath.LETTERS_FILE_PATH + attachmentFile.getName());
                 task.setTaskFromEmployee(AuthorizedUser.getUser().getEmployeeName());
                 task.setEmployeeId(employeeDao.getIdEmployeeByName(checkComboBoxEmployee.getItems().get(checkComboBoxEmployee.getCheckModel().getCheckedIndices().get(i))));
                 task.setTaskTerm(java.sql.Date.valueOf(datePickerLetter.getValue()));
@@ -90,15 +90,14 @@ public class AddLetterController {
 
             }
 
-
+//Добавляем письмо в таблицу и загружаем на сервер
             Letter letter = new Letter();
-
             letter.setLetterName(txtLetterName.getText());
             letter.setLetterDate(Date.valueOf(datePickerLetter.getValue()));
             letter.setAttachmentFile(attachmentFile);
             letter.setLetterPassword(Integer.parseInt(txtLetterPassword.getText()));
             letter.setLetterNumber(txtLetterNumber.getText());
-            letter.setLetterFilePath(filePath+attachmentFile.getName());
+            letter.setLetterFilePath(serverFilePath.LETTERS_FILE_PATH+attachmentFile.getName());
             letterDao.addLetter(letter);
 
 
