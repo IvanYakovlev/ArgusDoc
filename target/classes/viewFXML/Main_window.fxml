@@ -2,14 +2,12 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -81,63 +79,6 @@
             <AnchorPane fx:id="anchorCalendar" layoutX="20.0" layoutY="52.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
                <children>
                   <Label layoutX="226.0" layoutY="175.0" styleClass="label2" text="Календарь" />
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="anchorSetting" layoutX="40.0" layoutY="72.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
-               <children>
-                  <JFXTabPane styleClass="jfx-tab-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <tabs>
-                        <Tab text="Отделы">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <Label layoutX="32.0" layoutY="587.0" styleClass="label2" text="Название отдела" AnchorPane.bottomAnchor="21.0" />
-                                    <JFXTextField fx:id="txtDepartment" layoutX="154.0" layoutY="583.0" prefHeight="25.0" prefWidth="270.0" styleClass="JFXTextField" AnchorPane.bottomAnchor="17.0" AnchorPane.rightAnchor="385.0" />
-                                    <JFXButton layoutX="466.0" layoutY="583.0" onAction="#addDepartmentButton" styleClass="blue-btn" text="Добавить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="213.0" />
-                                    <JFXButton layoutX="589.0" layoutY="583.0" onAction="#updateDepartmentButton" styleClass="blue-btn" text="Обновить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="105.0" />
-                                    <JFXButton layoutX="555.0" layoutY="399.0" onAction="#removeDepartmentButton" styleClass="blue-btn" text="Удалить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-                                    <TableView fx:id="tableDepartment" onMouseClicked="#clickTableDepartment" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
-                                 </children>
-                              </AnchorPane>
-                          </content>
-                        </Tab>
-                        <Tab text="Сотрудники">
-                           <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <JFXButton layoutX="563.0" layoutY="396.0" onAction="#removeEmployeeButton" styleClass="blue-btn" text="Удалить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-                                    <JFXButton layoutX="480.0" layoutY="396.0" onAction="#updateEmployeeButton" styleClass="blue-btn" text="Обновить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="105.0" />
-                                    <JFXButton layoutX="403.0" layoutY="396.0" onAction="#addEmployeeButton" styleClass="blue-btn" text="Добавить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="210.0" />
-                                    <JFXTextField fx:id="txtLoginEmployee" layoutX="75.0" layoutY="359.0" prefHeight="25.0" prefWidth="244.0" styleClass="JFXTextField" AnchorPane.bottomAnchor="55.0" />
-                                    <JFXTextField fx:id="txtFIOEmployee" layoutX="75.0" layoutY="325.0" prefHeight="25.0" prefWidth="243.0" styleClass="JFXTextField" AnchorPane.bottomAnchor="100.0" />
-                                    <JFXTextField fx:id="txtPasswordEmployee" layoutX="75.0" layoutY="396.0" prefHeight="25.0" prefWidth="245.0" styleClass="JFXTextField" AnchorPane.bottomAnchor="10.0" />
-                                    <JFXComboBox fx:id="comboBoxEmployee_Department" layoutX="465.0" layoutY="325.0" prefHeight="25.0" prefWidth="218.0" styleClass="JFXComboBox" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="10.0" />
-                                    <JFXComboBox fx:id="comboBoxEmployee_Access" layoutX="465.0" layoutY="359.0" prefHeight="25.0" prefWidth="219.0" styleClass="JFXComboBox" AnchorPane.bottomAnchor="55.0" AnchorPane.rightAnchor="10.0" />
-                                    <Label layoutX="28.0" layoutY="342.0" styleClass="label2" text="ФИО" AnchorPane.bottomAnchor="100.0" />
-                                    <Label layoutX="24.0" layoutY="368.0" styleClass="label2" text="Логин" AnchorPane.bottomAnchor="50.0" />
-                                    <Label layoutX="20.0" layoutY="405.0" styleClass="label2" text="Пароль" AnchorPane.bottomAnchor="10.0" />
-                                    <Label layoutX="364.0" layoutY="376.0" styleClass="label2" text="Доступ" AnchorPane.bottomAnchor="55.0" AnchorPane.rightAnchor="250.0" />
-                                    <Label layoutX="366.0" layoutY="342.0" styleClass="label2" text="Отдел" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="250.0" />
-                                    <TableView fx:id="tableEmployee" onMouseClicked="#clickTableEmployee" prefHeight="502.0" prefWidth="809.0" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
-                                 </children>
-                              </AnchorPane>
-                           </content>
-                        </Tab>
-                        <Tab text="Документы">
-                           <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <JFXComboBox fx:id="comboBoxDocument_Department" layoutX="429.0" layoutY="361.0" prefHeight="25.0" prefWidth="331.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="239.0" />
-                                    <JFXButton fx:id="documentButtonId" layoutX="484.0" layoutY="400.0" onAction="#addDocumentButton" styleClass="blue-btn" text="Добавить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="105.0" />
-                                    <JFXButton layoutX="553.0" layoutY="400.0" onAction="#removeDocumentButton" styleClass="blue-btn" text="Удалить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-                                    <Label layoutX="186.0" layoutY="588.0" styleClass="label2" text="Отдел" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="589.0" />
-                                    <TableView fx:id="tableDocument" onMouseClicked="#clickTableDocument" prefHeight="558.0" prefWidth="809.0" styleClass="TableView" AnchorPane.bottomAnchor="67.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
-                                 </children>
-                              </AnchorPane>
-                           </content>
-                        </Tab>
-                     </tabs>
-                  </JFXTabPane>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="anchorLetter" layoutX="30.0" layoutY="62.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
