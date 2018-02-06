@@ -46,9 +46,8 @@ public class MainController {
     private double yOffset;
 
     private Task task= new Task();
-    private int idEmployee;
     private Document document = new Document();
-    private int idDepartment;
+
 
     DepartmentDao departmentDao;
     EmployeeDao employeeDao;
@@ -133,41 +132,55 @@ public class MainController {
 
 
     /*initialize table Document Template tab*/
+//заполняем таблицу данными
     documentNameTemplate = new TableColumn<Document, String>("Название документа");
     documentNameTemplate.setCellValueFactory(new PropertyValueFactory<Document, String>("documentName"));
     documentFilePathTemplate = new TableColumn<Document, String>("Путь файла");
     documentFilePathTemplate.setCellValueFactory(new PropertyValueFactory<Document, String>("documentFilePath"));
 
-    tableDocumentTemplate.getColumns().setAll(documentNameTemplate,documentFilePathTemplate);
+    tableDocumentTemplate.getColumns().setAll(documentNameTemplate);
     tableDocumentTemplate.setItems(documentDao.listDocuments());
+//задаем размер колонок в таблицу
+    documentNameTemplate.prefWidthProperty().bind(tableTask.widthProperty().multiply(1));
+
+
     /*initialize combobox Document template tab*/
 
     departmentDao.listDepartments();
     comboBoxDocument_Template.setItems(departmentDao.listDepartmentName());
     comboBoxDocument_Template.setPromptText("Выберите отдел:");
     /*initialize Task tab*/
-
+//заполняем таблицу данными
     idTask = new TableColumn<Task, String>("Id");
     idTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskId"));
     nameTask = new TableColumn<Task, String>("Название задачи");
-    nameTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskName"));
-    textTask = new TableColumn<Task, String>("Текст задачи");
+    nameTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskName"));textTask = new TableColumn<Task, String>("Текст задачи");
     textTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskText"));
     attachmentTask = new TableColumn<Task, String>("Прикрепленный файл");
     attachmentTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskAttachment"));
     employeeTask = new TableColumn<Task, String>("Исполнитель");
     employeeTask.setCellValueFactory(new PropertyValueFactory<Task, String>("employeeName"));
-    termTask = new TableColumn<Task, String>("Срок выполнения");
+    termTask = new TableColumn<Task, String>("Дата");
     termTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskTerm"));
     statusTask = new TableColumn<Task, String>("Статус задачи");
     statusTask.setCellValueFactory(new PropertyValueFactory<Task, String>("statusTaskName"));
     sender = new TableColumn<Task, String>("Отправитель");
     sender.setCellValueFactory(new PropertyValueFactory<Task, String>("taskFromEmployee"));
-    timeTask = new TableColumn<Task, String>("Время выполнения");
+    timeTask = new TableColumn<Task, String>("Время");
     timeTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskTime"));
 
+// задаем размер колонок в таблице
+    nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.24));
+    sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
+    termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+    timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+    statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
 
-    tableTask.getColumns().setAll(idTask, nameTask, textTask, attachmentTask, employeeTask, sender, termTask, timeTask, statusTask);
+
+
+
+
+    tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
 
     tableTask.setItems(taskDao.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
 
@@ -190,10 +203,14 @@ public class MainController {
         filePathLetter = new TableColumn<Letter, String>("файл");
         filePathLetter.setCellValueFactory(new PropertyValueFactory<Letter, String>("letterFilePath"));
 
-        tableLetter.getColumns().setAll(idLetter, nameLetter, passwordLetter, numberLetter, filePathLetter);
+        tableLetter.getColumns().setAll(nameLetter, passwordLetter, numberLetter);
         tableLetter.setItems(letterDao.listLetter());
 
         }
+
+
+        anchorTask.toFront();
+        myTaskBtnBar.toFront();
     }
 
 
@@ -377,6 +394,14 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
         anchorTask.toFront();
         myTaskBtnBar.toFront();
         taskDao = new TaskDaoImpl();
+        // задаем размер колонок в таблице
+        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.24));
+        sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
+        termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+        timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+        statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
+
+        tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
         tableTask.setItems(taskDao.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
     }
 
@@ -385,6 +410,14 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
         anchorTask.toFront();
         myTaskDoneBtnBar.toFront();
         taskDao = new TaskDaoImpl();
+        // задаем размер колонок в таблице
+        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.24));
+        sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
+        termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+        timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+        statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
+
+        tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
         tableTask.setItems(taskDao.listMyDoneTasks(AuthorizedUser.getUser().getEmployeeId()));
     }
     public void fromEmpTasjButton(ActionEvent actionEvent) {
@@ -392,6 +425,16 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
         anchorTask.toFront();
         fromEmpTaskBtnBar.toFront();
         taskDao = new TaskDaoImpl();
+
+        // задаем размер колонок в таблице
+        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.24));
+        employeeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
+        termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+        timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+        statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
+
+        tableTask.getColumns().setAll(nameTask, employeeTask, termTask, timeTask, statusTask);
+
         tableTask.setItems(taskDao.listFromEmpTasks((AuthorizedUser.getUser().getEmployeeName())));
     }
 
@@ -400,6 +443,16 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
         anchorTask.toFront();
         archiveTaskBtnBar.toFront();
         taskDao = new TaskDaoImpl();
+
+        // задаем размер колонок в таблице
+        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
+        sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
+        employeeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
+        termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+        timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.14));
+        //statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
+
+        tableTask.getColumns().setAll(nameTask,sender, employeeTask, termTask, timeTask);
         tableTask.setItems(taskDao.listArchiveTasks(StatusTask.CANCELED));
 
     }
@@ -433,6 +486,7 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
     public void templateTabButton(ActionEvent actionEvent) {
         departmentDao.listDepartments();
         tableDocumentTemplate.setItems(dataDocument);
+        comboBoxDocument_Template.setItems(departmentDao.listDepartmentName());
         anchorTemplate.toFront();
     }
 

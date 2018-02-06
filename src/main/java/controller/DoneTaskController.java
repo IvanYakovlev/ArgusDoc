@@ -9,6 +9,7 @@ import dialog.ADInfo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import model.StatusTask;
@@ -26,14 +27,19 @@ public class DoneTaskController {
         this.task = task;
     }
 
+
+
+    @FXML
+    private ButtonBar viewButtonBar = new ButtonBar();
+    @FXML
+    private ButtonBar editButtonBar = new ButtonBar();
     @FXML
     private JFXButton cancelDoneTaskButton = new JFXButton();
     @FXML
     private Label labelNameTask = new Label();
     @FXML
     private JFXTextArea textAreaTask = new JFXTextArea();
-    @FXML
-    private JFXTextArea textAreaTaskDone;
+
     @FXML
     private JFXButton doneTaskButton = new JFXButton();
     private TaskDao taskDao = new TaskDaoImpl();
@@ -44,14 +50,14 @@ public class DoneTaskController {
     }
 
     public void doneTaskButton(ActionEvent actionEvent) {
-        if (textAreaTaskDone.getText().isEmpty()) {
+        if (textAreaTask.getText().isEmpty()) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
 
 
             Task task = new Task();
             task.setTaskId(this.task.getTaskId());
-            task.setTaskText(textAreaTaskDone.getText());
+            task.setTaskText(textAreaTask.getText());
             task.setStatusTaskId(StatusTask.DONE);
             task.setTaskAttachment("newfile");
 
@@ -72,5 +78,20 @@ public class DoneTaskController {
         labelNameTask.setText(task.getTaskName());
         textAreaTask.setText(task.getTaskText());
 
+    }
+
+    public void stopDoneTaskButton(ActionEvent actionEvent) {
+        viewButtonBar.toFront();
+    }
+
+    public void downloadFile(ActionEvent actionEvent) {
+
+    }
+
+    public void doTaskDone(ActionEvent actionEvent) {
+        editButtonBar.toFront();
+    }
+
+    public void openFile(ActionEvent actionEvent) {
     }
 }
