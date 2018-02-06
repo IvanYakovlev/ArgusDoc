@@ -55,7 +55,7 @@ public class AddTaskController {
             Task task = new Task();
             task.setTaskName(txtTaskName.getText());
             task.setTaskText(textAreaTask.getText());
-            task.setTaskAttachment("file");
+            //task.setTaskAttachment("file");
             task.setTaskFromEmployee(AuthorizedUser.getUser().getEmployeeName());
             task.setEmployeeId(employeeDao.getIdEmployeeByName(comboBoxEmployee.getValue()));
             task.setTaskTerm(java.sql.Date.valueOf(datePickerTask.getValue()));

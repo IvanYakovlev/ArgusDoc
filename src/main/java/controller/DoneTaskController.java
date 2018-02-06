@@ -11,9 +11,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Label;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.StatusTask;
 import model.Task;
+
+import java.io.File;
 
 public class DoneTaskController {
 
@@ -28,7 +31,16 @@ public class DoneTaskController {
     }
 
 
+    TaskDao taskDao = new TaskDaoImpl();
+    final FileChooser fileChooser=new FileChooser();
+    File attachmentFile;
+    @FXML
+    private JFXButton downloadFile = new JFXButton();
+    @FXML
+    private JFXButton openFile = new JFXButton();
 
+    @FXML
+    private JFXButton attachmentFileButton ;
     @FXML
     private ButtonBar viewButtonBar = new ButtonBar();
     @FXML
@@ -42,8 +54,12 @@ public class DoneTaskController {
 
     @FXML
     private JFXButton doneTaskButton = new JFXButton();
-    private TaskDao taskDao = new TaskDaoImpl();
 
+
+    public void initialize(){
+        viewButtonBar.toFront();
+
+    }
     public void cancelDoneTaskButton(ActionEvent actionEvent) {
         Stage stage = (Stage) cancelDoneTaskButton.getScene().getWindow();
         stage.close();
@@ -73,25 +89,42 @@ public class DoneTaskController {
     }
 
     public void attachmentFileButton(ActionEvent actionEvent) {
+        File file;
+        file = fileChooser.showOpenDialog(attachmentFileButton.getScene().getWindow());
+        if (file == null) {
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Файл не выбрано!");
+        } else {
+
+            attachmentFile=file;
+        }
     }
     public void initTab(Task task){
         labelNameTask.setText(task.getTaskName());
         textAreaTask.setText(task.getTaskText());
-
+        if (task.getTaskAttachment()!=null){
+            downloadFile.setVisible(true);
+            openFile.setVisible(true);
+        }
     }
 
     public void stopDoneTaskButton(ActionEvent actionEvent) {
+        textAreaTask.setEditable(false);
         viewButtonBar.toFront();
     }
 
     public void downloadFile(ActionEvent actionEvent) {
+        System.out.println(task.getTaskAttachment());
 
     }
 
     public void doTaskDone(ActionEvent actionEvent) {
+
+        textAreaTask.setEditable(true);
         editButtonBar.toFront();
+
     }
 
     public void openFile(ActionEvent actionEvent) {
+        taskDao.openTaskAttachment(task.getTaskId());
     }
 }

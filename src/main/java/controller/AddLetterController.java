@@ -110,8 +110,7 @@ public class AddLetterController {
     }
 
     public void attachmentFileButton(ActionEvent actionEvent) {
-        File file;
-        file = fileChooser.showOpenDialog(attachmentFileButton.getScene().getWindow());
+        File file = fileChooser.showOpenDialog(attachmentFileButton.getScene().getWindow());
         if (file == null) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Письмо не выбрано!");
         } else {

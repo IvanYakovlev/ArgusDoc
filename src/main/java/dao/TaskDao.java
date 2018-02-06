@@ -17,6 +17,8 @@ public interface TaskDao {
     public void performedTask(int id);
     public void overdueTask(int id);
     public void canceledTask(int id);
+    public void openTaskAttachment(int id);
+    public void downloadAttachmentFile(int id);
 
 
 }

@@ -7,10 +7,11 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTimePicker?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="600.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddTaskController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="600.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddTaskController">
    <children>
       <JFXButton fx:id="cancelAddTaskButton" layoutX="505.0" layoutY="349.0" onAction="#cancelAddTaskButton" styleClass="blue-btn" text="Отмена" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <effect>
@@ -27,10 +28,21 @@
          <graphic>
             <FontAwesomeIconView fill="WHITE" glyphName="PAPERCLIP" size="20" />
          </graphic></JFXButton>
-      <JFXTextArea fx:id="textAreaTask" focusColor="#4eb1ba" layoutX="14.0" layoutY="94.0" prefHeight="233.0" prefWidth="578.0" promptText="Введите текст задачи" styleClass="JFXTextArea" />
-      <JFXTextField fx:id="txtTaskName" focusColor="#4eb1ba" layoutX="14.0" layoutY="21.0" prefHeight="25.0" prefWidth="219.0" promptText="Введите название" styleClass="JFXTextField" />
-      <JFXComboBox fx:id="comboBoxEmployee" layoutX="247.0" layoutY="21.0" prefHeight="25.0" prefWidth="149.0" promptText="Выберите исполнителя" styleClass="JFXTextField" />
-      <JFXDatePicker fx:id="datePickerTask" defaultColor="#4eb1ba" layoutX="415.0" layoutY="21.0" promptText="Выберите дату" styleClass="JFXDatePicker" />
-      <JFXTimePicker fx:id="timePickerTask" defaultColor="#4eb1ba" layoutX="415.0" layoutY="61.0" promptText="Выберите время" styleClass="JFXTimePicker" />
+      <JFXTextArea fx:id="textAreaTask" focusColor="#4eb1ba" layoutX="11.0" layoutY="178.0" prefHeight="233.0" prefWidth="578.0" promptText="Введите текст задачи" styleClass="JFXTextArea" />
+      <JFXTextField fx:id="txtTaskName" focusColor="#4eb1ba" layoutX="14.0" layoutY="120.0" prefHeight="25.0" prefWidth="219.0" promptText="Введите название" styleClass="JFXTextField" />
+      <JFXComboBox fx:id="comboBoxEmployee" layoutX="244.0" layoutY="120.0" prefHeight="25.0" prefWidth="149.0" promptText="Выберите исполнителя" styleClass="JFXTextField" />
+      <JFXDatePicker fx:id="datePickerTask" defaultColor="#4eb1ba" layoutX="415.0" layoutY="80.0" promptText="Выберите дату" styleClass="JFXDatePicker" />
+      <JFXTimePicker fx:id="timePickerTask" defaultColor="#4eb1ba" layoutX="415.0" layoutY="120.0" promptText="Выберите время" styleClass="JFXTimePicker" />
+      <AnchorPane prefHeight="40.0" prefWidth="200.0" styleClass="AnchorPane2" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label layoutX="14.0" layoutY="6.0" styleClass="log-label" text="Добавить задачу" />
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </AnchorPane>
    </children>
+   <effect>
+      <DropShadow />
+   </effect>
 </AnchorPane>

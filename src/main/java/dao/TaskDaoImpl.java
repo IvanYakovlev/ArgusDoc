@@ -8,6 +8,8 @@ import model.StatusTask;
 import model.Task;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -233,5 +235,30 @@ DBconnection dBconnection;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void openTaskAttachment(int id) {
+        dBconnection = new DBconnection();
+        try {
+            String sql = "SELECT Task_attachment FROM TASKS WHERE Task_id=" + id;
+            ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
+            if (resultSet.next()) {
+
+                String filepath = resultSet.getString("Task_attachment");
+
+                File file = new File(filepath);
+                java.awt.Desktop.getDesktop().open(file);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void downloadAttachmentFile(int id) {
+
     }
 }

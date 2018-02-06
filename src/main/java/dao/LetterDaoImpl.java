@@ -49,12 +49,39 @@ public class LetterDaoImpl implements LetterDao {
 
     @Override
     public void removeLetter(int id) {
-
+        dBconnection = new DBconnection();
+        try {
+            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("DELETE  FROM  LETTERS WHERE Letter_id = ?");
+            preparedStatement.setInt(1, id);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void downloadLetter(Letter letter) {
 
+    }
+
+    @Override
+    public void openLetter(int id) {
+        dBconnection = new DBconnection();
+        try {
+            String sql = "SELECT Letter_filepath FROM LETTERS WHERE Letter_id=" + id;
+            ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
+            if (resultSet.next()) {
+
+                String filepath = resultSet.getString("Letter_filepath");
+
+                File file = new File(filepath);
+                java.awt.Desktop.getDesktop().open(file);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

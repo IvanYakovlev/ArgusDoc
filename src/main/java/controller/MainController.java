@@ -47,7 +47,7 @@ public class MainController {
 
     private Task task= new Task();
     private Document document = new Document();
-
+    private Letter letter = new Letter();
 
     DepartmentDao departmentDao;
     EmployeeDao employeeDao;
@@ -202,6 +202,10 @@ public class MainController {
         numberLetter.setCellValueFactory(new PropertyValueFactory<Letter, String>("letterNumber"));
         filePathLetter = new TableColumn<Letter, String>("файл");
         filePathLetter.setCellValueFactory(new PropertyValueFactory<Letter, String>("letterFilePath"));
+
+        nameLetter.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.50));
+        passwordLetter.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
+        numberLetter.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.24));
 
         tableLetter.getColumns().setAll(nameLetter, passwordLetter, numberLetter);
         tableLetter.setItems(letterDao.listLetter());
@@ -545,7 +549,12 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
 
 
 //Letter Tab
+
+
+
+
     public void openLetter(ActionEvent actionEvent) {
+        letterDao.openLetter(letter.getLetterId());
     }
 
     public void openAddLetterWindow(ActionEvent actionEvent) {
@@ -597,5 +606,13 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
     }
 
     public void removeLetter(ActionEvent actionEvent) {
+        letterDao.removeLetter(letter.getLetterId());
+    }
+
+    public void clickLetterTable(MouseEvent mouseEvent) {
+        Letter letter = tableLetter.getSelectionModel().getSelectedItems().get(0);
+        if (letter!=null){
+            this.letter = letter;
+        }
     }
 }

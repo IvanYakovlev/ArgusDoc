@@ -2,10 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="14878a78-9981-4145-a902-69825c63e8c2" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/controller/DoneTaskController.java" afterPath="$PROJECT_DIR$/src/main/java/controller/DoneTaskController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/controller/MainController.java" afterPath="$PROJECT_DIR$/src/main/java/controller/MainController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/viewFXML/Done_task_window.fxml" afterPath="$PROJECT_DIR$/src/main/resources/viewFXML/Done_task_window.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/viewFXML/Main_window.fxml" afterPath="$PROJECT_DIR$/src/main/resources/viewFXML/Main_window.fxml" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/939d374c-ff33-4166-bbe0-2bcc3525038c.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/939d374c-ff33-4166-bbe0-2bcc3525038c.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/939d374c-ff33-4166-bbe0-2bcc3525038c/storage_v2/_src_/database/ArgusDoc.RAEcpQ/schema/dbo.sYMBAA.meta" afterPath="$PROJECT_DIR$/.idea/dataSources/939d374c-ff33-4166-bbe0-2bcc3525038c/storage_v2/_src_/database/ArgusDoc.RAEcpQ/schema/dbo.sYMBAA.meta" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/939d374c-ff33-4166-bbe0-2bcc3525038c/storage_v2/_src_/database/ArgusDoc.RAEcpQ/schema/dbo.sYMBAA.zip" afterPath="$PROJECT_DIR$/.idea/dataSources/939d374c-ff33-4166-bbe0-2bcc3525038c/storage_v2/_src_/database/ArgusDoc.RAEcpQ/schema/dbo.sYMBAA.zip" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/ArgusDoc_jar/ArgusDoc.jar" afterPath="$PROJECT_DIR$/out/artifacts/ArgusDoc_jar/ArgusDoc.jar" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/argusDocSettings/serverFilePath.java" afterPath="$PROJECT_DIR$/src/main/java/argusDocSettings/serverFilePath.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/AddLetterController.java" afterPath="$PROJECT_DIR$/src/main/java/controller/AddLetterController.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/AddTaskController.java" afterPath="$PROJECT_DIR$/src/main/java/controller/AddTaskController.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/DoneTaskController.java" afterPath="$PROJECT_DIR$/src/main/java/controller/DoneTaskController.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/MainController.java" afterPath="$PROJECT_DIR$/src/main/java/controller/MainController.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/LetterDao.java" afterPath="$PROJECT_DIR$/src/main/java/dao/LetterDao.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/LetterDaoImpl.java" afterPath="$PROJECT_DIR$/src/main/java/dao/LetterDaoImpl.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/TaskDao.java" afterPath="$PROJECT_DIR$/src/main/java/dao/TaskDao.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/TaskDaoImpl.java" afterPath="$PROJECT_DIR$/src/main/java/dao/TaskDaoImpl.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/styles/ArgusDoc.css" afterPath="$PROJECT_DIR$/src/main/resources/styles/ArgusDoc.css" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/viewFXML/Add_letter_window.fxml" afterPath="$PROJECT_DIR$/src/main/resources/viewFXML/Add_letter_window.fxml" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/viewFXML/Add_task_window.fxml" afterPath="$PROJECT_DIR$/src/main/resources/viewFXML/Add_task_window.fxml" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/viewFXML/Done_task_window.fxml" afterPath="$PROJECT_DIR$/src/main/resources/viewFXML/Done_task_window.fxml" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/viewFXML/Edit_task_window.fxml" afterPath="$PROJECT_DIR$/src/main/resources/viewFXML/Edit_task_window.fxml" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/viewFXML/Main_window.fxml" afterPath="$PROJECT_DIR$/src/main/resources/viewFXML/Main_window.fxml" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/viewFXML/Setting_window.fxml" afterPath="$PROJECT_DIR$/src/main/resources/viewFXML/Setting_window.fxml" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/DoneTaskController.class" afterPath="$PROJECT_DIR$/target/classes/controller/DoneTaskController.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/viewFXML/Done_task_window.fxml" afterPath="$PROJECT_DIR$/target/classes/viewFXML/Done_task_window.fxml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -17,10 +36,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/ArgusDoc$Main.coverage" NAME="Main Coverage Results" MODIFIED="1517825412131" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/ArgusDoc$Main.coverage" NAME="Main Coverage Results" MODIFIED="1517916692753" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
     <option name="GROUP_SCHEMA" value="true" />
     <option name="GROUP_CONTENTS" value="false" />
     <option name="SORT_POSITIONED" value="false" />
@@ -29,34 +49,42 @@
     <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
     <expand>
       <path>
-        <item name="" type="eadb38e5:DatabaseStructure$Root" />
-        <item name="ArgusDoc" type="e3449647:DbNodeDescriptor" />
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="ArgusDoc" type="feb32156:DbDataSourceImpl" />
       </path>
       <path>
-        <item name="" type="eadb38e5:DatabaseStructure$Root" />
-        <item name="ArgusDoc" type="e3449647:DbNodeDescriptor" />
-        <item name="ArgusDoc" type="e3449647:DbNodeDescriptor" />
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="ArgusDoc" type="feb32156:DbDataSourceImpl" />
+        <item name="ArgusDoc: database" type="bdf80c8a:MssqlImplModel$Database" />
       </path>
       <path>
-        <item name="" type="eadb38e5:DatabaseStructure$Root" />
-        <item name="ArgusDoc" type="e3449647:DbNodeDescriptor" />
-        <item name="ArgusDoc" type="e3449647:DbNodeDescriptor" />
-        <item name="dbo" type="e3449647:DbNodeDescriptor" />
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="ArgusDoc" type="feb32156:DbDataSourceImpl" />
+        <item name="ArgusDoc: database" type="bdf80c8a:MssqlImplModel$Database" />
+        <item name="dbo: schema" type="3adcb6a6:MssqlImplModel$Schema" />
       </path>
       <path>
-        <item name="" type="eadb38e5:DatabaseStructure$Root" />
-        <item name="ArgusDoc" type="e3449647:DbNodeDescriptor" />
-        <item name="ArgusDoc" type="e3449647:DbNodeDescriptor" />
-        <item name="dbo" type="e3449647:DbNodeDescriptor" />
-        <item name="" type="fce03ad6:DatabaseStructure$GroupNode" />
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="ArgusDoc" type="feb32156:DbDataSourceImpl" />
+        <item name="ArgusDoc: database" type="bdf80c8a:MssqlImplModel$Database" />
+        <item name="dbo: schema" type="3adcb6a6:MssqlImplModel$Schema" />
+        <item name="tables" type="d4e8921:DatabaseStructure$FamilyGroup" />
       </path>
       <path>
-        <item name="" type="eadb38e5:DatabaseStructure$Root" />
-        <item name="ArgusDoc" type="e3449647:DbNodeDescriptor" />
-        <item name="ArgusDoc" type="e3449647:DbNodeDescriptor" />
-        <item name="dbo" type="e3449647:DbNodeDescriptor" />
-        <item name="" type="fce03ad6:DatabaseStructure$GroupNode" />
-        <item name="DOCUMENTS" type="e3449647:DbNodeDescriptor" />
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="ArgusDoc" type="feb32156:DbDataSourceImpl" />
+        <item name="ArgusDoc: database" type="bdf80c8a:MssqlImplModel$Database" />
+        <item name="dbo: schema" type="3adcb6a6:MssqlImplModel$Schema" />
+        <item name="tables" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="LETTERS: table" type="a00791b9:MssqlImplModel$Table" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="ArgusDoc" type="feb32156:DbDataSourceImpl" />
+        <item name="ArgusDoc: database" type="bdf80c8a:MssqlImplModel$Database" />
+        <item name="dbo: schema" type="3adcb6a6:MssqlImplModel$Schema" />
+        <item name="tables" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="TASKS: table" type="a00791b9:MssqlImplModel$Table" />
       </path>
     </expand>
     <select />
@@ -66,35 +94,96 @@
       <file leaf-file-name="MainController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/controller/MainController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3735">
-              <caret line="488" column="8" lean-forward="false" selection-start-line="488" selection-start-column="8" selection-end-line="488" selection-end-column="8" />
+            <state relative-caret-position="361">
+              <caret line="206" column="87" lean-forward="false" selection-start-line="206" selection-start-column="87" selection-end-line="206" selection-end-column="87" />
               <folding>
-                <marker date="1517907358482" expanded="false" signature="19058:19064" ph=" }" />
+                <element signature="e#21005#21006#0" expanded="true" />
+                <element signature="e#21063#21064#0" expanded="true" />
+                <element signature="e#23000#23001#0" expanded="true" />
+                <element signature="e#23060#23061#0" expanded="true" />
+                <marker date="1517932075984" expanded="true" signature="19076:19118" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DoneTaskController.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/controller/DoneTaskController.java">
+      <file leaf-file-name="serverFilePath.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/argusDocSettings/serverFilePath.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="79" column="0" lean-forward="true" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
-              <folding>
-                <element signature="e#2145#2146#0" expanded="true" />
-                <element signature="e#2184#2185#0" expanded="true" />
-                <element signature="e#2303#2304#0" expanded="true" />
-                <element signature="e#2342#2343#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="255">
+              <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
+      <file leaf-file-name="Setting_window.fxml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/viewFXML/Setting_window.fxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
-              <caret line="89" column="37" lean-forward="false" selection-start-line="89" selection-start-column="24" selection-end-line="89" selection-end-column="37" />
+            <state relative-caret-position="622">
+              <caret line="59" column="68" lean-forward="false" selection-start-line="59" selection-start-column="68" selection-end-line="59" selection-end-column="68" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="JavaFX-Scene-Builder">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Add_task_window.fxml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/viewFXML/Add_task_window.fxml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="JavaFX-Scene-Builder">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Add_letter_window.fxml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/viewFXML/Add_letter_window.fxml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="JavaFX-Scene-Builder">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="22" column="91" lean-forward="false" selection-start-line="22" selection-start-column="91" selection-end-line="22" selection-end-column="91" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Main_window.fxml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/viewFXML/Main_window.fxml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="85" column="107" lean-forward="false" selection-start-line="85" selection-start-column="107" selection-end-line="85" selection-end-column="107" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="JavaFX-Scene-Builder">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AddLetterController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/controller/AddLetterController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="651">
+              <caret line="112" column="13" lean-forward="false" selection-start-line="112" selection-start-column="13" selection-end-line="112" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -116,9 +205,11 @@
       <file leaf-file-name="Done_task_window.fxml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/viewFXML/Done_task_window.fxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="40" column="73" lean-forward="true" selection-start-line="40" selection-start-column="73" selection-end-line="40" selection-end-column="73" />
-              <folding />
+            <state relative-caret-position="17">
+              <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+              <folding>
+                <marker date="1517928741634" expanded="true" signature="3985:3999" ph="..." />
+              </folding>
             </state>
           </provider>
           <provider editor-type-id="JavaFX-Scene-Builder">
@@ -159,6 +250,7 @@
       <find>add</find>
       <find>controller</find>
       <find>font</find>
+      <find>click</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -173,10 +265,7 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/main/java/model/Task.java" />
-        <option value="$PROJECT_DIR$/src/main/java/controller/AddTaskController.java" />
         <option value="$PROJECT_DIR$/src/main/java/controller/EditTaskController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/dao/TaskDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/dao/TaskDaoImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/Main.java" />
         <option value="$PROJECT_DIR$/src/main/resources/viewFXML/Authorization_window.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/controller/MainController2.java" />
@@ -186,29 +275,32 @@
         <option value="$PROJECT_DIR$/src/main/java/model/Department.java" />
         <option value="$PROJECT_DIR$/src/main/java/model/Access.java" />
         <option value="$PROJECT_DIR$/src/main/java/dao/AccessDaoImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/styles/ArgusDoc.css" />
         <option value="$PROJECT_DIR$/src/main/resources/viewFXML/Add_task_window.fxml" />
         <option value="$PROJECT_DIR$/src/main/resources/viewFXML/Edit_task_window.fxml" />
         <option value="$PROJECT_DIR$/src/main/resources/viewFXML/Main_window.fxml" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/resources/viewFXML/Add_letter_window.fxml" />
-        <option value="$PROJECT_DIR$/src/main/java/dao/LetterDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/model/StatusTask.java" />
         <option value="$PROJECT_DIR$/src/main/java/model/Letter.java" />
-        <option value="$PROJECT_DIR$/src/main/java/dao/LetterDaoImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/controller/AuthorizationController.java" />
         <option value="$PROJECT_DIR$/src/main/java/Settings/serverFilePath.java" />
-        <option value="$PROJECT_DIR$/src/main/java/argusDocSettings/serverFilePath.java" />
-        <option value="$PROJECT_DIR$/src/main/java/controller/AddLetterController.java" />
         <option value="$PROJECT_DIR$/src/main/java/dao/DocumentDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/dao/DocumentDaoImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/model/Document.java" />
         <option value="$PROJECT_DIR$/src/main/java/controller/SettingController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/viewFXML/Setting_window.fxml" />
-        <option value="$PROJECT_DIR$/src/main/java/controller/MainController.java" />
         <option value="$PROJECT_DIR$/src/Read.txt" />
         <option value="$PROJECT_DIR$/src/main/resources/viewFXML/Done_task_window.fxml" />
+        <option value="$PROJECT_DIR$/src/main/java/dao/TaskDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/dao/TaskDaoImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/controller/AddLetterController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/controller/AddTaskController.java" />
         <option value="$PROJECT_DIR$/src/main/java/controller/DoneTaskController.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/styles/ArgusDoc.css" />
+        <option value="$PROJECT_DIR$/src/main/java/dao/LetterDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/dao/LetterDaoImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/controller/MainController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/argusDocSettings/serverFilePath.java" />
       </list>
     </option>
   </component>
@@ -248,9 +340,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
+      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="PackagesPane" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -282,6 +375,22 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="argusDocSettings" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ArgusDoc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ArgusDoc" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="authorizedUser" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ArgusDoc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ArgusDoc" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="controller" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -289,7 +398,23 @@
               <item name="ArgusDoc" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="dao" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ArgusDoc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ArgusDoc" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ArgusDoc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ArgusDoc" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="styles" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ArgusDoc" type="b2602c69:ProjectViewProjectNode" />
@@ -308,7 +433,6 @@
         </subPane>
         <option name="show-excluded-files" value="false" />
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -337,7 +461,14 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager">
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <module />
+    </configuration>
     <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="Main" />
@@ -351,13 +482,6 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="ArgusDoc" />
       <envs />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <module />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
@@ -393,12 +517,6 @@
       <envs />
       <patterns />
     </configuration>
-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
-      <module name="" />
-      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
-      <option name="PROGRAM_PARAMETERS" />
-      <predefined_log_file id="idea.log" enabled="true" />
-    </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -432,6 +550,12 @@
       <envs />
       <properties />
       <listeners />
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file id="idea.log" enabled="true" />
     </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -469,31 +593,33 @@
       <workItem from="1517661455017" duration="1376000" />
       <workItem from="1517796589677" duration="19607000" />
       <workItem from="1517889996478" duration="13244000" />
+      <workItem from="1517916096889" duration="21000" />
+      <workItem from="1517916603896" duration="1431000" />
+      <workItem from="1517923481407" duration="7221000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="183847000" />
+    <option name="totallyTimeSpent" value="192520000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17432432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17391305" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.11956522" sideWeight="0.50959486" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2891892" sideWeight="0.4904051" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22826087" sideWeight="0.4904051" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19280206" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27377892" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1988273" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27345416" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -531,7 +657,11 @@
         <state relative-caret-position="2856">
           <caret line="199" column="54" lean-forward="true" selection-start-line="199" selection-start-column="54" selection-end-line="199" selection-end-column="54" />
           <folding>
-            <marker date="1517907358482" expanded="false" signature="19058:19064" ph=" }" />
+            <element signature="e#21005#21006#0" expanded="true" />
+            <element signature="e#21063#21064#0" expanded="true" />
+            <element signature="e#23000#23001#0" expanded="true" />
+            <element signature="e#23060#23061#0" expanded="true" />
+            <marker date="1517932075984" expanded="true" signature="19076:19118" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -556,36 +686,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/controller/MainController2.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/resources/styles/ArgusDoc.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/viewFXML/Edit_task_window.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/dao/AccessDao.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dao/EmployeeDaoImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="16" column="13" lean-forward="false" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -597,17 +701,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/viewFXML/Add_task_window.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/939d374c-ff33-4166-bbe0-2bcc3525038c/console.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -615,7 +708,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://table:/4b583a21/939d374c-ff33-4166-bbe0-2bcc3525038c/ArgusDoc.dbo.TASKS" />
     <entry file="das://table:/4b583a21/939d374c-ff33-4166-bbe0-2bcc3525038c/ArgusDoc.dbo.LETTERS" />
     <entry file="file://$PROJECT_DIR$/src/main/java/dao/AccessDaoImpl.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -631,60 +723,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="22" column="91" lean-forward="false" selection-start-line="22" selection-start-column="91" selection-end-line="22" selection-end-column="91" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_152/src.zip!/java/nio/file/Files.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/resources/viewFXML/Add_letter_window.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Settings.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/model/Employee.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="das://table:/361c7a01/939d374c-ff33-4166-bbe0-2bcc3525038c/ArgusDoc.dbo.DOCUMENTS">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="das://table:/361c7a01/939d374c-ff33-4166-bbe0-2bcc3525038c/ArgusDoc.dbo.DOCUMENTS" />
     <entry file="file://$PROJECT_DIR$/src/main/java/model/Letter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="97">
           <caret line="35" column="24" lean-forward="false" selection-start-line="35" selection-start-column="24" selection-end-line="35" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/controller/EditTaskController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="503">
-          <caret line="81" column="63" lean-forward="false" selection-start-line="81" selection-start-column="63" selection-end-line="81" selection-end-column="63" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dao/LetterDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="7" column="17" lean-forward="false" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -695,38 +747,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dao/DocumentDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="12" column="54" lean-forward="false" selection-start-line="12" selection-start-column="54" selection-end-line="12" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dao/LetterDaoImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="39" column="11" lean-forward="false" selection-start-line="39" selection-start-column="11" selection-end-line="41" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/dao/DepartmentDaoImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="503">
           <caret line="94" column="13" lean-forward="false" selection-start-line="94" selection-start-column="13" selection-end-line="94" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dao/TaskDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="12" column="48" lean-forward="false" selection-start-line="12" selection-start-column="48" selection-end-line="12" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dao/TaskDaoImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="503">
-          <caret line="86" column="50" lean-forward="false" selection-start-line="86" selection-start-column="50" selection-end-line="86" selection-end-column="50" />
         </state>
       </provider>
     </entry>
@@ -763,15 +787,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="26" column="40" lean-forward="false" selection-start-line="26" selection-start-column="40" selection-end-line="26" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/argusDocSettings/serverFilePath.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -779,26 +794,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dao/DocumentDaoImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1309">
-          <caret line="90" column="0" lean-forward="false" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
-          <folding>
-            <marker date="1517804801596" expanded="true" signature="1025:1108" ph="INSERT INTO Documents... " />
-            <marker date="1517804801596" expanded="true" signature="2412:2495" ph="INSERT INTO Documents... " />
-            <marker date="1517804801596" expanded="true" signature="3504:3547" ph="DELETE FROM " />
-            <marker date="1517804801596" expanded="true" signature="4217:4309" ph="SELECT * FRO... DOCUMENTS" />
-            <marker date="1517804801596" expanded="true" signature="5992:6116" ph="SELECT * FRO... DOCUMENTS" />
-            <marker date="1517804801596" expanded="true" signature="6039:6114" ph="SELECT Depar... DEPARTMENTS" />
-            <marker date="1517804801596" expanded="true" signature="6914:6972" ph="SELECT Docum... DOCUMENTS" />
-            <marker date="1517804801596" expanded="true" signature="7882:7955" ph="SELECT Docum... DOCUMENTS" />
-            <marker date="1517804801596" expanded="true" signature="9373:9431" ph="SELECT Docum... DOCUMENTS" />
-            <marker date="1517804801596" expanded="true" signature="10341:10414" ph="SELECT Docum... DOCUMENTS" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -806,25 +801,178 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1156">
           <caret line="97" column="36" lean-forward="false" selection-start-line="97" selection-start-column="33" selection-end-line="97" selection-end-column="36" />
-          <folding>
-            <marker date="1517796388564" expanded="true" signature="1502:1699" ph="SELECT * FRO... Employees" />
-          </folding>
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Read.txt" />
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="838">
+          <caret line="89" column="37" lean-forward="false" selection-start-line="89" selection-start-column="24" selection-end-line="89" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dao/DocumentDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="12" column="54" lean-forward="false" selection-start-line="12" selection-start-column="54" selection-end-line="12" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dao/TaskDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="20" column="47" lean-forward="false" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/4b583a21/939d374c-ff33-4166-bbe0-2bcc3525038c/ArgusDoc.dbo.TASKS">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/viewFXML/Edit_task_window.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/styles/ArgusDoc.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1224">
+          <caret line="96" column="34" lean-forward="false" selection-start-line="96" selection-start-column="34" selection-end-line="96" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/controller/SettingController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4913">
+        <state relative-caret-position="1195">
           <caret line="312" column="0" lean-forward="false" selection-start-line="312" selection-start-column="0" selection-end-line="312" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/controller/EditTaskController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="503">
+          <caret line="81" column="63" lean-forward="false" selection-start-line="81" selection-start-column="63" selection-end-line="81" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/controller/AddTaskController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-18">
+          <caret line="41" column="24" lean-forward="false" selection-start-line="41" selection-start-column="24" selection-end-line="41" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dao/LetterDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="11" column="35" lean-forward="false" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/controller/DoneTaskController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="104" column="31" lean-forward="false" selection-start-line="104" selection-start-column="31" selection-end-line="104" selection-end-column="31" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#3323#3324#0" expanded="false" />
+            <element signature="e#3383#3384#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dao/DocumentDaoImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+          <folding>
+            <marker date="1517916026103" expanded="true" signature="1025:1108" ph="INSERT INTO Documents... " />
+            <marker date="1517916026103" expanded="true" signature="3504:3547" ph="DELETE FROM DOCUMENTS... " />
+            <marker date="1517916026103" expanded="true" signature="4217:4309" ph="SELECT * FRO... DOCUMENTS" />
+            <marker date="1517916026103" expanded="true" signature="5992:6116" ph="SELECT * FRO... DOCUMENTS" />
+            <marker date="1517916026103" expanded="true" signature="6039:6114" ph="SELECT Depar... DEPARTMENTS" />
+            <marker date="1517916026103" expanded="true" signature="6914:6972" ph="SELECT Docum... DOCUMENTS" />
+            <marker date="1517916026103" expanded="true" signature="9373:9431" ph="SELECT Docum... DOCUMENTS" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dao/EmployeeDaoImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="16" column="13" lean-forward="false" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+          <folding>
+            <marker date="1517916026104" expanded="true" signature="718:830" ph="INSERT INTO Employees... " />
+            <marker date="1517916026104" expanded="true" signature="1637:1758" ph="UPDATE Employees... " />
+            <marker date="1517916026104" expanded="true" signature="2603:2644" ph="DELETE FROM Employees... " />
+            <marker date="1517916026104" expanded="true" signature="3111:3251" ph="SELECT * FRO... Employees" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dao/TaskDaoImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="63" column="98" lean-forward="false" selection-start-line="63" selection-start-column="98" selection-end-line="63" selection-end-column="98" />
+          <folding>
+            <marker date="1517925342966" expanded="true" signature="626:777" ph="INSERT INTO TASKS... " />
+            <marker date="1517925342966" expanded="true" signature="1612:1771" ph="UPDATE TASKS... " />
+            <marker date="1517925342966" expanded="true" signature="2666:2703" ph="DELETE FROM TASKS" />
+            <marker date="1517925342966" expanded="true" signature="3166:3424" ph="SELECT * FRO... TASKS" />
+            <marker date="1517925342966" expanded="true" signature="4710:4915" ph="SELECT * FRO... TASKS" />
+            <marker date="1517925342966" expanded="true" signature="6207:6426" ph="SELECT * FRO... TASKS" />
+            <marker date="1517925342966" expanded="true" signature="7720:7901" ph="SELECT * FRO... TASKS" />
+            <marker date="1517925342966" expanded="true" signature="9061:9144" ph="UPDATE TASKS... " />
+            <marker date="1517925342966" expanded="true" signature="9734:9785" ph="UPDATE TASKS... " />
+            <marker date="1517925342966" expanded="true" signature="10223:10274" ph="UPDATE TASKS... " />
+            <marker date="1517925342966" expanded="true" signature="10711:10762" ph="UPDATE TASKS... " />
+            <marker date="1517925342966" expanded="true" signature="11143:11191" ph="SELECT Task_... TASKS" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dao/LetterDaoImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="509">
+          <caret line="81" column="33" lean-forward="false" selection-start-line="81" selection-start-column="33" selection-end-line="81" selection-end-column="33" />
+          <folding>
+            <marker date="1517931442216" expanded="true" signature="745:857" ph="INSERT INTO LETTERS... " />
+            <marker date="1517931442216" expanded="true" signature="1722:1763" ph="DELETE FROM LETTERS" />
+            <marker date="1517931442216" expanded="true" signature="2142:2194" ph="SELECT Lette... LETTERS" />
+            <marker date="1517931442216" expanded="true" signature="2978:2999" ph="SELECT * FRO... LETTERS" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/controller/AddLetterController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="651">
+          <caret line="112" column="13" lean-forward="false" selection-start-line="112" selection-start-column="13" selection-end-line="112" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/viewFXML/Setting_window.fxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1003">
+        <state relative-caret-position="622">
           <caret line="59" column="68" lean-forward="false" selection-start-line="59" selection-start-column="68" selection-end-line="59" selection-end-column="68" />
           <folding />
         </state>
@@ -833,57 +981,17 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Read.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/controller/MainController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3735">
-          <caret line="488" column="8" lean-forward="false" selection-start-line="488" selection-start-column="8" selection-end-line="488" selection-end-column="8" />
-          <folding>
-            <marker date="1517907358482" expanded="false" signature="19058:19064" ph=" }" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/controller/AddLetterController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1197">
-          <caret line="95" column="52" lean-forward="false" selection-start-line="95" selection-start-column="52" selection-end-line="95" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/controller/AddTaskController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="68" column="12" lean-forward="false" selection-start-line="68" selection-start-column="12" selection-end-line="69" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/viewFXML/Main_window.fxml">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/viewFXML/Done_task_window.fxml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="17" column="230" lean-forward="false" selection-start-line="17" selection-start-column="230" selection-end-line="17" selection-end-column="230" />
-          <folding />
+          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding>
+            <marker date="1517928741634" expanded="true" signature="3985:3999" ph="..." />
+          </folding>
         </state>
       </provider>
       <provider editor-type-id="JavaFX-Scene-Builder">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="89" column="37" lean-forward="false" selection-start-line="89" selection-start-column="24" selection-end-line="89" selection-end-column="37" />
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/viewFXML/Authorization_window.fxml">
@@ -897,10 +1005,10 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/viewFXML/Done_task_window.fxml">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/viewFXML/Add_task_window.fxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="40" column="73" lean-forward="true" selection-start-line="40" selection-start-column="73" selection-end-line="40" selection-end-column="73" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -908,16 +1016,55 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/controller/DoneTaskController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/viewFXML/Add_letter_window.fxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="79" column="0" lean-forward="true" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="22" column="91" lean-forward="false" selection-start-line="22" selection-start-column="91" selection-end-line="22" selection-end-column="91" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/viewFXML/Main_window.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="85" column="107" lean-forward="false" selection-start-line="85" selection-start-column="107" selection-end-line="85" selection-end-column="107" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/controller/MainController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="206" column="87" lean-forward="false" selection-start-line="206" selection-start-column="87" selection-end-line="206" selection-end-column="87" />
           <folding>
-            <element signature="e#2145#2146#0" expanded="true" />
-            <element signature="e#2184#2185#0" expanded="true" />
-            <element signature="e#2303#2304#0" expanded="true" />
-            <element signature="e#2342#2343#0" expanded="true" />
+            <element signature="e#21005#21006#0" expanded="true" />
+            <element signature="e#21063#21064#0" expanded="true" />
+            <element signature="e#23000#23001#0" expanded="true" />
+            <element signature="e#23060#23061#0" expanded="true" />
+            <marker date="1517932075984" expanded="true" signature="19076:19118" ph="{...}" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/argusDocSettings/serverFilePath.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
