@@ -1,5 +1,6 @@
 package controller;
 
+import argusDocSettings.ServerFilePath;
 import authorizedUser.AuthorizedUser;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
@@ -75,8 +76,9 @@ public class DoneTaskController {
             task.setTaskId(this.task.getTaskId());
             task.setTaskText(textAreaTask.getText());
             task.setStatusTaskId(StatusTask.DONE);
-            task.setTaskAttachment("newfile");
-
+            task.setTaskAttachment(ServerFilePath.TASKS_FILE_PATH+attachmentFile.getName());
+            task.setTaskAttachmentFile(attachmentFile);
+            task.setTaskIsLetter(false);
 
             taskDao.doneTask(task);
 
@@ -92,7 +94,7 @@ public class DoneTaskController {
         File file;
         file = fileChooser.showOpenDialog(attachmentFileButton.getScene().getWindow());
         if (file == null) {
-            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Файл не выбрано!");
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Файл не выбран!");
         } else {
 
             attachmentFile=file;

@@ -10,6 +10,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -48,12 +50,20 @@ public class LetterDaoImpl implements LetterDao {
     }
 
     @Override
-    public void removeLetter(int id) {
+    public void removeLetter(int id, String filePath) {
         dBconnection = new DBconnection();
         try {
             PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("DELETE  FROM  LETTERS WHERE Letter_id = ?");
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
+
+            //удаляем файл с сервера
+            Path path = Paths.get(filePath);
+            try {
+                Files.delete(path);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

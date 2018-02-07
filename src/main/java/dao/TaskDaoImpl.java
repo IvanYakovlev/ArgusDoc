@@ -2,14 +2,19 @@ package dao;
 
 
 import dbConnection.DBconnection;
+import dialog.ADInfo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import model.StatusTask;
 import model.Task;
 
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +25,7 @@ public class TaskDaoImpl implements TaskDao{
 DBconnection dBconnection;
     public void addTask(Task task) {
         dBconnection=new DBconnection();
-
+//Добавляем данные в таблицу
         try {
             PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("INSERT INTO TASKS(Task_name, Task_text, Task_attachment, Task_from_employee, Employee_id, Task_term, Status_task_id, Task_time) VALUES(?,?,?,?,?,?,?,?)");
             preparedStatement.setString(1, task.getTaskName());
@@ -33,7 +38,15 @@ DBconnection dBconnection;
             preparedStatement.setTime(8,task.getTaskTime());
             preparedStatement.execute();
 
+
+//Копируем файл если он прикреплен или задача не сформирована из вкладки Письма
+            if (!task.getTaskIsLetter()&&task.getTaskAttachmentFile()!=null) {
+                File destFile = new File(task.getTaskAttachment());
+                Files.copy(task.getTaskAttachmentFile().toPath(), destFile.toPath());
+            }
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -53,17 +66,41 @@ DBconnection dBconnection;
             preparedStatement.setInt(9, task.getTaskId());
             preparedStatement.execute();
 
+
+            //Копируем файл если он прикреплен или задача не сформирована из вкладки Письма
+            if (!task.getTaskIsLetter()&&task.getTaskAttachmentFile()!=null) {
+
+
+                File destFile = new File(task.getTaskAttachment());
+                Files.copy(task.getTaskAttachmentFile().toPath(), destFile.toPath());
+            }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+         //   e.printStackTrace();
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Файл с таким именем уже существует!");
         }
     }
 
-    public void removeTask(int id) {
+    public void removeTask(int id,String filePath) {
         dBconnection = new DBconnection();
         try {
+            //удаляем данные из таблицы
+
             PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("DELETE  FROM  TASKS WHERE Task_id = ?");
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
+
+
+            //удаляем файл с сервера
+            if (filePath!=null) {
+                Path path = Paths.get(filePath);
+                try {
+                    Files.delete(path);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -185,9 +222,16 @@ DBconnection dBconnection;
             preparedStatement.setString(3, task.getTaskAttachment());
             preparedStatement.setInt(4, task.getTaskId());
 
+
+            //Подменяем/загружаем файл на сервер
+            File destFile = new File(task.getTaskAttachment());
+            Files.copy(task.getTaskAttachmentFile().toPath(), destFile.toPath());
+
             preparedStatement.execute();
 
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

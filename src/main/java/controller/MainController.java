@@ -1,18 +1,13 @@
 package controller;
 
-import argusDocSettings.serverFilePath;
 import authorizedUser.AuthorizedUser;
 import com.jfoenix.controls.*;
-import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import dao.*;
 import dbConnection.DBconnection;
 
 
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,21 +16,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Callback;
 import model.*;
 import dialog.ADInfo;
 
 
-import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 
 
 public class MainController {
@@ -468,20 +459,13 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
         }
     }
 
-    public void canceledTaskButton(ActionEvent actionEvent) {
-        if (task!=null) {
-            taskDao.canceledTask(task.getTaskId());
-        } else
-        {
-            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Задача не выбрана!");
-        }
-    }
+
 
 
     public void deleteTaskButton(ActionEvent actionEvent) {
         if (task!=null){
             taskDao = new TaskDaoImpl();
-            taskDao.removeTask(task.getTaskId());
+            taskDao.removeTask(task.getTaskId(), task.getTaskAttachment());
         } else
         {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Задача не выбрана!");
@@ -606,7 +590,7 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
     }
 
     public void removeLetter(ActionEvent actionEvent) {
-        letterDao.removeLetter(letter.getLetterId());
+        letterDao.removeLetter(letter.getLetterId(), letter.getLetterFilePath());
     }
 
     public void clickLetterTable(MouseEvent mouseEvent) {

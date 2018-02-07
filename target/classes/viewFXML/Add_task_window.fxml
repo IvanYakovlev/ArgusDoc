@@ -21,7 +21,7 @@
          <effect>
             <DropShadow />
          </effect></JFXButton>
-      <JFXButton fx:id="attachmentFileButton" layoutX="14.0" layoutY="349.0" styleClass="blue-btn" text="Прикрепить файл" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0">
+      <JFXButton fx:id="attachmentFileButton" layoutX="14.0" layoutY="349.0" onAction="#attachmentFileButton" styleClass="blue-btn" text="Прикрепить файл" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0">
          <effect>
             <DropShadow />
          </effect>

@@ -2,6 +2,7 @@ package model;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
 import javax.persistence.*;
+import java.io.File;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.util.Date;
@@ -42,6 +43,25 @@ public class Task extends RecursiveTreeObject<Task> {
     private int statusTaskId;
     private String statusTaskName;
 
+    private File taskAttachmentFile;
+
+    private Boolean taskIsLetter;
+
+    public Boolean getTaskIsLetter() {
+        return taskIsLetter;
+    }
+
+    public void setTaskIsLetter(Boolean taskIsLetter) {
+        this.taskIsLetter = taskIsLetter;
+    }
+
+    public File getTaskAttachmentFile() {
+        return taskAttachmentFile;
+    }
+
+    public void setTaskAttachmentFile(File taskAttachmentFile) {
+        this.taskAttachmentFile = taskAttachmentFile;
+    }
 
     public Time getTaskTime() {
         return taskTime;

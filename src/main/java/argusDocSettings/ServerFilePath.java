@@ -1,6 +1,6 @@
 package argusDocSettings;
 
-public class serverFilePath {
+public class ServerFilePath {
 
     public static final String DOCUMENTS_FILE_PATH = "//SERV2012/Obmen/ArgusDoc/Documents/";
     public static final String LETTERS_FILE_PATH = "//SERV2012/Obmen/ArgusDoc/Letters/";

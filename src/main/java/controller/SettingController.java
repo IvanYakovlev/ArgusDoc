@@ -1,7 +1,6 @@
 package controller;
 
-import argusDocSettings.serverFilePath;
-import authorizedUser.AuthorizedUser;
+import argusDocSettings.ServerFilePath;
 import com.jfoenix.controls.JFXTextField;
 import dao.*;
 import dbConnection.DBconnection;
@@ -10,7 +9,6 @@ import dialog.ADInfo;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -297,7 +295,7 @@ private FontAwesomeIconView closeSettingWindow;
                 Document document = new Document();
                 document.setDocumentName(choseFile.getName());
                 document.setDocumentFile(choseFile);
-                document.setDocumentFilePath(serverFilePath.DOCUMENTS_FILE_PATH+choseFile.getName());
+                document.setDocumentFilePath(ServerFilePath.DOCUMENTS_FILE_PATH+choseFile.getName());
                 document.setDepartmentId(departmentDao.getIdDepartmentByName(comboBoxDocument_Department.getValue()));
                 documentDao.addDocument(document);
                 clearDocumentTab();

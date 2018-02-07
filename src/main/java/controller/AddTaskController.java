@@ -1,5 +1,6 @@
 package controller;
 
+import argusDocSettings.ServerFilePath;
 import authorizedUser.AuthorizedUser;
 import com.jfoenix.controls.*;
 import dao.*;
@@ -10,16 +11,25 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Employee;
 import model.StatusTask;
 import model.Task;
 
 import java.awt.*;
+import java.io.File;
 import java.sql.Time;
 import java.util.Date;
 
 public class AddTaskController {
+
+    final FileChooser fileChooser=new FileChooser();
+    File attachmentFile;
+
+
+    @FXML
+    private JFXButton  attachmentFileButton;
     @FXML
     private JFXTextField txtTaskName;
     @FXML
@@ -55,13 +65,16 @@ public class AddTaskController {
             Task task = new Task();
             task.setTaskName(txtTaskName.getText());
             task.setTaskText(textAreaTask.getText());
-            //task.setTaskAttachment("file");
+            task.setTaskAttachmentFile(attachmentFile);
+            if (attachmentFile!=null) {
+                task.setTaskAttachment(ServerFilePath.TASKS_FILE_PATH + attachmentFile.getName());
+            }
             task.setTaskFromEmployee(AuthorizedUser.getUser().getEmployeeName());
             task.setEmployeeId(employeeDao.getIdEmployeeByName(comboBoxEmployee.getValue()));
             task.setTaskTerm(java.sql.Date.valueOf(datePickerTask.getValue()));
             task.setTaskTime(java.sql.Time.valueOf(timePickerTask.getValue()));
             task.setStatusTaskId(StatusTask.NOT_DONE);
-
+            task.setTaskIsLetter(false);
             taskDao.addTask(task);
 
 
@@ -79,5 +92,13 @@ public class AddTaskController {
     }
 
     public void attachmentFileButton(ActionEvent actionEvent) {
+        File file;
+        file = fileChooser.showOpenDialog(attachmentFileButton.getScene().getWindow());
+        if (file == null) {
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Файл не выбран!");
+        } else {
+
+            attachmentFile=file;
+        }
     }
 }
