@@ -6,6 +6,7 @@ import dao.*;
 import dbConnection.DBconnection;
 
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,15 +19,19 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Callback;
 import model.*;
 import dialog.ADInfo;
 
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Objects;
 
 
 public class MainController {
@@ -170,34 +175,21 @@ public class MainController {
     timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
     statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
 
-//цвет ячеек
-        int i=0;
-        for (Node n: tableTask.lookupAll("TableRow")) {
-            if (n instanceof TableRow) {
-                TableRow row = (TableRow) n;
-                if (tableTask.getItems().get(i).getStatusTaskId() == StatusTask.NOT_DONE) {
-                    row.getStyleClass().add("isNotDone");
-                } else {
-                    if (tableTask.getItems().get(i).getStatusTaskId() == StatusTask.NOT_DONE) {
-                        row.getStyleClass().add("isDone");
-                    } else if (tableTask.getItems().get(i).getStatusTaskId() == StatusTask.NOT_DONE) {
-                        row.getStyleClass().add("isPerformed");
-                    }
-                    i++;
-                    if (i == tableTask.getItems().size())
-                        break;
-                }
-            }
-        }
-       // tableTask.setRowFactory((param) -> new ColorRow());
 
-
-//////////////////////////
     tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
 
     tableTask.setItems(taskDao.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
 
     labelUserAuth.setText(AuthorizedUser.getUser().getEmployeeName());
+
+
+        //цвет ячеек
+
+
+
+
+
+//////////////////////////
 // If access - administrator
     if (AuthorizedUser.getUser().getAccessId()==1) {
 
@@ -480,7 +472,7 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
         if (task!=null){
             this.task = task;
         }
-        System.out.println(task);
+
     }
 
 

@@ -96,6 +96,7 @@ public class AuthorizationController {
                 stage.setMinHeight(715);
                 stage.setMinWidth(1000);
                 stage.getIcons().add(new Image("images/icon.jpg"));
+
                 stage.setScene(new Scene(root));
 
 

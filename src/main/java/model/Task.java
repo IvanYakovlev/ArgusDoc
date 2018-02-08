@@ -1,11 +1,10 @@
 package model;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.value.ObservableBooleanValue;
 
 import javax.persistence.*;
 import java.io.File;
 import java.sql.Time;
-import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name = "TASKS")
@@ -181,4 +180,6 @@ public class Task extends RecursiveTreeObject<Task> {
                 ", oldFile='" + oldFile + '\'' +
                 '}';
     }
+
+
 }
