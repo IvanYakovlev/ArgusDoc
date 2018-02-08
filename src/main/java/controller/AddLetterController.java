@@ -81,7 +81,7 @@ public class AddLetterController {
                 task.setTaskTerm(java.sql.Date.valueOf(datePickerLetter.getValue()));
                 task.setStatusTaskId(StatusTask.NOT_DONE);
                 task.setTaskTime(null);
-                task.setTaskIsLetter(true);
+                task.setTaskIsLetter(1);
                 taskDao.addTask(task);
 
 

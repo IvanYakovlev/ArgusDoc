@@ -115,7 +115,7 @@
                   <ButtonBar fx:id="myTaskBtnBar" layoutY="447.0" prefHeight="29.0" prefWidth="629.0" styleClass="ButtonBar" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0">
                     <buttons>
                         <JFXButton onAction="#openDoneTaskButton" styleClass="blue-btn" text="Показать" />
-                        <JFXButton styleClass="blue-btn" text="Принять" />
+                        <JFXButton fx:id="acceptTaskButton" onAction="#acceptTask" styleClass="blue-btn" text="Принять" />
                     </buttons>
                      <opaqueInsets>
                         <Insets />
@@ -123,7 +123,7 @@
                   </ButtonBar>
                   <ButtonBar fx:id="myTaskDoneBtnBar" layoutX="10.0" layoutY="457.0" prefHeight="29.0" prefWidth="629.0" styleClass="ButtonBar" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0">
                      <buttons>
-                        <JFXButton onAction="#openEditTaskButton" styleClass="blue-btn" text="Редактировать" />
+                        <JFXButton onAction="#openDoneTaskButton" styleClass="blue-btn" text="Редактировать" />
                      </buttons>
                      <opaqueInsets>
                         <Insets />

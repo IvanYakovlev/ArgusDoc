@@ -3,12 +3,13 @@ package dao;
 import javafx.collections.ObservableList;
 import model.Task;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface TaskDao {
-    public void addTask(Task task);
-    public void updateTask(Task task);
-    public void removeTask(int id, String filePath);
+    public void addTask(Task task) throws IOException;
+    public void updateTask(Task task) throws IOException;
+    public void removeTask(Task task);
     public ObservableList<Task> listMyTasks(int id);
     public ObservableList<Task> listMyDoneTasks(int id);
     public ObservableList<Task> listFromEmpTasks(String userName);

@@ -45,60 +45,14 @@ public class Task extends RecursiveTreeObject<Task> {
 
     private File taskAttachmentFile;
 
-    private Boolean taskIsLetter;
+    @Column(name = "Task_is_letter")
+    private int taskIsLetter;          // 0-задача, 1-письмо
 
-    public Boolean getTaskIsLetter() {
-        return taskIsLetter;
-    }
-
-    public void setTaskIsLetter(Boolean taskIsLetter) {
-        this.taskIsLetter = taskIsLetter;
-    }
-
-    public File getTaskAttachmentFile() {
-        return taskAttachmentFile;
-    }
-
-    public void setTaskAttachmentFile(File taskAttachmentFile) {
-        this.taskAttachmentFile = taskAttachmentFile;
-    }
-
-    public Time getTaskTime() {
-        return taskTime;
-    }
-
-    public void setTaskTime(Time taskTime) {
-        this.taskTime = taskTime;
-    }
-
-    public String getEmployeeName() {
-        return employeeName;
-    }
-
-    public void setEmployeeName(String employeeName) {
-        this.employeeName = employeeName;
-    }
-
-    public int getStatusTaskId() {
-        return statusTaskId;
-    }
-
-    public void setStatusTaskId(int statusTaskId) {
-        this.statusTaskId = statusTaskId;
-    }
-
-    public String getStatusTaskName() {
-        return statusTaskName;
-    }
-
-    public void setStatusTaskName(String statusTaskName) {
-        this.statusTaskName = statusTaskName;
-    }
+    private String oldFile;
 
     public int getTaskId() {
         return taskId;
     }
-
 
     public void setTaskId(int taskId) {
         this.taskId = taskId;
@@ -144,6 +98,14 @@ public class Task extends RecursiveTreeObject<Task> {
         this.employeeId = employeeId;
     }
 
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
+
     public java.sql.Date getTaskTerm() {
         return taskTerm;
     }
@@ -152,16 +114,71 @@ public class Task extends RecursiveTreeObject<Task> {
         this.taskTerm = taskTerm;
     }
 
+    public Time getTaskTime() {
+        return taskTime;
+    }
+
+    public void setTaskTime(Time taskTime) {
+        this.taskTime = taskTime;
+    }
+
+    public int getStatusTaskId() {
+        return statusTaskId;
+    }
+
+    public void setStatusTaskId(int statusTaskId) {
+        this.statusTaskId = statusTaskId;
+    }
+
+    public String getStatusTaskName() {
+        return statusTaskName;
+    }
+
+    public void setStatusTaskName(String statusTaskName) {
+        this.statusTaskName = statusTaskName;
+    }
+
+    public File getTaskAttachmentFile() {
+        return taskAttachmentFile;
+    }
+
+    public void setTaskAttachmentFile(File taskAttachmentFile) {
+        this.taskAttachmentFile = taskAttachmentFile;
+    }
+
+    public int getTaskIsLetter() {
+        return taskIsLetter;
+    }
+
+    public void setTaskIsLetter(int taskIsLetter) {
+        this.taskIsLetter = taskIsLetter;
+    }
+
+    public String getOldFile() {
+        return oldFile;
+    }
+
+    public void setOldFile(String oldFile) {
+        this.oldFile = oldFile;
+    }
+
     @Override
     public String toString() {
         return "Task{" +
-                "idTask=" + taskId +
+                "taskId=" + taskId +
                 ", taskName='" + taskName + '\'' +
                 ", taskText='" + taskText + '\'' +
                 ", taskAttachment='" + taskAttachment + '\'' +
                 ", taskFromEmployee='" + taskFromEmployee + '\'' +
                 ", employeeId=" + employeeId +
+                ", employeeName='" + employeeName + '\'' +
                 ", taskTerm=" + taskTerm +
+                ", taskTime=" + taskTime +
+                ", statusTaskId=" + statusTaskId +
+                ", statusTaskName='" + statusTaskName + '\'' +
+                ", taskAttachmentFile=" + taskAttachmentFile +
+                ", taskIsLetter=" + taskIsLetter +
+                ", oldFile='" + oldFile + '\'' +
                 '}';
     }
 }

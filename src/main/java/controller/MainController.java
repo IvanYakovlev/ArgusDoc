@@ -100,6 +100,7 @@ public class MainController {
     private TableColumn<Task, String> statusTask;
     private TableColumn<Task, String> sender;
     private TableColumn<Task, String> timeTask;
+    private TableColumn<Task, String> isLetter;
     @FXML
     private Label labelUserAuth;
 
@@ -159,6 +160,8 @@ public class MainController {
     sender.setCellValueFactory(new PropertyValueFactory<Task, String>("taskFromEmployee"));
     timeTask = new TableColumn<Task, String>("Время");
     timeTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskTime"));
+    isLetter = new TableColumn<Task, String>("Письмо");
+    isLetter.setCellValueFactory(new PropertyValueFactory<Task, String>("taskIsLetter"));
 
 // задаем размер колонок в таблице
     nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.24));
@@ -167,10 +170,29 @@ public class MainController {
     timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
     statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
 
+//цвет ячеек
+        int i=0;
+        for (Node n: tableTask.lookupAll("TableRow")) {
+            if (n instanceof TableRow) {
+                TableRow row = (TableRow) n;
+                if (tableTask.getItems().get(i).getStatusTaskId() == StatusTask.NOT_DONE) {
+                    row.getStyleClass().add("isNotDone");
+                } else {
+                    if (tableTask.getItems().get(i).getStatusTaskId() == StatusTask.NOT_DONE) {
+                        row.getStyleClass().add("isDone");
+                    } else if (tableTask.getItems().get(i).getStatusTaskId() == StatusTask.NOT_DONE) {
+                        row.getStyleClass().add("isPerformed");
+                    }
+                    i++;
+                    if (i == tableTask.getItems().size())
+                        break;
+                }
+            }
+        }
+       // tableTask.setRowFactory((param) -> new ColorRow());
 
 
-
-
+//////////////////////////
     tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
 
     tableTask.setItems(taskDao.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
@@ -334,6 +356,7 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
 
     public void openDoneTaskButton(ActionEvent actionEvent) {
         if (task!=null) {
+            taskDao.performedTask(task.getTaskId());
             FXMLLoader fxmlLoader = new FXMLLoader();
 
             fxmlLoader.setLocation(getClass().getResource("/viewFXML/Done_task_window.fxml"));
@@ -457,6 +480,7 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
         if (task!=null){
             this.task = task;
         }
+        System.out.println(task);
     }
 
 
@@ -465,7 +489,7 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
     public void deleteTaskButton(ActionEvent actionEvent) {
         if (task!=null){
             taskDao = new TaskDaoImpl();
-            taskDao.removeTask(task.getTaskId(), task.getTaskAttachment());
+            taskDao.removeTask(this.task);
         } else
         {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Задача не выбрана!");
@@ -599,4 +623,26 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
             this.letter = letter;
         }
     }
+
+    public void acceptTask(ActionEvent actionEvent) {
+        if (task!=null) {
+            taskDao.performedTask(task.getTaskId());
+        }
+    }
+
+/*    private class ColorRow extends TableRow<Task> {
+
+
+            @Override
+            protected void updateItem(Task task, boolean b) {
+                super.updateItem(task, b);
+               // boolean flag = true; // тут условие, по которому стоит разукрашитьвать ячейку или нет.
+                if (task.getStatusTaskId()==StatusTask.DONE) {
+                    this.getStyleClass().add("redCell");
+                } else {
+                    this.getStyleClass().add("greenCell");
+                }
+            }
+
+    }*/
 }

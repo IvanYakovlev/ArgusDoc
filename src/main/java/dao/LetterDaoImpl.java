@@ -62,7 +62,7 @@ public class LetterDaoImpl implements LetterDao {
             try {
                 Files.delete(path);
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Файл уже удален!");
             }
         } catch (SQLException e) {
             e.printStackTrace();

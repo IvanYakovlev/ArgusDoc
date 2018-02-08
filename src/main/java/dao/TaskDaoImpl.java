@@ -6,6 +6,7 @@ import dialog.ADInfo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import model.StatusTask;
 import model.Task;
 
@@ -20,14 +21,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class TaskDaoImpl implements TaskDao{
 DBconnection dBconnection;
-    public void addTask(Task task) {
+    public void addTask(Task task) throws IOException {
         dBconnection=new DBconnection();
 //Добавляем данные в таблицу
         try {
-            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("INSERT INTO TASKS(Task_name, Task_text, Task_attachment, Task_from_employee, Employee_id, Task_term, Status_task_id, Task_time) VALUES(?,?,?,?,?,?,?,?)");
+            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("INSERT INTO TASKS(Task_name, Task_text, Task_attachment, Task_from_employee, Employee_id, Task_term, Status_task_id, Task_time,Task_is_letter) VALUES(?,?,?,?,?,?,?,?,?)");
             preparedStatement.setString(1, task.getTaskName());
             preparedStatement.setString(2, task.getTaskText());
             preparedStatement.setString(3, task.getTaskAttachment());
@@ -36,25 +38,50 @@ DBconnection dBconnection;
             preparedStatement.setDate(6, task.getTaskTerm());
             preparedStatement.setInt(7, StatusTask.NOT_DONE);
             preparedStatement.setTime(8,task.getTaskTime());
+            preparedStatement.setInt(9,task.getTaskIsLetter());
             preparedStatement.execute();
 
 
 //Копируем файл если он прикреплен или задача не сформирована из вкладки Письма
-            if (!task.getTaskIsLetter()&&task.getTaskAttachmentFile()!=null) {
+            if (task.getTaskIsLetter()==0&&task.getTaskAttachmentFile()!=null) {
                 File destFile = new File(task.getTaskAttachment());
                 Files.copy(task.getTaskAttachmentFile().toPath(), destFile.toPath());
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            //alert.setTitle("Delete File");
+            alert.setHeaderText("Файл с таким именем уже существует! Хотите заменить?");
+
+
+            // option != null.
+            Optional<ButtonType> option = alert.showAndWait();
+
+            if (option.get() == null) {
+
+            } else if (option.get() == ButtonType.OK) {
+                Path path = Paths.get(task.getTaskAttachment());
+                Files.delete(path);
+
+                if (task.getTaskIsLetter()==0&&task.getTaskAttachmentFile()!=null) {
+                    File destFile = new File(task.getTaskAttachment());
+                    Files.copy(task.getTaskAttachmentFile().toPath(), destFile.toPath());
+
+                }
+
+            } else if (option.get() == ButtonType.CANCEL) {
+
+            } else {
+
+            }
         }
     }
 
-    public void updateTask(Task task) {
+    public void updateTask(Task task) throws IOException {
         dBconnection=new DBconnection();
         try {
-            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE TASKS SET Task_name=?, Task_text=?, Task_attachment=?, Task_from_employee=?, Employee_id=?, Task_term=?, Status_task_id=?, Task_time=? WHERE  Task_id =?");
+            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE TASKS SET Task_name=?, Task_text=?, Task_attachment=?, Task_from_employee=?, Employee_id=?, Task_term=?, Status_task_id=?, Task_time=?,Task_is_letter=? WHERE  Task_id =?");
             preparedStatement.setString(1, task.getTaskName());
             preparedStatement.setString(2, task.getTaskText());
             preparedStatement.setString(3, task.getTaskAttachment());
@@ -63,42 +90,49 @@ DBconnection dBconnection;
             preparedStatement.setDate(6,task.getTaskTerm());
             preparedStatement.setInt(7, task.getStatusTaskId());
             preparedStatement.setTime(8,task.getTaskTime());
-            preparedStatement.setInt(9, task.getTaskId());
+            preparedStatement.setInt(9,task.getTaskIsLetter());
+            preparedStatement.setInt(10, task.getTaskId());
             preparedStatement.execute();
 
 
             //Копируем файл если он прикреплен или задача не сформирована из вкладки Письма
-            if (!task.getTaskIsLetter()&&task.getTaskAttachmentFile()!=null) {
+            if (task.getTaskIsLetter()==0&&task.getTaskAttachmentFile()!=null) {
 
+                Path path = Paths.get(task.getOldFile());
+                Files.delete(path);
 
-                File destFile = new File(task.getTaskAttachment());
-                Files.copy(task.getTaskAttachmentFile().toPath(), destFile.toPath());
+                if (task.getTaskIsLetter()==0&&task.getTaskAttachmentFile()!=null) {
+                    File destFile = new File(task.getTaskAttachment());
+                    Files.copy(task.getTaskAttachmentFile().toPath(), destFile.toPath());
+
+                }
+                ADInfo.getAdInfo().dialog(Alert.AlertType.CONFIRMATION, "Файл обновлен!");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (IOException e) {
-         //   e.printStackTrace();
-            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Файл с таким именем уже существует!");
+            e.printStackTrace();
         }
     }
 
-    public void removeTask(int id,String filePath) {
+    public void removeTask(Task task) {
         dBconnection = new DBconnection();
         try {
             //удаляем данные из таблицы
 
             PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("DELETE  FROM  TASKS WHERE Task_id = ?");
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1, task.getTaskId());
             preparedStatement.execute();
 
 
-            //удаляем файл с сервера
-            if (filePath!=null) {
-                Path path = Paths.get(filePath);
+            //удаляем файл с сервера, если это не письмо
+            if (task.getTaskAttachment()!=null&&task.getTaskIsLetter()==0) {
+                Path path = Paths.get(task.getTaskAttachment());
                 try {
                     Files.delete(path);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println("файл уже удален");
+                   // ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "");
                 }
             }
         } catch (SQLException e) {
@@ -124,6 +158,7 @@ DBconnection dBconnection;
                 task.setStatusTaskName(resultSet.getString("Status_task_name"));
                 task.setTaskFromEmployee(resultSet.getString("Task_from_employee"));
                 task.setTaskTime(resultSet.getTime("Task_time"));
+                task.setTaskIsLetter(resultSet.getInt("Task_is_letter"));
                 listData.add(task);
             }
         } catch (SQLException e) {
@@ -150,6 +185,7 @@ DBconnection dBconnection;
                 task.setStatusTaskName(resultSet.getString("Status_task_name"));
                 task.setTaskFromEmployee(resultSet.getString("Task_from_employee"));
                 task.setTaskTime(resultSet.getTime("Task_time"));
+                task.setTaskIsLetter(resultSet.getInt("Task_is_letter"));
                 listData.add(task);
             }
         } catch (SQLException e) {
@@ -176,6 +212,7 @@ DBconnection dBconnection;
                 task.setStatusTaskName(resultSet.getString("Status_task_name"));
                 task.setTaskTime(resultSet.getTime("Task_time"));
                 task.setTaskFromEmployee(resultSet.getString("Task_from_employee"));
+                task.setTaskIsLetter(resultSet.getInt("Task_is_letter"));
 
                 listData.add(task);
             }
@@ -204,6 +241,7 @@ DBconnection dBconnection;
                 task.setStatusTaskName(resultSet.getString("Status_task_name"));
                 task.setTaskFromEmployee(resultSet.getString("Task_from_employee"));
                 task.setTaskTime(resultSet.getTime("Task_time"));
+                task.setTaskIsLetter(resultSet.getInt("Task_is_letter"));
                 listData.add(task);
             }
         } catch (SQLException e) {
@@ -222,12 +260,24 @@ DBconnection dBconnection;
             preparedStatement.setString(3, task.getTaskAttachment());
             preparedStatement.setInt(4, task.getTaskId());
 
-
-            //Подменяем/загружаем файл на сервер
-            File destFile = new File(task.getTaskAttachment());
-            Files.copy(task.getTaskAttachmentFile().toPath(), destFile.toPath());
-
             preparedStatement.execute();
+
+            //Загружаем файл на сервер
+            if (task.getTaskIsLetter()==0&&task.getTaskAttachmentFile()!=null) {
+
+                Path path = Paths.get(task.getOldFile());
+                Files.delete(path);
+                if (task.getTaskIsLetter()==0&&task.getTaskAttachmentFile()!=null) {
+                    File destFile = new File(task.getTaskAttachment());
+                    Files.copy(task.getTaskAttachmentFile().toPath(), destFile.toPath());
+
+                }
+                ADInfo.getAdInfo().dialog(Alert.AlertType.CONFIRMATION, "Файл обновлен!");
+            }
+
+
+
+
 
         } catch (SQLException e) {
             e.printStackTrace();

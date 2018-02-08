@@ -7,6 +7,7 @@ public final class StatusTask {
     public static final int OVERDUE = 4; // просрочена
     public static final int CANCELED = 5; // в архив
 
+
     private StatusTask() {
     }
 }

@@ -19,6 +19,7 @@ import model.Task;
 
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.sql.Time;
 import java.util.Date;
 
@@ -56,7 +57,7 @@ public class AddTaskController {
 
     }
 
-    public void addTaskButton(ActionEvent actionEvent) {
+    public void addTaskButton(ActionEvent actionEvent) throws IOException {
         if (txtTaskName.getText().isEmpty() ||  comboBoxEmployee.getValue()==null || datePickerTask.getValue()==null||textAreaTask.getText().isEmpty()) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
@@ -74,7 +75,7 @@ public class AddTaskController {
             task.setTaskTerm(java.sql.Date.valueOf(datePickerTask.getValue()));
             task.setTaskTime(java.sql.Time.valueOf(timePickerTask.getValue()));
             task.setStatusTaskId(StatusTask.NOT_DONE);
-            task.setTaskIsLetter(false);
+            task.setTaskIsLetter(0);
             taskDao.addTask(task);
 
 

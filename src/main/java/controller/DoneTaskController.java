@@ -76,10 +76,12 @@ public class DoneTaskController {
             task.setTaskId(this.task.getTaskId());
             task.setTaskText(textAreaTask.getText());
             task.setStatusTaskId(StatusTask.DONE);
-            task.setTaskAttachment(ServerFilePath.TASKS_FILE_PATH+attachmentFile.getName());
+            if (attachmentFile!=null) {
+                task.setTaskAttachment(ServerFilePath.TASKS_FILE_PATH + attachmentFile.getName());
+            }
             task.setTaskAttachmentFile(attachmentFile);
-            task.setTaskIsLetter(false);
-
+           // task.setTaskIsLetter(0);
+            task.setOldFile(this.task.getTaskAttachment());
             taskDao.doneTask(task);
 
 
@@ -123,6 +125,11 @@ public class DoneTaskController {
 
         textAreaTask.setEditable(true);
         editButtonBar.toFront();
+        // если задача сформирована с помощью письма, файл прикреплять не нужно
+        System.out.println(task);
+        if (this.task.getTaskIsLetter()==1){
+            attachmentFileButton.setVisible(false);
+        }
 
     }
 
