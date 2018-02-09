@@ -184,12 +184,28 @@ public class MainController {
 
 
         //цвет ячеек
+        tableTask.setRowFactory(new Callback<TableView<Task>, TableRow<Task>>() {
+            @Override
+            public TableRow<Task> call(TableView<Task> param) {
+                final TableRow<Task> row = new TableRow<Task>() {
+                    @Override
+                    protected void updateItem(Task row, boolean empty) {
+                        super.updateItem(row, empty);
+                        if (!empty)
+                            styleProperty().bind(Bindings.when(row.selectedProperty()).then("-fx-font-weight: bold; -fx-font-size: 16;").otherwise(""));
+                            styleProperty().bind(Bindings.when(row.selectedProperty()).then("-fx-font-weight: bold; -fx-font-size: 20;").otherwise(""));
+                            styleProperty().bind(Bindings.when(row.selectedProperty()).then("-fx-font-weight: bold; -fx-font-size: 24;").otherwise(""));
+                            styleProperty().bind(Bindings.when(row.selectedProperty()).then("-fx-font-weight: bold; -fx-font-size: 30;").otherwise(""));
+                            styleProperty().bind(Bindings.when(row.selectedProperty()).then("-fx-font-weight: bold; -fx-font-size: 34;").otherwise(""));
+
+                    }
+                };
+                return row;
+            }
+        });
+        //////////////////////
 
 
-
-
-
-//////////////////////////
 // If access - administrator
     if (AuthorizedUser.getUser().getAccessId()==1) {
 
