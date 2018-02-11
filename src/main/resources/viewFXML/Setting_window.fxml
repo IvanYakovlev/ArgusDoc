@@ -13,7 +13,7 @@
 
 <AnchorPane fx:id="anchorSetting" prefHeight="470.0" prefWidth="800.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SettingController">
    <children>
-      <JFXTabPane prefHeight="448.0" prefWidth="609.0" styleClass="jfx-tab-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <JFXTabPane prefHeight="448.0" prefWidth="609.0" styleClass="jfx-tab-pane" tabMinHeight="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>
             <Tab text="Отделы">
                <content>

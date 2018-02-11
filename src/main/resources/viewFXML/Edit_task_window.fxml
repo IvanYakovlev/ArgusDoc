@@ -62,8 +62,8 @@
       </Pane>
       <Pane fx:id="paneViewTask" layoutX="21.0" layoutY="51.0" prefHeight="340.0" prefWidth="580.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="56.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
          <children>
-            <JFXTextArea fx:id="textViewAreaTask" editable="false" focusColor="#4eb1ba" layoutX="12.0" layoutY="42.0" prefHeight="278.0" prefWidth="560.0" promptText="Введите текст задачи" styleClass="JFXTextArea" />
-            <Label fx:id="labelViewTask" layoutX="14.0" layoutY="14.0" styleClass="label2" text="Название задачи" />
+            <JFXTextArea fx:id="textViewAreaTask" editable="false" focusColor="#4eb1ba" layoutX="12.0" layoutY="50.0" prefHeight="270.0" prefWidth="560.0" promptText="Введите текст задачи" styleClass="JFXTextArea" />
+            <Label fx:id="labelViewTask" layoutX="14.0" layoutY="14.0" styleClass="label3" text="Название задачи" />
          </children>
       </Pane>
    </children>

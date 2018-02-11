@@ -82,7 +82,9 @@ public class AddLetterController {
                 task.setStatusTaskId(StatusTask.NOT_DONE);
                 task.setTaskTime(null);
                 task.setTaskIsLetter(1);
-                taskDao.addTask(task);
+
+                    taskDao.addTask(task);
+
 
 
             }
@@ -95,8 +97,7 @@ public class AddLetterController {
             letter.setLetterPassword(Integer.parseInt(txtLetterPassword.getText()));
             letter.setLetterNumber(txtLetterNumber.getText());
             letter.setLetterFilePath(ServerFilePath.LETTERS_FILE_PATH+attachmentFile.getName());
-            letterDao.addLetter(letter);
-
+                letterDao.addLetter(letter);
 
             Stage stage = (Stage) addLetterButton.getScene().getWindow();
             stage.close();

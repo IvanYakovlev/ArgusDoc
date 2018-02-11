@@ -116,7 +116,7 @@ public class EditTaskController {
 
         File file = fileChooser.showOpenDialog(attachmentFileButton.getScene().getWindow());
         if (file == null) {
-            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Письмо не выбрано!");
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Файл не выбран!");
         } else {
 
             attachmentFile=file;

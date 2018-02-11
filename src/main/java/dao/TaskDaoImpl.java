@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Date;
@@ -37,7 +38,7 @@ DBconnection dBconnection;
             preparedStatement.setString(4, task.getTaskFromEmployee());
             preparedStatement.setInt(5, task.getEmployeeId());
             preparedStatement.setDate(6, task.getTaskTerm());
-            preparedStatement.setInt(7, StatusTask.NOT_DONE);
+            preparedStatement.setInt(7, Integer.parseInt(StatusTask.NOT_DONE));
             preparedStatement.setTime(8,task.getTaskTime());
             preparedStatement.setInt(9,task.getTaskIsLetter());
             preparedStatement.execute();
@@ -89,7 +90,7 @@ DBconnection dBconnection;
             preparedStatement.setString(4, task.getTaskFromEmployee());
             preparedStatement.setInt(5, task.getEmployeeId());
             preparedStatement.setDate(6,task.getTaskTerm());
-            preparedStatement.setInt(7, task.getStatusTaskId());
+            preparedStatement.setString(7, task.getStatusTaskId());
             preparedStatement.setTime(8,task.getTaskTime());
             preparedStatement.setInt(9,task.getTaskIsLetter());
             preparedStatement.setInt(10, task.getTaskId());
@@ -98,9 +99,13 @@ DBconnection dBconnection;
 
             //Копируем файл если он прикреплен или задача не сформирована из вкладки Письма
             if (task.getTaskIsLetter()==0&&task.getTaskAttachmentFile()!=null) {
+                try {
+                    Path path = Paths.get(task.getOldFile());
+                    Files.delete(path);
+                }catch (NoSuchFileException e){
 
-                Path path = Paths.get(task.getOldFile());
-                Files.delete(path);
+                }
+
 
                 if (task.getTaskIsLetter()==0&&task.getTaskAttachmentFile()!=null) {
                     File destFile = new File(task.getTaskAttachment());
@@ -157,6 +162,7 @@ DBconnection dBconnection;
                 task.setEmployeeName(resultSet.getString("Employee_name"));
                 task.setTaskTerm(resultSet.getDate("Task_term"));
                 task.setStatusTaskName(resultSet.getString("Status_task_name"));
+                task.setStatusTaskId(resultSet.getString("Status_task_id"));
                 task.setTaskFromEmployee(resultSet.getString("Task_from_employee"));
                 task.setTaskTime(resultSet.getTime("Task_time"));
                 task.setTaskIsLetter(resultSet.getInt("Task_is_letter"));
@@ -184,6 +190,7 @@ DBconnection dBconnection;
                 task.setEmployeeName(resultSet.getString("Employee_name"));
                 task.setTaskTerm(resultSet.getDate("Task_term"));
                 task.setStatusTaskName(resultSet.getString("Status_task_name"));
+                task.setStatusTaskId(resultSet.getString("Status_task_id"));
                 task.setTaskFromEmployee(resultSet.getString("Task_from_employee"));
                 task.setTaskTime(resultSet.getTime("Task_time"));
                 task.setTaskIsLetter(resultSet.getInt("Task_is_letter"));
@@ -211,6 +218,7 @@ DBconnection dBconnection;
                 task.setEmployeeName(resultSet.getString("Employee_name"));
                 task.setTaskTerm(resultSet.getDate("Task_term"));
                 task.setStatusTaskName(resultSet.getString("Status_task_name"));
+                task.setStatusTaskId(resultSet.getString("Status_task_id"));
                 task.setTaskTime(resultSet.getTime("Task_time"));
                 task.setTaskFromEmployee(resultSet.getString("Task_from_employee"));
                 task.setTaskIsLetter(resultSet.getInt("Task_is_letter"));
@@ -240,6 +248,7 @@ DBconnection dBconnection;
                 task.setTaskTerm(resultSet.getDate("Task_term"));
                 task.setEmployeeName(resultSet.getString("Employee_name"));
                 task.setStatusTaskName(resultSet.getString("Status_task_name"));
+                task.setStatusTaskId(resultSet.getString("Status_task_id"));
                 task.setTaskFromEmployee(resultSet.getString("Task_from_employee"));
                 task.setTaskTime(resultSet.getTime("Task_time"));
                 task.setTaskIsLetter(resultSet.getInt("Task_is_letter"));
@@ -256,7 +265,7 @@ DBconnection dBconnection;
         dBconnection=new DBconnection();
         try {
             PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE TASKS SET Status_task_id=?, Task_text=?, Task_attachment=? WHERE  Task_id =?");
-            preparedStatement.setInt(1, task.getStatusTaskId());
+            preparedStatement.setInt(1, Integer.parseInt(task.getStatusTaskId()));
             preparedStatement.setString(2, task.getTaskText());
             preparedStatement.setString(3, task.getTaskAttachment());
             preparedStatement.setInt(4, task.getTaskId());
@@ -265,15 +274,24 @@ DBconnection dBconnection;
 
             //Загружаем файл на сервер
             if (task.getTaskIsLetter()==0&&task.getTaskAttachmentFile()!=null) {
+                if (task.getOldFile()!=null){
+                try {
+                    Path path = Paths.get(task.getOldFile());
 
-                Path path = Paths.get(task.getOldFile());
-                Files.delete(path);
+                    Files.delete(path);
+                }catch (IOException e){
+
+                }
+
+
+
                 if (task.getTaskIsLetter()==0&&task.getTaskAttachmentFile()!=null) {
                     File destFile = new File(task.getTaskAttachment());
                     Files.copy(task.getTaskAttachmentFile().toPath(), destFile.toPath());
 
                 }
                 ADInfo.getAdInfo().dialog(Alert.AlertType.CONFIRMATION, "Файл обновлен!");
+                }
             }
 
 
@@ -292,7 +310,7 @@ DBconnection dBconnection;
         dBconnection=new DBconnection();
         try {
             PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE TASKS SET Status_task_id=? WHERE  Task_id =?");
-            preparedStatement.setInt(1, StatusTask.PERFORMED);
+            preparedStatement.setInt(1, Integer.parseInt(StatusTask.PERFORMED));
             preparedStatement.setInt(2, id);
 
             preparedStatement.execute();
@@ -307,7 +325,7 @@ DBconnection dBconnection;
         dBconnection=new DBconnection();
         try {
             PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE TASKS SET Status_task_id=? WHERE  Task_id =?");
-            preparedStatement.setInt(1, StatusTask.OVERDUE);
+            preparedStatement.setInt(1, Integer.parseInt(StatusTask.OVERDUE));
             preparedStatement.setInt(2, id);
 
             preparedStatement.execute();
@@ -322,7 +340,7 @@ DBconnection dBconnection;
         dBconnection=new DBconnection();
         try {
             PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE TASKS SET Status_task_id=? WHERE  Task_id =?");
-            preparedStatement.setInt(1, StatusTask.CANCELED);
+            preparedStatement.setInt(1, Integer.parseInt(StatusTask.CANCELED));
             preparedStatement.setInt(2, id);
 
             preparedStatement.execute();
@@ -343,13 +361,21 @@ DBconnection dBconnection;
                 String filepath = resultSet.getString("Task_attachment");
 
                 File file = new File(filepath);
-                java.awt.Desktop.getDesktop().open(file);
+                try {
+                    java.awt.Desktop.getDesktop().open(file);
+                }catch (IllegalArgumentException e){
+                    ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Файл не найден!");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+
+
     }
 
     @Override

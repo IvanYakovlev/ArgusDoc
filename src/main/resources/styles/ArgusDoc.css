@@ -226,6 +226,11 @@
 .label2{
     -fx-text-fill: #212121;
 }
+.label3{
+    -fx-text-fill: #212121;
+    -fx-font-weight: bold;
+    -fx-font-size: 16
+}
 .password-field{
     -fx-text-fill: #221E1D;
 

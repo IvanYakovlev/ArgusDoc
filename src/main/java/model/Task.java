@@ -12,64 +12,10 @@ import java.sql.Time;
 @Table(name = "TASKS")
 public class Task extends RecursiveTreeObject<Task> {
 
-    private Boolean done=false ;
-    private Boolean notDone=false;
-    private Boolean performed=false;
-    private Boolean overdue=false;
-    private Boolean canceled=false;
-    private BooleanProperty selected ;
 
-    public BooleanProperty selectedProperty() {
-        return selected;
-    }
 
-    public Boolean getDone() {
-        return done;
-    }
 
-    public void setDone(Boolean done) {
-        this.done = done;
-    }
 
-    public Boolean getNotDone() {
-        return notDone;
-    }
-
-    public void setNotDone(Boolean notDone) {
-        this.notDone = notDone;
-    }
-
-    public Boolean getPerformed() {
-        return performed;
-    }
-
-    public void setPerformed(Boolean performed) {
-        this.performed = performed;
-    }
-
-    public Boolean getOverdue() {
-        return overdue;
-    }
-
-    public void setOverdue(Boolean overdue) {
-        this.overdue = overdue;
-    }
-
-    public Boolean getCanceled() {
-        return canceled;
-    }
-
-    public void setCanceled(Boolean canceled) {
-        this.canceled = canceled;
-    }
-
-    public boolean isSelected() {
-        return selected.get();
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected.set(selected);
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -100,7 +46,7 @@ public class Task extends RecursiveTreeObject<Task> {
     private java.sql.Time taskTime;
 
     @Column(name = "Status_task_id")
-    private int statusTaskId;
+    private String statusTaskId;
     private String statusTaskName;
 
     private File taskAttachmentFile;
@@ -111,6 +57,15 @@ public class Task extends RecursiveTreeObject<Task> {
     private int taskIsLetter;          // 0-задача, 1-письмо
 
     private String oldFile;
+
+
+    public String getStatusTaskId() {
+        return statusTaskId;
+    }
+
+    public void setStatusTaskId(String statusTaskId) {
+        this.statusTaskId = statusTaskId;
+    }
 
     public int getTaskId() {
         return taskId;
@@ -184,30 +139,8 @@ public class Task extends RecursiveTreeObject<Task> {
         this.taskTime = taskTime;
     }
 
-    public int getStatusTaskId() {
-        return statusTaskId;
-    }
 
-    public void setStatusTaskId(int statusTaskId) {
-        if (statusTaskId==1){
-            done=true;
-            selected = new SimpleBooleanProperty(done);
-        } else if (statusTaskId==2){
-            notDone=true;
-            selected = new SimpleBooleanProperty(notDone);
-        } else if (statusTaskId==3){
-            performed=true;
-            selected = new SimpleBooleanProperty(performed);
-        } else if (statusTaskId==4){
-           overdue=true;
-           selected = new SimpleBooleanProperty(overdue);
-        } else if (statusTaskId==5){
-            canceled=true;
-            selected = new SimpleBooleanProperty(canceled);
-        }
 
-        this.statusTaskId = statusTaskId;
-    }
 
     public String getStatusTaskName() {
         return statusTaskName;

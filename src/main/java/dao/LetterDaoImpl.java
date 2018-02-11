@@ -1,8 +1,11 @@
 package dao;
 
 import dbConnection.DBconnection;
+import dialog.ADInfo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import model.Letter;
 
 import java.io.File;
@@ -15,6 +18,7 @@ import java.nio.file.Paths;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class LetterDaoImpl implements LetterDao {
 
@@ -28,6 +32,11 @@ public class LetterDaoImpl implements LetterDao {
         dBconnection=new DBconnection();
 
         try {
+
+            //Копируем файл на сервер
+            File destFile = new File(letter.getLetterFilePath());
+            Files.copy(letter.getAttachmentFile().toPath(), destFile.toPath());
+
             // заносим данные в таблицу Letters
             PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("INSERT INTO LETTERS(Letter_name, Letter_number, Letter_filepath, Letter_password, Letter_date) VALUES(?,?,?,?,?)");
             preparedStatement.setString(1, letter.getLetterName());
@@ -35,16 +44,35 @@ public class LetterDaoImpl implements LetterDao {
             preparedStatement.setString(3, letter.getLetterFilePath());
             preparedStatement.setInt(4, letter.getLetterPassword());
             preparedStatement.setDate(5, letter.getLetterDate());
-
             preparedStatement.execute();
 
 
-            //Копируем файл на сервер
-            File destFile = new File(letter.getLetterFilePath());
-            Files.copy(letter.getAttachmentFile().toPath(), destFile.toPath());
-
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            //alert.setTitle("Delete File");
+            alert.setHeaderText("Письмо с таким именем уже существует! Хотите заменить?");
+
+
+            // option != null.
+            Optional<ButtonType> option = alert.showAndWait();
+
+            if (option.get() == null) {
+
+            } else if (option.get() == ButtonType.OK) {
+                Path path = Paths.get(letter.getLetterFilePath());
+                Files.delete(path);
+                File destFile = new File(letter.getLetterFilePath());
+                Files.copy(letter.getAttachmentFile().toPath(), destFile.toPath());
+
+
+
+            } else if (option.get() == ButtonType.CANCEL) {
+
+            } else {
+
+            }
         }
 
     }
@@ -85,7 +113,13 @@ public class LetterDaoImpl implements LetterDao {
                 String filepath = resultSet.getString("Letter_filepath");
 
                 File file = new File(filepath);
-                java.awt.Desktop.getDesktop().open(file);
+                try {
+                    java.awt.Desktop.getDesktop().open(file);
+                }catch (java.lang.IllegalArgumentException e){
+                    ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Письмо было удалено с сервера!");
+                }
+
+
             }
         } catch (SQLException e) {
             e.printStackTrace();

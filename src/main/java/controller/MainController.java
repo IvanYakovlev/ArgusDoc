@@ -151,7 +151,8 @@ public class MainController {
     idTask = new TableColumn<Task, String>("Id");
     idTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskId"));
     nameTask = new TableColumn<Task, String>("Название задачи");
-    nameTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskName"));textTask = new TableColumn<Task, String>("Текст задачи");
+    nameTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskName"));
+    textTask = new TableColumn<Task, String>("Текст задачи");
     textTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskText"));
     attachmentTask = new TableColumn<Task, String>("Прикрепленный файл");
     attachmentTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskAttachment"));
@@ -159,8 +160,9 @@ public class MainController {
     employeeTask.setCellValueFactory(new PropertyValueFactory<Task, String>("employeeName"));
     termTask = new TableColumn<Task, String>("Дата");
     termTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskTerm"));
-    statusTask = new TableColumn<Task, String>("Статус задачи");
-    statusTask.setCellValueFactory(new PropertyValueFactory<Task, String>("statusTaskName"));
+    statusTask = new TableColumn<Task, String>("");
+    statusTask.setCellValueFactory(new PropertyValueFactory<Task, String>("statusTaskId"));
+
     sender = new TableColumn<Task, String>("Отправитель");
     sender.setCellValueFactory(new PropertyValueFactory<Task, String>("taskFromEmployee"));
     timeTask = new TableColumn<Task, String>("Время");
@@ -169,11 +171,11 @@ public class MainController {
     isLetter.setCellValueFactory(new PropertyValueFactory<Task, String>("taskIsLetter"));
 
 // задаем размер колонок в таблице
-    nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.24));
-    sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
+    nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
+    sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
     termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
     timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-    statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
+    statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
 
     tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
@@ -183,27 +185,7 @@ public class MainController {
     labelUserAuth.setText(AuthorizedUser.getUser().getEmployeeName());
 
 
-        //цвет ячеек
-        tableTask.setRowFactory(new Callback<TableView<Task>, TableRow<Task>>() {
-            @Override
-            public TableRow<Task> call(TableView<Task> param) {
-                final TableRow<Task> row = new TableRow<Task>() {
-                    @Override
-                    protected void updateItem(Task row, boolean empty) {
-                        super.updateItem(row, empty);
-                        if (!empty)
-                            styleProperty().bind(Bindings.when(row.selectedProperty()).then("-fx-font-weight: bold; -fx-font-size: 16;").otherwise(""));
-                            styleProperty().bind(Bindings.when(row.selectedProperty()).then("-fx-font-weight: bold; -fx-font-size: 20;").otherwise(""));
-                            styleProperty().bind(Bindings.when(row.selectedProperty()).then("-fx-font-weight: bold; -fx-font-size: 24;").otherwise(""));
-                            styleProperty().bind(Bindings.when(row.selectedProperty()).then("-fx-font-weight: bold; -fx-font-size: 30;").otherwise(""));
-                            styleProperty().bind(Bindings.when(row.selectedProperty()).then("-fx-font-weight: bold; -fx-font-size: 34;").otherwise(""));
-
-                    }
-                };
-                return row;
-            }
-        });
-        //////////////////////
+     colorRow();//цвет ячеек
 
 
 // If access - administrator
@@ -241,8 +223,7 @@ public class MainController {
 
 
 
-
-/*Document template tab*/
+    /*Document template tab*/
 public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
 
     Document clickDocument = tableDocumentTemplate.getSelectionModel().getSelectedItems().get(0);
@@ -257,16 +238,23 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
     }
 
     public void openDocumentButton(ActionEvent actionEvent) {
-        if (document.getDocumentName()!=null) {
+        try {
             documentDao.openDocument(document.getDocumentId());
+        }catch (NullPointerException e){
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Документ не выбран!");
         }
 
     }
 
     public void printDocumentButton(ActionEvent actionEvent) {
-        if (document.getDocumentName()!=null) {
-            documentDao.printDocument(document.getDocumentId());
-        }
+       try {
+           documentDao.printDocument(document.getDocumentId());
+       }catch (NullPointerException e){
+           ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Документ не выбран!");
+       }
+
+
+       // }
 
     }
 
@@ -416,52 +404,62 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
 
 
     public void myTasksButton(ActionEvent actionEvent) {
+
+
+
+
+
         task=null;
         anchorTask.toFront();
         myTaskBtnBar.toFront();
         taskDao = new TaskDaoImpl();
+        colorRow();
         // задаем размер колонок в таблице
-        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.24));
-        sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
+        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
+        sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
         termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
         timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-        statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
+        statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
         tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
         tableTask.setItems(taskDao.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
+
     }
 
     public void myDoneTasksButton(ActionEvent actionEvent) {
+
         task=null;
         anchorTask.toFront();
         myTaskDoneBtnBar.toFront();
         taskDao = new TaskDaoImpl();
+        colorRow();
         // задаем размер колонок в таблице
-        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.24));
-        sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
+        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
+        sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
         termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
         timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-        statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
+        statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
         tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
         tableTask.setItems(taskDao.listMyDoneTasks(AuthorizedUser.getUser().getEmployeeId()));
+
     }
     public void fromEmpTasjButton(ActionEvent actionEvent) {
         task=null;
         anchorTask.toFront();
         fromEmpTaskBtnBar.toFront();
         taskDao = new TaskDaoImpl();
-
+        colorRow();
         // задаем размер колонок в таблице
-        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.24));
-        employeeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
+        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
+        employeeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
         termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
         timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-        statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
+        statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
         tableTask.getColumns().setAll(nameTask, employeeTask, termTask, timeTask, statusTask);
-
         tableTask.setItems(taskDao.listFromEmpTasks((AuthorizedUser.getUser().getEmployeeName())));
+
     }
 
     public void archiveTasks(ActionEvent actionEvent) {
@@ -469,17 +467,17 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
         anchorTask.toFront();
         archiveTaskBtnBar.toFront();
         taskDao = new TaskDaoImpl();
-
+        colorRow();
         // задаем размер колонок в таблице
-        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
-        sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
+        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
+        sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
         employeeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
         termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-        timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.14));
-        //statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
+        timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+        statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
-        tableTask.getColumns().setAll(nameTask,sender, employeeTask, termTask, timeTask);
-        tableTask.setItems(taskDao.listArchiveTasks(StatusTask.CANCELED));
+        tableTask.getColumns().setAll(nameTask,sender, employeeTask, termTask, timeTask,statusTask);
+        tableTask.setItems(taskDao.listArchiveTasks(Integer.parseInt(StatusTask.CANCELED)));
 
     }
 
@@ -491,7 +489,11 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
 
     }
 
-
+    public void acceptTask(ActionEvent actionEvent) {
+        if (task!=null) {
+            taskDao.performedTask(task.getTaskId());
+        }
+    }
 
 
     public void deleteTaskButton(ActionEvent actionEvent) {
@@ -632,25 +634,46 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
         }
     }
 
-    public void acceptTask(ActionEvent actionEvent) {
-        if (task!=null) {
-            taskDao.performedTask(task.getTaskId());
-        }
-    }
-
-/*    private class ColorRow extends TableRow<Task> {
 
 
-            @Override
-            protected void updateItem(Task task, boolean b) {
-                super.updateItem(task, b);
-               // boolean flag = true; // тут условие, по которому стоит разукрашитьвать ячейку или нет.
-                if (task.getStatusTaskId()==StatusTask.DONE) {
-                    this.getStyleClass().add("redCell");
-                } else {
-                    this.getStyleClass().add("greenCell");
+    private void colorRow() {
+        statusTask.setCellFactory(column -> {
+            return new TableCell<Task, String>() {
+                @Override
+                protected void updateItem( String item, boolean empty) {
+
+                    setStyle("");
+                    super.updateItem(item, empty);
+
+                    setText(empty ? "" : getItem().toString());
+                    setGraphic(null);
+
+                    TableRow<Task> currentRow = getTableRow();
+
+                    if (!isEmpty()) {
+                        switch (item) {
+                            case "1":
+                                currentRow.setStyle("-fx-background-color:#6BFF61");
+                                break;
+                            case "2":
+                                currentRow.setStyle("-fx-background-color:#FBCEB1; -fx-font-weight: bold; -fx-font-size: 16");
+                                break;
+                            case "3":
+                                currentRow.setStyle("-fx-background-color:#F3FF80");
+                                break;
+                            case "4":
+                                currentRow.setStyle("-fx-background-color:red");
+                                break;
+                            case "5":
+                                currentRow.setStyle("-fx-background-color:#BCCDC4");
+                                break;
+                            default:
+                                currentRow.setStyle("");
+                                break;
+                        }
+                    }
                 }
-            }
-
-    }*/
+            };
+        });
+    }
 }
