@@ -8,6 +8,8 @@ import dbConnection.DBconnection;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -110,7 +113,8 @@ public class MainController {
     private Label labelUserAuth;
 
 //Letter Tab
-
+    @FXML
+    private TextField txtFilter;
     @FXML
     private TableView<Letter> tableLetter;
     private TableColumn<Letter, String> idLetter;
@@ -130,62 +134,62 @@ public class MainController {
 
     /*initialize table Document Template tab*/
 //заполняем таблицу данными
-    documentNameTemplate = new TableColumn<Document, String>("Название документа");
-    documentNameTemplate.setCellValueFactory(new PropertyValueFactory<Document, String>("documentName"));
-    documentFilePathTemplate = new TableColumn<Document, String>("Путь файла");
-    documentFilePathTemplate.setCellValueFactory(new PropertyValueFactory<Document, String>("documentFilePath"));
+        documentNameTemplate = new TableColumn<Document, String>("Название документа");
+        documentNameTemplate.setCellValueFactory(new PropertyValueFactory<Document, String>("documentName"));
+        documentFilePathTemplate = new TableColumn<Document, String>("Путь файла");
+        documentFilePathTemplate.setCellValueFactory(new PropertyValueFactory<Document, String>("documentFilePath"));
 
-    tableDocumentTemplate.getColumns().setAll(documentNameTemplate);
-    tableDocumentTemplate.setItems(documentDao.listDocuments());
+        tableDocumentTemplate.getColumns().setAll(documentNameTemplate);
+        tableDocumentTemplate.setItems(documentDao.listDocuments());
 //задаем размер колонок в таблицу
-    documentNameTemplate.prefWidthProperty().bind(tableTask.widthProperty().multiply(1));
+        documentNameTemplate.prefWidthProperty().bind(tableTask.widthProperty().multiply(1));
 
 
     /*initialize combobox Document template tab*/
 
-    departmentDao.listDepartments();
-    comboBoxDocument_Template.setItems(departmentDao.listDepartmentName());
-    comboBoxDocument_Template.setPromptText("Выберите отдел:");
+        departmentDao.listDepartments();
+        comboBoxDocument_Template.setItems(departmentDao.listDepartmentName());
+        comboBoxDocument_Template.setPromptText("Выберите отдел:");
     /*initialize Task tab*/
 //заполняем таблицу данными
-    idTask = new TableColumn<Task, String>("Id");
-    idTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskId"));
-    nameTask = new TableColumn<Task, String>("Название задачи");
-    nameTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskName"));
-    textTask = new TableColumn<Task, String>("Текст задачи");
-    textTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskText"));
-    attachmentTask = new TableColumn<Task, String>("Прикрепленный файл");
-    attachmentTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskAttachment"));
-    employeeTask = new TableColumn<Task, String>("Исполнитель");
-    employeeTask.setCellValueFactory(new PropertyValueFactory<Task, String>("employeeName"));
-    termTask = new TableColumn<Task, String>("Дата");
-    termTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskTerm"));
-    statusTask = new TableColumn<Task, String>("");
-    statusTask.setCellValueFactory(new PropertyValueFactory<Task, String>("statusTaskId"));
+        idTask = new TableColumn<Task, String>("Id");
+        idTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskId"));
+        nameTask = new TableColumn<Task, String>("Название задачи");
+        nameTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskName"));
+        textTask = new TableColumn<Task, String>("Текст задачи");
+        textTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskText"));
+        attachmentTask = new TableColumn<Task, String>("Прикрепленный файл");
+        attachmentTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskAttachment"));
+        employeeTask = new TableColumn<Task, String>("Исполнитель");
+        employeeTask.setCellValueFactory(new PropertyValueFactory<Task, String>("employeeName"));
+        termTask = new TableColumn<Task, String>("Дата");
+        termTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskTerm"));
+        statusTask = new TableColumn<Task, String>("");
+        statusTask.setCellValueFactory(new PropertyValueFactory<Task, String>("statusTaskId"));
 
-    sender = new TableColumn<Task, String>("Отправитель");
-    sender.setCellValueFactory(new PropertyValueFactory<Task, String>("taskFromEmployee"));
-    timeTask = new TableColumn<Task, String>("Время");
-    timeTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskTime"));
-    isLetter = new TableColumn<Task, String>("Письмо");
-    isLetter.setCellValueFactory(new PropertyValueFactory<Task, String>("taskIsLetter"));
+        sender = new TableColumn<Task, String>("Отправитель");
+        sender.setCellValueFactory(new PropertyValueFactory<Task, String>("taskFromEmployee"));
+        timeTask = new TableColumn<Task, String>("Время");
+        timeTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskTime"));
+        isLetter = new TableColumn<Task, String>("Письмо");
+        isLetter.setCellValueFactory(new PropertyValueFactory<Task, String>("taskIsLetter"));
 
 // задаем размер колонок в таблице
-    nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
-    sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
-    termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-    timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-    statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
+        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
+        sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
+        termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+        timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+        statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
 
-    tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
+        tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
 
-    tableTask.setItems(taskDao.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
+        tableTask.setItems(taskDao.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
 
-    labelUserAuth.setText(AuthorizedUser.getUser().getEmployeeName());
+        labelUserAuth.setText(AuthorizedUser.getUser().getEmployeeName());
 
 
-     colorRow();//цвет ячеек
+        colorRow();//цвет ячеек
 
 
 // If access - administrator
@@ -213,7 +217,8 @@ public class MainController {
         tableLetter.getColumns().setAll(nameLetter, passwordLetter, numberLetter);
         tableLetter.setItems(letterDao.listLetter());
 
-        }
+
+    }
 
 
         anchorTask.toFront();
@@ -675,5 +680,41 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
                 }
             };
         });
+    }
+
+    public void keyPressSort(KeyEvent keyEvent) {
+           /*Сортировка*/
+
+// 1. Wrap the ObservableList in a FilteredList (initially display all data).
+        FilteredList<Letter> filteredData = new FilteredList<>(letterDao.listLetter(), p -> true);
+
+        // 2. Set the filter Predicate whenever the filter changes.
+        txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(letter -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (letter.getLetterName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } else if (letter.getLetterNumber().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches last name.
+                }
+                return false; // Does not match.
+            });
+        });
+
+        // 3. Wrap the FilteredList in a SortedList.
+        SortedList<Letter> sortedData = new SortedList<>(filteredData);
+
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(tableLetter.comparatorProperty());
+
+        // 5. Add sorted (and filtered) data to the table.
+        tableLetter.setItems(sortedData);
     }
 }
