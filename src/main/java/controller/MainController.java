@@ -38,6 +38,9 @@ import java.util.Objects;
 
 
 public class MainController {
+
+    String statusTab="myTask";
+
     //Connection
     private DBconnection dBconnection;
 
@@ -412,7 +415,7 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
 
 
 
-
+       statusTab="myTask";
 
         task=null;
         anchorTask.toFront();
@@ -432,7 +435,7 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
     }
 
     public void myDoneTasksButton(ActionEvent actionEvent) {
-
+        statusTab="myDoneTask";
         task=null;
         anchorTask.toFront();
         myTaskDoneBtnBar.toFront();
@@ -450,6 +453,7 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
 
     }
     public void fromEmpTasjButton(ActionEvent actionEvent) {
+        statusTab="fromEmpTask";
         task=null;
         anchorTask.toFront();
         fromEmpTaskBtnBar.toFront();
@@ -468,6 +472,7 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
     }
 
     public void archiveTasks(ActionEvent actionEvent) {
+        statusTab="archiveTask";
         task=null;
         anchorTask.toFront();
         archiveTaskBtnBar.toFront();
@@ -511,18 +516,21 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
         }
     }
     public void templateTabButton(ActionEvent actionEvent) {
+
+        statusTab="templateTab";
         departmentDao.listDepartments();
-        tableDocumentTemplate.setItems(dataDocument);
+        tableDocumentTemplate.setItems(documentDao.listDocuments());
         comboBoxDocument_Template.setItems(departmentDao.listDepartmentName());
         anchorTemplate.toFront();
     }
 
     public void calendarTabButton(ActionEvent actionEvent) {
+        statusTab="calendarTab";
         anchorCalendar.toFront();
     }
 
     public void letterTabButton(ActionEvent actionEvent) {
-
+        statusTab="letterTab";
         anchorLetter.toFront();
         tableLetter.setItems(letterDao.listLetter());
     }
@@ -685,36 +693,214 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
     public void keyPressSort(KeyEvent keyEvent) {
            /*Сортировка*/
 
+           switch (statusTab){
+               case "myTask":
 // 1. Wrap the ObservableList in a FilteredList (initially display all data).
-        FilteredList<Letter> filteredData = new FilteredList<>(letterDao.listLetter(), p -> true);
+                   FilteredList<Task> filteredMyTask = new FilteredList<>(taskDao.listMyTasks(AuthorizedUser.getUser().getEmployeeId()), p -> true);
 
-        // 2. Set the filter Predicate whenever the filter changes.
-        txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(letter -> {
-                // If filter text is empty, display all persons.
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
+                   // 2. Set the filter Predicate whenever the filter changes.
+                   txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
+                       filteredMyTask.setPredicate(task -> {
+                           // If filter text is empty, display all persons.
+                           if (newValue == null || newValue.isEmpty()) {
+                               return true;
+                           }
 
-                // Compare first name and last name of every person with filter text.
-                String lowerCaseFilter = newValue.toLowerCase();
+                           // Compare first name and last name of every person with filter text.
+                           String lowerCaseFilter = newValue.toLowerCase();
 
-                if (letter.getLetterName().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches first name.
-                } else if (letter.getLetterNumber().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches last name.
-                }
-                return false; // Does not match.
-            });
-        });
+                           if (task.getTaskName().toLowerCase().contains(lowerCaseFilter)) {
+                               return true; // Filter matches first name.
+                           } else if (task.getTaskFromEmployee().toLowerCase().contains(lowerCaseFilter)){
+                               return true;
+                           }
+                           return false; // Does not match.
+                       });
+                   });
 
-        // 3. Wrap the FilteredList in a SortedList.
-        SortedList<Letter> sortedData = new SortedList<>(filteredData);
+                   // 3. Wrap the FilteredList in a SortedList.
+                   SortedList<Task> sortedMyTask = new SortedList<>(filteredMyTask);
 
-        // 4. Bind the SortedList comparator to the TableView comparator.
-        sortedData.comparatorProperty().bind(tableLetter.comparatorProperty());
+                   // 4. Bind the SortedList comparator to the TableView comparator.
+                   sortedMyTask.comparatorProperty().bind(tableTask.comparatorProperty());
+                    colorRow();
+                   // 5. Add sorted (and filtered) data to the table.
+                   tableTask.setItems(sortedMyTask);
 
-        // 5. Add sorted (and filtered) data to the table.
-        tableLetter.setItems(sortedData);
+
+                   break;
+               case "myDoneTask":
+                   // 1. Wrap the ObservableList in a FilteredList (initially display all data).
+                   FilteredList<Task> filteredMyDoneTask = new FilteredList<>(taskDao.listMyDoneTasks(AuthorizedUser.getUser().getEmployeeId()), p -> true);
+
+                   // 2. Set the filter Predicate whenever the filter changes.
+                   txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
+                       filteredMyDoneTask.setPredicate(task -> {
+                           // If filter text is empty, display all persons.
+                           if (newValue == null || newValue.isEmpty()) {
+                               return true;
+                           }
+
+                           // Compare first name and last name of every person with filter text.
+                           String lowerCaseFilter = newValue.toLowerCase();
+
+                           if (task.getTaskFromEmployee().toLowerCase().contains(lowerCaseFilter)) {
+                               return true; // Filter matches first name.
+                           } else if (task.getTaskName().toLowerCase().contains(lowerCaseFilter)){
+                               return true;
+                           }
+                           return false; // Does not match.
+                       });
+                   });
+
+                   // 3. Wrap the FilteredList in a SortedList.
+                   SortedList<Task> sortedMyDoneTask = new SortedList<>(filteredMyDoneTask);
+
+                   // 4. Bind the SortedList comparator to the TableView comparator.
+                   sortedMyDoneTask.comparatorProperty().bind(tableTask.comparatorProperty());
+                   colorRow();
+                   // 5. Add sorted (and filtered) data to the table.
+                   tableTask.setItems(sortedMyDoneTask);
+                   break;
+               case "fromEmpTask":
+                   // 1. Wrap the ObservableList in a FilteredList (initially display all data).
+                   FilteredList<Task> filteredFromEmpTask = new FilteredList<>(taskDao.listFromEmpTasks((AuthorizedUser.getUser().getEmployeeName())), p -> true);
+
+                   // 2. Set the filter Predicate whenever the filter changes.
+                   txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
+                       filteredFromEmpTask.setPredicate(task -> {
+                           // If filter text is empty, display all persons.
+                           if (newValue == null || newValue.isEmpty()) {
+                               return true;
+                           }
+
+                           // Compare first name and last name of every person with filter text.
+                           String lowerCaseFilter = newValue.toLowerCase();
+
+                           if (task.getTaskName().toLowerCase().contains(lowerCaseFilter)) {
+                               return true; // Filter matches first name.
+                           } else if (task.getEmployeeName().toLowerCase().contains(lowerCaseFilter)){
+                               return true;
+                           }
+                           return false; // Does not match.
+                       });
+                   });
+
+                   // 3. Wrap the FilteredList in a SortedList.
+                   SortedList<Task> sortedFromEmpTask = new SortedList<>(filteredFromEmpTask);
+
+                   // 4. Bind the SortedList comparator to the TableView comparator.
+                   sortedFromEmpTask.comparatorProperty().bind(tableTask.comparatorProperty());
+                   colorRow();
+                   // 5. Add sorted (and filtered) data to the table.
+                   tableTask.setItems(sortedFromEmpTask);
+                   break;
+               case "archiveTask":
+                   // 1. Wrap the ObservableList in a FilteredList (initially display all data).
+                   FilteredList<Task> filteredArchiveTask = new FilteredList<>(taskDao.listArchiveTasks(Integer.parseInt(StatusTask.CANCELED)), p -> true);
+
+                   // 2. Set the filter Predicate whenever the filter changes.
+                   txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
+                       filteredArchiveTask.setPredicate(task -> {
+                           // If filter text is empty, display all persons.
+                           if (newValue == null || newValue.isEmpty()) {
+                               return true;
+                           }
+
+                           // Compare first name and last name of every person with filter text.
+                           String lowerCaseFilter = newValue.toLowerCase();
+
+                           if (task.getTaskName().toLowerCase().contains(lowerCaseFilter)) {
+                               return true; // Filter matches first name.
+                           } else if (task.getEmployeeName().toLowerCase().contains(lowerCaseFilter)){
+                               return true;
+                           } else if (task.getTaskFromEmployee().toLowerCase().contains(lowerCaseFilter)){
+                               return true;
+                           }
+                           return false; // Does not match.
+                       });
+                   });
+
+                   // 3. Wrap the FilteredList in a SortedList.
+                   SortedList<Task> sortedTaskArchive = new SortedList<>(filteredArchiveTask);
+
+                   // 4. Bind the SortedList comparator to the TableView comparator.
+                   sortedTaskArchive.comparatorProperty().bind(tableTask.comparatorProperty());
+                   colorRow();
+                   // 5. Add sorted (and filtered) data to the table.
+                   tableTask.setItems(sortedTaskArchive);
+                   break;
+               case "templateTab":
+                   // 1. Wrap the ObservableList in a FilteredList (initially display all data).
+                   FilteredList<Document> filteredDocument = new FilteredList<>(documentDao.listDocuments(), p -> true);
+
+                   // 2. Set the filter Predicate whenever the filter changes.
+                   txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
+                       filteredDocument.setPredicate(document -> {
+                           // If filter text is empty, display all persons.
+                           if (newValue == null || newValue.isEmpty()) {
+                               return true;
+                           }
+
+                           // Compare first name and last name of every person with filter text.
+                           String lowerCaseFilter = newValue.toLowerCase();
+
+                           if (document.getDocumentName().toLowerCase().contains(lowerCaseFilter)) {
+                               return true; // Filter matches first name.
+                           }
+                           return false; // Does not match.
+                       });
+                   });
+
+                   // 3. Wrap the FilteredList in a SortedList.
+                   SortedList<Document> sortedDocument = new SortedList<>(filteredDocument);
+
+                   // 4. Bind the SortedList comparator to the TableView comparator.
+                   sortedDocument.comparatorProperty().bind(tableDocumentTemplate.comparatorProperty());
+
+                   // 5. Add sorted (and filtered) data to the table.
+                   tableDocumentTemplate.setItems(sortedDocument);
+                   break;
+               case "calendarTab":
+                   break;
+               case "letterTab":
+                   // 1. Wrap the ObservableList in a FilteredList (initially display all data).
+                   FilteredList<Letter> filteredLetter = new FilteredList<>(letterDao.listLetter(), p -> true);
+
+                   // 2. Set the filter Predicate whenever the filter changes.
+                   txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
+                       filteredLetter.setPredicate(letter -> {
+                           // If filter text is empty, display all persons.
+                           if (newValue == null || newValue.isEmpty()) {
+                               return true;
+                           }
+
+                           // Compare first name and last name of every person with filter text.
+                           String lowerCaseFilter = newValue.toLowerCase();
+
+                           if (letter.getLetterName().toLowerCase().contains(lowerCaseFilter)) {
+                               return true; // Filter matches first name.
+                           } else if (letter.getLetterNumber().toLowerCase().contains(lowerCaseFilter)) {
+                               return true; // Filter matches last name.
+                           }
+                           return false; // Does not match.
+                       });
+                   });
+
+                   // 3. Wrap the FilteredList in a SortedList.
+                   SortedList<Letter> sortedLetter = new SortedList<>(filteredLetter);
+
+                   // 4. Bind the SortedList comparator to the TableView comparator.
+                   sortedLetter.comparatorProperty().bind(tableLetter.comparatorProperty());
+
+                   // 5. Add sorted (and filtered) data to the table.
+                   tableLetter.setItems(sortedLetter);
+                   break;
+               default:
+                   break;
+
+           }
+
+
     }
 }
