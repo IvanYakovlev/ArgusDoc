@@ -23,6 +23,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -69,6 +71,11 @@ public class MainController {
 
 
 // Window control
+    @FXML
+    private WebView webView = new WebView();
+
+
+
 
     @FXML
     private JFXButton settingTabButton = new JFXButton();
@@ -196,6 +203,18 @@ public class MainController {
 
 
         colorRow();//цвет ячеек
+
+//Calendar Tab
+
+
+
+// Get WebEngine via WebView
+        WebEngine webEngine = webView.getEngine();
+
+// Load page
+        webEngine.load("https://calendar.yandex.ru/week?uid=1130000018187093");
+
+
 
 
 // If access - administrator
@@ -907,16 +926,5 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
 
     }
 
-    public void trayNotification(ActionEvent actionEvent) {
-        String title = "Новое сообщение";
-        String message = "You've successfully created your first Tray Notification";
-        NotificationType notificationType = NotificationType.INFORMATION;
 
-        TrayNotification tray = new TrayNotification();
-        tray.setTitle(title);
-        tray.setMessage(message);
-        tray.setAnimationType(AnimationType.POPUP);
-        tray.setNotificationType(notificationType);
-        tray.showAndWait();
-    }
 }

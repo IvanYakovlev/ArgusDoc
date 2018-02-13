@@ -28,16 +28,52 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" exported="" name="Maven: com.microsoft.sqlserver:mssql-jdbc:6.3.6.jre8-preview" level="project" />
-    <orderEntry type="library" exported="" name="Maven: javax.persistence:persistence-api:1.0.2" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.slf4j:slf4j-api:1.7.25" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.controlsfx:controlsfx:8.40.14" level="project" />
-    <orderEntry type="library" exported="" name="Maven: com.jfoenix:jfoenix:8.0.1" level="project" />
-    <orderEntry type="library" exported="" name="Maven: de.jensd:fontawesomefx:8.9" level="project" />
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
           <root url="jar://$USER_HOME$/Downloads/TrayNotification.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="Maven: com.microsoft.sqlserver:mssql-jdbc:6.3.6.jre8-preview" level="project" />
+    <orderEntry type="library" name="Maven: javax.persistence:persistence-api:1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.25" level="project" />
+    <orderEntry type="library" name="Maven: org.controlsfx:controlsfx:8.40.14" level="project" />
+    <orderEntry type="library" name="Maven: com.jfoenix:jfoenix:8.0.1" level="project" />
+    <orderEntry type="library" name="Maven: de.jensd:fontawesomefx:8.9" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/55/jfxtras-agenda-8.0-r5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/55/jfxtras-common-8.0-r5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/55/jfxtras-controls-8.0-r5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/55/jfxtras-fxml-8.0-r5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
