@@ -22,14 +22,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
+
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Callback;
+
 import model.*;
 import dialog.ADInfo;
+import tray.animations.AnimationType;
+import tray.notification.*;
+import tray.notification.TrayNotification;
 
 
 import java.io.IOException;
@@ -902,5 +905,18 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
            }
 
 
+    }
+
+    public void trayNotification(ActionEvent actionEvent) {
+        String title = "Новое сообщение";
+        String message = "You've successfully created your first Tray Notification";
+        NotificationType notificationType = NotificationType.INFORMATION;
+
+        TrayNotification tray = new TrayNotification();
+        tray.setTitle(title);
+        tray.setMessage(message);
+        tray.setAnimationType(AnimationType.POPUP);
+        tray.setNotificationType(notificationType);
+        tray.showAndWait();
     }
 }
