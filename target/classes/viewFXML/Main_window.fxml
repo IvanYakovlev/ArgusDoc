@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import jfxtras.scene.control.agenda.Agenda?>
+<?import jfxtras.scene.control.CalendarPicker?>
 
 <AnchorPane prefHeight="700.0" prefWidth="1000.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
@@ -152,9 +152,7 @@
             </HBox>
             <AnchorPane fx:id="anchorCalendar" layoutX="20.0" layoutY="52.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
                <children>
-                   <HBox xmlns:fx="http://javafx.com/fxml">
-                       <Agenda id="id1" />
-                   </HBox>
+                   <CalendarPicker fx:id="calendarPicker" prefHeight="195.0" prefWidth="372.0" styleClass="CalendarPicker" />
                </children>
             </AnchorPane>
          </children>

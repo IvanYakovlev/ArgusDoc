@@ -23,23 +23,20 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import jfxtras.scene.layout.GridPane;
 import model.*;
 import dialog.ADInfo;
-import tray.animations.AnimationType;
-import tray.notification.*;
-import tray.notification.TrayNotification;
+
 
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.Objects;
+
+import java.util.*;
 
 
 public class MainController {
@@ -72,7 +69,7 @@ public class MainController {
 
 // Window control
     @FXML
-    private WebView webView = new WebView();
+    private GridPane calendarGrid = new GridPane();
 
 
 
@@ -124,6 +121,8 @@ public class MainController {
     private TableColumn<Task, String> isLetter;
     @FXML
     private Label labelUserAuth;
+// Calendar Tab
+
 
 //Letter Tab
     @FXML
@@ -135,7 +134,11 @@ public class MainController {
     private TableColumn<Letter, String> passwordLetter;
     private TableColumn<Letter, String> numberLetter;
     private TableColumn<Letter, String> filePathLetter;
-
+    private Date getFirstDateOfCurrentMonth() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH));
+        return cal.getTime();
+    }
     public void initialize() {
         accessDao = new AccessDaoImpl();
         employeeDao = new EmployeeDaoImpl();
@@ -207,12 +210,7 @@ public class MainController {
 //Calendar Tab
 
 
-
-// Get WebEngine via WebView
-        WebEngine webEngine = webView.getEngine();
-
-// Load page
-        webEngine.load("https://calendar.yandex.ru/week?uid=1130000018187093");
+        System.out.println(getFirstDateOfCurrentMonth().getDay());
 
 
 

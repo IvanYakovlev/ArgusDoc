@@ -95,6 +95,11 @@ http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.
             <artifactId>jfxtras-all</artifactId>
             <version>8.0-r4</version>
         </dependency>
+        <dependency>
+            <groupId>com.guigarage</groupId>
+            <artifactId>responsivefx</artifactId>
+            <version>0.7</version>
+        </dependency>
     </dependencies>
 
     <build>
