@@ -257,14 +257,15 @@
 }
 
 .CalendarPickerControlSkin .day-button {
-    -fx-color: #03A9F4;
+    -fx-color: #536DFE;
     -fx-border-width: 0 0 0 0;
   /*  -fx-background-color:transparent;*/
-    -fx-padding:0 8 8 8;
-    -fx-background-insets: 0;
-    -fx-effect: inherit;
-    -fx-border-color: transparent;
-    -fx-text-fill: #FFFFFF;
+    /*-fx-background-color: #536DFE;*/
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: right;
+    -fx-button-type:raised;
+    -fx-font-size:16px;
+    -fx-font-weight:bold ;
 }
 
 /* highlight today */
@@ -290,11 +291,12 @@
     -fx-padding:0 8 8 8;
     -fx-background-insets: 0;
     -fx-effect: inherit;
+    -fx-text-alignment: center;
     -fx-border-color: transparent;
-    -fx-text-fill: #303F9F;
+    -fx-body-color: #536DFE;
+
 
 }
-
 
 
 
