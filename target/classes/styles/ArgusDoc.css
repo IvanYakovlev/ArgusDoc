@@ -285,16 +285,14 @@
 }
 
 .CalendarPicker .ListSpinner {
-    	-fxx-arrow-position:SPLIT;
-    /*-fxx-arrow-direction:VERTICAL;*/
-         -fxx-value-alignment:CENTER;
-
+    -fxx-arrow-position:SPLIT;
+    -fxx-value-alignment:CENTER;
     -fx-padding:0 8 8 8;
     -fx-background-insets: 0;
     -fx-effect: inherit;
     -fx-border-color: transparent;
-
     -fx-text-fill: #303F9F;
+
 }
 
 
