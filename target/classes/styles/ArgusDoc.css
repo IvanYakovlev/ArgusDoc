@@ -1,7 +1,7 @@
 .AnchorPane{
     -fx-background-color: #FFFFFF;
     -fx-text-fill: #221E1D;
-
+    -fx-effect: dropshadow( gaussian,rgba(0,0,0,0.16),5,0,0,2);
 
 
 
@@ -288,19 +288,13 @@
 .CalendarPicker .ListSpinner {
     -fxx-arrow-position:SPLIT;
     -fxx-value-alignment:CENTER;
-    -fx-padding:0 8 8 8;
+    -fx-padding:4 4 4 4;
     -fx-background-insets: 0;
     -fx-effect: inherit;
     -fx-text-alignment: center;
     -fx-border-color: transparent;
-<<<<<<< HEAD
-    -fx-text-fill: #303F9F;
-
-}
-=======
     -fx-body-color: #536DFE;
 
->>>>>>> 8dcf1a516a26ea30bb6c584edab275c9480b7fd2
 
 }
 

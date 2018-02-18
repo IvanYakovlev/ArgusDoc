@@ -2,12 +2,16 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,6 +19,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import jfxtras.scene.control.CalendarPicker?>
+
+<!--<?import jfxtras.scene.control.CalendarPicker?>-->
 
 <AnchorPane prefHeight="700.0" prefWidth="1000.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
@@ -152,9 +158,28 @@
             </HBox>
             <AnchorPane fx:id="anchorCalendar" layoutX="20.0" layoutY="52.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
                <children>
-                   <CalendarPicker fx:id="calendarPicker" prefHeight="195.0" prefWidth="372.0" styleClass="CalendarPicker" />
-               </children>
-            </AnchorPane>
+                  <CalendarPicker fx:id="calendarPicker" layoutX="4.0" layoutY="14.0" onMouseClicked="#clickCalendarPicker" prefHeight="280.0" prefWidth="395.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                  </CalendarPicker>
+                  <TableView fx:id="tableEvent" layoutX="464.0" layoutY="50.0" onMouseClicked="#clickTableEvent" prefHeight="590.0" prefWidth="372.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="430.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                    <columns>
+                      <TableColumn prefWidth="398.0" text="Напоминания" />
+                    </columns>
+                  </TableView>
+                  <Label layoutX="438.0" layoutY="14.0" styleClass="label3" text="Дела на" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="16.0" />
+                  <Label fx:id="labelSelectedDate" layoutX="510.0" layoutY="16.0" styleClass="label3" text="сегодня" AnchorPane.leftAnchor="500.0" />
+                  <AnchorPane layoutX="10.0" layoutY="290.0" prefHeight="343.0" prefWidth="401.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="300.0">
+                     <children>
+                        <JFXButton onAction="#removeEvent" styleClass="blue-btn" text="Удалить" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="115.0" />
+                        <JFXButton onAction="#addEvent" styleClass="blue-btn" text="Добавить" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+                        <JFXTextArea fx:id="textAreaEvent" focusColor="#4eb1ba" layoutX="2.0" layoutY="58.0" prefHeight="157.0" prefWidth="395.0" promptText="Введите текст напоминания" styleClass="JFXTextArea" AnchorPane.bottomAnchor="125.0" AnchorPane.topAnchor="50.0" />
+                        <JFXTimePicker fx:id="timePickerEvent" defaultColor="#4eb1ba" layoutX="10.0" layoutY="242.0" prefHeight="25.0" prefWidth="249.0" promptText="Выберите время" styleClass="JFXTimePicker" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="10.0" />
+                        <JFXToggleButton fx:id="repeateEventToggleBtn" layoutX="263.0" layoutY="225.0" onAction="#repeateEventToggleBtn" prefHeight="26.0" prefWidth="128.0" text="Повторять" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="10.0" />
+                        <JFXComboBox fx:id="comboBoxRepeate" layoutX="256.0" layoutY="281.0" prefHeight="25.0" prefWidth="129.0" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="10.0" />
+                        <Label layoutX="15.0" layoutY="14.0" styleClass="label3" text="Добавить напоминание:" AnchorPane.topAnchor="10.0" />
+                     </children>
+                  </AnchorPane>
+                  <JFXButton layoutX="583.0" layoutY="9.0" onAction="#showAllEventButton" prefHeight="17.0" prefWidth="122.0" styleClass="blue-btn" text="показать все" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+               </children></AnchorPane>
          </children>
       </AnchorPane>
    </children>

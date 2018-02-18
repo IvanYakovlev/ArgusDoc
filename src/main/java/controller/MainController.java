@@ -6,7 +6,9 @@ import dao.*;
 import dbConnection.DBconnection;
 
 
-import javafx.beans.binding.Bindings;
+import javafx.beans.InvalidationListener;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -28,6 +30,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import jfxtras.scene.control.CalendarPicker;
 import jfxtras.scene.layout.GridPane;
 import model.*;
 import dialog.ADInfo;
@@ -36,12 +39,34 @@ import dialog.ADInfo;
 
 import java.io.IOException;
 
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
 public class MainController {
 
     String statusTab="myTask";
+
+
+    Calendar calendar = Calendar.getInstance();
+    int year = calendar.get(Calendar.YEAR);
+    int month = calendar.get(Calendar.MONTH);
+    int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+
+    java.sql.Date datesql = new java.sql.Date(calendar.getTimeInMillis());
+
+    public void setDatesql(java.sql.Date datesql) {
+        this.datesql = datesql;
+    }
+
+    Date date = new Date();
+    SimpleDateFormat dateForDB = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    SimpleDateFormat dateForView = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
+
+
+    String selectedDate = dateForDB.format(date);
 
     //Connection
     private DBconnection dBconnection;
@@ -52,6 +77,7 @@ public class MainController {
     private Task task= new Task();
     private Document document = new Document();
     private Letter letter = new Letter();
+    private Event event = new Event();
 
     DepartmentDao departmentDao;
     EmployeeDao employeeDao;
@@ -59,6 +85,7 @@ public class MainController {
     DocumentDao documentDao;
     LetterDao letterDao;
     TaskDao taskDao;
+    EventDao eventDao;
 
     private ObservableList<Department> dataDepartment;
     private ObservableList<Employee> dataEmployee;
@@ -122,6 +149,22 @@ public class MainController {
     @FXML
     private Label labelUserAuth;
 // Calendar Tab
+    @FXML TableView<Event> tableEvent;
+    private TableColumn<Event, String> nameEvent;
+    private TableColumn<Event, String> dateEvent;
+    private TableColumn<Event, String> timeEvent;
+    @FXML
+    private Label labelSelectedDate;
+    @FXML
+    private TextArea textAreaEvent;
+    @FXML
+    private CalendarPicker calendarPicker;
+    @FXML
+    private JFXTimePicker timePickerEvent;
+    @FXML
+    private JFXToggleButton repeateEventToggleBtn;
+    @FXML
+    private JFXComboBox<String> comboBoxRepeate;
 
 
 //Letter Tab
@@ -146,7 +189,7 @@ public class MainController {
         documentDao = new DocumentDaoImpl();
         taskDao = new TaskDaoImpl();
         letterDao = new LetterDaoImpl();
-
+        eventDao = new EventDaoImpl();
 
     /*initialize table Document Template tab*/
 //заполняем таблицу данными
@@ -208,9 +251,52 @@ public class MainController {
         colorRow();//цвет ячеек
 
 //Calendar Tab
+        nameEvent = new TableColumn<Event, String>("Напоминание");
+        nameEvent.setCellValueFactory(new PropertyValueFactory<Event, String>("eventName"));
+        dateEvent = new TableColumn<Event, String>("Дата");
+        dateEvent.setCellValueFactory(new PropertyValueFactory<Event, String>("eventDate"));
+        timeEvent = new TableColumn<Event, String>("Время");
+        timeEvent.setCellValueFactory(new PropertyValueFactory<Event, String>("eventTime"));
+
+        timeEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.30));
+        nameEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.70));
+        dateEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0));
 
 
-        System.out.println(getFirstDateOfCurrentMonth().getDay());
+        tableEvent.getColumns().setAll(timeEvent, nameEvent ,dateEvent);
+        tableEvent.setItems(eventDao.listSelectedDayEvent(AuthorizedUser.getUser().getEmployeeId(), datesql));
+
+
+        timePickerEvent.setIs24HourView(true);
+        calendarPicker.calendarProperty().addListener( (observable) -> {
+            if (calendarPicker.getCalendar()!=null) {
+                calendar = calendarPicker.getCalendar();
+                datesql = new java.sql.Date(calendar.getTimeInMillis());
+                tableEvent.setItems(eventDao.listSelectedDayEvent(AuthorizedUser.getUser().getEmployeeId(), datesql));
+                int selectedMonth=calendar.get(Calendar.MONTH);
+                int selectedDay = calendar.get(Calendar.DAY_OF_MONTH);
+                int selectedYear = calendar.get(Calendar.YEAR);
+                System.out.println(year+" "+day+" "+month);
+                System.out.println(selectedYear+" "+selectedDay+" "+selectedMonth);
+                if (month==selectedMonth&&day==selectedDay&&year==selectedYear){
+                    labelSelectedDate.setText("сегодня");
+                } else {
+                    labelSelectedDate.setText(dateForView.format(datesql));
+                }
+                timeEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.30));
+                nameEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.70));
+                dateEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0));
+            }
+            else {
+                datesql = new java.sql.Date(calendar.getInstance().getTimeInMillis());
+                tableEvent.setItems(eventDao.listSelectedDayEvent(AuthorizedUser.getUser().getEmployeeId(), datesql));
+                labelSelectedDate.setText("сегодня");
+                timeEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.30));
+                nameEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.70));
+                dateEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0));
+                }
+        });
+
 
 
 
@@ -233,9 +319,6 @@ public class MainController {
         filePathLetter = new TableColumn<Letter, String>("файл");
         filePathLetter.setCellValueFactory(new PropertyValueFactory<Letter, String>("letterFilePath"));
 
-        nameLetter.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.50));
-        passwordLetter.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
-        numberLetter.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.24));
 
         tableLetter.getColumns().setAll(nameLetter, passwordLetter, numberLetter);
         tableLetter.setItems(letterDao.listLetter());
@@ -247,19 +330,76 @@ public class MainController {
         anchorTask.toFront();
         myTaskBtnBar.toFront();
     }
+/*
+Calendar tab
+* */
+    public void clickTableEvent(MouseEvent mouseEvent) {
+        Event event = tableEvent.getSelectionModel().getSelectedItems().get(0);
+        if (event!=null){
+            this.event = event;
+        }
+
+    }
+
+    public void removeEvent(ActionEvent actionEvent) {
+        if (event!=null){
+           eventDao.removeEvent(event);
+        }
+        refreshTableEvent();
+    }
+
+    public void addEvent(ActionEvent actionEvent) {
+        if (textAreaEvent.getText().isEmpty()) {
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Введите текст напоминания!");
+        } else {
+            Event event = new Event();
+            event.setEventName(textAreaEvent.getText());
+            event.setEventTime(Time.valueOf(timePickerEvent.getValue()));
+            event.setEventDate(datesql);
+            event.setEmployeeId(AuthorizedUser.getUser().getEmployeeId());
+            eventDao.addEvent(event);
+
+            clearEventText();
+            refreshTableEvent();
+
+        }
+    }
+
+    private void refreshTableEvent() {
+
+        tableEvent.setItems(eventDao.listSelectedDayEvent(AuthorizedUser.getUser().getEmployeeId(), datesql));
+    }
+
+    private void clearEventText() {
+        textAreaEvent.setText("");
+        timePickerEvent.setValue(null);
+    }
+
+    public void repeateEventToggleBtn(ActionEvent actionEvent) {
+
+    }
+
+    public void showAllEventButton(ActionEvent actionEvent) {
+        tableEvent.setItems(eventDao.listAllEvent(AuthorizedUser.getUser().getEmployeeId()));
+        tableEvent.getColumns().setAll(dateEvent, timeEvent, nameEvent);
+        nameEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.50));
+        dateEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.25));
+        timeEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.25));
+    }
+    public void clickCalendarPicker(MouseEvent mouseEvent) {
+
+    }
 
 
-
-
-    /*Document template tab*/
-public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
+/*Document template tab*/
+    public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
 
     Document clickDocument = tableDocumentTemplate.getSelectionModel().getSelectedItems().get(0);
 
         document = clickDocument;
 
 
-}
+    }
     public void choiceDepartmentDocument(ActionEvent actionEvent) {
         tableDocumentTemplate.setItems(documentDao.listDocumentsByDepartment(comboBoxDocument_Template.getValue()));
 
@@ -923,6 +1063,7 @@ public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
 
 
     }
+
 
 
 }

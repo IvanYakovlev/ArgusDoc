@@ -6,7 +6,7 @@ import javafx.beans.property.StringProperty;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name = "ACCESS")
 public class Access extends RecursiveTreeObject<Access> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
