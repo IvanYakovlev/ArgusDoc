@@ -8,7 +8,12 @@
     <groupId>Argus</groupId>
     <artifactId>ArgusDoc</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <modules>
+        <module>ArgusDoc-server</module>
+        <module>ArgusDoc-client</module>
+        <module>ArgusDoc-core</module>
+    </modules>
+    <packaging>pom</packaging>
 
     <settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd
 http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd

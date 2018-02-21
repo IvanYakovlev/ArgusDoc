@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="433.0" prefWidth="600.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DoneTaskController">
+   <children>
+      <JFXTextArea fx:id="textAreaTask" editable="false" focusColor="#4eb1ba" layoutX="11.0" layoutY="94.0" prefHeight="279.0" prefWidth="580.0" promptText="Введите текст" styleClass="JFXTextArea" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="94.0" />
+      <Label fx:id="labelNameTask" layoutY="58.0" prefHeight="17.0" prefWidth="587.0" styleClass="label3" text="название задачи" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0" />
+      <AnchorPane layoutY="67.0" prefHeight="40.0" prefWidth="200.0" styleClass="AnchorPane2" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label layoutX="14.0" layoutY="6.0" styleClass="log-label" text="Выполнение задачи" />
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </AnchorPane>
+      <ButtonBar fx:id="viewButtonBar" layoutX="128.0" layoutY="397.0" prefHeight="40.0" prefWidth="472.0" styleClass="ButtonBar" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+         <buttons>
+            <JFXButton fx:id="downloadFile" maxWidth="150.0" onAction="#downloadFile" styleClass="blue-btn" text="Скачать" visible="false">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="DOWNLOAD" size="20" />
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="openFile" maxWidth="150.0" onAction="#openFile" styleClass="blue-btn" text="Открыть" visible="false">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="FILE" size="20" />
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="doTaskDone" maxWidth="150.0" onAction="#doTaskDone" prefHeight="37.0" prefWidth="210.0" styleClass="blue-btn" text="Выполнение" />
+            <JFXButton fx:id="cancelDoneTaskButton" maxHeight="-Infinity" maxWidth="150.0" minHeight="30.0" minWidth="30.0" onAction="#cancelDoneTaskButton" prefHeight="37.0" prefWidth="50.0" styleClass="blue-btn" text="Отмена" />
+         </buttons>
+      </ButtonBar>
+      <ButtonBar fx:id="editButtonBar" layoutX="118.0" layoutY="387.0" prefHeight="40.0" prefWidth="472.0" styleClass="ButtonBar" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+         <buttons>
+            <JFXButton fx:id="attachmentFileButton" alignment="CENTER" maxWidth="150.0" minWidth="71.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#attachmentFileButton" prefHeight="37.0" styleClass="blue-btn" text="Прикрепить">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="PAPERCLIP" size="20" />
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="stopDoneTaskButton" maxWidth="150.0" onAction="#stopDoneTaskButton" prefHeight="37.0" prefWidth="210.0" styleClass="blue-btn" text="Отмена" />
+            <JFXButton fx:id="doneTaskButton" maxHeight="-Infinity" maxWidth="150.0" minHeight="30.0" minWidth="30.0" onAction="#doneTaskButton" prefHeight="37.0" prefWidth="50.0" styleClass="blue-btn" text="Ок" />
+         </buttons>
+      </ButtonBar>
+   </children>
+   <effect>
+      <DropShadow />
+   </effect>
+</AnchorPane>
