@@ -3,25 +3,22 @@ package controller;
 import argusDocSettings.ServerFilePath;
 import authorizedUser.AuthorizedUser;
 import com.jfoenix.controls.*;
-import dao.*;
+import entity.Event;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import service.*;
 import dialog.ADInfo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import model.Employee;
-import model.StatusTask;
-import model.Task;
+import entity.StatusTask;
+import entity.Task;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Time;
-import java.util.Date;
+import java.rmi.RemoteException;
 
 public class AddTaskController {
 
@@ -45,14 +42,19 @@ public class AddTaskController {
     private JFXButton cancelAddTaskButton;
     @FXML
     private JFXButton addTaskButton;
-    private TaskDao taskDao;
-    private EmployeeDao employeeDao;
+    private DepartmentService departmentService = ServiceRegistry.departmentService;
+    private EmployeeService employeeService = ServiceRegistry.employeeService;
+    private AccessService accessService = ServiceRegistry.accessService;
+    private DocumentService documentService = ServiceRegistry.documentService;
+    private LetterService letterService = ServiceRegistry.letterService;
+    private TaskService taskService = ServiceRegistry.taskService;
+    private EventService eventService = ServiceRegistry.eventService;
 
-    public  void initialize(){
-        employeeDao = new EmployeeDaoImpl();
-        taskDao = new TaskDaoImpl();
-        employeeDao.listEmployees();
-        comboBoxEmployee.setItems(employeeDao.listEmployeesName());
+    public  void initialize() throws RemoteException {
+
+        employeeService.listEmployees();
+        ObservableList<String> observableListEmployeesName = FXCollections.observableArrayList(employeeService.listEmployeesName());
+        comboBoxEmployee.setItems(observableListEmployeesName);
         timePickerTask.setIs24HourView(true);
 
     }
@@ -71,12 +73,12 @@ public class AddTaskController {
                 task.setTaskAttachment(ServerFilePath.TASKS_FILE_PATH + attachmentFile.getName());
             }
             task.setTaskFromEmployee(AuthorizedUser.getUser().getEmployeeName());
-            task.setEmployeeId(employeeDao.getIdEmployeeByName(comboBoxEmployee.getValue()));
+            task.setEmployeeId(employeeService.getIdEmployeeByName(comboBoxEmployee.getValue()));
             task.setTaskTerm(java.sql.Date.valueOf(datePickerTask.getValue()));
             task.setTaskTime(java.sql.Time.valueOf(timePickerTask.getValue()));
             task.setStatusTaskId(StatusTask.NOT_DONE);
             task.setTaskIsLetter(0);
-            taskDao.addTask(task);
+            taskService.addTask(task);
 
 
 

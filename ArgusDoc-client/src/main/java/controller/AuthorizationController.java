@@ -2,7 +2,8 @@ package controller;
 
 import authorizedUser.AuthorizedUser;
 import com.jfoenix.controls.JFXPasswordField;
-import dbConnection.DBconnection;
+
+import dialog.ADInfo;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,32 +16,47 @@ import javafx.scene.image.Image;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import model.Employee;
+import entity.Employee;
+import main.Main;
+import service.*;
 
 
 import java.awt.*;
-import java.awt.event.InputEvent;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AuthorizationController {
+
+
     @FXML
     private JFXPasswordField txtPasswordEnter;
-    DBconnection dBconnection;
-    Robot robot;
-        public JFXPasswordField getTxtPasswordEnter() {
+
+    public JFXPasswordField getTxtPasswordEnter() {
         return txtPasswordEnter;
     }
 
-    private Employee userAuth=new Employee();
+    private Employee userAuth;
 
 
 
-
+    public Main main;
+/*    private DepartmentService departmentService;
+    private EmployeeService employeeService;
+    private AccessService accessService;
+    private DocumentService documentService;
+    private LetterService letterService;
+    private TaskService taskService;
+    private EventService eventService;*/
+    private DepartmentService departmentService = ServiceRegistry.departmentService;
+    private EmployeeService employeeService = ServiceRegistry.employeeService;
+    private AccessService accessService = ServiceRegistry.accessService;
+    private DocumentService documentService = ServiceRegistry.documentService;
+    private LetterService letterService = ServiceRegistry.letterService;
+    private TaskService taskService = ServiceRegistry.taskService;
+    private EventService eventService = ServiceRegistry.eventService;
     private double xOffset;
     private double yOffset;
 
@@ -49,7 +65,7 @@ public class AuthorizationController {
         return userAuth;
     }
 
-    public void loginButton(ActionEvent actionEvent) {
+    public void loginButton(ActionEvent actionEvent) throws RemoteException {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
         enter();
 
@@ -57,41 +73,56 @@ public class AuthorizationController {
 
 
 
-    public void enter(){
-
-
+    public void enter() throws RemoteException {
         try {
-            this.dBconnection = new DBconnection();
+            userAuth = employeeService.getEmployeeByPassword(txtPasswordEnter.getText());
 
-            ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT * FROM Employees, Departments,Access WHERE Employees.Department_id=Departments.Department_id AND Access.Access_id=Employees.Access_id AND Employee_password = '"+txtPasswordEnter.getText()+"'");
-            while (resultSet.next()) {
-                userAuth.setEmployeeId(resultSet.getInt("Employee_id"));
-                userAuth.setEmployeeName(resultSet.getString("Employee_name"));
-                userAuth.setEmployeeLogin(resultSet.getString("Employee_login"));
-                userAuth.setEmployeePassword(resultSet.getString("Employee_password"));
-                userAuth.setDepartmentName(resultSet.getString("Department_name"));
-                userAuth.setAccessName(resultSet.getString("Access_name"));
-                userAuth.setDepartmentId(resultSet.getInt("Department_id"));
-                userAuth.setAccessId(resultSet.getInt("Access_id"));
-                userAuth.setEmployeeOnline(resultSet.getByte("Employee_online"));
-                AuthorizedUser.setUser(userAuth);
 
-            }
+            AuthorizedUser.setUser(userAuth);
 
-        } catch (SQLException e) {
+//        System.out.println(employeeService.listEmployees());
+            if (userAuth.getEmployeeName() == null) {
+                dialog.ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Пользователь не найден");
+            } else {
 
-        }
-        if (userAuth.getEmployeeName()==null){
-            dialog.ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Пользователь не найден");
-        } else {
-            try {
+
+                FXMLLoader fxmlLoader = new FXMLLoader();
+
+                fxmlLoader.setLocation(getClass().getResource("/viewFXML/Main_window.fxml"));
+                try {
+
+                    fxmlLoader.load();
+                    Stage stage = new Stage();
+                    Parent root = fxmlLoader.getRoot();
+                    stage.setScene(new Scene(root));
+
+
+                    stage.setTitle("Аргус");
+                    stage.setMinHeight(715);
+                    stage.setMinWidth(1000);
+                    stage.getIcons().add(new Image("images/icon.jpg"));
+
+
+                    stage.show();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            /*try {
 
 
 
                 Stage stage = new Stage();
-                FXMLLoader loader = new FXMLLoader();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("../viewFXML/Main_window.fxml"));
+                System.out.println(main);
 
-                Parent root = loader.load(getClass().getResource("/viewFXML/Main_window.fxml"));
+                Parent root = loader.load();
+
+                MainController mainController = loader.getController();
+                mainController.initService();
+
+
                 stage.setTitle("Аргус");
                 stage.setMinHeight(715);
                 stage.setMinWidth(1000);
@@ -100,29 +131,14 @@ public class AuthorizationController {
                 stage.setScene(new Scene(root));
 
 
-         /*       stage.initStyle(StageStyle.TRANSPARENT);
-
-                root.setOnMousePressed(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        xOffset = event.getSceneX();
-                        yOffset = event.getSceneY();
-                    }
-                });
-                root.setOnMouseDragged(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        stage.setX(event.getScreenX() - xOffset);
-                        stage.setY(event.getScreenY() - yOffset);
-                    }
-                });*/
-
-
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
+            }*/
             }
-        }
+        }   catch (NullPointerException e){
+        ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Сервер недоступен!");
+    }
 
     }
 
@@ -131,7 +147,11 @@ public class AuthorizationController {
             @Override
             public void handle(KeyEvent ke) {
                 if (ke.getCode().equals(KeyCode.ENTER)) {
-                    enter();
+                    try {
+                        enter();
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
                     ((Node) keyEvent.getSource()).getScene().getWindow().hide();
                 }
             }
@@ -140,4 +160,32 @@ public class AuthorizationController {
 
     }
 
+
+    public DepartmentService getDepartmentService() {
+        return departmentService;
+    }
+
+    public EmployeeService getEmployeeService() {
+        return employeeService;
+    }
+
+    public AccessService getAccessService() {
+        return accessService;
+    }
+
+    public DocumentService getDocumentService() {
+        return documentService;
+    }
+
+    public LetterService getLetterService() {
+        return letterService;
+    }
+
+    public TaskService getTaskService() {
+        return taskService;
+    }
+
+    public EventService getEventService() {
+        return eventService;
+    }
 }

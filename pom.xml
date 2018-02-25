@@ -9,9 +9,11 @@
     <artifactId>ArgusDoc</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>ArgusDoc-server</module>
+
         <module>ArgusDoc-client</module>
-        <module>ArgusDoc-core</module>
+        <module>ArgusDoc-server</module>
+        <module>ArgusDoc-api</module>
+
     </modules>
     <packaging>pom</packaging>
 

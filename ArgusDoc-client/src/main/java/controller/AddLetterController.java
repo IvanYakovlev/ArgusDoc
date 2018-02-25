@@ -6,19 +6,20 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
-import dao.*;
+import service.*;
 import dialog.ADInfo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import model.Letter;
-import model.StatusTask;
-import model.Task;
+import entity.Letter;
+import entity.StatusTask;
+import entity.Task;
 import org.controlsfx.control.CheckComboBox;
 
 import java.io.*;
+import java.rmi.RemoteException;
 import java.sql.Date;
 
 public class AddLetterController {
@@ -41,18 +42,20 @@ public class AddLetterController {
     @FXML
     private JFXTextField txtLetterNumber;
 
-    private TaskDao taskDao;
-    private EmployeeDao employeeDao;
-    private LetterDao letterDao;
+    private DepartmentService departmentService = ServiceRegistry.departmentService;
+    private EmployeeService employeeService = ServiceRegistry.employeeService;
+    private AccessService accessService = ServiceRegistry.accessService;
+    private DocumentService documentService = ServiceRegistry.documentService;
+    private LetterService letterService = ServiceRegistry.letterService;
+    private TaskService taskService = ServiceRegistry.taskService;
+    private EventService eventService = ServiceRegistry.eventService;
     final FileChooser fileChooser=new FileChooser();
     File attachmentFile;
 
-    public  void initialize(){
-        employeeDao = new EmployeeDaoImpl();
-        taskDao = new TaskDaoImpl();
-        letterDao = new LetterDaoImpl();
-        employeeDao.listEmployees();
-        checkComboBoxEmployee.getItems().setAll(employeeDao.listEmployeesName());
+    public  void initialize() throws RemoteException {
+
+        employeeService.listEmployees();
+        checkComboBoxEmployee.getItems().setAll(employeeService.listEmployeesName());
 
 
     }
@@ -77,13 +80,13 @@ public class AddLetterController {
                 task.setTaskText(textAreaLetter.getText());
                 task.setTaskAttachment(ServerFilePath.LETTERS_FILE_PATH + attachmentFile.getName());
                 task.setTaskFromEmployee(AuthorizedUser.getUser().getEmployeeName());
-                task.setEmployeeId(employeeDao.getIdEmployeeByName(checkComboBoxEmployee.getItems().get(checkComboBoxEmployee.getCheckModel().getCheckedIndices().get(i))));
+                task.setEmployeeId(employeeService.getIdEmployeeByName(checkComboBoxEmployee.getItems().get(checkComboBoxEmployee.getCheckModel().getCheckedIndices().get(i))));
                 task.setTaskTerm(java.sql.Date.valueOf(datePickerLetter.getValue()));
                 task.setStatusTaskId(StatusTask.NOT_DONE);
                 task.setTaskTime(null);
                 task.setTaskIsLetter(1);
 
-                    taskDao.addTask(task);
+                    taskService.addTask(task);
 
 
 
@@ -97,7 +100,7 @@ public class AddLetterController {
             letter.setLetterPassword(Integer.parseInt(txtLetterPassword.getText()));
             letter.setLetterNumber(txtLetterNumber.getText());
             letter.setLetterFilePath(ServerFilePath.LETTERS_FILE_PATH+attachmentFile.getName());
-                letterDao.addLetter(letter);
+                letterService.addLetter(letter);
 
             Stage stage = (Stage) addLetterButton.getScene().getWindow();
             stage.close();

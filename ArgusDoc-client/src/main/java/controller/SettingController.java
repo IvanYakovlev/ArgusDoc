@@ -2,8 +2,9 @@ package controller;
 
 import argusDocSettings.ServerFilePath;
 import com.jfoenix.controls.JFXTextField;
-import dao.*;
-import dbConnection.DBconnection;
+import entity.*;
+import javafx.collections.FXCollections;
+import service.*;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import dialog.ADInfo;
 import javafx.collections.ObservableList;
@@ -14,18 +15,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import model.Department;
-import model.Document;
-import model.Employee;
-import model.Task;
 
 import java.io.File;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 
 public class SettingController {
 
-    private DBconnection dBconnection;
+
 
     private double xOffset;
     private double yOffset;
@@ -35,12 +33,13 @@ public class SettingController {
     private Document document = new Document();
     private int idDepartment;
 
-    DepartmentDao departmentDao;
-    EmployeeDao employeeDao;
-    AccessDao accessDao;
-    DocumentDao documentDao;
-    LetterDao letterDao;
-    TaskDao taskDao;
+    private DepartmentService departmentService = ServiceRegistry.departmentService;
+    private EmployeeService employeeService = ServiceRegistry.employeeService;
+    private AccessService accessService = ServiceRegistry.accessService;
+    private DocumentService documentService = ServiceRegistry.documentService;
+    private LetterService letterService = ServiceRegistry.letterService;
+    private TaskService taskService = ServiceRegistry.taskService;
+    private EventService eventService = ServiceRegistry.eventService;
 
     private ObservableList<Department> dataDepartment;
     private ObservableList<Employee> dataEmployee;
@@ -95,14 +94,10 @@ private FontAwesomeIconView closeSettingWindow;
 
 
 
-    public void initialize() {
-        accessDao = new AccessDaoImpl();
-        employeeDao = new EmployeeDaoImpl();
-        departmentDao = new DepartmentDaoImpl();
-        documentDao = new DocumentDaoImpl();
-        taskDao = new TaskDaoImpl();
-        letterDao = new LetterDaoImpl();
-    /*initialize Departments settings table*/
+    public void initialize() throws RemoteException {
+
+//initialize Departments settings table
+
 
 
         idDep = new TableColumn<Department, String>("id");
@@ -111,9 +106,11 @@ private FontAwesomeIconView closeSettingWindow;
         nameDep.setCellValueFactory(new PropertyValueFactory<Department, String>("departmentName"));
 
         tableDepartment.getColumns().setAll(idDep, nameDep);
-        tableDepartment.setItems(departmentDao.listDepartments());
+        ObservableList<Department> observableListDepartments = FXCollections.observableArrayList(departmentService.listDepartments());
+        tableDepartment.setItems(observableListDepartments);
 
-    /*initialize Employee settings table*/
+//initialize Employee settings table
+
 
 
         idEmpl = new TableColumn<Employee, String>("id");
@@ -130,13 +127,17 @@ private FontAwesomeIconView closeSettingWindow;
         accessEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("accessName"));
 
         tableEmployee.getColumns().setAll(idEmpl, fioEmpl, loginEmpl, passwordEmpl, departmentEmpl, accessEmpl);
-        tableEmployee.setItems(employeeDao.listEmployees());
-    /*initialize combobox Employee settings tab*/
-        accessDao.listAccess();
-        comboBoxEmployee_Access.setItems(accessDao.listAccessName());
+        ObservableList<Employee> observableListEmployees = FXCollections.observableArrayList(employeeService.listEmployees());
+        tableEmployee.setItems(observableListEmployees);
+//initialize combobox Employee settings tab
 
-        comboBoxEmployee_Department.setItems(departmentDao.listDepartmentName());
-    /*initialize Document settings table*/
+        accessService.listAccess();
+        ObservableList<String> observableListAccessName = FXCollections.observableArrayList(accessService.listAccessName());
+        comboBoxEmployee_Access.setItems(observableListAccessName);
+        ObservableList<String> observableListDepartmentName = FXCollections.observableArrayList(departmentService.listDepartmentName());
+        comboBoxEmployee_Department.setItems(observableListDepartmentName);
+//initialize Document settings table
+
 
         idDoc = new TableColumn<Document, String>("id");
         idDoc.setCellValueFactory(new PropertyValueFactory<Document, String>("documentId"));
@@ -148,35 +149,43 @@ private FontAwesomeIconView closeSettingWindow;
         filePathDoc.setCellValueFactory(new PropertyValueFactory<Document, String>("documentFilePath"));
 
         tableDocument.getColumns().setAll(idDoc, nameDoc, departmentDoc, filePathDoc);
-        tableDocument.setItems(documentDao.listDocuments());
+        ObservableList<Document> observableListDocument = FXCollections.observableArrayList(documentService.listDocuments());
+        tableDocument.setItems(observableListDocument);
 
-    /*initialize combobox Document settings tab*/
+//initialize combobox Document settings tab
 
-        comboBoxDocument_Department.setItems(departmentDao.listDepartmentName());
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        ObservableList<String> observableListDepartmentName2 = FXCollections.observableArrayList(departmentService.listDepartmentName());
+        comboBoxDocument_Department.setItems(observableListDepartmentName2);
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     }
 
-         /*Departments tab CRUD*/
+//Departments tab CRUD
+
     public void clearDepartmentText() {
         txtDepartment.setText("");
 
     }
 
-    public void refreshTableDepartment() {
-        dataDepartment = departmentDao.listDepartments();
+    public void refreshTableDepartment() throws RemoteException {
+        ObservableList<Department> observableListDepartments = FXCollections.observableArrayList(departmentService.listDepartments());
+        dataDepartment = observableListDepartments;
         tableDepartment.setItems(dataDepartment);
-        comboBoxEmployee_Department.setItems(departmentDao.listDepartmentName());
-        comboBoxDocument_Department.setItems(departmentDao.listDepartmentName());
-      //  comboBoxDocument_Template.setItems(departmentDao.listDepartmentName());
+
+        ObservableList<String> observableListDepartmentName = FXCollections.observableArrayList(departmentService.listDepartmentName());
+        comboBoxEmployee_Department.setItems(observableListDepartmentName);
+        comboBoxDocument_Department.setItems(observableListDepartmentName);
+      //  comboBoxDocument_Template.setItems(departmentService.listDepartmentName());
 
     }
 
-    public void addDepartmentButton(ActionEvent actionEvent) throws SQLException {
+    public void addDepartmentButton(ActionEvent actionEvent) throws SQLException, RemoteException {
         if (txtDepartment.getText().isEmpty()) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Введите название отдела!");
         } else {
             Department department = new Department();
             department.setDepartmentName(txtDepartment.getText());
-            departmentDao.addDepartment(department);
+            departmentService.addDepartment(department);
             clearDepartmentText();
             refreshTableDepartment();
 
@@ -184,8 +193,8 @@ private FontAwesomeIconView closeSettingWindow;
 
     }
 
-    public void removeDepartmentButton(ActionEvent actionEvent) {
-        departmentDao.removeDepartment(this.idDepartment);
+    public void removeDepartmentButton(ActionEvent actionEvent) throws RemoteException {
+        departmentService.removeDepartment(this.idDepartment);
         clearDepartmentText();
         refreshTableDepartment();
 
@@ -199,14 +208,14 @@ private FontAwesomeIconView closeSettingWindow;
         }
     }
 
-    public void updateDepartmentButton(ActionEvent actionEvent) {
+    public void updateDepartmentButton(ActionEvent actionEvent) throws RemoteException {
         if (txtDepartment.getText().isEmpty()) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Введите название отдела!");
         } else {
             Department department = new Department();
             department.setDepartmentName(txtDepartment.getText());
             department.setDepartmentId(this.idDepartment);
-            departmentDao.updateDepartment(department);
+            departmentService.updateDepartment(department);
             clearDepartmentText();
             refreshTableDepartment();
 
@@ -214,7 +223,8 @@ private FontAwesomeIconView closeSettingWindow;
     }
 
 
-    /*Employees tab CRUD*/
+//Employees tab CRUD
+
     public void clearEmployeeTab() {
         txtFIOEmployee.setText("");
         txtLoginEmployee.setText("");
@@ -224,8 +234,9 @@ private FontAwesomeIconView closeSettingWindow;
 
     }
 
-    public void refreshTableEmployee() {
-        dataEmployee = employeeDao.listEmployees();
+    public void refreshTableEmployee() throws RemoteException {
+        ObservableList<Employee> observableListEmployee = FXCollections.observableArrayList(employeeService.listEmployees());
+        dataEmployee = observableListEmployee;
         tableEmployee.setItems(dataEmployee);
     }
 
@@ -241,7 +252,7 @@ private FontAwesomeIconView closeSettingWindow;
         }
     }
 
-    public void updateEmployeeButton(ActionEvent actionEvent) {
+    public void updateEmployeeButton(ActionEvent actionEvent) throws RemoteException {
         if (txtFIOEmployee.getText().isEmpty() || txtLoginEmployee.getText().isEmpty() || txtPasswordEmployee.getText().isEmpty() || comboBoxEmployee_Department.getValue()==null || comboBoxEmployee_Access.getValue()==null) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
@@ -249,23 +260,23 @@ private FontAwesomeIconView closeSettingWindow;
             employee.setEmployeeName(txtFIOEmployee.getText());
             employee.setEmployeeLogin(txtLoginEmployee.getText());
             employee.setEmployeePassword(txtPasswordEmployee.getText());
-            employee.setDepartmentId(departmentDao.getIdDepartmentByName(comboBoxEmployee_Department.getValue()));
-            employee.setAccessId(accessDao.getIdAccessByName(comboBoxEmployee_Access.getValue()));
+            employee.setDepartmentId(departmentService.getIdDepartmentByName(comboBoxEmployee_Department.getValue()));
+            employee.setAccessId(accessService.getIdAccessByName(comboBoxEmployee_Access.getValue()));
             employee.setEmployeeId(this.idEmployee);
-            employeeDao.updateEmployee(employee);
+            employeeService.updateEmployee(employee);
 
             refreshTableEmployee();
         }
     }
 
-    public void removeEmployeeButton(ActionEvent actionEvent) {
-        employeeDao.removeEmployee(this.idEmployee);
+    public void removeEmployeeButton(ActionEvent actionEvent) throws RemoteException {
+        employeeService.removeEmployee(this.idEmployee);
 
         clearEmployeeTab();
         refreshTableEmployee();
     }
 
-    public void addEmployeeButton(ActionEvent actionEvent) {
+    public void addEmployeeButton(ActionEvent actionEvent) throws RemoteException {
         if (txtFIOEmployee.getText().isEmpty() || txtLoginEmployee.getText().isEmpty() || txtPasswordEmployee.getText().isEmpty() || comboBoxEmployee_Department.getValue()==null || comboBoxEmployee_Access.getValue()==null) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
@@ -274,16 +285,17 @@ private FontAwesomeIconView closeSettingWindow;
             employee.setEmployeeName(txtFIOEmployee.getText());
             employee.setEmployeeLogin(txtLoginEmployee.getText());
             employee.setEmployeePassword(txtPasswordEmployee.getText());
-            employee.setDepartmentId(departmentDao.getIdDepartmentByName(comboBoxEmployee_Department.getValue()));
-            employee.setAccessId(accessDao.getIdAccessByName(comboBoxEmployee_Access.getValue()));
-            employeeDao.addEmployee(employee);
+            employee.setDepartmentId(departmentService.getIdDepartmentByName(comboBoxEmployee_Department.getValue()));
+            employee.setAccessId(accessService.getIdAccessByName(comboBoxEmployee_Access.getValue()));
+            employeeService.addEmployee(employee);
             clearEmployeeTab();
             refreshTableEmployee();
         }
     }
 
 
-    /*Documents tab CRUD*/
+//ocuments tab CRUD
+
     public void addDocumentButton(ActionEvent actionEvent) throws IOException {
         if (comboBoxDocument_Department.getValue()==null) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
@@ -296,8 +308,8 @@ private FontAwesomeIconView closeSettingWindow;
                 document.setDocumentName(choseFile.getName());
                 document.setDocumentFile(choseFile);
                 document.setDocumentFilePath(ServerFilePath.DOCUMENTS_FILE_PATH+choseFile.getName());
-                document.setDepartmentId(departmentDao.getIdDepartmentByName(comboBoxDocument_Department.getValue()));
-                documentDao.addDocument(document);
+                document.setDepartmentId(departmentService.getIdDepartmentByName(comboBoxDocument_Department.getValue()));
+                documentService.addDocument(document);
                 clearDocumentTab();
                 refreshTableDocument();
             }
@@ -305,8 +317,8 @@ private FontAwesomeIconView closeSettingWindow;
 
     }
 
-    private void refreshTableDocument() {
-        dataDocument = documentDao.listDocuments();
+    private void refreshTableDocument() throws RemoteException {
+        dataDocument = (ObservableList<Document>) documentService.listDocuments();
         tableDocument.setItems(dataDocument);
 
     }
@@ -316,9 +328,9 @@ private FontAwesomeIconView closeSettingWindow;
         comboBoxDocument_Department.setValue(null);
     }
 
-    public void removeDocumentButton(ActionEvent actionEvent) {
+    public void removeDocumentButton(ActionEvent actionEvent) throws RemoteException {
         if (document.getDocumentFilePath()!=null) {
-            documentDao.removeDocument(document.getDocumentId(), document.getDocumentFilePath());
+            documentService.removeDocument(document.getDocumentId(), document.getDocumentFilePath());
 
             clearDocumentTab();
             refreshTableDocument();

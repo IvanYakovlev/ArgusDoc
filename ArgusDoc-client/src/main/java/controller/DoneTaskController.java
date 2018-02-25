@@ -1,11 +1,10 @@
 package controller;
 
 import argusDocSettings.ServerFilePath;
-import authorizedUser.AuthorizedUser;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
-import dao.TaskDao;
-import dao.TaskDaoImpl;
+import service.*;
+
 import dialog.ADInfo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,10 +13,11 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import model.StatusTask;
-import model.Task;
+import entity.StatusTask;
+import entity.Task;
 
 import java.io.File;
+import java.rmi.RemoteException;
 
 public class DoneTaskController {
 
@@ -32,7 +32,13 @@ public class DoneTaskController {
     }
 
 
-    TaskDao taskDao = new TaskDaoImpl();
+    private DepartmentService departmentService = ServiceRegistry.departmentService;
+    private EmployeeService employeeService = ServiceRegistry.employeeService;
+    private AccessService accessService = ServiceRegistry.accessService;
+    private DocumentService documentService = ServiceRegistry.documentService;
+    private LetterService letterService = ServiceRegistry.letterService;
+    private TaskService taskService = ServiceRegistry.taskService;
+    private EventService eventService = ServiceRegistry.eventService;
     final FileChooser fileChooser=new FileChooser();
     File attachmentFile;
     @FXML
@@ -66,7 +72,7 @@ public class DoneTaskController {
         stage.close();
     }
 
-    public void doneTaskButton(ActionEvent actionEvent) {
+    public void doneTaskButton(ActionEvent actionEvent) throws RemoteException {
         if (textAreaTask.getText().isEmpty()) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
@@ -82,7 +88,7 @@ public class DoneTaskController {
             task.setTaskAttachmentFile(attachmentFile);
            // task.setTaskIsLetter(0);
             task.setOldFile(this.task.getTaskAttachment());
-            taskDao.doneTask(task);
+            taskService.doneTask(task);
 
 
 
@@ -133,7 +139,7 @@ public class DoneTaskController {
 
     }
 
-    public void openFile(ActionEvent actionEvent) {
-        taskDao.openTaskAttachment(task.getTaskId());
+    public void openFile(ActionEvent actionEvent) throws RemoteException {
+        taskService.openTaskAttachment(task.getTaskId());
     }
 }

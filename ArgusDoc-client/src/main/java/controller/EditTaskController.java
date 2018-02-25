@@ -3,10 +3,9 @@ package controller;
 import argusDocSettings.ServerFilePath;
 import authorizedUser.AuthorizedUser;
 import com.jfoenix.controls.*;
-import dao.EmployeeDao;
-import dao.EmployeeDaoImpl;
-import dao.TaskDao;
-import dao.TaskDaoImpl;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import service.*;
 import dialog.ADInfo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,12 +16,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import model.StatusTask;
-import model.Task;
+import entity.StatusTask;
+import entity.Task;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.rmi.RemoteException;
 
 public class EditTaskController {
     MainController mainController = new MainController();
@@ -63,17 +62,21 @@ public class EditTaskController {
     @FXML
     private JFXTextArea textAreaTask;
 
-    private EmployeeDao employeeDao;
-
-    private TaskDao taskDao;
+    private DepartmentService departmentService = ServiceRegistry.departmentService;
+    private EmployeeService employeeService = ServiceRegistry.employeeService;
+    private AccessService accessService = ServiceRegistry.accessService;
+    private DocumentService documentService = ServiceRegistry.documentService;
+    private LetterService letterService = ServiceRegistry.letterService;
+    private TaskService taskService = ServiceRegistry.taskService;
+    private EventService eventService = ServiceRegistry.eventService;
     public Task task;
 
-    public void initialize(){
+    public void initialize() throws RemoteException {
 
-        employeeDao = new EmployeeDaoImpl();
-        employeeDao.listEmployees();
-        taskDao = new TaskDaoImpl();
-        comboBoxEmployee.setItems(employeeDao.listEmployeesName());
+
+        employeeService.listEmployees();
+        ObservableList<String> observableListEmployeesName = FXCollections.observableArrayList(employeeService.listEmployeesName());
+        comboBoxEmployee.setItems(observableListEmployeesName);
         timePickerTask.setIs24HourView(true);
         paneViewTask.toFront();
         viewButtonBar.toFront();
@@ -95,14 +98,14 @@ public class EditTaskController {
                 task.setTaskAttachment(ServerFilePath.TASKS_FILE_PATH + attachmentFile.getName());
             }
             task.setTaskFromEmployee(AuthorizedUser.getUser().getEmployeeName());
-            task.setEmployeeId(employeeDao.getIdEmployeeByName(comboBoxEmployee.getValue()));
+            task.setEmployeeId(employeeService.getIdEmployeeByName(comboBoxEmployee.getValue()));
             task.setTaskTerm(java.sql.Date.valueOf(datePickerTask.getValue()));
             task.setTaskTime(java.sql.Time.valueOf(timePickerTask.getValue()));
             task.setStatusTaskId(StatusTask.NOT_DONE);
             task.setTaskIsLetter(0);
             task.setOldFile(this.task.getTaskAttachment());
             System.out.println(this.task.getTaskAttachment());
-            taskDao.updateTask(task);
+            taskService.updateTask(task);
 
 
 
@@ -145,8 +148,8 @@ public class EditTaskController {
 
     }
 
-    public void openFileButton(ActionEvent actionEvent) {
-        taskDao.openTaskAttachment(task.getTaskId());
+    public void openFileButton(ActionEvent actionEvent) throws RemoteException {
+        taskService.openTaskAttachment(task.getTaskId());
     }
 
     public void downloadFileButton(ActionEvent actionEvent) {
@@ -165,9 +168,9 @@ public class EditTaskController {
         viewButtonBar.toFront();
     }
 
-    public void toArchiveTaskButton(ActionEvent actionEvent) {
+    public void toArchiveTaskButton(ActionEvent actionEvent) throws RemoteException {
         if (task!=null) {
-            taskDao.canceledTask(task.getTaskId());
+            taskService.canceledTask(task.getTaskId());
         } else
         {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Задача не выбрана!");

@@ -1,6 +1,6 @@
 package authorizedUser;
 
-import model.Employee;
+import entity.Employee;
 
 public class AuthorizedUser {
     public static Employee user;
