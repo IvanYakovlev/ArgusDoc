@@ -586,24 +586,35 @@ Calendar tab
 
     public void myTasksButton(ActionEvent actionEvent) throws RemoteException {
 
-
-
-       statusTab="myTask";
-
+        statusTab="myTask";
         taskEntity =null;
         anchorTask.toFront();
         myTaskBtnBar.toFront();
-        colorRow();
-        // задаем размер колонок в таблице
-        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
-        sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
-        termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-        timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-        statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
+
 
         tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
-        ObservableList<TaskEntity> observableListMyTaskEntities = FXCollections.observableArrayList(taskService.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
-        tableTask.setItems(observableListMyTaskEntities);
+        Task task = new Task<Void>() {
+            @Override public Void call() throws RemoteException {
+
+
+
+                nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
+                sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
+                termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+                timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+                statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
+
+
+                ObservableList<TaskEntity> observableListMyTaskEntities = FXCollections.observableArrayList(taskService.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
+                tableTask.setItems(observableListMyTaskEntities);
+                // задаем размер колонок в таблице
+                colorRow();
+                return null;
+            }
+        };
+        new Thread(task).start();
+
+
 
     }
 
@@ -613,36 +624,62 @@ Calendar tab
         anchorTask.toFront();
         myTaskDoneBtnBar.toFront();
 
-        colorRow();
-        // задаем размер колонок в таблице
-        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
-        sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
-        termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-        timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-        statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
         tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
-        ObservableList<TaskEntity> observableListMyDoneTaskEntities = FXCollections.observableArrayList(taskService.listMyDoneTasks(AuthorizedUser.getUser().getEmployeeId()));
-        tableTask.setItems(observableListMyDoneTaskEntities);
+        Task task = new Task<Void>() {
+            @Override public Void call() throws RemoteException {
+
+
+
+                nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
+                sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
+                termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+                timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+                statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
+
+
+                ObservableList<TaskEntity> observableListMyDoneTaskEntities = FXCollections.observableArrayList(taskService.listMyDoneTasks(AuthorizedUser.getUser().getEmployeeId()));
+                tableTask.setItems(observableListMyDoneTaskEntities);
+                // задаем размер колонок в таблице
+                colorRow();
+                return null;
+            }
+        };
+        new Thread(task).start();
+
 
     }
     public void fromEmpTasjButton(ActionEvent actionEvent) throws RemoteException {
+
         statusTab="fromEmpTask";
         taskEntity =null;
         anchorTask.toFront();
         fromEmpTaskBtnBar.toFront();
 
-        colorRow();
-        // задаем размер колонок в таблице
-        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
-        employeeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
-        termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-        timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-        statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
         tableTask.getColumns().setAll(nameTask, employeeTask, termTask, timeTask, statusTask);
-        ObservableList<TaskEntity> observableListFromEmpTaskEntities = FXCollections.observableArrayList(taskService.listFromEmpTasks((AuthorizedUser.getUser().getEmployeeName())));
-        tableTask.setItems(observableListFromEmpTaskEntities);
+        Task task = new Task<Void>() {
+            @Override public Void call() throws RemoteException {
+
+
+                nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
+                employeeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
+                termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+                timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+                statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
+
+
+                ObservableList<TaskEntity> observableListFromEmpTaskEntities = FXCollections.observableArrayList(taskService.listFromEmpTasks((AuthorizedUser.getUser().getEmployeeName())));
+                tableTask.setItems(observableListFromEmpTaskEntities);
+                colorRow();
+                // задаем размер колонок в таблице
+                return null;
+            }
+        };
+        new Thread(task).start();
+
+
+
 
     }
 
@@ -652,18 +689,31 @@ Calendar tab
         anchorTask.toFront();
         archiveTaskBtnBar.toFront();
 
-        colorRow();
-        // задаем размер колонок в таблице
-        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
-        sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
-        employeeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
-        termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-        timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-        statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
-
         tableTask.getColumns().setAll(nameTask,sender, employeeTask, termTask, timeTask,statusTask);
-        ObservableList<TaskEntity> observableListrchiveTaskEntities = FXCollections.observableArrayList(taskService.listArchiveTasks(Integer.parseInt(StatusTask.CANCELED)));
-        tableTask.setItems(observableListrchiveTaskEntities);
+
+        Task task = new Task<Void>() {
+            @Override public Void call() throws RemoteException {
+
+
+                nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
+                sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
+                employeeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
+                termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+                timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+                statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
+
+
+                ObservableList<TaskEntity> observableListrchiveTaskEntities = FXCollections.observableArrayList(taskService.listArchiveTasks(Integer.parseInt(StatusTask.CANCELED)));
+                tableTask.setItems(observableListrchiveTaskEntities);
+                colorRow();
+                // задаем размер колонок в таблице
+                return null;
+            }
+        };
+        new Thread(task).start();
+
+
+
 
     }
 
@@ -718,8 +768,20 @@ Calendar tab
     }
 
     public void calendarTabButton(ActionEvent actionEvent) {
+
+
+
         statusTab="calendarTab";
         anchorCalendar.toFront();
+
+        Task task = new Task<Void>() {
+            @Override public Void call() throws RemoteException {
+
+
+                return null;
+            }
+        };
+        new Thread(task).start();
     }
 
     public void letterTabButton(ActionEvent actionEvent) throws RemoteException {
@@ -729,14 +791,8 @@ Calendar tab
         Task task = new Task<Void>() {
             @Override public Void call() throws RemoteException {
 
-
-
-
                 ObservableList<Letter> observableListLetter = FXCollections.observableArrayList(letterService.listLetter());
                 tableLetter.setItems(observableListLetter);
-
-
-
 
                 return null;
             }
@@ -747,44 +803,57 @@ Calendar tab
 
     public void settingTabButton(ActionEvent actionEvent) {
 
-            FXMLLoader fxmlLoader = new FXMLLoader();
 
-            fxmlLoader.setLocation(getClass().getResource("/viewFXML/Setting_window.fxml"));
-            try {
+        FXMLLoader fxmlLoader = new FXMLLoader();
 
-                fxmlLoader.load();
-                Stage stage = new Stage();
-                Parent root = fxmlLoader.getRoot();
-                stage.setScene(new Scene(root));
+        fxmlLoader.setLocation(getClass().getResource("/viewFXML/Setting_window.fxml"));
+        try {
 
-                stage.setTitle("Новая задача");
+            fxmlLoader.load();
+            Stage stage = new Stage();
+            Parent root = fxmlLoader.getRoot();
+            stage.setScene(new Scene(root));
 
-                stage.setMinWidth(800);
-                stage.setMinHeight(470);
-                stage.setResizable(false);
+            stage.setTitle("Новая задача");
 
-                stage.initModality(Modality.WINDOW_MODAL);
-                stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
-                stage.initStyle(StageStyle.TRANSPARENT);
-                root.setOnMousePressed(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        xOffset = event.getSceneX();
-                        yOffset = event.getSceneY();
-                    }
-                });
-                root.setOnMouseDragged(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        stage.setX(event.getScreenX() - xOffset);
-                        stage.setY(event.getScreenY() - yOffset);
-                    }
-                });
-                stage.show();
+            stage.setMinWidth(800);
+            stage.setMinHeight(470);
+            stage.setResizable(false);
 
-            } catch (IOException e) {
-                e.printStackTrace();
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+            stage.initStyle(StageStyle.TRANSPARENT);
+            root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    xOffset = event.getSceneX();
+                    yOffset = event.getSceneY();
+                }
+            });
+            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    stage.setX(event.getScreenX() - xOffset);
+                    stage.setY(event.getScreenY() - yOffset);
+                }
+            });
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    /*    Task task = new Task<Void>() {
+
+            @Override public Void call() throws RemoteException {
+
+
+
+                return null;
             }
+        };
+        new Thread(task).start();*/
+
 
     }
 

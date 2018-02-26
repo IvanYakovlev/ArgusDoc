@@ -185,7 +185,13 @@ private FontAwesomeIconView closeSettingWindow;
         } else {
             Department department = new Department();
             department.setDepartmentName(txtDepartment.getText());
-            departmentService.addDepartment(department);
+
+            try {
+                departmentService.addDepartment(department);
+            }catch (IllegalStateException e){
+                ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Отдел с таким названием уже существует!");
+            }
+
             clearDepartmentText();
             refreshTableDepartment();
 
@@ -215,7 +221,13 @@ private FontAwesomeIconView closeSettingWindow;
             Department department = new Department();
             department.setDepartmentName(txtDepartment.getText());
             department.setDepartmentId(this.idDepartment);
-            departmentService.updateDepartment(department);
+
+            try {
+                departmentService.updateDepartment(department);
+            }catch (IllegalStateException e){
+                ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Отдел с таким названием уже существует!");
+            }
+
             clearDepartmentText();
             refreshTableDepartment();
 

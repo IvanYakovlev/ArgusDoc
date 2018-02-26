@@ -39,7 +39,7 @@ public class DepartmentServiceImpl implements DepartmentService {
             preparedStatement.execute();
 
         } catch (SQLException e) {
-            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Отдел с таким названием уже существует!");
+            e.printStackTrace();
         }
     }
 
@@ -54,7 +54,7 @@ public class DepartmentServiceImpl implements DepartmentService {
             preparedStatement.execute();
 
         } catch (SQLException e) {
-            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Отдел с таким названием уже существует!");
+            e.printStackTrace();
         }
     }
 
