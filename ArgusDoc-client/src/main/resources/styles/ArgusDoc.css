@@ -111,7 +111,7 @@
     -fx-background-radius: 3px;
     -fx-background-color: white;
     -fx-background-insets: 0;
-
+    -fx-selection-bar-color: #3F51B5;
 }
 
 .table-view .column-header, .table-view .filler {
@@ -136,11 +136,13 @@
 }
 .table-view .table-row-cell .table-cell{
     -fx-border-width: 0 0 0 0;
+
 }
 
 .table-view .table-row-cell:selected .table-cell{
-    -fx-text-fill: #221E1D;
+    -fx-text-fill: white;
     -fx-border-width: 0 0 0 0;
+    -fx-background-color: #536DFE;
 }
 .table-view .table-row-cell:selected{
     -fx-background-color: rgba(0,0,0,0.04);

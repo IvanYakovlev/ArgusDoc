@@ -3,7 +3,7 @@ package controller;
 import argusDocSettings.ServerFilePath;
 import authorizedUser.AuthorizedUser;
 import com.jfoenix.controls.*;
-import entity.Event;
+import entity.TaskEntity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import service.*;
@@ -14,7 +14,6 @@ import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import entity.StatusTask;
-import entity.Task;
 
 import java.io.File;
 import java.io.IOException;
@@ -65,20 +64,20 @@ public class AddTaskController {
         } else {
 
 
-            Task task = new Task();
-            task.setTaskName(txtTaskName.getText());
-            task.setTaskText(textAreaTask.getText());
-            task.setTaskAttachmentFile(attachmentFile);
+            TaskEntity taskEntity = new TaskEntity();
+            taskEntity.setTaskName(txtTaskName.getText());
+            taskEntity.setTaskText(textAreaTask.getText());
+            taskEntity.setTaskAttachmentFile(attachmentFile);
             if (attachmentFile!=null) {
-                task.setTaskAttachment(ServerFilePath.TASKS_FILE_PATH + attachmentFile.getName());
+                taskEntity.setTaskAttachment(ServerFilePath.TASKS_FILE_PATH + attachmentFile.getName());
             }
-            task.setTaskFromEmployee(AuthorizedUser.getUser().getEmployeeName());
-            task.setEmployeeId(employeeService.getIdEmployeeByName(comboBoxEmployee.getValue()));
-            task.setTaskTerm(java.sql.Date.valueOf(datePickerTask.getValue()));
-            task.setTaskTime(java.sql.Time.valueOf(timePickerTask.getValue()));
-            task.setStatusTaskId(StatusTask.NOT_DONE);
-            task.setTaskIsLetter(0);
-            taskService.addTask(task);
+            taskEntity.setTaskFromEmployee(AuthorizedUser.getUser().getEmployeeName());
+            taskEntity.setEmployeeId(employeeService.getIdEmployeeByName(comboBoxEmployee.getValue()));
+            taskEntity.setTaskTerm(java.sql.Date.valueOf(datePickerTask.getValue()));
+            taskEntity.setTaskTime(java.sql.Time.valueOf(timePickerTask.getValue()));
+            taskEntity.setStatusTaskId(StatusTask.NOT_DONE);
+            taskEntity.setTaskIsLetter(0);
+            taskService.addTask(taskEntity);
 
 
 

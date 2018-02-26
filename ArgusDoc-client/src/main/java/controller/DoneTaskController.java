@@ -3,6 +3,7 @@ package controller;
 import argusDocSettings.ServerFilePath;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
+import entity.TaskEntity;
 import service.*;
 
 import dialog.ADInfo;
@@ -14,21 +15,20 @@ import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import entity.StatusTask;
-import entity.Task;
 
 import java.io.File;
 import java.rmi.RemoteException;
 
 public class DoneTaskController {
 
-    private Task task = new Task();
+    private TaskEntity taskEntity = new TaskEntity();
 
-    public Task getTask() {
-        return task;
+    public TaskEntity getTaskEntity() {
+        return taskEntity;
     }
 
-    public void setTask(Task task) {
-        this.task = task;
+    public void setTaskEntity(TaskEntity taskEntity) {
+        this.taskEntity = taskEntity;
     }
 
 
@@ -78,17 +78,17 @@ public class DoneTaskController {
         } else {
 
 
-            Task task = new Task();
-            task.setTaskId(this.task.getTaskId());
-            task.setTaskText(textAreaTask.getText());
-            task.setStatusTaskId(StatusTask.DONE);
+            TaskEntity taskEntity = new TaskEntity();
+            taskEntity.setTaskId(this.taskEntity.getTaskId());
+            taskEntity.setTaskText(textAreaTask.getText());
+            taskEntity.setStatusTaskId(StatusTask.DONE);
             if (attachmentFile!=null) {
-                task.setTaskAttachment(ServerFilePath.TASKS_FILE_PATH + attachmentFile.getName());
+                taskEntity.setTaskAttachment(ServerFilePath.TASKS_FILE_PATH + attachmentFile.getName());
             }
-            task.setTaskAttachmentFile(attachmentFile);
-           // task.setTaskIsLetter(0);
-            task.setOldFile(this.task.getTaskAttachment());
-            taskService.doneTask(task);
+            taskEntity.setTaskAttachmentFile(attachmentFile);
+           // taskEntity.setTaskIsLetter(0);
+            taskEntity.setOldFile(this.taskEntity.getTaskAttachment());
+            taskService.doneTask(taskEntity);
 
 
 
@@ -108,10 +108,10 @@ public class DoneTaskController {
             attachmentFile=file;
         }
     }
-    public void initTab(Task task){
-        labelNameTask.setText(task.getTaskName());
-        textAreaTask.setText(task.getTaskText());
-        if (task.getTaskAttachment()!=null){
+    public void initTab(TaskEntity taskEntity){
+        labelNameTask.setText(taskEntity.getTaskName());
+        textAreaTask.setText(taskEntity.getTaskText());
+        if (taskEntity.getTaskAttachment()!=null){
             downloadFile.setVisible(true);
             openFile.setVisible(true);
         }
@@ -123,7 +123,7 @@ public class DoneTaskController {
     }
 
     public void downloadFile(ActionEvent actionEvent) {
-        System.out.println(task.getTaskAttachment());
+        System.out.println(taskEntity.getTaskAttachment());
 
     }
 
@@ -132,14 +132,14 @@ public class DoneTaskController {
         textAreaTask.setEditable(true);
         editButtonBar.toFront();
         // если задача сформирована с помощью письма, файл прикреплять не нужно
-        System.out.println(task);
-        if (this.task.getTaskIsLetter()==1){
+        System.out.println(taskEntity);
+        if (this.taskEntity.getTaskIsLetter()==1){
             attachmentFileButton.setVisible(false);
         }
 
     }
 
     public void openFile(ActionEvent actionEvent) throws RemoteException {
-        taskService.openTaskAttachment(task.getTaskId());
+        taskService.openTaskAttachment(taskEntity.getTaskId());
     }
 }

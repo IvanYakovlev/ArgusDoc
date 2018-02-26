@@ -4,7 +4,7 @@ import java.io.*;
 
 @Entity
 @Table(name ="DOCUMENTS")
-public class Document implements Externalizable{
+public class Document implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Document_id")
@@ -83,7 +83,7 @@ public class Document implements Externalizable{
                 '}';
     }
 
-    @Override
+/*    @Override
     public void writeExternal(ObjectOutput out) throws IOException {
         out.writeObject(getDocumentId());
         out.writeObject(getDocumentName());
@@ -102,5 +102,5 @@ public class Document implements Externalizable{
         setDocumentFilePath((String) in.readObject());
         setDepartmentName((String) in.readObject());
         setDepartmentId(in.readInt());
-    }
+    }*/
 }

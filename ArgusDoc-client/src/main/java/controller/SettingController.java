@@ -28,7 +28,7 @@ public class SettingController {
     private double xOffset;
     private double yOffset;
 
-    private Task task= new Task();
+    private TaskEntity taskEntity = new TaskEntity();
     private int idEmployee;
     private Document document = new Document();
     private int idDepartment;
@@ -318,7 +318,8 @@ private FontAwesomeIconView closeSettingWindow;
     }
 
     private void refreshTableDocument() throws RemoteException {
-        dataDocument = (ObservableList<Document>) documentService.listDocuments();
+        ObservableList<Document> observableListDocument = FXCollections.observableArrayList(documentService.listDocuments());
+        dataDocument = observableListDocument;
         tableDocument.setItems(dataDocument);
 
     }

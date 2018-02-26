@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import entity.TaskEntity;
 import service.*;
 import dialog.ADInfo;
 import javafx.event.ActionEvent;
@@ -15,7 +16,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import entity.Letter;
 import entity.StatusTask;
-import entity.Task;
 import org.controlsfx.control.CheckComboBox;
 
 import java.io.*;
@@ -75,18 +75,18 @@ public class AddLetterController {
         } else {
             for (int i = 0; i < checkComboBoxEmployee.getCheckModel().getCheckedIndices().size(); i++) {
 //формируем задачи для исполнителей
-                Task task = new Task();
-                task.setTaskName(txtLetterName.getText());
-                task.setTaskText(textAreaLetter.getText());
-                task.setTaskAttachment(ServerFilePath.LETTERS_FILE_PATH + attachmentFile.getName());
-                task.setTaskFromEmployee(AuthorizedUser.getUser().getEmployeeName());
-                task.setEmployeeId(employeeService.getIdEmployeeByName(checkComboBoxEmployee.getItems().get(checkComboBoxEmployee.getCheckModel().getCheckedIndices().get(i))));
-                task.setTaskTerm(java.sql.Date.valueOf(datePickerLetter.getValue()));
-                task.setStatusTaskId(StatusTask.NOT_DONE);
-                task.setTaskTime(null);
-                task.setTaskIsLetter(1);
+                TaskEntity taskEntity = new TaskEntity();
+                taskEntity.setTaskName(txtLetterName.getText());
+                taskEntity.setTaskText(textAreaLetter.getText());
+                taskEntity.setTaskAttachment(ServerFilePath.LETTERS_FILE_PATH + attachmentFile.getName());
+                taskEntity.setTaskFromEmployee(AuthorizedUser.getUser().getEmployeeName());
+                taskEntity.setEmployeeId(employeeService.getIdEmployeeByName(checkComboBoxEmployee.getItems().get(checkComboBoxEmployee.getCheckModel().getCheckedIndices().get(i))));
+                taskEntity.setTaskTerm(java.sql.Date.valueOf(datePickerLetter.getValue()));
+                taskEntity.setStatusTaskId(StatusTask.NOT_DONE);
+                taskEntity.setTaskTime(null);
+                taskEntity.setTaskIsLetter(1);
 
-                    taskService.addTask(task);
+                    taskService.addTask(taskEntity);
 
 
 

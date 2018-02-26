@@ -17,7 +17,7 @@ public class Main extends Application{
     public void start(Stage primaryStage) throws Exception {
         dBconnection.connect();
 
-        Registry registry = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
+        Registry registry = LocateRegistry.createRegistry(8695);
 
         AccessServiceImpl accessServiceImpl = new AccessServiceImpl();
         AccessService accessService = (AccessService) UnicastRemoteObject.exportObject(accessServiceImpl,0);

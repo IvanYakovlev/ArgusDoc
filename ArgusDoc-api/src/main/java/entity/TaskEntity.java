@@ -8,7 +8,7 @@ import java.sql.Time;
 
 @Entity
 @Table(name = "TASKS")
-public class Task extends RecursiveTreeObject<Task> implements Externalizable{
+public class TaskEntity extends RecursiveTreeObject<TaskEntity> implements Externalizable{
 
 
 
@@ -174,7 +174,7 @@ public class Task extends RecursiveTreeObject<Task> implements Externalizable{
 
     @Override
     public String toString() {
-        return "Task{" +
+        return "TaskEntity{" +
                 "taskId=" + taskId +
                 ", taskName='" + taskName + '\'' +
                 ", taskText='" + taskText + '\'' +

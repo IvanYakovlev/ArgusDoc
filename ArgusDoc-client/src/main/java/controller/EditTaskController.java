@@ -3,6 +3,7 @@ package controller;
 import argusDocSettings.ServerFilePath;
 import authorizedUser.AuthorizedUser;
 import com.jfoenix.controls.*;
+import entity.TaskEntity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import service.*;
@@ -17,7 +18,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import entity.StatusTask;
-import entity.Task;
 
 import java.io.File;
 import java.io.IOException;
@@ -69,7 +69,7 @@ public class EditTaskController {
     private LetterService letterService = ServiceRegistry.letterService;
     private TaskService taskService = ServiceRegistry.taskService;
     private EventService eventService = ServiceRegistry.eventService;
-    public Task task;
+    public TaskEntity taskEntity;
 
     public void initialize() throws RemoteException {
 
@@ -89,23 +89,23 @@ public class EditTaskController {
         } else {
 
 
-            Task task = new Task();
-            task.setTaskId(this.task.getTaskId());
-            task.setTaskText(textAreaTask.getText());
-            task.setTaskName(txtTaskName.getText());
-            task.setTaskAttachmentFile(attachmentFile);
+            TaskEntity taskEntity = new TaskEntity();
+            taskEntity.setTaskId(this.taskEntity.getTaskId());
+            taskEntity.setTaskText(textAreaTask.getText());
+            taskEntity.setTaskName(txtTaskName.getText());
+            taskEntity.setTaskAttachmentFile(attachmentFile);
             if (attachmentFile!=null) {
-                task.setTaskAttachment(ServerFilePath.TASKS_FILE_PATH + attachmentFile.getName());
+                taskEntity.setTaskAttachment(ServerFilePath.TASKS_FILE_PATH + attachmentFile.getName());
             }
-            task.setTaskFromEmployee(AuthorizedUser.getUser().getEmployeeName());
-            task.setEmployeeId(employeeService.getIdEmployeeByName(comboBoxEmployee.getValue()));
-            task.setTaskTerm(java.sql.Date.valueOf(datePickerTask.getValue()));
-            task.setTaskTime(java.sql.Time.valueOf(timePickerTask.getValue()));
-            task.setStatusTaskId(StatusTask.NOT_DONE);
-            task.setTaskIsLetter(0);
-            task.setOldFile(this.task.getTaskAttachment());
-            System.out.println(this.task.getTaskAttachment());
-            taskService.updateTask(task);
+            taskEntity.setTaskFromEmployee(AuthorizedUser.getUser().getEmployeeName());
+            taskEntity.setEmployeeId(employeeService.getIdEmployeeByName(comboBoxEmployee.getValue()));
+            taskEntity.setTaskTerm(java.sql.Date.valueOf(datePickerTask.getValue()));
+            taskEntity.setTaskTime(java.sql.Time.valueOf(timePickerTask.getValue()));
+            taskEntity.setStatusTaskId(StatusTask.NOT_DONE);
+            taskEntity.setTaskIsLetter(0);
+            taskEntity.setOldFile(this.taskEntity.getTaskAttachment());
+            System.out.println(this.taskEntity.getTaskAttachment());
+            taskService.updateTask(taskEntity);
 
 
 
@@ -125,13 +125,13 @@ public class EditTaskController {
             attachmentFile=file;
         }
     }
-    public void initTab(Task task){
-        txtTaskName.setText(task.getTaskName());
-        textAreaTask.setText(task.getTaskText());
-        textViewAreaTask.setText(task.getTaskText());
-        labelViewTask.setText(task.getTaskName());
-        comboBoxEmployee.getSelectionModel().select(task.getEmployeeName());
-        if (task.getTaskAttachment()==null){
+    public void initTab(TaskEntity taskEntity){
+        txtTaskName.setText(taskEntity.getTaskName());
+        textAreaTask.setText(taskEntity.getTaskText());
+        textViewAreaTask.setText(taskEntity.getTaskText());
+        labelViewTask.setText(taskEntity.getTaskName());
+        comboBoxEmployee.getSelectionModel().select(taskEntity.getEmployeeName());
+        if (taskEntity.getTaskAttachment()==null){
             downloadFileButton.setVisible(false);
             openFileButton.setVisible(false);
         }
@@ -149,7 +149,7 @@ public class EditTaskController {
     }
 
     public void openFileButton(ActionEvent actionEvent) throws RemoteException {
-        taskService.openTaskAttachment(task.getTaskId());
+        taskService.openTaskAttachment(taskEntity.getTaskId());
     }
 
     public void downloadFileButton(ActionEvent actionEvent) {
@@ -169,8 +169,8 @@ public class EditTaskController {
     }
 
     public void toArchiveTaskButton(ActionEvent actionEvent) throws RemoteException {
-        if (task!=null) {
-            taskService.canceledTask(task.getTaskId());
+        if (taskEntity !=null) {
+            taskService.canceledTask(taskEntity.getTaskId());
         } else
         {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Задача не выбрана!");

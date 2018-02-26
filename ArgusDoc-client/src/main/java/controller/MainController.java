@@ -3,6 +3,7 @@ package controller;
 import authorizedUser.AuthorizedUser;
 import com.jfoenix.controls.*;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import service.*;
 
 
@@ -75,7 +76,7 @@ public class MainController {
     private double xOffset;
     private double yOffset;
 
-    private Task task= new Task();
+    private TaskEntity taskEntity = new TaskEntity();
     private Document document = new Document();
     private Letter letter = new Letter();
     private Event event = new Event();
@@ -132,17 +133,17 @@ public class MainController {
 //Tasks tab
 
     @FXML
-    private TableView<Task> tableTask;
-    private TableColumn<Task, String> idTask;
-    private TableColumn<Task, String> nameTask;
-    private TableColumn<Task, String> textTask;
-    private TableColumn<Task, String> attachmentTask;
-    private TableColumn<Task, String> employeeTask;
-    private TableColumn<Task, String> termTask;
-    private TableColumn<Task, String> statusTask;
-    private TableColumn<Task, String> sender;
-    private TableColumn<Task, String> timeTask;
-    private TableColumn<Task, String> isLetter;
+    private TableView<TaskEntity> tableTask;
+    private TableColumn<TaskEntity, String> idTask;
+    private TableColumn<TaskEntity, String> nameTask;
+    private TableColumn<TaskEntity, String> textTask;
+    private TableColumn<TaskEntity, String> attachmentTask;
+    private TableColumn<TaskEntity, String> employeeTask;
+    private TableColumn<TaskEntity, String> termTask;
+    private TableColumn<TaskEntity, String> statusTask;
+    private TableColumn<TaskEntity, String> sender;
+    private TableColumn<TaskEntity, String> timeTask;
+    private TableColumn<TaskEntity, String> isLetter;
     @FXML
     private Label labelUserAuth;
 // Calendar Tab
@@ -205,29 +206,29 @@ public class MainController {
         ObservableList<String> observableListDepartmentName = FXCollections.observableArrayList(departmentService.listDepartmentName());
         comboBoxDocument_Template.setItems(observableListDepartmentName);
         comboBoxDocument_Template.setPromptText("Выберите отдел:");
-    /*initialize Task tab*/
+    /*initialize TaskEntity tab*/
 //заполняем таблицу данными
-        idTask = new TableColumn<Task, String>("Id");
-        idTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskId"));
-        nameTask = new TableColumn<Task, String>("Название задачи");
-        nameTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskName"));
-        textTask = new TableColumn<Task, String>("Текст задачи");
-        textTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskText"));
-        attachmentTask = new TableColumn<Task, String>("Прикрепленный файл");
-        attachmentTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskAttachment"));
-        employeeTask = new TableColumn<Task, String>("Исполнитель");
-        employeeTask.setCellValueFactory(new PropertyValueFactory<Task, String>("employeeName"));
-        termTask = new TableColumn<Task, String>("Дата");
-        termTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskTerm"));
-        statusTask = new TableColumn<Task, String>("");
-        statusTask.setCellValueFactory(new PropertyValueFactory<Task, String>("statusTaskId"));
+        idTask = new TableColumn<TaskEntity, String>("Id");
+        idTask.setCellValueFactory(new PropertyValueFactory<TaskEntity, String>("taskId"));
+        nameTask = new TableColumn<TaskEntity, String>("Название задачи");
+        nameTask.setCellValueFactory(new PropertyValueFactory<TaskEntity, String>("taskName"));
+        textTask = new TableColumn<TaskEntity, String>("Текст задачи");
+        textTask.setCellValueFactory(new PropertyValueFactory<TaskEntity, String>("taskText"));
+        attachmentTask = new TableColumn<TaskEntity, String>("Прикрепленный файл");
+        attachmentTask.setCellValueFactory(new PropertyValueFactory<TaskEntity, String>("taskAttachment"));
+        employeeTask = new TableColumn<TaskEntity, String>("Исполнитель");
+        employeeTask.setCellValueFactory(new PropertyValueFactory<TaskEntity, String>("employeeName"));
+        termTask = new TableColumn<TaskEntity, String>("Дата");
+        termTask.setCellValueFactory(new PropertyValueFactory<TaskEntity, String>("taskTerm"));
+        statusTask = new TableColumn<TaskEntity, String>("");
+        statusTask.setCellValueFactory(new PropertyValueFactory<TaskEntity, String>("statusTaskId"));
 
-        sender = new TableColumn<Task, String>("Отправитель");
-        sender.setCellValueFactory(new PropertyValueFactory<Task, String>("taskFromEmployee"));
-        timeTask = new TableColumn<Task, String>("Время");
-        timeTask.setCellValueFactory(new PropertyValueFactory<Task, String>("taskTime"));
-        isLetter = new TableColumn<Task, String>("Письмо");
-        isLetter.setCellValueFactory(new PropertyValueFactory<Task, String>("taskIsLetter"));
+        sender = new TableColumn<TaskEntity, String>("Отправитель");
+        sender.setCellValueFactory(new PropertyValueFactory<TaskEntity, String>("taskFromEmployee"));
+        timeTask = new TableColumn<TaskEntity, String>("Время");
+        timeTask.setCellValueFactory(new PropertyValueFactory<TaskEntity, String>("taskTime"));
+        isLetter = new TableColumn<TaskEntity, String>("Письмо");
+        isLetter.setCellValueFactory(new PropertyValueFactory<TaskEntity, String>("taskIsLetter"));
 
 // задаем размер колонок в таблице
         nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
@@ -239,8 +240,8 @@ public class MainController {
 
         tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
 
-        ObservableList<Task> observableListMyTask = FXCollections.observableArrayList(taskService.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
-        tableTask.setItems(observableListMyTask);
+        ObservableList<TaskEntity> observableListMyTaskEntity = FXCollections.observableArrayList(taskService.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
+        tableTask.setItems(observableListMyTaskEntity);
 
         labelUserAuth.setText(AuthorizedUser.getUser().getEmployeeName());
 
@@ -442,8 +443,8 @@ Calendar tab
 
 /*Tasks  tab*/
     public void refreshTaskTab() throws RemoteException {
-        ObservableList<Task> observableListMyTasks = FXCollections.observableArrayList(taskService.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
-        tableTask.setItems(observableListMyTasks);
+        ObservableList<TaskEntity> observableListMyTaskEntities = FXCollections.observableArrayList(taskService.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
+        tableTask.setItems(observableListMyTaskEntities);
 
     }
 
@@ -484,7 +485,7 @@ Calendar tab
 
     public void openEditTaskButton(ActionEvent actionEvent) {
 
-        if (task!=null) {
+        if (taskEntity !=null) {
             EditTaskController editTaskController = new EditTaskController();
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/viewFXML/Edit_task_window.fxml"));
@@ -495,8 +496,8 @@ Calendar tab
                 Parent root = fxmlLoader.getRoot();
                 stage.setScene(new Scene(root));
                 EditTaskController editController = fxmlLoader.getController();
-                editController.task =task;
-                editController.initTab(task);
+                editController.taskEntity = taskEntity;
+                editController.initTab(taskEntity);
 
                 stage.setTitle("Редактирование задачи");
                 stage.setMinHeight(150);
@@ -532,8 +533,8 @@ Calendar tab
     }
 
     public void openDoneTaskButton(ActionEvent actionEvent) throws RemoteException {
-        if (task!=null) {
-            taskService.performedTask(task.getTaskId());
+        if (taskEntity !=null) {
+            taskService.performedTask(taskEntity.getTaskId());
             FXMLLoader fxmlLoader = new FXMLLoader();
 
             fxmlLoader.setLocation(getClass().getResource("/viewFXML/Done_task_window.fxml"));
@@ -544,8 +545,8 @@ Calendar tab
                 Parent root = fxmlLoader.getRoot();
                 stage.setScene(new Scene(root));
                 DoneTaskController doneController = fxmlLoader.getController();
-                doneController.setTask(task);
-                doneController.initTab(task);
+                doneController.setTaskEntity(taskEntity);
+                doneController.initTab(taskEntity);
 
                 stage.setTitle("Выполнение задачи");
                 stage.setMinHeight(150);
@@ -589,7 +590,7 @@ Calendar tab
 
        statusTab="myTask";
 
-        task=null;
+        taskEntity =null;
         anchorTask.toFront();
         myTaskBtnBar.toFront();
         colorRow();
@@ -601,14 +602,14 @@ Calendar tab
         statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
         tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
-        ObservableList<Task> observableListMyTasks = FXCollections.observableArrayList(taskService.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
-        tableTask.setItems(observableListMyTasks);
+        ObservableList<TaskEntity> observableListMyTaskEntities = FXCollections.observableArrayList(taskService.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
+        tableTask.setItems(observableListMyTaskEntities);
 
     }
 
     public void myDoneTasksButton(ActionEvent actionEvent) throws RemoteException {
         statusTab="myDoneTask";
-        task=null;
+        taskEntity =null;
         anchorTask.toFront();
         myTaskDoneBtnBar.toFront();
 
@@ -621,13 +622,13 @@ Calendar tab
         statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
         tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
-        ObservableList<Task> observableListMyDoneTasks = FXCollections.observableArrayList(taskService.listMyDoneTasks(AuthorizedUser.getUser().getEmployeeId()));
-        tableTask.setItems(observableListMyDoneTasks);
+        ObservableList<TaskEntity> observableListMyDoneTaskEntities = FXCollections.observableArrayList(taskService.listMyDoneTasks(AuthorizedUser.getUser().getEmployeeId()));
+        tableTask.setItems(observableListMyDoneTaskEntities);
 
     }
     public void fromEmpTasjButton(ActionEvent actionEvent) throws RemoteException {
         statusTab="fromEmpTask";
-        task=null;
+        taskEntity =null;
         anchorTask.toFront();
         fromEmpTaskBtnBar.toFront();
 
@@ -640,14 +641,14 @@ Calendar tab
         statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
         tableTask.getColumns().setAll(nameTask, employeeTask, termTask, timeTask, statusTask);
-        ObservableList<Task> observableListFromEmpTasks = FXCollections.observableArrayList(taskService.listFromEmpTasks((AuthorizedUser.getUser().getEmployeeName())));
-        tableTask.setItems(observableListFromEmpTasks);
+        ObservableList<TaskEntity> observableListFromEmpTaskEntities = FXCollections.observableArrayList(taskService.listFromEmpTasks((AuthorizedUser.getUser().getEmployeeName())));
+        tableTask.setItems(observableListFromEmpTaskEntities);
 
     }
 
     public void archiveTasks(ActionEvent actionEvent) throws RemoteException {
         statusTab="archiveTask";
-        task=null;
+        taskEntity =null;
         anchorTask.toFront();
         archiveTaskBtnBar.toFront();
 
@@ -661,45 +662,59 @@ Calendar tab
         statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
         tableTask.getColumns().setAll(nameTask,sender, employeeTask, termTask, timeTask,statusTask);
-        ObservableList<Task> observableListrchiveTasks = FXCollections.observableArrayList(taskService.listArchiveTasks(Integer.parseInt(StatusTask.CANCELED)));
-        tableTask.setItems(observableListrchiveTasks);
+        ObservableList<TaskEntity> observableListrchiveTaskEntities = FXCollections.observableArrayList(taskService.listArchiveTasks(Integer.parseInt(StatusTask.CANCELED)));
+        tableTask.setItems(observableListrchiveTaskEntities);
 
     }
 
     public void clickTableTask(MouseEvent mouseEvent) {
-        Task task = tableTask.getSelectionModel().getSelectedItems().get(0);
-        if (task!=null){
-            this.task = task;
+        TaskEntity taskEntity = tableTask.getSelectionModel().getSelectedItems().get(0);
+        if (taskEntity !=null){
+            this.taskEntity = taskEntity;
         }
 
     }
 
     public void acceptTask(ActionEvent actionEvent) throws RemoteException {
-        if (task!=null) {
-            taskService.performedTask(task.getTaskId());
+        if (taskEntity !=null) {
+            taskService.performedTask(taskEntity.getTaskId());
         }
     }
 
 
     public void deleteTaskButton(ActionEvent actionEvent) throws RemoteException {
-        if (task!=null){
+        if (taskEntity !=null){
 
-            taskService.removeTask(this.task);
+            taskService.removeTask(this.taskEntity);
         } else
         {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Задача не выбрана!");
         }
     }
     public void templateTabButton(ActionEvent actionEvent) throws RemoteException {
-
-        statusTab="templateTab";
-
-        departmentService.listDepartments();
-        ObservableList<Document> observableListDocuments = FXCollections.observableArrayList(documentService.listDocuments());
-        tableDocumentTemplate.setItems(observableListDocuments);
-        ObservableList<String> observableListDepartmentName = FXCollections.observableArrayList(departmentService.listDepartmentName());
-        comboBoxDocument_Template.setItems(observableListDepartmentName);
         anchorTemplate.toFront();
+
+        Task task = new Task<Void>() {
+            @Override public Void call() throws RemoteException {
+
+
+                statusTab="templateTab";
+
+                departmentService.listDepartments();
+                ObservableList<Document> observableListDocuments = FXCollections.observableArrayList(documentService.listDocuments());
+                tableDocumentTemplate.setItems(observableListDocuments);
+                ObservableList<String> observableListDepartmentName = FXCollections.observableArrayList(departmentService.listDepartmentName());
+                comboBoxDocument_Template.setItems(observableListDepartmentName);
+
+
+
+
+
+                return null;
+            }
+        };
+        new Thread(task).start();
+
     }
 
     public void calendarTabButton(ActionEvent actionEvent) {
@@ -710,8 +725,24 @@ Calendar tab
     public void letterTabButton(ActionEvent actionEvent) throws RemoteException {
         statusTab="letterTab";
         anchorLetter.toFront();
-        ObservableList<Letter> observableListLetter = FXCollections.observableArrayList(letterService.listLetter());
-        tableLetter.setItems(observableListLetter);
+
+        Task task = new Task<Void>() {
+            @Override public Void call() throws RemoteException {
+
+
+
+
+                ObservableList<Letter> observableListLetter = FXCollections.observableArrayList(letterService.listLetter());
+                tableLetter.setItems(observableListLetter);
+
+
+
+
+                return null;
+            }
+        };
+        new Thread(task).start();
+
     }
 
     public void settingTabButton(ActionEvent actionEvent) {
@@ -764,7 +795,13 @@ Calendar tab
 
 
     public void openLetter(ActionEvent actionEvent) throws RemoteException {
-        letterService.openLetter(letter.getLetterId());
+        try {letterService.openLetter(letter.getLetterId());
+
+        }catch (RemoteException e){
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Письмо было удалено с сервера!");
+        }
+
+
     }
 
     public void openAddLetterWindow(ActionEvent actionEvent) {
@@ -779,8 +816,8 @@ Calendar tab
                 Parent root = fxmlLoader.getRoot();
                 stage.setScene(new Scene(root));
                /* DoneTaskController doneController = fxmlLoader.getController();
-                doneController.setTask(task);
-                doneController.initTab(task);*/
+                doneController.setTaskEntity(taskEntity);
+                doneController.initTab(taskEntity);*/
 
                 stage.setTitle("Новая задача");
                 stage.setMinHeight(150);
@@ -830,7 +867,7 @@ Calendar tab
 
     private void colorRow() {
         statusTask.setCellFactory(column -> {
-            return new TableCell<Task, String>() {
+            return new TableCell<TaskEntity, String>() {
                 @Override
                 protected void updateItem( String item, boolean empty) {
 
@@ -840,7 +877,7 @@ Calendar tab
                     setText(empty ? "" : getItem().toString());
                     setGraphic(null);
 
-                    TableRow<Task> currentRow = getTableRow();
+                    TableRow<TaskEntity> currentRow = getTableRow();
 
                     if (!isEmpty()) {
                         switch (item) {
@@ -872,213 +909,219 @@ Calendar tab
     public void keyPressSort(KeyEvent keyEvent) throws RemoteException {
            /*Сортировка*/
 
-           switch (statusTab){
-               case "myTask":
+        switch (statusTab){
+            case "myTask":
 // 1. Wrap the ObservableList in a FilteredList (initially display all data).
-                   FilteredList<Task> filteredMyTask = new FilteredList<Task>((ObservableList<Task>) taskService.listMyTasks(AuthorizedUser.getUser().getEmployeeId()), p -> true);
+                ObservableList<TaskEntity> observableListMyTaskEntities = FXCollections.observableArrayList(taskService.listMyTasks(AuthorizedUser.getUser().getEmployeeId()));
+                FilteredList<TaskEntity> filteredMyTaskEntity = new FilteredList<TaskEntity>(observableListMyTaskEntities, p -> true);
 
-                   // 2. Set the filter Predicate whenever the filter changes.
-                   txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
-                       filteredMyTask.setPredicate(task -> {
-                           // If filter text is empty, display all persons.
-                           if (newValue == null || newValue.isEmpty()) {
-                               return true;
-                           }
+                // 2. Set the filter Predicate whenever the filter changes.
+                txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
+                    filteredMyTaskEntity.setPredicate(task -> {
+                        // If filter text is empty, display all persons.
+                        if (newValue == null || newValue.isEmpty()) {
+                            return true;
+                        }
 
-                           // Compare first name and last name of every person with filter text.
-                           String lowerCaseFilter = newValue.toLowerCase();
+                        // Compare first name and last name of every person with filter text.
+                        String lowerCaseFilter = newValue.toLowerCase();
 
-                           if (task.getTaskName().toLowerCase().contains(lowerCaseFilter)) {
-                               return true; // Filter matches first name.
-                           } else if (task.getTaskFromEmployee().toLowerCase().contains(lowerCaseFilter)){
-                               return true;
-                           }
-                           return false; // Does not match.
-                       });
-                   });
+                        if (task.getTaskName().toLowerCase().contains(lowerCaseFilter)) {
+                            return true; // Filter matches first name.
+                        } else if (task.getTaskFromEmployee().toLowerCase().contains(lowerCaseFilter)){
+                            return true;
+                        }
+                        return false; // Does not match.
+                    });
+                });
 
-                   // 3. Wrap the FilteredList in a SortedList.
-                   SortedList<Task> sortedMyTask = new SortedList<>(filteredMyTask);
+                // 3. Wrap the FilteredList in a SortedList.
+                SortedList<TaskEntity> sortedMyTaskEntity = new SortedList<>(filteredMyTaskEntity);
 
-                   // 4. Bind the SortedList comparator to the TableView comparator.
-                   sortedMyTask.comparatorProperty().bind(tableTask.comparatorProperty());
-                    colorRow();
-                   // 5. Add sorted (and filtered) data to the table.
-                   tableTask.setItems(sortedMyTask);
+                // 4. Bind the SortedList comparator to the TableView comparator.
+                sortedMyTaskEntity.comparatorProperty().bind(tableTask.comparatorProperty());
+                colorRow();
+                // 5. Add sorted (and filtered) data to the table.
+                tableTask.setItems(sortedMyTaskEntity);
 
 
-                   break;
-               case "myDoneTask":
-                   // 1. Wrap the ObservableList in a FilteredList (initially display all data).
-                   FilteredList<Task> filteredMyDoneTask = new FilteredList<Task>((ObservableList<Task>) taskService.listMyDoneTasks(AuthorizedUser.getUser().getEmployeeId()), p -> true);
+                break;
+            case "myDoneTask":
+                // 1. Wrap the ObservableList in a FilteredList (initially display all data).
+                ObservableList<TaskEntity> observableListMyDoneTaskEntities = FXCollections.observableArrayList(taskService.listMyDoneTasks(AuthorizedUser.getUser().getEmployeeId()));
+                FilteredList<TaskEntity> filteredMyDoneTaskEntity = new FilteredList<TaskEntity>(observableListMyDoneTaskEntities, p -> true);
 
-                   // 2. Set the filter Predicate whenever the filter changes.
-                   txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
-                       filteredMyDoneTask.setPredicate(task -> {
-                           // If filter text is empty, display all persons.
-                           if (newValue == null || newValue.isEmpty()) {
-                               return true;
-                           }
+                // 2. Set the filter Predicate whenever the filter changes.
+                txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
+                    filteredMyDoneTaskEntity.setPredicate(task -> {
+                        // If filter text is empty, display all persons.
+                        if (newValue == null || newValue.isEmpty()) {
+                            return true;
+                        }
 
-                           // Compare first name and last name of every person with filter text.
-                           String lowerCaseFilter = newValue.toLowerCase();
+                        // Compare first name and last name of every person with filter text.
+                        String lowerCaseFilter = newValue.toLowerCase();
 
-                           if (task.getTaskFromEmployee().toLowerCase().contains(lowerCaseFilter)) {
-                               return true; // Filter matches first name.
-                           } else if (task.getTaskName().toLowerCase().contains(lowerCaseFilter)){
-                               return true;
-                           }
-                           return false; // Does not match.
-                       });
-                   });
+                        if (task.getTaskFromEmployee().toLowerCase().contains(lowerCaseFilter)) {
+                            return true; // Filter matches first name.
+                        } else if (task.getTaskName().toLowerCase().contains(lowerCaseFilter)){
+                            return true;
+                        }
+                        return false; // Does not match.
+                    });
+                });
 
-                   // 3. Wrap the FilteredList in a SortedList.
-                   SortedList<Task> sortedMyDoneTask = new SortedList<>(filteredMyDoneTask);
+                // 3. Wrap the FilteredList in a SortedList.
+                SortedList<TaskEntity> sortedMyDoneTaskEntity = new SortedList<>(filteredMyDoneTaskEntity);
 
-                   // 4. Bind the SortedList comparator to the TableView comparator.
-                   sortedMyDoneTask.comparatorProperty().bind(tableTask.comparatorProperty());
-                   colorRow();
-                   // 5. Add sorted (and filtered) data to the table.
-                   tableTask.setItems(sortedMyDoneTask);
-                   break;
-               case "fromEmpTask":
-                   // 1. Wrap the ObservableList in a FilteredList (initially display all data).
-                   FilteredList<Task> filteredFromEmpTask = new FilteredList<Task>((ObservableList<Task>) taskService.listFromEmpTasks((AuthorizedUser.getUser().getEmployeeName())), p -> true);
+                // 4. Bind the SortedList comparator to the TableView comparator.
+                sortedMyDoneTaskEntity.comparatorProperty().bind(tableTask.comparatorProperty());
+                colorRow();
+                // 5. Add sorted (and filtered) data to the table.
+                tableTask.setItems(sortedMyDoneTaskEntity);
+                break;
+            case "fromEmpTask":
+                // 1. Wrap the ObservableList in a FilteredList (initially display all data).
+                ObservableList<TaskEntity> observableListFromEmpTaskEntities = FXCollections.observableArrayList(taskService.listFromEmpTasks((AuthorizedUser.getUser().getEmployeeName())));
+                FilteredList<TaskEntity> filteredFromEmpTaskEntity = new FilteredList<TaskEntity>(observableListFromEmpTaskEntities, p -> true);
 
-                   // 2. Set the filter Predicate whenever the filter changes.
-                   txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
-                       filteredFromEmpTask.setPredicate(task -> {
-                           // If filter text is empty, display all persons.
-                           if (newValue == null || newValue.isEmpty()) {
-                               return true;
-                           }
+                // 2. Set the filter Predicate whenever the filter changes.
+                txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
+                    filteredFromEmpTaskEntity.setPredicate(task -> {
+                        // If filter text is empty, display all persons.
+                        if (newValue == null || newValue.isEmpty()) {
+                            return true;
+                        }
 
-                           // Compare first name and last name of every person with filter text.
-                           String lowerCaseFilter = newValue.toLowerCase();
+                        // Compare first name and last name of every person with filter text.
+                        String lowerCaseFilter = newValue.toLowerCase();
 
-                           if (task.getTaskName().toLowerCase().contains(lowerCaseFilter)) {
-                               return true; // Filter matches first name.
-                           } else if (task.getEmployeeName().toLowerCase().contains(lowerCaseFilter)){
-                               return true;
-                           }
-                           return false; // Does not match.
-                       });
-                   });
+                        if (task.getTaskName().toLowerCase().contains(lowerCaseFilter)) {
+                            return true; // Filter matches first name.
+                        } else if (task.getEmployeeName().toLowerCase().contains(lowerCaseFilter)){
+                            return true;
+                        }
+                        return false; // Does not match.
+                    });
+                });
 
-                   // 3. Wrap the FilteredList in a SortedList.
-                   SortedList<Task> sortedFromEmpTask = new SortedList<>(filteredFromEmpTask);
+                // 3. Wrap the FilteredList in a SortedList.
+                SortedList<TaskEntity> sortedFromEmpTaskEntity = new SortedList<>(filteredFromEmpTaskEntity);
 
-                   // 4. Bind the SortedList comparator to the TableView comparator.
-                   sortedFromEmpTask.comparatorProperty().bind(tableTask.comparatorProperty());
-                   colorRow();
-                   // 5. Add sorted (and filtered) data to the table.
-                   tableTask.setItems(sortedFromEmpTask);
-                   break;
-               case "archiveTask":
-                   // 1. Wrap the ObservableList in a FilteredList (initially display all data).
-                   FilteredList<Task> filteredArchiveTask = new FilteredList<Task>((ObservableList<Task>) taskService.listArchiveTasks(Integer.parseInt(StatusTask.CANCELED)), p -> true);
+                // 4. Bind the SortedList comparator to the TableView comparator.
+                sortedFromEmpTaskEntity.comparatorProperty().bind(tableTask.comparatorProperty());
+                colorRow();
+                // 5. Add sorted (and filtered) data to the table.
+                tableTask.setItems(sortedFromEmpTaskEntity);
+                break;
+            case "archiveTask":
+                // 1. Wrap the ObservableList in a FilteredList (initially display all data).
+                ObservableList<TaskEntity> observableListArchiveTaskEntities = FXCollections.observableArrayList(taskService.listArchiveTasks(Integer.parseInt(StatusTask.CANCELED)));
+                FilteredList<TaskEntity> filteredArchiveTaskEntity = new FilteredList<TaskEntity>(observableListArchiveTaskEntities, p -> true);
 
-                   // 2. Set the filter Predicate whenever the filter changes.
-                   txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
-                       filteredArchiveTask.setPredicate(task -> {
-                           // If filter text is empty, display all persons.
-                           if (newValue == null || newValue.isEmpty()) {
-                               return true;
-                           }
+                // 2. Set the filter Predicate whenever the filter changes.
+                txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
+                    filteredArchiveTaskEntity.setPredicate(task -> {
+                        // If filter text is empty, display all persons.
+                        if (newValue == null || newValue.isEmpty()) {
+                            return true;
+                        }
 
-                           // Compare first name and last name of every person with filter text.
-                           String lowerCaseFilter = newValue.toLowerCase();
+                        // Compare first name and last name of every person with filter text.
+                        String lowerCaseFilter = newValue.toLowerCase();
 
-                           if (task.getTaskName().toLowerCase().contains(lowerCaseFilter)) {
-                               return true; // Filter matches first name.
-                           } else if (task.getEmployeeName().toLowerCase().contains(lowerCaseFilter)){
-                               return true;
-                           } else if (task.getTaskFromEmployee().toLowerCase().contains(lowerCaseFilter)){
-                               return true;
-                           }
-                           return false; // Does not match.
-                       });
-                   });
+                        if (task.getTaskName().toLowerCase().contains(lowerCaseFilter)) {
+                            return true; // Filter matches first name.
+                        } else if (task.getEmployeeName().toLowerCase().contains(lowerCaseFilter)){
+                            return true;
+                        } else if (task.getTaskFromEmployee().toLowerCase().contains(lowerCaseFilter)){
+                            return true;
+                        }
+                        return false; // Does not match.
+                    });
+                });
 
-                   // 3. Wrap the FilteredList in a SortedList.
-                   SortedList<Task> sortedTaskArchive = new SortedList<>(filteredArchiveTask);
+                // 3. Wrap the FilteredList in a SortedList.
+                SortedList<TaskEntity> sortedTaskEntityArchive = new SortedList<>(filteredArchiveTaskEntity);
 
-                   // 4. Bind the SortedList comparator to the TableView comparator.
-                   sortedTaskArchive.comparatorProperty().bind(tableTask.comparatorProperty());
-                   colorRow();
-                   // 5. Add sorted (and filtered) data to the table.
-                   tableTask.setItems(sortedTaskArchive);
-                   break;
-               case "templateTab":
-                   // 1. Wrap the ObservableList in a FilteredList (initially display all data).
-                   FilteredList<Document> filteredDocument = new FilteredList<Document>((ObservableList<Document>) documentService.listDocuments(), p -> true);
+                // 4. Bind the SortedList comparator to the TableView comparator.
+                sortedTaskEntityArchive.comparatorProperty().bind(tableTask.comparatorProperty());
+                colorRow();
+                // 5. Add sorted (and filtered) data to the table.
+                tableTask.setItems(sortedTaskEntityArchive);
+                break;
+            case "templateTab":
+                // 1. Wrap the ObservableList in a FilteredList (initially display all data).
+                ObservableList<Document> observableListDocuments = FXCollections.observableArrayList(documentService.listDocuments());
+                FilteredList<Document> filteredDocument = new FilteredList<Document>(observableListDocuments, p -> true);
 
-                   // 2. Set the filter Predicate whenever the filter changes.
-                   txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
-                       filteredDocument.setPredicate(document -> {
-                           // If filter text is empty, display all persons.
-                           if (newValue == null || newValue.isEmpty()) {
-                               return true;
-                           }
+                // 2. Set the filter Predicate whenever the filter changes.
+                txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
+                    filteredDocument.setPredicate(document -> {
+                        // If filter text is empty, display all persons.
+                        if (newValue == null || newValue.isEmpty()) {
+                            return true;
+                        }
 
-                           // Compare first name and last name of every person with filter text.
-                           String lowerCaseFilter = newValue.toLowerCase();
+                        // Compare first name and last name of every person with filter text.
+                        String lowerCaseFilter = newValue.toLowerCase();
 
-                           if (document.getDocumentName().toLowerCase().contains(lowerCaseFilter)) {
-                               return true; // Filter matches first name.
-                           }
-                           return false; // Does not match.
-                       });
-                   });
+                        if (document.getDocumentName().toLowerCase().contains(lowerCaseFilter)) {
+                            return true; // Filter matches first name.
+                        }
+                        return false; // Does not match.
+                    });
+                });
 
-                   // 3. Wrap the FilteredList in a SortedList.
-                   SortedList<Document> sortedDocument = new SortedList<>(filteredDocument);
+                // 3. Wrap the FilteredList in a SortedList.
+                SortedList<Document> sortedDocument = new SortedList<>(filteredDocument);
 
-                   // 4. Bind the SortedList comparator to the TableView comparator.
-                   sortedDocument.comparatorProperty().bind(tableDocumentTemplate.comparatorProperty());
+                // 4. Bind the SortedList comparator to the TableView comparator.
+                sortedDocument.comparatorProperty().bind(tableDocumentTemplate.comparatorProperty());
 
-                   // 5. Add sorted (and filtered) data to the table.
-                   tableDocumentTemplate.setItems(sortedDocument);
-                   break;
-               case "calendarTab":
-                   break;
-               case "letterTab":
-                   // 1. Wrap the ObservableList in a FilteredList (initially display all data).
-                   FilteredList<Letter> filteredLetter = new FilteredList<Letter>((ObservableList<Letter>) letterService.listLetter(), p -> true);
+                // 5. Add sorted (and filtered) data to the table.
+                tableDocumentTemplate.setItems(sortedDocument);
+                break;
+            case "calendarTab":
+                break;
+            case "letterTab":
+                // 1. Wrap the ObservableList in a FilteredList (initially display all data).
+                ObservableList<Letter> observableListLetters = FXCollections.observableArrayList(letterService.listLetter());
+                FilteredList<Letter> filteredLetter = new FilteredList<Letter>( observableListLetters, p -> true);
 
-                   // 2. Set the filter Predicate whenever the filter changes.
-                   txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
-                       filteredLetter.setPredicate(letter -> {
-                           // If filter text is empty, display all persons.
-                           if (newValue == null || newValue.isEmpty()) {
-                               return true;
-                           }
+                // 2. Set the filter Predicate whenever the filter changes.
+                txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
+                    filteredLetter.setPredicate(letter -> {
+                        // If filter text is empty, display all persons.
+                        if (newValue == null || newValue.isEmpty()) {
+                            return true;
+                        }
 
-                           // Compare first name and last name of every person with filter text.
-                           String lowerCaseFilter = newValue.toLowerCase();
+                        // Compare first name and last name of every person with filter text.
+                        String lowerCaseFilter = newValue.toLowerCase();
 
-                           if (letter.getLetterName().toLowerCase().contains(lowerCaseFilter)) {
-                               return true; // Filter matches first name.
-                           } else if (letter.getLetterNumber().toLowerCase().contains(lowerCaseFilter)) {
-                               return true; // Filter matches last name.
-                           }
-                           return false; // Does not match.
-                       });
-                   });
+                        if (letter.getLetterName().toLowerCase().contains(lowerCaseFilter)) {
+                            return true; // Filter matches first name.
+                        } else if (letter.getLetterNumber().toLowerCase().contains(lowerCaseFilter)) {
+                            return true; // Filter matches last name.
+                        }
+                        return false; // Does not match.
+                    });
+                });
 
-                   // 3. Wrap the FilteredList in a SortedList.
-                   SortedList<Letter> sortedLetter = new SortedList<>(filteredLetter);
+                // 3. Wrap the FilteredList in a SortedList.
+                SortedList<Letter> sortedLetter = new SortedList<>(filteredLetter);
 
-                   // 4. Bind the SortedList comparator to the TableView comparator.
-                   sortedLetter.comparatorProperty().bind(tableLetter.comparatorProperty());
+                // 4. Bind the SortedList comparator to the TableView comparator.
+                sortedLetter.comparatorProperty().bind(tableLetter.comparatorProperty());
 
-                   // 5. Add sorted (and filtered) data to the table.
-                   tableLetter.setItems(sortedLetter);
-                   break;
-               default:
-                   break;
+                // 5. Add sorted (and filtered) data to the table.
+                tableLetter.setItems(sortedLetter);
+                break;
+            default:
+                break;
 
-           }
+        }
 
 
     }

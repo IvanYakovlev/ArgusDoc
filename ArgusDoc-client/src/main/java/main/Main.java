@@ -23,38 +23,12 @@ public class Main extends Application {
     private double yOffset = 0;
 
 
-/*    private AccessService accessService;
-    private DepartmentService departmentService;
-    private DocumentService documentService;
-    private EmployeeService employeeService;
-    private EventService eventService;
-    private LetterService letterService;
-    private TaskService taskService;*/
-
-
         @Override
     public void start(Stage primaryStage) throws Exception {
 
-            /*Registry registry = LocateRegistry.getRegistry("localhost", Registry.REGISTRY_PORT);
-
-            accessService = (AccessService) registry.lookup("accessService");
-            departmentService = (DepartmentService) registry.lookup("departmentService");
-            documentService = (DocumentService) registry.lookup("documentService");
-            employeeService = (EmployeeService) registry.lookup("employeeService");
-            eventService = (EventService) registry.lookup("eventService");
-            letterService = (LetterService) registry.lookup("letterService");
-            taskService = (TaskService) registry.lookup("taskService");*/
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../viewFXML/Authorization_window.fxml"));
 
-
             Parent root = loader.load();
-
-           /* AuthorizationController authorizationController = loader.getController();
-            authorizationController.setMain(this);*/
-
-
-
 
             primaryStage.setTitle("Авторизация");
             primaryStage.setMinHeight(120);
@@ -62,8 +36,6 @@ public class Main extends Application {
             primaryStage.setResizable(false);
             primaryStage.getIcons().add(new Image("images/icon.jpg"));
             primaryStage.initStyle(StageStyle.TRANSPARENT);
-
-
 
             root.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
@@ -83,10 +55,7 @@ public class Main extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
 
-
         }
-
-
 
     public static void main(String[] args) {
         launch(args);
