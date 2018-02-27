@@ -29,49 +29,41 @@ public class DepartmentServiceImpl implements DepartmentService {
         this.mapDepartment = mapDepartment;
     }
 
-    public void addDepartment(Department department) throws RemoteException {
+    public void addDepartment(Department department) throws RemoteException, SQLException {
 
         this.dBconnection=new DBconnection();
 
-        try {
+
             PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("INSERT INTO Departments(Department_name) VALUES (?)");
             preparedStatement.setString(1,department.getDepartmentName());
             preparedStatement.execute();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Override
-    public void updateDepartment(Department department) throws RemoteException{
+    public void updateDepartment(Department department) throws RemoteException, SQLException {
         this.dBconnection =new DBconnection();
 
-        try {
             PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE Departments SET Department_name=? WHERE Department_id=?");
             preparedStatement.setInt(2,department.getDepartmentId());
             preparedStatement.setString(1,department.getDepartmentName());
             preparedStatement.execute();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
     }
 
 
 
 
-    public void removeDepartment(int id) throws RemoteException{
+    public void removeDepartment(int id) throws RemoteException, SQLException {
         dBconnection = new DBconnection();
 
-        try {
             PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("DELETE FROM Departments WHERE Department_id = ?");
             preparedStatement.setInt(1,id);
             preparedStatement.execute();
             mapDepartment.remove(id);
-        } catch (SQLException e) {
-            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Удаление невозможно, так как есть пользователи в данном отделе!");
-        }
+
     }
 
     public List<Department> listDepartments() throws RemoteException{
@@ -87,8 +79,8 @@ public class DepartmentServiceImpl implements DepartmentService {
                 mapDepartment.put(department.getDepartmentId(),department.getDepartmentName());
                 listData.add(department);
             }
-        } catch (Exception ex) {
-            System.out.println("error list");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return listData;
 

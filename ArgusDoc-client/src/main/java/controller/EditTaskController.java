@@ -1,8 +1,8 @@
 package controller;
 
 import argusDocSettings.ServerFilePath;
-import authorizedUser.AuthorizedUser;
 import com.jfoenix.controls.*;
+import entity.Employee;
 import entity.TaskEntity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,6 +24,9 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 
 public class EditTaskController {
+
+    public Employee authorizedUser ;
+
     MainController mainController = new MainController();
     final FileChooser fileChooser=new FileChooser();
     File attachmentFile;
@@ -97,7 +100,7 @@ public class EditTaskController {
             if (attachmentFile!=null) {
                 taskEntity.setTaskAttachment(ServerFilePath.TASKS_FILE_PATH + attachmentFile.getName());
             }
-            taskEntity.setTaskFromEmployee(AuthorizedUser.getUser().getEmployeeName());
+            taskEntity.setTaskFromEmployee(authorizedUser.getEmployeeName());
             taskEntity.setEmployeeId(employeeService.getIdEmployeeByName(comboBoxEmployee.getValue()));
             taskEntity.setTaskTerm(java.sql.Date.valueOf(datePickerTask.getValue()));
             taskEntity.setTaskTime(java.sql.Time.valueOf(timePickerTask.getValue()));

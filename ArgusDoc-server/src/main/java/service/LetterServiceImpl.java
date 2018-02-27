@@ -25,13 +25,13 @@ public class LetterServiceImpl implements LetterService {
     DBconnection dBconnection;
 
     @Override
-    public void addLetter(Letter letter) throws IOException, RemoteException {
+    public void addLetter(Letter letter) throws IOException, RemoteException, SQLException {
 
 
 
         dBconnection=new DBconnection();
 
-        try {
+
 
             //Копируем файл на сервер
             File destFile = new File(letter.getLetterFilePath());
@@ -47,54 +47,24 @@ public class LetterServiceImpl implements LetterService {
             preparedStatement.execute();
 
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            //alert.setTitle("Delete File");
-            alert.setHeaderText("Письмо с таким именем уже существует! Хотите заменить?");
 
-
-            // option != null.
-            Optional<ButtonType> option = alert.showAndWait();
-
-            if (option.get() == null) {
-
-            } else if (option.get() == ButtonType.OK) {
-                Path path = Paths.get(letter.getLetterFilePath());
-                Files.delete(path);
-                File destFile = new File(letter.getLetterFilePath());
-                Files.copy(letter.getAttachmentFile().toPath(), destFile.toPath());
-
-
-
-            } else if (option.get() == ButtonType.CANCEL) {
-
-            } else {
-
-            }
-        }
 
     }
 
     @Override
-    public void removeLetter(int id, String filePath) throws RemoteException{
+    public void removeLetter(int id, String filePath) throws IOException, SQLException {
         dBconnection = new DBconnection();
-        try {
+
             PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("DELETE  FROM  LETTERS WHERE Letter_id = ?");
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
 
             //удаляем файл с сервера
             Path path = Paths.get(filePath);
-            try {
+
                 Files.delete(path);
-            } catch (IOException e) {
-                System.out.println("Файл уже удален!");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+
     }
 
     @Override
@@ -103,9 +73,9 @@ public class LetterServiceImpl implements LetterService {
     }
 
     @Override
-    public void openLetter(int id) throws RemoteException{
+    public void openLetter(int id) throws IOException, SQLException {
         dBconnection = new DBconnection();
-        try {
+
             String sql = "SELECT Letter_filepath FROM LETTERS WHERE Letter_id=" + id;
             ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
             if (resultSet.next()) {
@@ -113,19 +83,11 @@ public class LetterServiceImpl implements LetterService {
                 String filepath = resultSet.getString("Letter_filepath");
 
                 File file = new File(filepath);
-                try {
-                    java.awt.Desktop.getDesktop().open(file);
-                }catch (java.lang.IllegalArgumentException e){
-                    ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Письмо было удалено с сервера!");
-                }
 
+                java.awt.Desktop.getDesktop().open(file);
 
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Override

@@ -179,7 +179,7 @@ private FontAwesomeIconView closeSettingWindow;
 
     }
 
-    public void addDepartmentButton(ActionEvent actionEvent) throws SQLException, RemoteException {
+    public void addDepartmentButton(ActionEvent actionEvent) throws RemoteException {
         if (txtDepartment.getText().isEmpty()) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Введите название отдела!");
         } else {
@@ -188,7 +188,7 @@ private FontAwesomeIconView closeSettingWindow;
 
             try {
                 departmentService.addDepartment(department);
-            }catch (IllegalStateException e){
+            }catch (SQLException e){
                 ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Отдел с таким названием уже существует!");
             }
 
@@ -200,10 +200,16 @@ private FontAwesomeIconView closeSettingWindow;
     }
 
     public void removeDepartmentButton(ActionEvent actionEvent) throws RemoteException {
-        departmentService.removeDepartment(this.idDepartment);
+
+        try {
+            departmentService.removeDepartment(this.idDepartment);
+
+        }catch (SQLException e){
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Удаление невозможно, так как есть пользователи в данном отделе!");
+        }
+
         clearDepartmentText();
         refreshTableDepartment();
-
     }
 
     public void clickTableDepartment(MouseEvent mouseEvent) {
@@ -224,7 +230,7 @@ private FontAwesomeIconView closeSettingWindow;
 
             try {
                 departmentService.updateDepartment(department);
-            }catch (IllegalStateException e){
+            }catch (SQLException e){
                 ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Отдел с таким названием уже существует!");
             }
 
@@ -275,14 +281,22 @@ private FontAwesomeIconView closeSettingWindow;
             employee.setDepartmentId(departmentService.getIdDepartmentByName(comboBoxEmployee_Department.getValue()));
             employee.setAccessId(accessService.getIdAccessByName(comboBoxEmployee_Access.getValue()));
             employee.setEmployeeId(this.idEmployee);
-            employeeService.updateEmployee(employee);
+            try {
+                employeeService.updateEmployee(employee);
+            } catch (SQLException e) {
+                ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Данный пользователь уже существует!");
+            }
 
             refreshTableEmployee();
         }
     }
 
     public void removeEmployeeButton(ActionEvent actionEvent) throws RemoteException {
-        employeeService.removeEmployee(this.idEmployee);
+        try {
+            employeeService.removeEmployee(this.idEmployee);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         clearEmployeeTab();
         refreshTableEmployee();
@@ -299,14 +313,18 @@ private FontAwesomeIconView closeSettingWindow;
             employee.setEmployeePassword(txtPasswordEmployee.getText());
             employee.setDepartmentId(departmentService.getIdDepartmentByName(comboBoxEmployee_Department.getValue()));
             employee.setAccessId(accessService.getIdAccessByName(comboBoxEmployee_Access.getValue()));
-            employeeService.addEmployee(employee);
+            try {
+                employeeService.addEmployee(employee);
+            } catch (SQLException e) {
+                ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Данный пользователь уже существует!");
+            }
             clearEmployeeTab();
             refreshTableEmployee();
         }
     }
 
 
-//ocuments tab CRUD
+//Documents tab CRUD
 
     public void addDocumentButton(ActionEvent actionEvent) throws IOException {
         if (comboBoxDocument_Department.getValue()==null) {
@@ -321,7 +339,11 @@ private FontAwesomeIconView closeSettingWindow;
                 document.setDocumentFile(choseFile);
                 document.setDocumentFilePath(ServerFilePath.DOCUMENTS_FILE_PATH+choseFile.getName());
                 document.setDepartmentId(departmentService.getIdDepartmentByName(comboBoxDocument_Department.getValue()));
-                documentService.addDocument(document);
+                try {
+                    documentService.addDocument(document);
+                } catch (SQLException e) {
+                    ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Документ с таким названием уже существует!");
+                }
                 clearDocumentTab();
                 refreshTableDocument();
             }
@@ -343,7 +365,14 @@ private FontAwesomeIconView closeSettingWindow;
 
     public void removeDocumentButton(ActionEvent actionEvent) throws RemoteException {
         if (document.getDocumentFilePath()!=null) {
-            documentService.removeDocument(document.getDocumentId(), document.getDocumentFilePath());
+
+            try {
+                documentService.removeDocument(document.getDocumentId(), document.getDocumentFilePath());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             clearDocumentTab();
             refreshTableDocument();

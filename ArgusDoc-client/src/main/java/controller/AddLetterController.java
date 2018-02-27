@@ -1,12 +1,14 @@
 package controller;
 
 import argusDocSettings.ServerFilePath;
-import authorizedUser.AuthorizedUser;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import entity.Employee;
 import entity.TaskEntity;
+import javafx.scene.control.ButtonType;
 import service.*;
 import dialog.ADInfo;
 import javafx.event.ActionEvent;
@@ -19,10 +21,18 @@ import entity.StatusTask;
 import org.controlsfx.control.CheckComboBox;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.util.Optional;
 
 public class AddLetterController {
+
+
+    public Employee authorizedUser ;
 
     @FXML
     CheckComboBox<String> checkComboBoxEmployee;
@@ -79,7 +89,7 @@ public class AddLetterController {
                 taskEntity.setTaskName(txtLetterName.getText());
                 taskEntity.setTaskText(textAreaLetter.getText());
                 taskEntity.setTaskAttachment(ServerFilePath.LETTERS_FILE_PATH + attachmentFile.getName());
-                taskEntity.setTaskFromEmployee(AuthorizedUser.getUser().getEmployeeName());
+                taskEntity.setTaskFromEmployee(authorizedUser.getEmployeeName());
                 taskEntity.setEmployeeId(employeeService.getIdEmployeeByName(checkComboBoxEmployee.getItems().get(checkComboBoxEmployee.getCheckModel().getCheckedIndices().get(i))));
                 taskEntity.setTaskTerm(java.sql.Date.valueOf(datePickerLetter.getValue()));
                 taskEntity.setStatusTaskId(StatusTask.NOT_DONE);
@@ -100,7 +110,35 @@ public class AddLetterController {
             letter.setLetterPassword(Integer.parseInt(txtLetterPassword.getText()));
             letter.setLetterNumber(txtLetterNumber.getText());
             letter.setLetterFilePath(ServerFilePath.LETTERS_FILE_PATH+attachmentFile.getName());
+            try {
                 letterService.addLetter(letter);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }catch (IOException e) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                //alert.setTitle("Delete File");
+                alert.setHeaderText("Письмо с таким именем уже существует! Хотите заменить?");
+
+
+                // option != null.
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if (option.get() == null) {
+
+                } else if (option.get() == ButtonType.OK) {
+                    Path path = Paths.get(letter.getLetterFilePath());
+                    Files.delete(path);
+                    File destFile = new File(letter.getLetterFilePath());
+                    Files.copy(letter.getAttachmentFile().toPath(), destFile.toPath());
+
+
+
+                } else if (option.get() == ButtonType.CANCEL) {
+
+                } else {
+
+                }
+            }
 
             Stage stage = (Stage) addLetterButton.getScene().getWindow();
             stage.close();

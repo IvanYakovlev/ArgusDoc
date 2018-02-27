@@ -31,7 +31,7 @@ public class ServiceRegistry {
         } catch (RemoteException e) {
             System.out.println("сервер не запущен");
         } catch (NotBoundException e) {
-            e.printStackTrace();
+            System.out.println("сервер не запущен");
         }
     }
 

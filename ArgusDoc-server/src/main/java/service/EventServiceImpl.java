@@ -17,9 +17,9 @@ public class EventServiceImpl implements EventService {
 
 
     @Override
-    public void addEvent(Event event) throws RemoteException {
+    public void addEvent(Event event) throws RemoteException, SQLException {
         this.dBconnection = new DBconnection();
-        try {
+
             PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("INSERT INTO EVENTS(Event_name, Event_date, Event_time, Employee_id) VALUES (?,?,?,?)");
             preparedStatement.setString(1,event.getEventName());
             preparedStatement.setDate(2,event.getEventDate());
@@ -27,22 +27,18 @@ public class EventServiceImpl implements EventService {
             preparedStatement.setInt(4,event.getEmployeeId());
 
             preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Override
-    public void removeEvent(Event event) throws RemoteException{
+    public void removeEvent(Event event) throws RemoteException, SQLException {
         this.dBconnection = new DBconnection();
-        try {
+
             PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("DELETE FROM EVENTS WHERE Event_id=?");
             preparedStatement.setInt(1,event.getEventId());
 
             preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Override

@@ -47,7 +47,7 @@ public class AccessServiceImpl implements AccessService {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error access list");
+            e.printStackTrace();
         }
         return listData;
     }

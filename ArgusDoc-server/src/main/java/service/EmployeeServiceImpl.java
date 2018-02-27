@@ -21,9 +21,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     DBconnection dBconnection;
     Map<Integer, String> mapEmployee = new HashMap<Integer, String>();
 
-    public void addEmployee(Employee employee) throws RemoteException{
+    public void addEmployee(Employee employee) throws RemoteException, SQLException {
         this.dBconnection = new DBconnection();
-        try {
+
             PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("INSERT INTO Employees(Employee_name,Employee_login,Employee_password,Department_id,Access_id) VALUES (?,?,?,?,?)");
             preparedStatement.setString(1,employee.getEmployeeName());
             preparedStatement.setString(2,employee.getEmployeeLogin());
@@ -31,16 +31,13 @@ public class EmployeeServiceImpl implements EmployeeService {
             preparedStatement.setInt(4,employee.getDepartmentId());
             preparedStatement.setInt(5,employee.getAccessId());
             preparedStatement.execute();
-        } catch (SQLException e) {
-            //e.printStackTrace();
-            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Данный пользователь уже существует!");
-        }
+
     }
 
     @Override
-    public void updateEmployee(Employee employee) throws RemoteException{
+    public void updateEmployee(Employee employee) throws RemoteException, SQLException {
         this.dBconnection = new DBconnection();
-        try {
+
             PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("UPDATE Employees SET Employee_name=?,Employee_login=?,Employee_password=?,Department_id=?,Access_id=? WHERE Employee_id=?");
             preparedStatement.setString(1,employee.getEmployeeName());
             preparedStatement.setString(2,employee.getEmployeeLogin());
@@ -49,21 +46,16 @@ public class EmployeeServiceImpl implements EmployeeService {
             preparedStatement.setInt(5,employee.getAccessId());
             preparedStatement.setInt(6,employee.getEmployeeId());
             preparedStatement.execute();
-        } catch (SQLException e) {
-           e.printStackTrace();
-            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Данный пользователь уже существует!");
-        }
+
     }
 
-    public void removeEmployee(int id) throws RemoteException{
+    public void removeEmployee(int id) throws RemoteException, SQLException {
         this.dBconnection = new DBconnection();
-        try {
+
             PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("DELETE FROM Employees WHERE Employee_id=?");
             preparedStatement.setInt(1,id);
             preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
 
 
     }
@@ -112,9 +104,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee getEmployeeByPassword(String password) throws RemoteException {
+    public Employee getEmployeeByPassword(String password) throws RemoteException, SQLException {
         Employee employee= new Employee();
-        try {
+
             this.dBconnection = new DBconnection();
 
             ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT * FROM Employees, Departments,Access WHERE Employees.Department_id=Departments.Department_id AND Access.Access_id=Employees.Access_id AND Employee_password = '"+password+"'");
@@ -132,9 +124,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
             }
 
-        } catch (SQLException e) {
 
-        }
         return employee;
     }
 }

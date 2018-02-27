@@ -21,11 +21,9 @@ public class DocumentServiceImpl implements DocumentService {
     DBconnection dBconnection;
     Map<Integer, String> mapDocument = new HashMap<>();
 
-    public void addDocument(Document document) throws IOException,RemoteException {
+    public void addDocument(Document document) throws IOException, RemoteException, SQLException {
 
         this.dBconnection = new DBconnection();
-        try {
-
 
             if (document.getDocumentFile().length() > 50000000) {
                 ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Размер загружаемого документа не должен превышать 50мб!");
@@ -43,9 +41,7 @@ public class DocumentServiceImpl implements DocumentService {
                 Files.copy(document.getDocumentFile().toPath(), destFile.toPath());
 
             }
-        } catch (SQLException e) {
-            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Документ с таким названием уже существует!");
-        }
+
     }
            /* this.dBconnection = new DBconnection();
             File file;
@@ -79,10 +75,10 @@ public class DocumentServiceImpl implements DocumentService {
             }*/
 
 
-    public void removeDocument(int id, String filePath) throws RemoteException{
+    public void removeDocument(int id, String filePath) throws IOException, SQLException {
         dBconnection = new DBconnection();
 
-        try {
+
             //удаляем запись в таблице
             PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("DELETE FROM DOCUMENTS WHERE Document_id = ?");
             preparedStatement.setInt(1,id);
@@ -91,16 +87,12 @@ public class DocumentServiceImpl implements DocumentService {
 
             //удаляем файл с сервера
             Path path = Paths.get(filePath);
-            try {
+
                 Files.delete(path);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+
     }
 
     @Override
@@ -174,10 +166,10 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public void openDocument(int id)  throws RemoteException{
+    public void openDocument(int id) throws IOException, SQLException {
 
         dBconnection = new DBconnection();
-        try {
+
             String sql = "SELECT Document_filepath FROM DOCUMENTS WHERE Document_id=" + id;
             ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
             if (resultSet.next()) {
@@ -187,11 +179,7 @@ public class DocumentServiceImpl implements DocumentService {
                 File file = new File(filepath);
                 java.awt.Desktop.getDesktop().open(file);
              }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
 
 
 
@@ -242,9 +230,9 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public void printDocument(int id) throws RemoteException{
+    public void printDocument(int id) throws IOException, SQLException {
         dBconnection = new DBconnection();
-        try {
+
             String sql = "SELECT Document_filepath FROM DOCUMENTS WHERE Document_id=" + id;
             ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
             if (resultSet.next()) {
@@ -254,11 +242,7 @@ public class DocumentServiceImpl implements DocumentService {
                 File file = new File(filepath);
                 java.awt.Desktop.getDesktop().print(file);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
 
 
     /*    File file1 = new File("C:\\Temp\\" + mapDocument.get(id));
