@@ -21,6 +21,7 @@ import service.*;
 
 
 import java.io.IOException;
+import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 
@@ -59,10 +60,6 @@ public class AuthorizationController {
         Employee authorizedUser = null;
         try {
             authorizedUser = employeeService.getEmployeeByPassword(txtPasswordEnter.getText());
-        } catch (SQLException e) {
-            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Данный пользователь не найден!");
-        }
-        System.out.println(authorizedUser.getEmployeeName());
 
             if (authorizedUser.getEmployeeName() == null) {
                 dialog.ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Пользователь не найден");
@@ -95,6 +92,18 @@ public class AuthorizationController {
                 }
 
             }
+
+
+        } catch (SQLException e) {
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Данный пользователь не найден!");
+        }catch (NoSuchObjectException e){
+            System.out.println("ШО ЗА НАХ");
+        }catch (NullPointerException e){
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Сервер незапущен!");
+        }
+
+
+
 
 
     }

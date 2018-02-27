@@ -81,7 +81,8 @@ public class MainController {
     private EventService eventService = ServiceRegistry.eventService;
 
 // Window control
-
+    @FXML
+    private JFXProgressBar progressBar = new JFXProgressBar();
 
     @FXML
     private JFXButton settingTabButton = new JFXButton();
@@ -599,8 +600,7 @@ Calendar tab
 
     public void myTasksButton(ActionEvent actionEvent) throws RemoteException {
 
-        statusTab="myTask";
-        taskEntity =null;
+
         anchorTask.toFront();
         myTaskBtnBar.toFront();
 
@@ -608,6 +608,21 @@ Calendar tab
         tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
         Task task = new Task<Void>() {
             @Override public Void call() throws RemoteException {
+                tableTask.setDisable(true);
+                progressBar.setVisible(true);
+                final int max = 1000000;
+                for (int i=1; i<=max; i++) {
+                    if (isCancelled()) {
+                        break;
+                    }
+                    updateProgress(i, max);
+                }
+
+
+                statusTab="myTask";
+                taskEntity =null;
+
+
 
 
 
@@ -622,18 +637,20 @@ Calendar tab
                 tableTask.setItems(observableListMyTaskEntities);
                 // задаем размер колонок в таблице
                 colorRow();
+                progressBar.setVisible(false);
+                tableTask.setDisable(false);
                 return null;
             }
         };
-        new Thread(task).start();
 
+        new Thread(task).start();
+        progressBar.progressProperty().bind(task.progressProperty());
 
 
     }
 
     public void myDoneTasksButton(ActionEvent actionEvent) throws RemoteException {
-        statusTab="myDoneTask";
-        taskEntity =null;
+
         anchorTask.toFront();
         myTaskDoneBtnBar.toFront();
 
@@ -642,6 +659,17 @@ Calendar tab
         Task task = new Task<Void>() {
             @Override public Void call() throws RemoteException {
 
+                tableTask.setDisable(true);
+                progressBar.setVisible(true);
+                final int max = 1000000;
+                for (int i=1; i<=max; i++) {
+                    if (isCancelled()) {
+                        break;
+                    }
+                    updateProgress(i, max);
+                }
+                statusTab="myDoneTask";
+                taskEntity =null;
 
 
                 nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
@@ -655,17 +683,19 @@ Calendar tab
                 tableTask.setItems(observableListMyDoneTaskEntities);
                 // задаем размер колонок в таблице
                 colorRow();
+
+                tableTask.setDisable(false);
+                progressBar.setVisible(false);
                 return null;
             }
         };
         new Thread(task).start();
-
+        progressBar.progressProperty().bind(task.progressProperty());
 
     }
     public void fromEmpTasjButton(ActionEvent actionEvent) throws RemoteException {
 
-        statusTab="fromEmpTask";
-        taskEntity =null;
+
         anchorTask.toFront();
         fromEmpTaskBtnBar.toFront();
 
@@ -674,6 +704,17 @@ Calendar tab
         Task task = new Task<Void>() {
             @Override public Void call() throws RemoteException {
 
+                tableTask.setDisable(true);
+                progressBar.setVisible(true);
+                final int max = 1000000;
+                for (int i=1; i<=max; i++) {
+                    if (isCancelled()) {
+                        break;
+                    }
+                    updateProgress(i, max);
+                }
+                statusTab="fromEmpTask";
+                taskEntity =null;
 
                 nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
                 employeeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
@@ -686,19 +727,22 @@ Calendar tab
                 tableTask.setItems(observableListFromEmpTaskEntities);
                 colorRow();
                 // задаем размер колонок в таблице
+
+
+                tableTask.setDisable(false);
+                progressBar.setVisible(false);
                 return null;
             }
         };
         new Thread(task).start();
-
+        progressBar.progressProperty().bind(task.progressProperty());
 
 
 
     }
 
     public void archiveTasks(ActionEvent actionEvent) throws RemoteException {
-        statusTab="archiveTask";
-        taskEntity =null;
+
         anchorTask.toFront();
         archiveTaskBtnBar.toFront();
 
@@ -707,6 +751,18 @@ Calendar tab
         Task task = new Task<Void>() {
             @Override public Void call() throws RemoteException {
 
+                tableTask.setDisable(true);
+                progressBar.setVisible(true);
+                final int max = 1000000;
+                for (int i=1; i<=max; i++) {
+                    if (isCancelled()) {
+                        break;
+                    }
+                    updateProgress(i, max);
+                }
+
+                statusTab="archiveTask";
+                taskEntity =null;
 
                 nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
                 sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
@@ -720,11 +776,14 @@ Calendar tab
                 tableTask.setItems(observableListrchiveTaskEntities);
                 colorRow();
                 // задаем размер колонок в таблице
+
+                tableTask.setDisable(false);
+                progressBar.setVisible(false);
                 return null;
             }
         };
         new Thread(task).start();
-
+        progressBar.progressProperty().bind(task.progressProperty());
 
 
 
@@ -759,7 +818,15 @@ Calendar tab
 
         Task task = new Task<Void>() {
             @Override public Void call() throws RemoteException {
-
+                tableDocumentTemplate.setDisable(true);
+                progressBar.setVisible(true);
+                final int max = 1000000;
+                for (int i=1; i<=max; i++) {
+                    if (isCancelled()) {
+                        break;
+                    }
+                    updateProgress(i, max);
+                }
 
                 statusTab="templateTab";
 
@@ -769,7 +836,8 @@ Calendar tab
                 ObservableList<String> observableListDepartmentName = FXCollections.observableArrayList(departmentService.listDepartmentName());
                 comboBoxDocument_Template.setItems(observableListDepartmentName);
 
-
+                tableDocumentTemplate.setDisable(false);
+                progressBar.setVisible(false);
 
 
 
@@ -777,24 +845,33 @@ Calendar tab
             }
         };
         new Thread(task).start();
-
+        progressBar.progressProperty().bind(task.progressProperty());
     }
 
     public void calendarTabButton(ActionEvent actionEvent) {
 
 
-
-        statusTab="calendarTab";
         anchorCalendar.toFront();
 
         Task task = new Task<Void>() {
             @Override public Void call() throws RemoteException {
 
+                progressBar.setVisible(true);
+                final int max = 1000000;
+                for (int i=1; i<=max; i++) {
+                    if (isCancelled()) {
+                        break;
+                    }
+                    updateProgress(i, max);
+                }
+                statusTab="calendarTab";
 
+                progressBar.setVisible(false);
                 return null;
             }
         };
         new Thread(task).start();
+        progressBar.progressProperty().bind(task.progressProperty());
     }
 
     public void letterTabButton(ActionEvent actionEvent) throws RemoteException {
@@ -803,14 +880,26 @@ Calendar tab
 
         Task task = new Task<Void>() {
             @Override public Void call() throws RemoteException {
-
+                tableLetter.setDisable(true);
+                progressBar.setVisible(true);
+                final int max = 1000000;
+                for (int i=1; i<=max; i++) {
+                    if (isCancelled()) {
+                        break;
+                    }
+                    updateProgress(i, max);
+                }
                 ObservableList<Letter> observableListLetter = FXCollections.observableArrayList(letterService.listLetter());
                 tableLetter.setItems(observableListLetter);
 
+
+                tableLetter.setDisable(false);
+                progressBar.setVisible(false);
                 return null;
             }
         };
         new Thread(task).start();
+        progressBar.progressProperty().bind(task.progressProperty());
 
     }
 
