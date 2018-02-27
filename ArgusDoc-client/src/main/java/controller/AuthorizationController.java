@@ -82,7 +82,7 @@ public class AuthorizationController {
                     stage.setTitle("Аргус");
                     stage.setMinHeight(715);
                     stage.setMinWidth(1000);
-                    stage.getIcons().add(new Image("images/icon.jpg"));
+                    stage.getIcons().add(new Image("images/icon2.jpg"));
 
 
                     stage.show();
