@@ -15,8 +15,6 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -27,15 +25,7 @@
    <children>
       <AnchorPane layoutX="31.0" prefHeight="500.0" prefWidth="170.0" styleClass="AnchorPane2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fitHeight="92.0" fitWidth="109.0" layoutX="47.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/icon2.jpg" />
-               </image></ImageView>
-            <Label layoutX="72.0" layoutY="46.0" prefHeight="17.0" prefWidth="73.0">
-               <font>
-                  <Font name="Gentium Basic" size="24.0" />
-               </font>
-            </Label>
+            <FontAwesomeIconView fill="WHITE" glyphName="BARS" layoutX="8.0" layoutY="31.0" size="20" AnchorPane.topAnchor="20.0" />
             <AnchorPane prefHeight="528.0" prefWidth="30.0" styleClass="AnchorPane3" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <FontAwesomeIconView fill="WHITE" glyphName="BARS" layoutX="8.0" layoutY="31.0" size="20" AnchorPane.topAnchor="20.0" />
@@ -45,7 +35,7 @@
                   <DropShadow />
                </effect>
             </AnchorPane>
-            <VBox layoutY="75.0" prefHeight="625.0" prefWidth="170.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="75.0">
+            <VBox layoutY="75.0" prefHeight="625.0" prefWidth="170.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="140.0">
                <children>
                   <JFXButton fx:id="myTasksButton" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#myTasksButton" styleClass="JFXButton" text="   Задачи">
                      <graphic>
@@ -78,6 +68,7 @@
                   </JFXButton>
                </children>
             </VBox>
+            <FontAwesomeIconView fill="WHITE" glyphName="SHIELD" layoutX="3.0" layoutY="47.0" size="80" textAlignment="CENTER" wrappingWidth="122.00000727176666" />
          </children>
          <effect>
             <DropShadow />
@@ -184,7 +175,8 @@
                      </children>
                   </AnchorPane>
                   <JFXButton layoutX="583.0" layoutY="9.0" onAction="#showAllEventButton" prefHeight="17.0" prefWidth="122.0" styleClass="blue-btn" text="показать все" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
-               </children></AnchorPane>
+               </children>
+            </AnchorPane>
             <JFXProgressBar fx:id="progressBar" layoutX="430.0" layoutY="350.0" progress="0.0" visible="false" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
          </children>
       </AnchorPane>

@@ -82,7 +82,7 @@ public class AuthorizationController {
                     stage.setTitle("Аргус");
                     stage.setMinHeight(715);
                     stage.setMinWidth(1000);
-                    stage.getIcons().add(new Image("images/icon2.jpg"));
+                    stage.getIcons().add(new Image("images/1.jpg"));
 
 
                     stage.show();
@@ -97,7 +97,7 @@ public class AuthorizationController {
         } catch (SQLException e) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Данный пользователь не найден!");
         }catch (NoSuchObjectException e){
-            System.out.println("ШО ЗА НАХ");
+            e.printStackTrace();
         }catch (NullPointerException e){
             ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Сервер незапущен!");
         }

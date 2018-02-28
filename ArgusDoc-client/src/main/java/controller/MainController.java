@@ -610,18 +610,18 @@ Calendar tab
             @Override public Void call() throws RemoteException {
                 tableTask.setDisable(true);
                 progressBar.setVisible(true);
-                final int max = 1000000;
-                for (int i=1; i<=max; i++) {
+
+                final int max = 100;
+               /* for (int i=1; i<=max; i++) {
                     if (isCancelled()) {
                         break;
                     }
                     updateProgress(i, max);
-                }
+                }*/
 
 
                 statusTab="myTask";
                 taskEntity =null;
-
 
 
 
@@ -633,12 +633,20 @@ Calendar tab
                 statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
 
+                updateProgress(60, max);
+
                 ObservableList<TaskEntity> observableListMyTaskEntities = FXCollections.observableArrayList(taskService.listMyTasks(authorizedUser.getEmployeeId()));
                 tableTask.setItems(observableListMyTaskEntities);
+
+
                 // задаем размер колонок в таблице
                 colorRow();
+
                 progressBar.setVisible(false);
                 tableTask.setDisable(false);
+                updateProgress(max, max);
+
+
                 return null;
             }
         };
@@ -661,13 +669,13 @@ Calendar tab
 
                 tableTask.setDisable(true);
                 progressBar.setVisible(true);
-                final int max = 1000000;
-                for (int i=1; i<=max; i++) {
+                final int max = 100;
+               /* for (int i=1; i<=max; i++) {
                     if (isCancelled()) {
                         break;
                     }
                     updateProgress(i, max);
-                }
+                }*/
                 statusTab="myDoneTask";
                 taskEntity =null;
 
@@ -679,13 +687,18 @@ Calendar tab
                 statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
 
+                updateProgress(60, max);
                 ObservableList<TaskEntity> observableListMyDoneTaskEntities = FXCollections.observableArrayList(taskService.listMyDoneTasks(authorizedUser.getEmployeeId()));
                 tableTask.setItems(observableListMyDoneTaskEntities);
+
+
+
                 // задаем размер колонок в таблице
                 colorRow();
 
                 tableTask.setDisable(false);
                 progressBar.setVisible(false);
+                updateProgress(max, max);
                 return null;
             }
         };
@@ -706,7 +719,7 @@ Calendar tab
 
                 tableTask.setDisable(true);
                 progressBar.setVisible(true);
-                final int max = 1000000;
+                final int max = 1000;
                 for (int i=1; i<=max; i++) {
                     if (isCancelled()) {
                         break;
@@ -753,7 +766,7 @@ Calendar tab
 
                 tableTask.setDisable(true);
                 progressBar.setVisible(true);
-                final int max = 1000000;
+                final int max = 1000;
                 for (int i=1; i<=max; i++) {
                     if (isCancelled()) {
                         break;
@@ -820,7 +833,7 @@ Calendar tab
             @Override public Void call() throws RemoteException {
                 tableDocumentTemplate.setDisable(true);
                 progressBar.setVisible(true);
-                final int max = 1000000;
+                final int max = 1000;
                 for (int i=1; i<=max; i++) {
                     if (isCancelled()) {
                         break;
@@ -857,7 +870,7 @@ Calendar tab
             @Override public Void call() throws RemoteException {
 
                 progressBar.setVisible(true);
-                final int max = 1000000;
+                final int max = 1000;
                 for (int i=1; i<=max; i++) {
                     if (isCancelled()) {
                         break;
@@ -882,7 +895,7 @@ Calendar tab
             @Override public Void call() throws RemoteException {
                 tableLetter.setDisable(true);
                 progressBar.setVisible(true);
-                final int max = 1000000;
+                final int max = 1000;
                 for (int i=1; i<=max; i++) {
                     if (isCancelled()) {
                         break;

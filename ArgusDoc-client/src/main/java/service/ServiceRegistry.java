@@ -17,7 +17,7 @@ public class ServiceRegistry {
     public static TaskService taskService;
     static {
         try {
-            registry = LocateRegistry.getRegistry("localhost", 8695);
+            registry = LocateRegistry.getRegistry("localhost", 8966);
             accessService = (AccessService) registry.lookup("accessService");
             departmentService = (DepartmentService) registry.lookup("departmentService");
             documentService = (DocumentService) registry.lookup("documentService");
