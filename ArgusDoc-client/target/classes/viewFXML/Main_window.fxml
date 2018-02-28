@@ -3,34 +3,30 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXProgressBar?>
-<?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXTimePicker?>
-<?import com.jfoenix.controls.JFXToggleButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+
 <?import jfxtras.scene.control.CalendarPicker?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1000.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<?import javafx.scene.control.TableColumn?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import com.jfoenix.controls.JFXToggleButton?>
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
       <AnchorPane layoutX="31.0" prefHeight="500.0" prefWidth="170.0" styleClass="AnchorPane2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fitHeight="450.0" fitWidth="78.0" layoutX="64.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true" smooth="false" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="54.0">
-               <image>
-                  <Image url="@../images/1.jpg" />
-               </image></ImageView>
+            <FontAwesomeIconView fill="WHITE" glyphName="BARS" layoutX="8.0" layoutY="31.0" size="20" AnchorPane.topAnchor="20.0" />
             <AnchorPane prefHeight="528.0" prefWidth="30.0" styleClass="AnchorPane3" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <FontAwesomeIconView fill="WHITE" glyphName="BARS" layoutX="8.0" layoutY="31.0" size="20" AnchorPane.topAnchor="20.0" />
@@ -73,6 +69,31 @@
                   </JFXButton>
                </children>
             </VBox>
+            <FontAwesomeIconView fill="WHITE" glyphName="SHIELD" layoutX="45.0" layoutY="101.0" size="80" stroke="#bc2b2b" textAlignment="CENTER" wrappingWidth="102.00000607967377">
+               <effect>
+                  <DropShadow color="WHITE" height="0.0" radius="5.4925" width="23.97" />
+               </effect>
+            </FontAwesomeIconView>
+            <Label layoutX="70.0" layoutY="48.0" prefWidth="30.0" style="-fx-text-fill: #303f9f;" text="A">
+               <font>
+                  <Font name="Sitka Small Bold Italic" size="36.0" />
+               </font>
+            </Label>
+            <Label layoutX="100.0" layoutY="50.0" text="d">
+               <font>
+                  <Font name="Franklin Gothic Medium" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="100.0" layoutY="60.0" text="o">
+               <font>
+                  <Font name="Franklin Gothic Medium" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="100.0" layoutY="70.0" text="c">
+               <font>
+                  <Font name="Franklin Gothic Medium" size="12.0" />
+               </font>
+            </Label>
          </children>
          <effect>
             <DropShadow />
