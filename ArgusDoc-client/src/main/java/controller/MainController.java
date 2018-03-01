@@ -1320,4 +1320,39 @@ Calendar tab
     }
 
 
+    public void refreshTabIcon(MouseEvent mouseEvent) {
+        refreshTab();
+
+    }
+
+    public void refreshTab(){
+
+        switch (statusTab){
+
+            case "MyTask":
+                listMyTasks
+                break;
+
+            case "MyDoneTask":
+                listMyDoneTasks
+                break;
+
+            case "FromEmplTask":
+                listFromEmpTasks
+                break;
+
+            case "ArchiveTask":
+                listArchiveTasks
+                break;
+
+            case "calendarTab":
+                listLetter
+                break;
+
+            default:{
+                break;
+            }
+        }
+
+    }
 }

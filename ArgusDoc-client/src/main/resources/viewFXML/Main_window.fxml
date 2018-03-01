@@ -171,10 +171,10 @@
                   <JFXButton layoutX="705.0" layoutY="608.0" onAction="#removeLetter" styleClass="blue-btn" text="Удалить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
                </children>
             </AnchorPane>
-            <HBox layoutX="534.0" layoutY="7.0" prefHeight="30.0" prefWidth="401.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
+            <HBox layoutX="534.0" layoutY="7.0" prefHeight="30.0" prefWidth="401.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="5.0">
                <children>
                   <FontAwesomeIconView fill="#303f9f" glyphName="SEARCH" size="20" />
-                  <JFXTextField fx:id="txtFilter" onKeyPressed="#keyPressSort" prefHeight="25.0" prefWidth="457.0" />
+                  <JFXTextField fx:id="txtFilter" onKeyPressed="#keyPressSort" prefHeight="25.0" prefWidth="391.0" />
                </children>
             </HBox>
             <AnchorPane fx:id="anchorCalendar" layoutX="20.0" layoutY="52.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
@@ -203,6 +203,7 @@
                </children>
             </AnchorPane>
             <JFXProgressBar fx:id="progressBar" layoutX="430.0" layoutY="350.0" progress="0.0" visible="false" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+            <FontAwesomeIconView fill="#303f9f" glyphName="REFRESH" layoutX="343.0" layoutY="26.0" onMouseClicked="#refreshTabIcon" size="22" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="7.0" />
          </children>
       </AnchorPane>
    </children>
