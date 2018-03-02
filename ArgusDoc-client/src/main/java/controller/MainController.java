@@ -179,7 +179,7 @@ public class MainController {
 
         tableDocumentTemplate.getColumns().setAll(documentNameTemplate);
 
-        ObservableList<Document> observableListDocument = FXCollections.observableArrayList(ServiceRegistry.documentService.listDocuments());
+        ObservableList<Document> observableListDocument = FXCollections.observableArrayList(documentService.listDocuments());
         tableDocumentTemplate.setItems(observableListDocument);
 //задаем размер колонок в таблицу
         documentNameTemplate.prefWidthProperty().bind(tableTask.widthProperty().multiply(1));
@@ -846,8 +846,8 @@ Calendar tab
                 departmentService.listDepartments();
                 ObservableList<Document> observableListDocuments = FXCollections.observableArrayList(documentService.listDocuments());
                 tableDocumentTemplate.setItems(observableListDocuments);
-                ObservableList<String> observableListDepartmentName = FXCollections.observableArrayList(departmentService.listDepartmentName());
-                comboBoxDocument_Template.setItems(observableListDepartmentName);
+         /*       ObservableList<String> observableListDepartmentName = FXCollections.observableArrayList(departmentService.listDepartmentName());
+                comboBoxDocument_Template.setItems(observableListDepartmentName);*/
 
                 tableDocumentTemplate.setDisable(false);
                 progressBar.setVisible(false);
@@ -1320,13 +1320,44 @@ Calendar tab
     }
 
 
-    public void refreshTabIcon(MouseEvent mouseEvent) {
+    public void refreshTabIcon(MouseEvent mouseEvent) throws RemoteException {
         refreshTab();
 
     }
 
-    public void refreshTab(){
+    public void refreshTab() throws RemoteException {
 
+        ObservableList<Document> observableListDocument = FXCollections.observableArrayList(documentService.listDocuments());
+
+        ObservableList<Document> observableListDocumentsByDepartment = FXCollections.observableArrayList(documentService.listDocumentsByDepartment(comboBoxDocument_Template.getValue()));
+
+        ObservableList<Document> observableListDocuments = FXCollections.observableArrayList(documentService.listDocuments());
+
+
+        ObservableList<TaskEntity> observableListMyTaskEntity = FXCollections.observableArrayList(taskService.listMyTasks(authorizedUser.getEmployeeId()));
+
+        ObservableList<TaskEntity> observableListMyDoneTaskEntities = FXCollections.observableArrayList(taskService.listMyDoneTasks(authorizedUser.getEmployeeId()));
+
+        ObservableList<TaskEntity> observableListFromEmpTaskEntities = FXCollections.observableArrayList(taskService.listFromEmpTasks((authorizedUser.getEmployeeName())));
+
+        ObservableList<TaskEntity> observableListrchiveTaskEntities = FXCollections.observableArrayList(taskService.listArchiveTasks(Integer.parseInt(StatusTask.CANCELED)));
+
+
+        ObservableList<Event> observableListSelectDayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), datesql));
+
+        ObservableList<Event> observableSelectedDayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), datesql));
+
+        ObservableList<Event> observableListSelectedDayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), datesql));
+
+        ObservableList<Event> observableListAllEvent = FXCollections.observableArrayList(eventService.listAllEvent(authorizedUser.getEmployeeId()));
+
+
+
+        ObservableList<String> observableListDepartmentName = FXCollections.observableArrayList(departmentService.listDepartmentName());
+
+        ObservableList<Letter> observableListLetter = FXCollections.observableArrayList(letterService.listLetter());
+
+/*
         switch (statusTab){
 
             case "MyTask":
@@ -1352,7 +1383,7 @@ Calendar tab
             default:{
                 break;
             }
-        }
+        }*/
 
     }
 }
