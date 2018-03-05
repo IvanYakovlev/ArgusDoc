@@ -2,6 +2,7 @@ package controller;
 
 
 import com.jfoenix.controls.*;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import notification.NotificationEvent;
@@ -38,6 +39,7 @@ import dialog.ADInfo;
 
 import java.io.IOException;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.sql.Time;
@@ -613,8 +615,9 @@ Calendar tab
 
         anchorTask.toFront();
         myTaskBtnBar.toFront();
-        //ObservableList<TaskEntity> observableListMyDoneTaskEntities = FXCollections.observableArrayList(taskService.listMyDoneTasks(authorizedUser.getEmployeeId()))
 
+        ObservableList<TaskEntity> list = observableListMyLetterTaskEntity;
+        Platform.runLater(() ->{
         tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
         Task task = new Task<Void>() {
             @Override public Void call() throws RemoteException {
@@ -644,11 +647,14 @@ Calendar tab
 
 
 
+                    tableTask.setItems(list);
+                    // задаем размер колонок в таблице
+                    colorRow();
 
-                tableTask.setItems(observableListMyLetterTaskEntity);
 
-                // задаем размер колонок в таблице
-                colorRow();
+
+
+
 
                 progressBar.setVisible(false);
                 tableTask.setDisable(false);
@@ -661,7 +667,7 @@ Calendar tab
 
         new Thread(task).start();
         progressBar.progressProperty().bind(task.progressProperty());
-
+        });
 
     }
     public void myTasksButton(ActionEvent actionEvent) throws RemoteException {
@@ -669,8 +675,8 @@ Calendar tab
 
         anchorTask.toFront();
         myTaskBtnBar.toFront();
-        //ObservableList<TaskEntity> observableListMyDoneTaskEntities = FXCollections.observableArrayList(taskService.listMyDoneTasks(authorizedUser.getEmployeeId()))
-
+        ObservableList<TaskEntity> list = observableListMyTaskEntity;
+        Platform.runLater(() ->{
         tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
         Task task = new Task<Void>() {
             @Override public Void call() throws RemoteException {
@@ -701,11 +707,15 @@ Calendar tab
 
                 updateProgress(60, max);
 
-                tableTask.setItems(observableListMyTaskEntity);
+
+                    tableTask.setItems(list);
+                    // задаем размер колонок в таблице
+                    colorRow();
 
 
-                // задаем размер колонок в таблице
-                colorRow();
+
+
+
 
                 progressBar.setVisible(false);
                 tableTask.setDisable(false);
@@ -719,15 +729,16 @@ Calendar tab
         new Thread(task).start();
         progressBar.progressProperty().bind(task.progressProperty());
 
-
+        });
     }
 
     public void myDoneTasksButton(ActionEvent actionEvent) throws RemoteException {
 
         anchorTask.toFront();
         myTaskDoneBtnBar.toFront();
+        ObservableList<TaskEntity> list = observableListMyDoneTaskEntity;
 
-
+        Platform.runLater(() ->{
         tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
         Task task = new Task<Void>() {
             @Override public Void call() throws RemoteException {
@@ -735,12 +746,12 @@ Calendar tab
                 tableTask.setDisable(true);
                 progressBar.setVisible(true);
                 final int max = 100;
-               /* for (int i=1; i<=max; i++) {
+                for (int i=1; i<=max; i++) {
                     if (isCancelled()) {
                         break;
                     }
                     updateProgress(i, max);
-                }*/
+                }
                 statusTab="myDoneTask";
                 taskEntity =null;
 
@@ -752,32 +763,34 @@ Calendar tab
                 statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
 
-                updateProgress(60, max);
-              ;
-                tableTask.setItems(observableListMyDoneTaskEntity);
 
 
 
-                // задаем размер колонок в таблице
-                colorRow();
+                    tableTask.setItems(list);
+                    // задаем размер колонок в таблице
+                    colorRow();
+
+
+
+
 
                 tableTask.setDisable(false);
                 progressBar.setVisible(false);
-                updateProgress(max, max);
+
                 return null;
             }
         };
         new Thread(task).start();
         progressBar.progressProperty().bind(task.progressProperty());
-
+        });
     }
     public void fromEmpTasjButton(ActionEvent actionEvent) throws RemoteException {
 
 
         anchorTask.toFront();
         fromEmpTaskBtnBar.toFront();
-
-
+        ObservableList<TaskEntity> list = observableListFromEmpTaskEntity;
+        Platform.runLater(() ->{
         tableTask.getColumns().setAll(nameTask, employeeTask, termTask, timeTask, statusTask);
         Task task = new Task<Void>() {
             @Override public Void call() throws RemoteException {
@@ -801,10 +814,13 @@ Calendar tab
                 statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
 
+                    tableTask.setItems(list);
+                    colorRow();
+                    // задаем размер колонок в таблице
 
-                tableTask.setItems(observableListFromEmpTaskEntity);
-                colorRow();
-                // задаем размер колонок в таблице
+
+
+
 
 
                 tableTask.setDisable(false);
@@ -815,7 +831,7 @@ Calendar tab
         new Thread(task).start();
         progressBar.progressProperty().bind(task.progressProperty());
 
-
+        });
 
     }
 
@@ -826,6 +842,8 @@ Calendar tab
 
         tableTask.getColumns().setAll(nameTask,sender, employeeTask, termTask, timeTask,statusTask);
 
+        ObservableList<TaskEntity> list = observableListArchiveTaskEntity;
+        Platform.runLater(() ->{
         Task task = new Task<Void>() {
             @Override public Void call() throws RemoteException {
 
@@ -850,10 +868,13 @@ Calendar tab
                 statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
 
+                    tableTask.setItems(list);
+                    colorRow();
+                    // задаем размер колонок в таблице
 
-                tableTask.setItems(observableListArchiveTaskEntity);
-                colorRow();
-                // задаем размер колонок в таблице
+
+
+
 
                 tableTask.setDisable(false);
                 progressBar.setVisible(false);
@@ -862,7 +883,7 @@ Calendar tab
         };
         new Thread(task).start();
         progressBar.progressProperty().bind(task.progressProperty());
-
+        });
 
 
     }
@@ -1125,43 +1146,48 @@ Calendar tab
 
 
     private void colorRow() {
-        statusTask.setCellFactory(column -> {
-            return new TableCell<TaskEntity, String>() {
-                @Override
-                protected void updateItem( String item, boolean empty) {
+        Platform.runLater(() -> {
 
-                    setStyle("");
-                    super.updateItem(item, empty);
 
-                    setText(empty ? "" : getItem().toString());
-                    setGraphic(null);
+                    statusTask.setCellFactory(column -> {
+                        return new TableCell<TaskEntity, String>() {
+                            @Override
+                            protected void updateItem(String item, boolean empty) {
 
-                    TableRow<TaskEntity> currentRow = getTableRow();
+                                setStyle("");
+                                super.updateItem(item, empty);
 
-                    if (!isEmpty()) {
-                        switch (item) {
-                            case "1":
-                                currentRow.setStyle("-fx-background-color:#6BFF61");
-                                break;
-                            case "2":
-                                currentRow.setStyle("-fx-background-color:#FBCEB1; -fx-font-weight: bold; -fx-font-size: 16");
-                                break;
-                            case "3":
-                                currentRow.setStyle("-fx-background-color:#F3FF80");
-                                break;
-                            case "4":
-                                currentRow.setStyle("-fx-background-color:red");
-                                break;
-                            case "5":
-                                currentRow.setStyle("-fx-background-color:#BCCDC4");
-                                break;
-                            default:
-                                currentRow.setStyle("");
-                                break;
-                        }
-                    }
-                }
-            };
+                                setText(empty ? "" : getItem().toString());
+                                setGraphic(null);
+
+                                TableRow<TaskEntity> currentRow = getTableRow();
+
+                                if (!isEmpty()) {
+                                    switch (item) {
+                                        case "1":
+                                            currentRow.setStyle("-fx-background-color:#6BFF61");
+                                            break;
+                                        case "2":
+                                            currentRow.setStyle("-fx-background-color:#FBCEB1; -fx-font-weight: bold; -fx-font-size: 16");
+                                            break;
+                                        case "3":
+                                            currentRow.setStyle("-fx-background-color:#F3FF80");
+                                            break;
+                                        case "4":
+                                            currentRow.setStyle("-fx-background-color:red");
+                                            break;
+                                        case "5":
+                                            currentRow.setStyle("-fx-background-color:#BCCDC4");
+                                            break;
+                                        default:
+                                            currentRow.setStyle("");
+                                            break;
+                                    }
+                                }
+                            }
+                        };
+                    });
+
         });
     }
 
@@ -1391,9 +1417,7 @@ Calendar tab
         colorRow();
     }
 
-    public void refreshData() throws RemoteException {
-
-
+    public  void refreshData() throws RemoteException {
 
         observableListDocument = FXCollections.observableArrayList(documentService.listDocuments());
         observableListDocumentsByDepartment = FXCollections.observableArrayList(documentService.listDocumentsByDepartment(comboBoxDocument_Template.getValue()));
