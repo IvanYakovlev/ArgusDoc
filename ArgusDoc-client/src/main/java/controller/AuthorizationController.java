@@ -99,7 +99,8 @@ public class AuthorizationController {
         }catch (NoSuchObjectException e){
             e.printStackTrace();
         }catch (NullPointerException e){
-            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Сервер незапущен!");
+            e.printStackTrace();
+            //ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Сервер незапущен!");
         }
 
 

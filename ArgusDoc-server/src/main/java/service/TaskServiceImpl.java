@@ -149,7 +149,7 @@ DBconnection dBconnection;
         this.dBconnection = new DBconnection();
         List<TaskEntity> listData = new ArrayList<TaskEntity>();
         try {
-            ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT * FROM TASKS,EMPLOYEES,STATUS_TASKS WHERE TASKS.Employee_id=EMPLOYEES.Employee_id AND TASKs.status_task_id=STATUS_TASKS.Status_task_id AND TASKS.Employee_id='"+id+"' AND STATUS_TASKS.Status_task_id!="+StatusTask.DONE+"AND STATUS_TASKS.Status_task_id!="+StatusTask.CANCELED);
+            ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT * FROM TASKS,EMPLOYEES,STATUS_TASKS WHERE TASKS.Employee_id=EMPLOYEES.Employee_id AND TASKs.status_task_id=STATUS_TASKS.Status_task_id AND TASKS.Employee_id='"+id+"' AND STATUS_TASKS.Status_task_id!="+StatusTask.DONE+"AND STATUS_TASKS.Status_task_id!="+StatusTask.CANCELED+" AND TASKS.Task_is_letter='0'");
             while (resultSet.next()){
                 TaskEntity taskEntity = new TaskEntity();
                 taskEntity.setTaskId(resultSet.getInt("Task_id"));
@@ -158,6 +158,34 @@ DBconnection dBconnection;
                 taskEntity.setTaskAttachment(resultSet.getString("Task_attachment"));
                 taskEntity.setEmployeeId(resultSet.getInt("Employee_id"));
                 taskEntity.setEmployeeName(resultSet.getString("Employee_name"));
+                taskEntity.setTaskTerm(resultSet.getDate("Task_term"));
+                taskEntity.setStatusTaskName(resultSet.getString("Status_task_name"));
+                taskEntity.setStatusTaskId(resultSet.getString("Status_task_id"));
+                taskEntity.setTaskFromEmployee(resultSet.getString("Task_from_employee"));
+                taskEntity.setTaskTime(resultSet.getTime("Task_time"));
+                taskEntity.setTaskIsLetter(resultSet.getInt("Task_is_letter"));
+                listData.add(taskEntity);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listData;
+    }
+
+    @Override
+    public List<TaskEntity> listMyLetterTasks(int id) throws RemoteException {
+        this.dBconnection = new DBconnection();
+        List<TaskEntity> listData = new ArrayList<TaskEntity>();
+        try {
+            ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT * FROM TASKS,EMPLOYEES,STATUS_TASKS WHERE TASKS.Employee_id=EMPLOYEES.Employee_id AND TASKs.status_task_id=STATUS_TASKS.Status_task_id AND TASKS.Employee_id='"+id+"' AND STATUS_TASKS.Status_task_id!="+StatusTask.DONE+"AND STATUS_TASKS.Status_task_id!="+StatusTask.CANCELED+" AND TASKS.Task_is_letter='1'");
+            while (resultSet.next()){
+                TaskEntity taskEntity = new TaskEntity();
+                taskEntity.setTaskId(resultSet.getInt("Task_id"));
+                taskEntity.setTaskName(resultSet.getString("Task_name"));
+                taskEntity.setTaskText(resultSet.getString("Task_text"));
+                taskEntity.setTaskAttachment(resultSet.getString("Task_attachment"));
+                taskEntity.setEmployeeName(resultSet.getString("Employee_name"));
+                taskEntity.setEmployeeId(resultSet.getInt("Employee_id"));
                 taskEntity.setTaskTerm(resultSet.getDate("Task_term"));
                 taskEntity.setStatusTaskName(resultSet.getString("Status_task_name"));
                 taskEntity.setStatusTaskId(resultSet.getString("Status_task_id"));

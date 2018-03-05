@@ -5,9 +5,8 @@ import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
 
 public class NotificationEvent {
-    public void newTask(){
-        String title = "Новое сообщение";
-        String message = "You've successfully created your first Tray Notification";
+    public void newTask(String message){
+        String title = "У вас новые задачи:";
         NotificationType notificationType = NotificationType.INFORMATION;
 
         TrayNotification tray = new TrayNotification();

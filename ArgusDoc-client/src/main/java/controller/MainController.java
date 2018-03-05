@@ -4,6 +4,7 @@ package controller;
 import com.jfoenix.controls.*;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
+import notification.NotificationEvent;
 import service.*;
 
 
@@ -45,9 +46,26 @@ import java.util.*;
 
 
 public class MainController {
-
+    NotificationEvent notificationEvent=new NotificationEvent();
     public Employee authorizedUser;
 
+
+    private ObservableList<Document> observableListDocument ;
+    private ObservableList<Document> observableListDocumentsByDepartment ;
+
+    private ObservableList<TaskEntity> observableListMyTaskEntity ;
+    private ObservableList<TaskEntity> observableListMyLetterTaskEntity ;
+    private ObservableList<TaskEntity> observableListMyDoneTaskEntity;
+    private ObservableList<TaskEntity> observableListFromEmpTaskEntity;
+    private ObservableList<TaskEntity> observableListArchiveTaskEntity;
+
+    private ObservableList<Event> observableListSelectDayEvent;
+    private ObservableList<Event> observableListAllEvent;
+
+    private ObservableList<String> observableListDepartmentName;
+    private ObservableList<Letter> observableListLetter;
+
+    int oldSizeTask;
 
     String statusTab="myTask";
 
@@ -81,6 +99,12 @@ public class MainController {
     private EventService eventService = ServiceRegistry.eventService;
 
 // Window control
+
+    @FXML
+    private JFXButton myTasksButton = new JFXButton();
+
+
+
     @FXML
     private JFXProgressBar progressBar = new JFXProgressBar();
 
@@ -170,6 +194,9 @@ public class MainController {
 
     public void initialize(Employee authorizedUser) throws RemoteException {
         this.authorizedUser=authorizedUser;
+        refreshData();
+        oldSizeTask=observableListMyTaskEntity.size();
+
     /*initialize table Document Template tab*/
 //заполняем таблицу данными
         documentNameTemplate = new TableColumn<Document, String>("Название документа");
@@ -179,7 +206,6 @@ public class MainController {
 
         tableDocumentTemplate.getColumns().setAll(documentNameTemplate);
 
-        ObservableList<Document> observableListDocument = FXCollections.observableArrayList(documentService.listDocuments());
         tableDocumentTemplate.setItems(observableListDocument);
 //задаем размер колонок в таблицу
         documentNameTemplate.prefWidthProperty().bind(tableTask.widthProperty().multiply(1));
@@ -188,7 +214,7 @@ public class MainController {
     /*initialize combobox Document template tab*/
 
         departmentService.listDepartments();
-        ObservableList<String> observableListDepartmentName = FXCollections.observableArrayList(departmentService.listDepartmentName());
+
         comboBoxDocument_Template.setItems(observableListDepartmentName);
         comboBoxDocument_Template.setPromptText("Выберите отдел:");
     /*initialize TaskEntity tab*/
@@ -225,7 +251,6 @@ public class MainController {
 
         tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
 
-        ObservableList<TaskEntity> observableListMyTaskEntity = FXCollections.observableArrayList(taskService.listMyTasks(authorizedUser.getEmployeeId()));
         tableTask.setItems(observableListMyTaskEntity);
 
         labelUserAuth.setText(authorizedUser.getEmployeeName());
@@ -248,21 +273,16 @@ public class MainController {
 
         tableEvent.getColumns().setAll(timeEvent, nameEvent ,dateEvent);
 
-        ObservableList<Event> observableListSelectDayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), datesql));
         tableEvent.setItems(observableListSelectDayEvent);
-
 
         timePickerEvent.setIs24HourView(true);
         calendarPicker.calendarProperty().addListener( (observable) -> {
             if (calendarPicker.getCalendar()!=null) {
                 calendar = calendarPicker.getCalendar();
                 datesql = new java.sql.Date(calendar.getTimeInMillis());
-                try {
-                    ObservableList<Event> observableListSelectedDayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), datesql));
-                    tableEvent.setItems(observableListSelectedDayEvent);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+
+                tableEvent.setItems(observableListSelectDayEvent);
+
                 int selectedMonth=calendar.get(Calendar.MONTH);
                 int selectedDay = calendar.get(Calendar.DAY_OF_MONTH);
                 int selectedYear = calendar.get(Calendar.YEAR);
@@ -279,12 +299,8 @@ public class MainController {
             }
             else {
                 datesql = new java.sql.Date(calendar.getInstance().getTimeInMillis());
-                try {
-                    ObservableList<Event> observableSelectedDayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), datesql));
-                    tableEvent.setItems(observableSelectedDayEvent);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+
+                tableEvent.setItems(observableListSelectDayEvent);
                 labelSelectedDate.setText("сегодня");
                 timeEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.30));
                 nameEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.70));
@@ -316,7 +332,7 @@ public class MainController {
 
 
         tableLetter.getColumns().setAll(nameLetter, passwordLetter, numberLetter);
-        ObservableList<Letter> observableListLetter = FXCollections.observableArrayList(letterService.listLetter());
+
         tableLetter.setItems(observableListLetter);
 
 
@@ -372,8 +388,8 @@ Calendar tab
 
     private void refreshTableEvent() throws RemoteException {
 
-        ObservableList<Event> observableListSelectedDayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), datesql));
-        tableEvent.setItems(observableListSelectedDayEvent);
+
+        tableEvent.setItems(observableListSelectDayEvent);
     }
 
     private void clearEventText() {
@@ -386,7 +402,7 @@ Calendar tab
     }
 
     public void showAllEventButton(ActionEvent actionEvent) throws RemoteException {
-        ObservableList<Event> observableListAllEvent = FXCollections.observableArrayList(eventService.listAllEvent(authorizedUser.getEmployeeId()));
+
         tableEvent.setItems(observableListAllEvent);
         tableEvent.getColumns().setAll(dateEvent, timeEvent, nameEvent);
         nameEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.50));
@@ -408,7 +424,7 @@ Calendar tab
 
     }
     public void choiceDepartmentDocument(ActionEvent actionEvent) throws RemoteException {
-        ObservableList<Document> observableListDocumentsByDepartment = FXCollections.observableArrayList(documentService.listDocumentsByDepartment(comboBoxDocument_Template.getValue()));
+
         tableDocumentTemplate.setItems(observableListDocumentsByDepartment);
 
     }
@@ -445,12 +461,6 @@ Calendar tab
 
 
 /*Tasks  tab*/
-    public void refreshTaskTab() throws RemoteException {
-        ObservableList<TaskEntity> observableListMyTaskEntities = FXCollections.observableArrayList(taskService.listMyTasks(authorizedUser.getEmployeeId()));
-        tableTask.setItems(observableListMyTaskEntities);
-
-    }
-
 
     public void openAddTaskButton(ActionEvent actionEvent) throws IOException {
         try {
@@ -549,6 +559,7 @@ Calendar tab
     public void openDoneTaskButton(ActionEvent actionEvent) throws RemoteException {
         if (taskEntity !=null) {
             taskService.performedTask(taskEntity.getTaskId());
+            refreshData();
             FXMLLoader fxmlLoader = new FXMLLoader();
 
             fxmlLoader.setLocation(getClass().getResource("/viewFXML/Done_task_window.fxml"));
@@ -597,13 +608,68 @@ Calendar tab
 
 
 
+    public void myLetterButton(ActionEvent actionEvent) {
 
+
+        anchorTask.toFront();
+        myTaskBtnBar.toFront();
+        //ObservableList<TaskEntity> observableListMyDoneTaskEntities = FXCollections.observableArrayList(taskService.listMyDoneTasks(authorizedUser.getEmployeeId()))
+
+        tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
+        Task task = new Task<Void>() {
+            @Override public Void call() throws RemoteException {
+                tableTask.setDisable(true);
+                progressBar.setVisible(true);
+
+                final int max = 100;
+                for (int i=1; i<=max; i++) {
+                    if (isCancelled()) {
+                        break;
+                    }
+                    updateProgress(i, max);
+                }
+
+
+                statusTab="myLetter";
+                taskEntity =null;
+
+
+
+
+                nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
+                sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
+                termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+                timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+                statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
+
+
+
+
+                tableTask.setItems(observableListMyLetterTaskEntity);
+
+                // задаем размер колонок в таблице
+                colorRow();
+
+                progressBar.setVisible(false);
+                tableTask.setDisable(false);
+
+
+
+                return null;
+            }
+        };
+
+        new Thread(task).start();
+        progressBar.progressProperty().bind(task.progressProperty());
+
+
+    }
     public void myTasksButton(ActionEvent actionEvent) throws RemoteException {
 
 
         anchorTask.toFront();
         myTaskBtnBar.toFront();
-
+        //ObservableList<TaskEntity> observableListMyDoneTaskEntities = FXCollections.observableArrayList(taskService.listMyDoneTasks(authorizedUser.getEmployeeId()))
 
         tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
         Task task = new Task<Void>() {
@@ -635,8 +701,7 @@ Calendar tab
 
                 updateProgress(60, max);
 
-                ObservableList<TaskEntity> observableListMyTaskEntities = FXCollections.observableArrayList(taskService.listMyTasks(authorizedUser.getEmployeeId()));
-                tableTask.setItems(observableListMyTaskEntities);
+                tableTask.setItems(observableListMyTaskEntity);
 
 
                 // задаем размер колонок в таблице
@@ -688,8 +753,8 @@ Calendar tab
 
 
                 updateProgress(60, max);
-                ObservableList<TaskEntity> observableListMyDoneTaskEntities = FXCollections.observableArrayList(taskService.listMyDoneTasks(authorizedUser.getEmployeeId()));
-                tableTask.setItems(observableListMyDoneTaskEntities);
+              ;
+                tableTask.setItems(observableListMyDoneTaskEntity);
 
 
 
@@ -736,8 +801,8 @@ Calendar tab
                 statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
 
-                ObservableList<TaskEntity> observableListFromEmpTaskEntities = FXCollections.observableArrayList(taskService.listFromEmpTasks((authorizedUser.getEmployeeName())));
-                tableTask.setItems(observableListFromEmpTaskEntities);
+
+                tableTask.setItems(observableListFromEmpTaskEntity);
                 colorRow();
                 // задаем размер колонок в таблице
 
@@ -785,8 +850,8 @@ Calendar tab
                 statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
 
-                ObservableList<TaskEntity> observableListrchiveTaskEntities = FXCollections.observableArrayList(taskService.listArchiveTasks(Integer.parseInt(StatusTask.CANCELED)));
-                tableTask.setItems(observableListrchiveTaskEntities);
+
+                tableTask.setItems(observableListArchiveTaskEntity);
                 colorRow();
                 // задаем размер колонок в таблице
 
@@ -813,6 +878,7 @@ Calendar tab
     public void acceptTask(ActionEvent actionEvent) throws RemoteException {
         if (taskEntity !=null) {
             taskService.performedTask(taskEntity.getTaskId());
+            refreshData();
         }
     }
 
@@ -844,8 +910,8 @@ Calendar tab
                 statusTab="templateTab";
 
                 departmentService.listDepartments();
-                ObservableList<Document> observableListDocuments = FXCollections.observableArrayList(documentService.listDocuments());
-                tableDocumentTemplate.setItems(observableListDocuments);
+
+                tableDocumentTemplate.setItems(observableListDocument);
          /*       ObservableList<String> observableListDepartmentName = FXCollections.observableArrayList(departmentService.listDepartmentName());
                 comboBoxDocument_Template.setItems(observableListDepartmentName);*/
 
@@ -902,7 +968,7 @@ Calendar tab
                     }
                     updateProgress(i, max);
                 }
-                ObservableList<Letter> observableListLetter = FXCollections.observableArrayList(letterService.listLetter());
+
                 tableLetter.setItems(observableListLetter);
 
 
@@ -1105,8 +1171,8 @@ Calendar tab
         switch (statusTab){
             case "myTask":
 // 1. Wrap the ObservableList in a FilteredList (initially display all data).
-                ObservableList<TaskEntity> observableListMyTaskEntities = FXCollections.observableArrayList(taskService.listMyTasks(authorizedUser.getEmployeeId()));
-                FilteredList<TaskEntity> filteredMyTaskEntity = new FilteredList<TaskEntity>(observableListMyTaskEntities, p -> true);
+              //  ObservableList<TaskEntity> observableListMyTaskEntities = FXCollections.observableArrayList(taskService.listMyTasks(authorizedUser.getEmployeeId()));
+                FilteredList<TaskEntity> filteredMyTaskEntity = new FilteredList<TaskEntity>(observableListMyTaskEntity, p -> true);
 
                 // 2. Set the filter Predicate whenever the filter changes.
                 txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -1141,8 +1207,8 @@ Calendar tab
                 break;
             case "myDoneTask":
                 // 1. Wrap the ObservableList in a FilteredList (initially display all data).
-                ObservableList<TaskEntity> observableListMyDoneTaskEntities = FXCollections.observableArrayList(taskService.listMyDoneTasks(authorizedUser.getEmployeeId()));
-                FilteredList<TaskEntity> filteredMyDoneTaskEntity = new FilteredList<TaskEntity>(observableListMyDoneTaskEntities, p -> true);
+               // ObservableList<TaskEntity> observableListMyDoneTaskEntities = FXCollections.observableArrayList(taskService.listMyDoneTasks(authorizedUser.getEmployeeId()));
+                FilteredList<TaskEntity> filteredMyDoneTaskEntity = new FilteredList<TaskEntity>(observableListMyDoneTaskEntity, p -> true);
 
                 // 2. Set the filter Predicate whenever the filter changes.
                 txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -1175,8 +1241,8 @@ Calendar tab
                 break;
             case "fromEmpTask":
                 // 1. Wrap the ObservableList in a FilteredList (initially display all data).
-                ObservableList<TaskEntity> observableListFromEmpTaskEntities = FXCollections.observableArrayList(taskService.listFromEmpTasks((authorizedUser.getEmployeeName())));
-                FilteredList<TaskEntity> filteredFromEmpTaskEntity = new FilteredList<TaskEntity>(observableListFromEmpTaskEntities, p -> true);
+                //ObservableList<TaskEntity> observableListFromEmpTaskEntities = FXCollections.observableArrayList(taskService.listFromEmpTasks((authorizedUser.getEmployeeName())));
+                FilteredList<TaskEntity> filteredFromEmpTaskEntity = new FilteredList<TaskEntity>(observableListFromEmpTaskEntity, p -> true);
 
                 // 2. Set the filter Predicate whenever the filter changes.
                 txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -1209,8 +1275,8 @@ Calendar tab
                 break;
             case "archiveTask":
                 // 1. Wrap the ObservableList in a FilteredList (initially display all data).
-                ObservableList<TaskEntity> observableListArchiveTaskEntities = FXCollections.observableArrayList(taskService.listArchiveTasks(Integer.parseInt(StatusTask.CANCELED)));
-                FilteredList<TaskEntity> filteredArchiveTaskEntity = new FilteredList<TaskEntity>(observableListArchiveTaskEntities, p -> true);
+                //ObservableList<TaskEntity> observableListArchiveTaskEntities = FXCollections.observableArrayList(taskService.listArchiveTasks(Integer.parseInt(StatusTask.CANCELED)));
+                FilteredList<TaskEntity> filteredArchiveTaskEntity = new FilteredList<TaskEntity>(observableListArchiveTaskEntity, p -> true);
 
                 // 2. Set the filter Predicate whenever the filter changes.
                 txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -1245,8 +1311,8 @@ Calendar tab
                 break;
             case "templateTab":
                 // 1. Wrap the ObservableList in a FilteredList (initially display all data).
-                ObservableList<Document> observableListDocuments = FXCollections.observableArrayList(documentService.listDocuments());
-                FilteredList<Document> filteredDocument = new FilteredList<Document>(observableListDocuments, p -> true);
+                //ObservableList<Document> observableListDocuments = FXCollections.observableArrayList(documentService.listDocuments());
+                FilteredList<Document> filteredDocument = new FilteredList<Document>(observableListDocument, p -> true);
 
                 // 2. Set the filter Predicate whenever the filter changes.
                 txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -1279,8 +1345,8 @@ Calendar tab
                 break;
             case "letterTab":
                 // 1. Wrap the ObservableList in a FilteredList (initially display all data).
-                ObservableList<Letter> observableListLetters = FXCollections.observableArrayList(letterService.listLetter());
-                FilteredList<Letter> filteredLetter = new FilteredList<Letter>( observableListLetters, p -> true);
+                //ObservableList<Letter> observableListLetters = FXCollections.observableArrayList(letterService.listLetter());
+                FilteredList<Letter> filteredLetter = new FilteredList<Letter>( observableListLetter, p -> true);
 
                 // 2. Set the filter Predicate whenever the filter changes.
                 txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -1321,69 +1387,77 @@ Calendar tab
 
 
     public void refreshTabIcon(MouseEvent mouseEvent) throws RemoteException {
-        refreshTab();
-
+        refreshData();
+        colorRow();
     }
 
-    public void refreshTab() throws RemoteException {
-
-        ObservableList<Document> observableListDocument = FXCollections.observableArrayList(documentService.listDocuments());
-
-        ObservableList<Document> observableListDocumentsByDepartment = FXCollections.observableArrayList(documentService.listDocumentsByDepartment(comboBoxDocument_Template.getValue()));
-
-        ObservableList<Document> observableListDocuments = FXCollections.observableArrayList(documentService.listDocuments());
-
-
-        ObservableList<TaskEntity> observableListMyTaskEntity = FXCollections.observableArrayList(taskService.listMyTasks(authorizedUser.getEmployeeId()));
-
-        ObservableList<TaskEntity> observableListMyDoneTaskEntities = FXCollections.observableArrayList(taskService.listMyDoneTasks(authorizedUser.getEmployeeId()));
-
-        ObservableList<TaskEntity> observableListFromEmpTaskEntities = FXCollections.observableArrayList(taskService.listFromEmpTasks((authorizedUser.getEmployeeName())));
-
-        ObservableList<TaskEntity> observableListrchiveTaskEntities = FXCollections.observableArrayList(taskService.listArchiveTasks(Integer.parseInt(StatusTask.CANCELED)));
-
-
-        ObservableList<Event> observableListSelectDayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), datesql));
-
-        ObservableList<Event> observableSelectedDayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), datesql));
-
-        ObservableList<Event> observableListSelectedDayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), datesql));
-
-        ObservableList<Event> observableListAllEvent = FXCollections.observableArrayList(eventService.listAllEvent(authorizedUser.getEmployeeId()));
+    public void refreshData() throws RemoteException {
 
 
 
-        ObservableList<String> observableListDepartmentName = FXCollections.observableArrayList(departmentService.listDepartmentName());
+        observableListDocument = FXCollections.observableArrayList(documentService.listDocuments());
+        observableListDocumentsByDepartment = FXCollections.observableArrayList(documentService.listDocumentsByDepartment(comboBoxDocument_Template.getValue()));
 
-        ObservableList<Letter> observableListLetter = FXCollections.observableArrayList(letterService.listLetter());
+        observableListMyTaskEntity = FXCollections.observableArrayList(taskService.listMyTasks(authorizedUser.getEmployeeId()));
+        observableListMyLetterTaskEntity = FXCollections.observableArrayList(taskService.listMyLetterTasks(authorizedUser.getEmployeeId()));
+        observableListMyDoneTaskEntity = FXCollections.observableArrayList(taskService.listMyDoneTasks(authorizedUser.getEmployeeId()));
+        observableListFromEmpTaskEntity = FXCollections.observableArrayList(taskService.listFromEmpTasks((authorizedUser.getEmployeeName())));
+        observableListArchiveTaskEntity = FXCollections.observableArrayList(taskService.listArchiveTasks(Integer.parseInt(StatusTask.CANCELED)));
 
-/*
+        observableListSelectDayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), datesql));
+        observableListAllEvent = FXCollections.observableArrayList(eventService.listAllEvent(authorizedUser.getEmployeeId()));
+
+        observableListDepartmentName = FXCollections.observableArrayList(departmentService.listDepartmentName());
+        observableListLetter = FXCollections.observableArrayList(letterService.listLetter());
+
+//Уведомления о новых задачах
+        int newsTask = 0;
+        String messageNameTask="";
+        for (int i = 0;i<observableListMyTaskEntity.size();i++){
+            if (observableListMyTaskEntity.get(i).getStatusTaskId().equals(StatusTask.NOT_DONE)){
+                newsTask++;
+                messageNameTask=messageNameTask+", "+observableListMyTaskEntity.get(i).getTaskName();
+            }
+        }
+        if (newsTask>0) {
+            myTasksButton.setText("   Мои задачи("+(newsTask)+")");
+            notificationEvent.newTask(messageNameTask);
+        } else if (newsTask==0){
+            myTasksButton.setText("   Мои задачи");
+        }
+
+//Обновление текущей вкладки
         switch (statusTab){
-
-            case "MyTask":
-                listMyTasks
+            case "myTask":
+                tableTask.setItems(observableListMyTaskEntity);
                 break;
 
-            case "MyDoneTask":
-                listMyDoneTasks
+            case "myDoneTask":
+                tableTask.setItems(observableListMyDoneTaskEntity);
                 break;
 
-            case "FromEmplTask":
-                listFromEmpTasks
+            case "fromEmpTask":
+                tableTask.setItems(observableListFromEmpTaskEntity);
                 break;
 
-            case "ArchiveTask":
-                listArchiveTasks
+            case "archiveTask":
+                tableTask.setItems(observableListArchiveTaskEntity);
                 break;
 
             case "calendarTab":
-                listLetter
+                tableEvent.setItems(observableListSelectDayEvent);
+                break;
+
+            case "templateTab":
+                tableDocumentTemplate.setItems(observableListDocument);
                 break;
 
             default:{
                 break;
             }
-        }*/
+        }
 
     }
+
+
 }
