@@ -48,7 +48,7 @@
                      </graphic>
                   </JFXButton>
                   <JFXButton fx:id="myDoneTasksButton" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="30.0" onAction="#myDoneTasksButton" styleClass="JFXButton" text="         Выполненные" />
-                  <JFXButton fx:id="fromEmpTasjButton" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="30.0" onAction="#fromEmpTasjButton" styleClass="JFXButton" text="         Назначенные" />
+                  <JFXButton fx:id="fromEmpTaskButton" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="30.0" onAction="#fromEmpTaskButton" styleClass="JFXButton" text="         Назначенные" />
                   <JFXButton fx:id="archiveTasks" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="30.0" onAction="#archiveTasks" styleClass="JFXButton" text="         Архив" />
                   <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#templateTabButton" styleClass="JFXButton" text="   Шаблоны">
                      <graphic>

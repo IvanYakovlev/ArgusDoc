@@ -104,7 +104,10 @@ public class MainController {
 
     @FXML
     private JFXButton myTasksButton = new JFXButton();
-
+    @FXML
+    private JFXButton myLetterButton = new JFXButton();
+    @FXML
+    private JFXButton fromEmpTaskButton = new JFXButton();
 
 
     @FXML
@@ -651,11 +654,6 @@ Calendar tab
                     // задаем размер колонок в таблице
                     colorRow();
 
-
-
-
-
-
                 progressBar.setVisible(false);
                 tableTask.setDisable(false);
 
@@ -784,7 +782,7 @@ Calendar tab
         progressBar.progressProperty().bind(task.progressProperty());
         });
     }
-    public void fromEmpTasjButton(ActionEvent actionEvent) throws RemoteException {
+    public void fromEmpTaskButton(ActionEvent actionEvent) throws RemoteException {
 
 
         anchorTask.toFront();
@@ -1433,21 +1431,50 @@ Calendar tab
 
         observableListDepartmentName = FXCollections.observableArrayList(departmentService.listDepartmentName());
         observableListLetter = FXCollections.observableArrayList(letterService.listLetter());
-
+//Уведомления о новых письмах
+        int newLetter = 0;
+        String messageNameLetter="";
+        for (int i = 0;i<observableListMyLetterTaskEntity.size();i++){
+            if (observableListMyLetterTaskEntity.get(i).getStatusTaskId().equals(StatusTask.NOT_DONE)){
+                newLetter++;
+                messageNameLetter=messageNameLetter+", "+observableListMyLetterTaskEntity.get(i).getTaskName();
+            }
+        }
+        if (newLetter>0) {
+            myLetterButton.setText("   Мои письма("+(newLetter)+")");
+            notificationEvent.newLetter(messageNameLetter);
+        } else if (newLetter==0){
+            myLetterButton.setText("   Мои письма");
+        }
 //Уведомления о новых задачах
-        int newsTask = 0;
+        int newTask = 0;
         String messageNameTask="";
         for (int i = 0;i<observableListMyTaskEntity.size();i++){
             if (observableListMyTaskEntity.get(i).getStatusTaskId().equals(StatusTask.NOT_DONE)){
-                newsTask++;
+                newTask++;
                 messageNameTask=messageNameTask+", "+observableListMyTaskEntity.get(i).getTaskName();
             }
         }
-        if (newsTask>0) {
-            myTasksButton.setText("   Мои задачи("+(newsTask)+")");
+        if (newTask>0) {
+            myTasksButton.setText("   Мои задачи("+(newTask)+")");
             notificationEvent.newTask(messageNameTask);
-        } else if (newsTask==0){
+        } else if (newTask==0){
             myTasksButton.setText("   Мои задачи");
+        }
+//Уведомления о выполненых задачах
+        int newFromEmpTask = 0;
+        String messageNameFromEmpTask="";
+        for (int i = 0;i<observableListFromEmpTaskEntity .size();i++){
+            if (observableListFromEmpTaskEntity .get(i).getStatusTaskId().equals(StatusTask.DONE)){
+                newFromEmpTask++;
+                messageNameFromEmpTask=messageNameFromEmpTask+", "+observableListFromEmpTaskEntity .get(i).getTaskName();
+            }
+        }
+        if (newFromEmpTask>0) {
+            fromEmpTaskButton.setText("         Назначенные("+(newFromEmpTask)+")");
+            notificationEvent.newFromEmpTask(messageNameFromEmpTask);
+        } else if (newFromEmpTask==0){
+            fromEmpTaskButton.setText("         Назначенные");
         }
 
 //Обновление текущей вкладки
@@ -1455,7 +1482,9 @@ Calendar tab
             case "myTask":
                 tableTask.setItems(observableListMyTaskEntity);
                 break;
-
+            case "myLetter":
+                tableTask.setItems(observableListMyLetterTaskEntity);
+                break;
             case "myDoneTask":
                 tableTask.setItems(observableListMyDoneTaskEntity);
                 break;
@@ -1480,8 +1509,5 @@ Calendar tab
                 break;
             }
         }
-
     }
-
-
 }
