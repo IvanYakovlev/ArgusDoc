@@ -4,7 +4,11 @@ package controller;
 import com.jfoenix.controls.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.concurrent.ScheduledService;
+import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.util.Duration;
 import notification.NotificationEvent;
 import service.*;
 
@@ -67,7 +71,7 @@ public class MainController {
     private ObservableList<String> observableListDepartmentName;
     private ObservableList<Letter> observableListLetter;
 
-    int oldSizeTask;
+
 
     String statusTab="myTask";
 
@@ -108,7 +112,8 @@ public class MainController {
     private JFXButton myLetterButton = new JFXButton();
     @FXML
     private JFXButton fromEmpTaskButton = new JFXButton();
-
+    @FXML
+    private JFXButton calendarTabButton = new JFXButton();
 
     @FXML
     private JFXProgressBar progressBar = new JFXProgressBar();
@@ -200,8 +205,9 @@ public class MainController {
     public void initialize(Employee authorizedUser) throws RemoteException {
         this.authorizedUser=authorizedUser;
         refreshData();
-        oldSizeTask=observableListMyTaskEntity.size();
 
+
+        serviceStart();
     /*initialize table Document Template tab*/
 //заполняем таблицу данными
         documentNameTemplate = new TableColumn<Document, String>("Название документа");
@@ -281,12 +287,14 @@ public class MainController {
         tableEvent.setItems(observableListSelectDayEvent);
 
         timePickerEvent.setIs24HourView(true);
+
+
         calendarPicker.calendarProperty().addListener( (observable) -> {
             if (calendarPicker.getCalendar()!=null) {
                 calendar = calendarPicker.getCalendar();
                 datesql = new java.sql.Date(calendar.getTimeInMillis());
 
-                tableEvent.setItems(observableListSelectDayEvent);
+
 
                 int selectedMonth=calendar.get(Calendar.MONTH);
                 int selectedDay = calendar.get(Calendar.DAY_OF_MONTH);
@@ -301,15 +309,26 @@ public class MainController {
                 timeEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.30));
                 nameEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.70));
                 dateEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0));
+                try {
+                    refreshData();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
             }
             else {
                 datesql = new java.sql.Date(calendar.getInstance().getTimeInMillis());
 
-                tableEvent.setItems(observableListSelectDayEvent);
+
                 labelSelectedDate.setText("сегодня");
                 timeEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.30));
                 nameEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.70));
                 dateEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0));
+                tableEvent.setItems(observableListSelectDayEvent);
+                try {
+                    refreshData();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
                 }
         });
 
@@ -620,51 +639,50 @@ Calendar tab
         myTaskBtnBar.toFront();
 
         ObservableList<TaskEntity> list = observableListMyLetterTaskEntity;
-        Platform.runLater(() ->{
+
         tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
-        Task task = new Task<Void>() {
-            @Override public Void call() throws RemoteException {
-                tableTask.setDisable(true);
-                progressBar.setVisible(true);
 
-                final int max = 100;
-                for (int i=1; i<=max; i++) {
-                    if (isCancelled()) {
-                        break;
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override public Void call() throws RemoteException {
+                        tableTask.setDisable(true);
+                        progressBar.setVisible(true);
+
+                        final int max = 100;
+                        for (int i=1; i<=max; i++) {
+                            if (isCancelled()) {
+                                break;
+                            }
+                            updateProgress(i, max);
+                        }
+
+                        statusTab="myLetter";
+                        taskEntity =null;
+
+                        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
+                        sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
+                        termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+                        timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+                        statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
+
+                        tableTask.setItems(list);
+                        // задаем размер колонок в таблице
+                        colorRow();
+
+                        progressBar.setVisible(false);
+                        tableTask.setDisable(false);
+                        return null;
                     }
-                    updateProgress(i, max);
-                }
-
-
-                statusTab="myLetter";
-                taskEntity =null;
-
-
-
-
-                nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
-                sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
-                termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-                timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-                statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
-
-
-
-                    tableTask.setItems(list);
-                    // задаем размер колонок в таблице
-                    colorRow();
-
-                progressBar.setVisible(false);
-                tableTask.setDisable(false);
-
-
-
-                return null;
+                };
             }
         };
 
-        new Thread(task).start();
-        progressBar.progressProperty().bind(task.progressProperty());
+
+        Platform.runLater(() ->{
+        service.start();
+        progressBar.progressProperty().bind(service.progressProperty());
         });
 
     }
@@ -674,14 +692,18 @@ Calendar tab
         anchorTask.toFront();
         myTaskBtnBar.toFront();
         ObservableList<TaskEntity> list = observableListMyTaskEntity;
-        Platform.runLater(() ->{
-        tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
-        Task task = new Task<Void>() {
-            @Override public Void call() throws RemoteException {
-                tableTask.setDisable(true);
-                progressBar.setVisible(true);
 
-                final int max = 100;
+        tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
+
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override public Void call() throws RemoteException {
+                        tableTask.setDisable(true);
+                        progressBar.setVisible(true);
+
+                        final int max = 100;
                /* for (int i=1; i<=max; i++) {
                     if (isCancelled()) {
                         break;
@@ -690,42 +712,46 @@ Calendar tab
                 }*/
 
 
-                statusTab="myTask";
-                taskEntity =null;
+                        statusTab="myTask";
+                        taskEntity =null;
 
 
 
 
-                nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
-                sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
-                termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-                timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-                statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
+                        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
+                        sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
+                        termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+                        timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+                        statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
 
-                updateProgress(60, max);
+                        updateProgress(60, max);
 
 
-                    tableTask.setItems(list);
-                    // задаем размер колонок в таблице
-                    colorRow();
-
-
-
+                        tableTask.setItems(list);
+                        // задаем размер колонок в таблице
+                        colorRow();
 
 
 
-                progressBar.setVisible(false);
-                tableTask.setDisable(false);
-                updateProgress(max, max);
 
 
-                return null;
+
+                        progressBar.setVisible(false);
+                        tableTask.setDisable(false);
+                        updateProgress(max, max);
+
+
+                        return null;
+                    }
+                };
             }
         };
 
-        new Thread(task).start();
-        progressBar.progressProperty().bind(task.progressProperty());
+
+        Platform.runLater(() ->{
+        service.start();
+        progressBar.progressProperty().bind(service.progressProperty());
 
         });
     }
@@ -736,50 +762,58 @@ Calendar tab
         myTaskDoneBtnBar.toFront();
         ObservableList<TaskEntity> list = observableListMyDoneTaskEntity;
 
-        Platform.runLater(() ->{
+
         tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
-        Task task = new Task<Void>() {
-            @Override public Void call() throws RemoteException {
 
-                tableTask.setDisable(true);
-                progressBar.setVisible(true);
-                final int max = 100;
-                for (int i=1; i<=max; i++) {
-                    if (isCancelled()) {
-                        break;
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override public Void call() throws RemoteException {
+
+                        tableTask.setDisable(true);
+                        progressBar.setVisible(true);
+                        final int max = 100;
+                        for (int i=1; i<=max; i++) {
+                            if (isCancelled()) {
+                                break;
+                            }
+                            updateProgress(i, max);
+                        }
+                        statusTab="myDoneTask";
+                        taskEntity =null;
+
+
+                        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
+                        sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
+                        termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+                        timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+                        statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
+
+
+
+
+
+                        tableTask.setItems(list);
+                        // задаем размер колонок в таблице
+                        colorRow();
+
+
+
+
+
+                        tableTask.setDisable(false);
+                        progressBar.setVisible(false);
+
+                        return null;
                     }
-                    updateProgress(i, max);
-                }
-                statusTab="myDoneTask";
-                taskEntity =null;
-
-
-                nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
-                sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
-                termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-                timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-                statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
-
-
-
-
-
-                    tableTask.setItems(list);
-                    // задаем размер колонок в таблице
-                    colorRow();
-
-
-
-
-
-                tableTask.setDisable(false);
-                progressBar.setVisible(false);
-
-                return null;
+                };
             }
         };
-        new Thread(task).start();
-        progressBar.progressProperty().bind(task.progressProperty());
+
+        Platform.runLater(() ->{
+        service.start();
+        progressBar.progressProperty().bind(service.progressProperty());
         });
     }
     public void fromEmpTaskButton(ActionEvent actionEvent) throws RemoteException {
@@ -788,46 +822,49 @@ Calendar tab
         anchorTask.toFront();
         fromEmpTaskBtnBar.toFront();
         ObservableList<TaskEntity> list = observableListFromEmpTaskEntity;
-        Platform.runLater(() ->{
+
         tableTask.getColumns().setAll(nameTask, employeeTask, termTask, timeTask, statusTask);
-        Task task = new Task<Void>() {
-            @Override public Void call() throws RemoteException {
 
-                tableTask.setDisable(true);
-                progressBar.setVisible(true);
-                final int max = 1000;
-                for (int i=1; i<=max; i++) {
-                    if (isCancelled()) {
-                        break;
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override public Void call() throws RemoteException {
+
+                        tableTask.setDisable(true);
+                        progressBar.setVisible(true);
+                        final int max = 1000;
+                        for (int i=1; i<=max; i++) {
+                            if (isCancelled()) {
+                                break;
+                            }
+                            updateProgress(i, max);
+                        }
+                        statusTab="fromEmpTask";
+                        taskEntity =null;
+
+                        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
+                        employeeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
+                        termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+                        timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+                        statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
+
+
+                        tableTask.setItems(list);
+                        colorRow();
+                        // задаем размер колонок в таблице
+
+                        tableTask.setDisable(false);
+                        progressBar.setVisible(false);
+                        return null;
                     }
-                    updateProgress(i, max);
-                }
-                statusTab="fromEmpTask";
-                taskEntity =null;
-
-                nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
-                employeeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
-                termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-                timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-                statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
-
-
-                    tableTask.setItems(list);
-                    colorRow();
-                    // задаем размер колонок в таблице
-
-
-
-
-
-
-                tableTask.setDisable(false);
-                progressBar.setVisible(false);
-                return null;
+                };
             }
         };
-        new Thread(task).start();
-        progressBar.progressProperty().bind(task.progressProperty());
+
+        Platform.runLater(() ->{
+        service.start();
+        progressBar.progressProperty().bind(service.progressProperty());
 
         });
 
@@ -841,46 +878,54 @@ Calendar tab
         tableTask.getColumns().setAll(nameTask,sender, employeeTask, termTask, timeTask,statusTask);
 
         ObservableList<TaskEntity> list = observableListArchiveTaskEntity;
-        Platform.runLater(() ->{
-        Task task = new Task<Void>() {
-            @Override public Void call() throws RemoteException {
 
-                tableTask.setDisable(true);
-                progressBar.setVisible(true);
-                final int max = 1000;
-                for (int i=1; i<=max; i++) {
-                    if (isCancelled()) {
-                        break;
+
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override public Void call() throws RemoteException {
+
+                        tableTask.setDisable(true);
+                        progressBar.setVisible(true);
+                        final int max = 1000;
+                        for (int i=1; i<=max; i++) {
+                            if (isCancelled()) {
+                                break;
+                            }
+                            updateProgress(i, max);
+                        }
+
+                        statusTab="archiveTask";
+                        taskEntity =null;
+
+                        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
+                        sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
+                        employeeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
+                        termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+                        timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+                        statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
+
+
+                        tableTask.setItems(list);
+                        colorRow();
+                        // задаем размер колонок в таблице
+
+
+
+
+
+                        tableTask.setDisable(false);
+                        progressBar.setVisible(false);
+                        return null;
                     }
-                    updateProgress(i, max);
-                }
-
-                statusTab="archiveTask";
-                taskEntity =null;
-
-                nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
-                sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
-                employeeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
-                termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-                timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-                statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
-
-
-                    tableTask.setItems(list);
-                    colorRow();
-                    // задаем размер колонок в таблице
-
-
-
-
-
-                tableTask.setDisable(false);
-                progressBar.setVisible(false);
-                return null;
+                };
             }
         };
-        new Thread(task).start();
-        progressBar.progressProperty().bind(task.progressProperty());
+
+        Platform.runLater(() ->{
+        service.start();
+        progressBar.progressProperty().bind(service.progressProperty());
         });
 
 
@@ -914,36 +959,42 @@ Calendar tab
     public void templateTabButton(ActionEvent actionEvent) throws RemoteException {
         anchorTemplate.toFront();
 
-        Task task = new Task<Void>() {
-            @Override public Void call() throws RemoteException {
-                tableDocumentTemplate.setDisable(true);
-                progressBar.setVisible(true);
-                final int max = 1000;
-                for (int i=1; i<=max; i++) {
-                    if (isCancelled()) {
-                        break;
-                    }
-                    updateProgress(i, max);
-                }
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override public Void call() throws RemoteException {
+                        tableDocumentTemplate.setDisable(true);
+                        progressBar.setVisible(true);
+                        final int max = 1000;
+                        for (int i=1; i<=max; i++) {
+                            if (isCancelled()) {
+                                break;
+                            }
+                            updateProgress(i, max);
+                        }
 
-                statusTab="templateTab";
+                        statusTab="templateTab";
 
-                departmentService.listDepartments();
+                        departmentService.listDepartments();
 
-                tableDocumentTemplate.setItems(observableListDocument);
+                        tableDocumentTemplate.setItems(observableListDocument);
          /*       ObservableList<String> observableListDepartmentName = FXCollections.observableArrayList(departmentService.listDepartmentName());
                 comboBoxDocument_Template.setItems(observableListDepartmentName);*/
 
-                tableDocumentTemplate.setDisable(false);
-                progressBar.setVisible(false);
+                        tableDocumentTemplate.setDisable(false);
+                        progressBar.setVisible(false);
 
 
 
-                return null;
+                        return null;
+                    }
+                };
             }
         };
-        new Thread(task).start();
-        progressBar.progressProperty().bind(task.progressProperty());
+
+        service.start();
+        progressBar.progressProperty().bind(service.progressProperty());
     }
 
     public void calendarTabButton(ActionEvent actionEvent) {
@@ -951,53 +1002,65 @@ Calendar tab
 
         anchorCalendar.toFront();
 
-        Task task = new Task<Void>() {
-            @Override public Void call() throws RemoteException {
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override public Void call() throws RemoteException {
 
-                progressBar.setVisible(true);
-                final int max = 1000;
-                for (int i=1; i<=max; i++) {
-                    if (isCancelled()) {
-                        break;
+                        progressBar.setVisible(true);
+                        final int max = 1000;
+                        for (int i=1; i<=max; i++) {
+                            if (isCancelled()) {
+                                break;
+                            }
+                            updateProgress(i, max);
+                        }
+                        statusTab="calendarTab";
+
+                        progressBar.setVisible(false);
+                        return null;
                     }
-                    updateProgress(i, max);
-                }
-                statusTab="calendarTab";
-
-                progressBar.setVisible(false);
-                return null;
+                };
             }
         };
-        new Thread(task).start();
-        progressBar.progressProperty().bind(task.progressProperty());
+
+        service.start();
+        progressBar.progressProperty().bind(service.progressProperty());
     }
 
     public void letterTabButton(ActionEvent actionEvent) throws RemoteException {
         statusTab="letterTab";
         anchorLetter.toFront();
 
-        Task task = new Task<Void>() {
-            @Override public Void call() throws RemoteException {
-                tableLetter.setDisable(true);
-                progressBar.setVisible(true);
-                final int max = 1000;
-                for (int i=1; i<=max; i++) {
-                    if (isCancelled()) {
-                        break;
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override public Void call() throws RemoteException {
+                        tableLetter.setDisable(true);
+                        progressBar.setVisible(true);
+                        final int max = 1000;
+                        for (int i=1; i<=max; i++) {
+                            if (isCancelled()) {
+                                break;
+                            }
+                            updateProgress(i, max);
+                        }
+
+                        tableLetter.setItems(observableListLetter);
+
+
+                        tableLetter.setDisable(false);
+                        progressBar.setVisible(false);
+                        return null;
                     }
-                    updateProgress(i, max);
-                }
-
-                tableLetter.setItems(observableListLetter);
-
-
-                tableLetter.setDisable(false);
-                progressBar.setVisible(false);
-                return null;
+                };
             }
         };
-        new Thread(task).start();
-        progressBar.progressProperty().bind(task.progressProperty());
+
+        service.start();
+        progressBar.progressProperty().bind(service.progressProperty());
 
     }
 
@@ -1144,48 +1207,59 @@ Calendar tab
 
 
     private void colorRow() {
-        Platform.runLater(() -> {
+            Service<Void> service = new Service<Void>() {
+                @Override
+                protected Task<Void> createTask() {
+                    return new Task<Void>() {
+                        @Override
+                        protected Void call() throws Exception {
+                            statusTask.setCellFactory(column -> {
+                                return new TableCell<TaskEntity, String>() {
+                                    @Override
+                                    protected void updateItem(String item, boolean empty) {
 
+                                        setStyle("");
+                                        super.updateItem(item, empty);
 
-                    statusTask.setCellFactory(column -> {
-                        return new TableCell<TaskEntity, String>() {
-                            @Override
-                            protected void updateItem(String item, boolean empty) {
+                                        setText(empty ? "" : getItem().toString());
+                                        setGraphic(null);
 
-                                setStyle("");
-                                super.updateItem(item, empty);
+                                        TableRow<TaskEntity> currentRow = getTableRow();
 
-                                setText(empty ? "" : getItem().toString());
-                                setGraphic(null);
-
-                                TableRow<TaskEntity> currentRow = getTableRow();
-
-                                if (!isEmpty()) {
-                                    switch (item) {
-                                        case "1":
-                                            currentRow.setStyle("-fx-background-color:#6BFF61");
-                                            break;
-                                        case "2":
-                                            currentRow.setStyle("-fx-background-color:#FBCEB1; -fx-font-weight: bold; -fx-font-size: 16");
-                                            break;
-                                        case "3":
-                                            currentRow.setStyle("-fx-background-color:#F3FF80");
-                                            break;
-                                        case "4":
-                                            currentRow.setStyle("-fx-background-color:red");
-                                            break;
-                                        case "5":
-                                            currentRow.setStyle("-fx-background-color:#BCCDC4");
-                                            break;
-                                        default:
-                                            currentRow.setStyle("");
-                                            break;
+                                        if (!isEmpty()) {
+                                            switch (item) {
+                                                case "1":
+                                                    currentRow.setStyle("-fx-background-color:#6BFF61");
+                                                    break;
+                                                case "2":
+                                                    currentRow.setStyle("-fx-background-color:#FBCEB1; -fx-font-weight: bold; -fx-font-size: 16");
+                                                    break;
+                                                case "3":
+                                                    currentRow.setStyle("-fx-background-color:#F3FF80");
+                                                    break;
+                                                case "4":
+                                                    currentRow.setStyle("-fx-background-color:red");
+                                                    break;
+                                                case "5":
+                                                    currentRow.setStyle("-fx-background-color:#BCCDC4");
+                                                    break;
+                                                default:
+                                                    currentRow.setStyle("");
+                                                    break;
+                                            }
+                                        }
                                     }
-                                }
-                            }
-                        };
-                    });
+                                };
+                            });
+                            return null;
+                        }
+                    };
+                }
+            };
 
+
+        Platform.runLater(() -> {
+            service.start();
         });
     }
 
@@ -1416,98 +1490,286 @@ Calendar tab
     }
 
     public  void refreshData() throws RemoteException {
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        observableListDocument = FXCollections.observableArrayList(documentService.listDocuments());
+                        observableListDocumentsByDepartment = FXCollections.observableArrayList(documentService.listDocumentsByDepartment(comboBoxDocument_Template.getValue()));
 
-        observableListDocument = FXCollections.observableArrayList(documentService.listDocuments());
-        observableListDocumentsByDepartment = FXCollections.observableArrayList(documentService.listDocumentsByDepartment(comboBoxDocument_Template.getValue()));
+                        observableListMyTaskEntity = FXCollections.observableArrayList(taskService.listMyTasks(authorizedUser.getEmployeeId()));
+                        observableListMyLetterTaskEntity = FXCollections.observableArrayList(taskService.listMyLetterTasks(authorizedUser.getEmployeeId()));
+                        observableListMyDoneTaskEntity = FXCollections.observableArrayList(taskService.listMyDoneTasks(authorizedUser.getEmployeeId()));
+                        observableListFromEmpTaskEntity = FXCollections.observableArrayList(taskService.listFromEmpTasks((authorizedUser.getEmployeeName())));
+                        observableListArchiveTaskEntity = FXCollections.observableArrayList(taskService.listArchiveTasks(Integer.parseInt(StatusTask.CANCELED)));
 
-        observableListMyTaskEntity = FXCollections.observableArrayList(taskService.listMyTasks(authorizedUser.getEmployeeId()));
-        observableListMyLetterTaskEntity = FXCollections.observableArrayList(taskService.listMyLetterTasks(authorizedUser.getEmployeeId()));
-        observableListMyDoneTaskEntity = FXCollections.observableArrayList(taskService.listMyDoneTasks(authorizedUser.getEmployeeId()));
-        observableListFromEmpTaskEntity = FXCollections.observableArrayList(taskService.listFromEmpTasks((authorizedUser.getEmployeeName())));
-        observableListArchiveTaskEntity = FXCollections.observableArrayList(taskService.listArchiveTasks(Integer.parseInt(StatusTask.CANCELED)));
+                        observableListSelectDayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), datesql));
+                        ObservableList<Event> observableListTodayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), new java.sql.Date(System.currentTimeMillis())));
+                        observableListAllEvent = FXCollections.observableArrayList(eventService.listAllEvent(authorizedUser.getEmployeeId()));
 
-        observableListSelectDayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), datesql));
-        observableListAllEvent = FXCollections.observableArrayList(eventService.listAllEvent(authorizedUser.getEmployeeId()));
-
-        observableListDepartmentName = FXCollections.observableArrayList(departmentService.listDepartmentName());
-        observableListLetter = FXCollections.observableArrayList(letterService.listLetter());
+                        observableListDepartmentName = FXCollections.observableArrayList(departmentService.listDepartmentName());
+                        observableListLetter = FXCollections.observableArrayList(letterService.listLetter());
 //Уведомления о новых письмах
-        int newLetter = 0;
-        String messageNameLetter="";
-        for (int i = 0;i<observableListMyLetterTaskEntity.size();i++){
-            if (observableListMyLetterTaskEntity.get(i).getStatusTaskId().equals(StatusTask.NOT_DONE)){
-                newLetter++;
-                messageNameLetter=messageNameLetter+", "+observableListMyLetterTaskEntity.get(i).getTaskName();
-            }
-        }
-        if (newLetter>0) {
-            myLetterButton.setText("   Мои письма("+(newLetter)+")");
-            notificationEvent.newLetter(messageNameLetter);
-        } else if (newLetter==0){
-            myLetterButton.setText("   Мои письма");
-        }
+                        int newLetter = 0;
+                        int idSummLetter = 0;
+                        String messageNameLetter="";
+                        for (int i = 0;i<observableListMyLetterTaskEntity.size();i++){
+                            if (observableListMyLetterTaskEntity.get(i).getStatusTaskId().equals(StatusTask.NOT_DONE)){
+                                newLetter++;
+                                idSummLetter=idSummLetter+observableListMyLetterTaskEntity.get(i).getTaskId();
+                                messageNameLetter=messageNameLetter+" "+observableListMyLetterTaskEntity.get(i).getTaskName();
+                            }
+                        }
+                        if (newLetter>0) {
+
+                            int finalNewLetter = newLetter;
+                            String finalMessageNameLetter = messageNameLetter;
+                            int finalIdSummLetter = idSummLetter;
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    myLetterButton.setText("   Мои письма("+(finalNewLetter)+")");
+                                    notificationEvent.newLetter(finalMessageNameLetter, finalIdSummLetter);
+
+                                }
+                            });
+
+                        } else if (newLetter==0){
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    myLetterButton.setText("   Мои письма");
+
+                                }
+                            });
+
+                        }
 //Уведомления о новых задачах
-        int newTask = 0;
-        String messageNameTask="";
-        for (int i = 0;i<observableListMyTaskEntity.size();i++){
-            if (observableListMyTaskEntity.get(i).getStatusTaskId().equals(StatusTask.NOT_DONE)){
-                newTask++;
-                messageNameTask=messageNameTask+", "+observableListMyTaskEntity.get(i).getTaskName();
-            }
-        }
-        if (newTask>0) {
-            myTasksButton.setText("   Мои задачи("+(newTask)+")");
-            notificationEvent.newTask(messageNameTask);
-        } else if (newTask==0){
-            myTasksButton.setText("   Мои задачи");
-        }
+                        int newTask = 0;
+                        int idSummNewTask = 0;
+                        String messageNameTask="";
+                        for (int i = 0;i<observableListMyTaskEntity.size();i++){
+                            if (observableListMyTaskEntity.get(i).getStatusTaskId().equals(StatusTask.NOT_DONE)){
+                                newTask++;
+                                messageNameTask=messageNameTask+" "+observableListMyTaskEntity.get(i).getTaskName();
+                                idSummNewTask=idSummNewTask+observableListMyTaskEntity.get(i).getTaskId();
+                            }
+                        }
+                        if (newTask>0) {
+                            int finalNewTask = newTask;
+                            String finalMessageNameTask = messageNameTask;
+                            int finalIdSummNewTask = idSummNewTask;
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    myTasksButton.setText("   Мои задачи("+(finalNewTask)+")");
+                                    notificationEvent.newTask(finalMessageNameTask, finalIdSummNewTask);
+
+                                }
+                            });
+
+                        } else if (newTask==0){
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    myTasksButton.setText("   Мои задачи");
+
+                                }
+                            });
+
+                        }
 //Уведомления о выполненых задачах
-        int newFromEmpTask = 0;
-        String messageNameFromEmpTask="";
-        for (int i = 0;i<observableListFromEmpTaskEntity .size();i++){
-            if (observableListFromEmpTaskEntity .get(i).getStatusTaskId().equals(StatusTask.DONE)){
-                newFromEmpTask++;
-                messageNameFromEmpTask=messageNameFromEmpTask+", "+observableListFromEmpTaskEntity .get(i).getTaskName();
-            }
-        }
-        if (newFromEmpTask>0) {
-            fromEmpTaskButton.setText("         Назначенные("+(newFromEmpTask)+")");
-            notificationEvent.newFromEmpTask(messageNameFromEmpTask);
-        } else if (newFromEmpTask==0){
-            fromEmpTaskButton.setText("         Назначенные");
-        }
+                        int newFromEmpTask = 0;
+                        int idSummNewFromEmpTask = 0;
+                        String messageNameFromEmpTask="";
+                        for (int i = 0;i<observableListFromEmpTaskEntity .size();i++){
+                            if (observableListFromEmpTaskEntity .get(i).getStatusTaskId().equals(StatusTask.DONE)){
+                                newFromEmpTask++;
+                                messageNameFromEmpTask=messageNameFromEmpTask+" "+observableListFromEmpTaskEntity .get(i).getTaskName();
+                                idSummNewFromEmpTask=idSummNewFromEmpTask+observableListFromEmpTaskEntity.get(i).getTaskId();
+                            }
+                        }
+                        if (newFromEmpTask>0) {
+                            int finalNewFromEmpTask = newFromEmpTask;
+                            String finalMessageNameFromEmpTask = messageNameFromEmpTask;
+                            int finalIdSummNewFromEmpTask = idSummNewFromEmpTask;
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    fromEmpTaskButton.setText("         Назначенные("+(finalNewFromEmpTask)+")");
+                                    notificationEvent.newFromEmpTask(finalMessageNameFromEmpTask, finalIdSummNewFromEmpTask);
+
+                                }
+                            });
+
+                        } else if (newFromEmpTask==0){
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    fromEmpTaskButton.setText("         Назначенные");
+
+                                }
+                            });
+
+                        }
+//Уведомления о событиях
+                        int newEvent = 0;
+                        long dateNow = System.currentTimeMillis();
+                        String messageEvent="";
+                        java.sql.Date today = new java.sql.Date(dateNow);
+
+
+
+                        try {
+                            for (int i=0;i<observableListTodayEvent.size();i++){
+
+                                if (((observableListTodayEvent.get(i).getEventTime().getTime()+observableListTodayEvent.get(i).getEventDate().getTime()+25200000)<dateNow)&&(String.valueOf(observableListTodayEvent.get(i).getEventDate()).equals(String.valueOf(today)))){
+                                    newEvent++;
+                                    messageEvent=messageEvent+" "+observableListTodayEvent.get(i).getEventName();
+                                }
+
+                            }
+                        }catch (ArrayIndexOutOfBoundsException e){
+                            System.out.println("На сегодня дел нет.");
+                        }
+                        if (newEvent>0){
+                            int finalNewEvent = newEvent;
+                            String finalMessageEvent = messageEvent;
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    calendarTabButton.setText("   Календарь(" + (finalNewEvent)+")");
+                                    notificationEvent.newEvent(finalMessageEvent);
+
+                                }
+                            });
+
+                        } else if (newEvent==0){
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    calendarTabButton.setText("   Календарь");
+                                }
+                            });
+
+                        }
+
 
 //Обновление текущей вкладки
-        switch (statusTab){
-            case "myTask":
-                tableTask.setItems(observableListMyTaskEntity);
-                break;
-            case "myLetter":
-                tableTask.setItems(observableListMyLetterTaskEntity);
-                break;
-            case "myDoneTask":
-                tableTask.setItems(observableListMyDoneTaskEntity);
-                break;
+                        switch (statusTab){
+                            case "myTask":
+                                Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        tableTask.setItems(observableListMyTaskEntity);
+                                    }
+                                });
 
-            case "fromEmpTask":
-                tableTask.setItems(observableListFromEmpTaskEntity);
-                break;
 
-            case "archiveTask":
-                tableTask.setItems(observableListArchiveTaskEntity);
-                break;
+                                break;
+                            case "myLetter":
+                                Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        tableTask.setItems(observableListMyLetterTaskEntity);
+                                    }
+                                });
 
-            case "calendarTab":
-                tableEvent.setItems(observableListSelectDayEvent);
-                break;
+                                break;
+                            case "myDoneTask":
+                                Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        tableTask.setItems(observableListMyDoneTaskEntity);
+                                    }
+                                });
 
-            case "templateTab":
-                tableDocumentTemplate.setItems(observableListDocument);
-                break;
+                                break;
 
-            default:{
-                break;
+                            case "fromEmpTask":
+                                Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        tableTask.setItems(observableListFromEmpTaskEntity);
+                                    }
+                                });
+
+                                break;
+
+                            case "archiveTask":
+                                Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        tableTask.setItems(observableListArchiveTaskEntity);
+                                    }
+                                });
+
+                                break;
+
+                            case "calendarTab":
+                                Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        tableEvent.setItems(observableListSelectDayEvent);
+                                    }
+                                });
+
+
+                                break;
+
+                            case "templateTab":
+                                Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        tableDocumentTemplate.setItems(observableListDocument);
+                                    }
+                                });
+
+                                break;
+
+                            default:{
+                                break;
+                            }
+                        }
+                        colorRow();
+                        return null;
+                    }
+                };
             }
-        }
+        };
+                service.start();
+
+
+    }
+    public void serviceStart(){
+        ScheduledService<Void> service = new ScheduledService<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        System.out.println("Hello");
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    refreshData();
+                                } catch (RemoteException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+
+                        return null;
+                    }
+                };
+            }
+        };
+        service.setPeriod(Duration.seconds(30));
+        service.start();
+
+
     }
 }

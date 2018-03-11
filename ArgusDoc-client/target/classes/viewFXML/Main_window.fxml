@@ -55,7 +55,7 @@
                         <FontAwesomeIconView fill="WHITE" glyphName="BOOK" size="16" />
                      </graphic>
                   </JFXButton>
-                  <JFXButton alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#calendarTabButton" styleClass="JFXButton" text="   Календарь">
+                  <JFXButton fx:id="calendarTabButton" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#calendarTabButton" styleClass="JFXButton" text="   Календарь">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="CALENDAR" size="16" />
                      </graphic>
