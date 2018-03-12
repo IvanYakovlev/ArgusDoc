@@ -21,7 +21,12 @@ import entity.StatusTask;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 
 public class EditTaskController {
 
@@ -108,8 +113,29 @@ public class EditTaskController {
             taskEntity.setTaskIsLetter(0);
             taskEntity.setOldFile(this.taskEntity.getTaskAttachment());
             System.out.println(this.taskEntity.getTaskAttachment());
-            taskService.updateTask(taskEntity);
+            try {
+                taskService.updateTask(taskEntity);
+//Копируем файл если он прикреплен или задача сформирована не из вкладки Письма
+                if (taskEntity.getTaskIsLetter()==0&& taskEntity.getTaskAttachmentFile()!=null) {
+                    try {
+                        Path path = Paths.get(taskEntity.getOldFile());
+                        Files.delete(path);
+                    }catch (NoSuchFileException e){
 
+                    }
+
+                    if (taskEntity.getTaskIsLetter()==0&& taskEntity.getTaskAttachmentFile()!=null) {
+                        File destFile = new File(taskEntity.getTaskAttachment());
+                        Files.copy(taskEntity.getTaskAttachmentFile().toPath(), destFile.toPath());
+
+                    }
+                    ADInfo.getAdInfo().dialog(Alert.AlertType.CONFIRMATION, "Файл обновлен!");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
 
             Stage stage = (Stage) editTaskButton.getScene().getWindow();
@@ -152,7 +178,19 @@ public class EditTaskController {
     }
 
     public void openFileButton(ActionEvent actionEvent) throws RemoteException {
-        taskService.openTaskAttachment(taskEntity.getTaskId());
+        try {
+            File file = new File(taskEntity.getTaskAttachment());
+            java.awt.Desktop.getDesktop().open(file);
+            //taskService.openTaskAttachment(taskEntity.getTaskId());
+
+
+
+        } catch (IOException e) {
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Файл не найден!");
+        }
+        catch (IllegalArgumentException e){
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Файл не найден!");
+        }
     }
 
     public void downloadFileButton(ActionEvent actionEvent) {

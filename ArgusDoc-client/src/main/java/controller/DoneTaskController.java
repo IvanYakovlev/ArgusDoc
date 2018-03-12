@@ -17,7 +17,12 @@ import javafx.stage.Stage;
 import entity.StatusTask;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 
 public class DoneTaskController {
 
@@ -88,9 +93,37 @@ public class DoneTaskController {
             taskEntity.setTaskAttachmentFile(attachmentFile);
            // taskEntity.setTaskIsLetter(0);
             taskEntity.setOldFile(this.taskEntity.getTaskAttachment());
-            taskService.doneTask(taskEntity);
 
 
+            try {
+                taskService.doneTask(taskEntity);
+
+                //Загружаем файл на сервер
+                if (taskEntity.getTaskIsLetter()==0&& taskEntity.getTaskAttachmentFile()!=null) {
+                    if (taskEntity.getOldFile()!=null){
+                        try {
+                            Path path = Paths.get(taskEntity.getOldFile());
+
+                            Files.delete(path);
+                        }catch (IOException e){
+
+                        }
+
+
+
+                        //if (taskEntity.getTaskIsLetter()==0&& taskEntity.getTaskAttachmentFile()!=null) {
+                        File destFile = new File(taskEntity.getTaskAttachment());
+                        Files.copy(taskEntity.getTaskAttachmentFile().toPath(), destFile.toPath());
+
+                        // }
+                        ADInfo.getAdInfo().dialog(Alert.AlertType.CONFIRMATION, "Файл обновлен!");
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             Stage stage = (Stage) doneTaskButton.getScene().getWindow();
             stage.close();
@@ -140,6 +173,16 @@ public class DoneTaskController {
     }
 
     public void openFile(ActionEvent actionEvent) throws RemoteException {
-        taskService.openTaskAttachment(taskEntity.getTaskId());
+        try {
+            //taskService.openTaskAttachment(taskEntity.getTaskId());
+            File file = new File(taskEntity.getTaskAttachment());
+            java.awt.Desktop.getDesktop().open(file);
+
+
+        } catch (IOException e) {
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Файл не найден!");
+        }catch (IllegalArgumentException e){
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Файл не найден!");
+        }
     }
 }

@@ -18,6 +18,9 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 
@@ -53,7 +56,7 @@ public class SettingController {
 private FontAwesomeIconView closeSettingWindow;
     @FXML
     private TableView<Department> tableDepartment;
-    private TableColumn<Department, String> idDep;
+
     private TableColumn<Department, String> nameDep;
     @FXML
     private JFXTextField txtDepartment;
@@ -72,9 +75,7 @@ private FontAwesomeIconView closeSettingWindow;
     private TextField txtPasswordEmployee;
     @FXML
     private TableView<Employee> tableEmployee;
-    private TableColumn<Employee, String> idEmpl;
     private TableColumn<Employee, String> fioEmpl;
-    private TableColumn<Employee, String> loginEmpl;
     private TableColumn<Employee, String> passwordEmpl;
     private TableColumn<Employee, String> departmentEmpl;
     private TableColumn<Employee, String> accessEmpl;
@@ -83,10 +84,9 @@ private FontAwesomeIconView closeSettingWindow;
 
     @FXML
     private TableView<Document> tableDocument;
-    private TableColumn<Document, String> idDoc;
     private TableColumn<Document, String> nameDoc;
     private TableColumn<Document, String> departmentDoc;
-    private TableColumn<Document, String> filePathDoc;
+
     @FXML
     private Button documentButtonId;
     @FXML
@@ -100,25 +100,20 @@ private FontAwesomeIconView closeSettingWindow;
 
 
 
-        idDep = new TableColumn<Department, String>("id");
-        idDep.setCellValueFactory(new PropertyValueFactory<Department, String>("departmentId"));
+
         nameDep = new TableColumn<Department, String>("Название отдела");
         nameDep.setCellValueFactory(new PropertyValueFactory<Department, String>("departmentName"));
 
-        tableDepartment.getColumns().setAll(idDep, nameDep);
+        nameDep.prefWidthProperty().bind(tableDepartment.widthProperty().multiply(1));
+
+        tableDepartment.getColumns().setAll(nameDep);
         ObservableList<Department> observableListDepartments = FXCollections.observableArrayList(departmentService.listDepartments());
         tableDepartment.setItems(observableListDepartments);
 
 //initialize Employee settings table
 
-
-
-        idEmpl = new TableColumn<Employee, String>("id");
-        idEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeeId"));
         fioEmpl = new TableColumn<Employee, String>("ФИО");
         fioEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeeName"));
-        loginEmpl = new TableColumn<Employee, String>("Логин");
-        loginEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeeLogin"));
         passwordEmpl = new TableColumn<Employee, String>("Пароль");
         passwordEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("employeePassword"));
         departmentEmpl = new TableColumn<Employee, String>("Отдел");
@@ -126,9 +121,15 @@ private FontAwesomeIconView closeSettingWindow;
         accessEmpl = new TableColumn<Employee, String>("Уровень доступа");
         accessEmpl.setCellValueFactory(new PropertyValueFactory<Employee, String>("accessName"));
 
-        tableEmployee.getColumns().setAll(idEmpl, fioEmpl, loginEmpl, passwordEmpl, departmentEmpl, accessEmpl);
+        fioEmpl.prefWidthProperty().bind(tableEmployee.widthProperty().multiply(0.35));
+        passwordEmpl.prefWidthProperty().bind(tableEmployee.widthProperty().multiply(0.15));
+        departmentEmpl.prefWidthProperty().bind(tableEmployee.widthProperty().multiply(0.30));
+        accessEmpl.prefWidthProperty().bind(tableEmployee.widthProperty().multiply(0.20));
+
+        tableEmployee.getColumns().setAll( fioEmpl, passwordEmpl, departmentEmpl, accessEmpl);
         ObservableList<Employee> observableListEmployees = FXCollections.observableArrayList(employeeService.listEmployees());
         tableEmployee.setItems(observableListEmployees);
+
 //initialize combobox Employee settings tab
 
         accessService.listAccess();
@@ -139,16 +140,23 @@ private FontAwesomeIconView closeSettingWindow;
 //initialize Document settings table
 
 
-        idDoc = new TableColumn<Document, String>("id");
-        idDoc.setCellValueFactory(new PropertyValueFactory<Document, String>("documentId"));
+
         nameDoc = new TableColumn<Document, String>("Название документа");
         nameDoc.setCellValueFactory(new PropertyValueFactory<Document, String>("documentName"));
         departmentDoc = new TableColumn<Document, String>("Отдел");
         departmentDoc.setCellValueFactory(new PropertyValueFactory<Document, String>("departmentName"));
-        filePathDoc = new TableColumn<Document, String>("Путь файла");
-        filePathDoc.setCellValueFactory(new PropertyValueFactory<Document, String>("documentFilePath"));
 
-        tableDocument.getColumns().setAll(idDoc, nameDoc, departmentDoc, filePathDoc);
+
+
+
+
+
+        tableDocument.getColumns().setAll( nameDoc, departmentDoc);
+
+
+        nameDoc.prefWidthProperty().bind(tableEmployee.widthProperty().multiply(0.70));
+        departmentDoc.prefWidthProperty().bind(tableEmployee.widthProperty().multiply(0.30));
+
         ObservableList<Document> observableListDocument = FXCollections.observableArrayList(documentService.listDocuments());
         tableDocument.setItems(observableListDocument);
 
@@ -367,7 +375,18 @@ private FontAwesomeIconView closeSettingWindow;
         if (document.getDocumentFilePath()!=null) {
 
             try {
+
                 documentService.removeDocument(document.getDocumentId(), document.getDocumentFilePath());
+//удаляем файл с сервера
+                if (document.getDocumentFilePath()!=null) {
+                    Path path = Paths.get(document.getDocumentFilePath());
+                    try {
+                        Files.delete(path);
+                    } catch (IOException e) {
+                        System.out.println("файл уже удален");
+                    }
+                }
+
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (IOException e) {

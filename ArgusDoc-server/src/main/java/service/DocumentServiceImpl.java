@@ -25,9 +25,7 @@ public class DocumentServiceImpl implements DocumentService {
 
         this.dBconnection = new DBconnection();
 
-            if (document.getDocumentFile().length() > 50000000) {
-                ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Размер загружаемого документа не должен превышать 50мб!");
-            } else {
+
                 //добавляем запись в таблицу Documents
                 PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("INSERT INTO Documents(Document_name,Document_filepath,Department_id) VALUES (?,?,?)");
                 preparedStatement.setString(1, document.getDocumentName());
@@ -40,7 +38,7 @@ public class DocumentServiceImpl implements DocumentService {
                 File destFile = new File(document.getDocumentFilePath());
                 Files.copy(document.getDocumentFile().toPath(), destFile.toPath());
 
-            }
+
 
     }
            /* this.dBconnection = new DBconnection();
@@ -78,20 +76,11 @@ public class DocumentServiceImpl implements DocumentService {
     public void removeDocument(int id, String filePath) throws IOException, SQLException {
         dBconnection = new DBconnection();
 
-
             //удаляем запись в таблице
             PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("DELETE FROM DOCUMENTS WHERE Document_id = ?");
             preparedStatement.setInt(1,id);
             preparedStatement.execute();
             mapDocument.remove(id);
-
-            //удаляем файл с сервера
-            Path path = Paths.get(filePath);
-
-                Files.delete(path);
-
-
-
 
     }
 
@@ -166,20 +155,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public void openDocument(int id) throws IOException, SQLException {
-
-        dBconnection = new DBconnection();
-
-            String sql = "SELECT Document_filepath FROM DOCUMENTS WHERE Document_id=" + id;
-            ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
-            if (resultSet.next()) {
-
-                String filepath = resultSet.getString("Document_filepath");
-
-                File file = new File(filepath);
-                java.awt.Desktop.getDesktop().open(file);
-             }
-
+    public void openDocument(int id) throws IOException, SQLException,IllegalArgumentException {
 
 
 
@@ -230,19 +206,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public void printDocument(int id) throws IOException, SQLException {
-        dBconnection = new DBconnection();
-
-            String sql = "SELECT Document_filepath FROM DOCUMENTS WHERE Document_id=" + id;
-            ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
-            if (resultSet.next()) {
-
-                String filepath = resultSet.getString("Document_filepath");
-
-                File file = new File(filepath);
-                java.awt.Desktop.getDesktop().print(file);
-            }
-
+    public void printDocument(int id) throws IOException, SQLException,IllegalArgumentException {
 
 
     /*    File file1 = new File("C:\\Temp\\" + mapDocument.get(id));

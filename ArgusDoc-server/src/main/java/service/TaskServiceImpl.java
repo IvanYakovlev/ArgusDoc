@@ -25,10 +25,10 @@ import java.util.Optional;
 
 public class TaskServiceImpl implements TaskService {
 DBconnection dBconnection;
-    public void addTask(TaskEntity taskEntity) throws IOException, RemoteException {
+    public void addTask(TaskEntity taskEntity) throws IOException, RemoteException, SQLException {
         dBconnection=new DBconnection();
 //Добавляем данные в таблицу
-        try {
+
             PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("INSERT INTO TASKS(Task_name, Task_text, Task_attachment, Task_from_employee, Employee_id, Task_term, Status_task_id, Task_time,Task_is_letter) VALUES(?,?,?,?,?,?,?,?,?)");
             preparedStatement.setString(1, taskEntity.getTaskName());
             preparedStatement.setString(2, taskEntity.getTaskText());
@@ -41,46 +41,11 @@ DBconnection dBconnection;
             preparedStatement.setInt(9, taskEntity.getTaskIsLetter());
             preparedStatement.execute();
 
-
-//Копируем файл если он прикреплен или задача не сформирована из вкладки Письма
-            if (taskEntity.getTaskIsLetter()==0&& taskEntity.getTaskAttachmentFile()!=null) {
-                File destFile = new File(taskEntity.getTaskAttachment());
-                Files.copy(taskEntity.getTaskAttachmentFile().toPath(), destFile.toPath());
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            //alert.setTitle("Delete File");
-            alert.setHeaderText("Файл с таким именем уже существует! Хотите заменить?");
-
-
-            // option != null.
-            Optional<ButtonType> option = alert.showAndWait();
-
-            if (option.get() == null) {
-
-            } else if (option.get() == ButtonType.OK) {
-                Path path = Paths.get(taskEntity.getTaskAttachment());
-                Files.delete(path);
-
-                if (taskEntity.getTaskIsLetter()==0&& taskEntity.getTaskAttachmentFile()!=null) {
-                    File destFile = new File(taskEntity.getTaskAttachment());
-                    Files.copy(taskEntity.getTaskAttachmentFile().toPath(), destFile.toPath());
-
-                }
-
-            } else if (option.get() == ButtonType.CANCEL) {
-
-            } else {
-
-            }
-        }
     }
 
-    public void updateTask(TaskEntity taskEntity) throws IOException, RemoteException{
+    public void updateTask(TaskEntity taskEntity) throws IOException, RemoteException, SQLException {
         dBconnection=new DBconnection();
-        try {
+
             PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE TASKS SET Task_name=?, Task_text=?, Task_attachment=?, Task_from_employee=?, Employee_id=?, Task_term=?, Status_task_id=?, Task_time=?,Task_is_letter=? WHERE  Task_id =?");
             preparedStatement.setString(1, taskEntity.getTaskName());
             preparedStatement.setString(2, taskEntity.getTaskText());
@@ -94,54 +59,15 @@ DBconnection dBconnection;
             preparedStatement.setInt(10, taskEntity.getTaskId());
             preparedStatement.execute();
 
-
-            //Копируем файл если он прикреплен или задача не сформирована из вкладки Письма
-            if (taskEntity.getTaskIsLetter()==0&& taskEntity.getTaskAttachmentFile()!=null) {
-                try {
-                    Path path = Paths.get(taskEntity.getOldFile());
-                    Files.delete(path);
-                }catch (NoSuchFileException e){
-
-                }
-
-
-                if (taskEntity.getTaskIsLetter()==0&& taskEntity.getTaskAttachmentFile()!=null) {
-                    File destFile = new File(taskEntity.getTaskAttachment());
-                    Files.copy(taskEntity.getTaskAttachmentFile().toPath(), destFile.toPath());
-
-                }
-                ADInfo.getAdInfo().dialog(Alert.AlertType.CONFIRMATION, "Файл обновлен!");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
-    public void removeTask(TaskEntity taskEntity)throws RemoteException {
+    public void removeTask(TaskEntity taskEntity) throws RemoteException, SQLException {
         dBconnection = new DBconnection();
-        try {
-            //удаляем данные из таблицы
 
+        //удаляем данные из таблицы
             PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("DELETE  FROM  TASKS WHERE Task_id = ?");
             preparedStatement.setInt(1, taskEntity.getTaskId());
             preparedStatement.execute();
-
-
-            //удаляем файл с сервера, если это не письмо
-            if (taskEntity.getTaskAttachment()!=null&& taskEntity.getTaskIsLetter()==0) {
-                Path path = Paths.get(taskEntity.getTaskAttachment());
-                try {
-                    Files.delete(path);
-                } catch (IOException e) {
-                    System.out.println("файл уже удален");
-                   // ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "");
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
     }
 
@@ -287,9 +213,9 @@ DBconnection dBconnection;
     }
 
     @Override
-    public void doneTask(TaskEntity taskEntity) throws RemoteException{
+    public void doneTask(TaskEntity taskEntity) throws RemoteException, SQLException {
         dBconnection=new DBconnection();
-        try {
+
             PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE TASKS SET Status_task_id=?, Task_text=?, Task_attachment=? WHERE  Task_id =?");
             preparedStatement.setInt(1, Integer.parseInt(taskEntity.getStatusTaskId()));
             preparedStatement.setString(2, taskEntity.getTaskText());
@@ -298,37 +224,7 @@ DBconnection dBconnection;
 
             preparedStatement.execute();
 
-            //Загружаем файл на сервер
-            if (taskEntity.getTaskIsLetter()==0&& taskEntity.getTaskAttachmentFile()!=null) {
-                if (taskEntity.getOldFile()!=null){
-                try {
-                    Path path = Paths.get(taskEntity.getOldFile());
 
-                    Files.delete(path);
-                }catch (IOException e){
-
-                }
-
-
-
-                if (taskEntity.getTaskIsLetter()==0&& taskEntity.getTaskAttachmentFile()!=null) {
-                    File destFile = new File(taskEntity.getTaskAttachment());
-                    Files.copy(taskEntity.getTaskAttachmentFile().toPath(), destFile.toPath());
-
-                }
-                ADInfo.getAdInfo().dialog(Alert.AlertType.CONFIRMATION, "Файл обновлен!");
-                }
-            }
-
-
-
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -377,7 +273,7 @@ DBconnection dBconnection;
     }
 
     @Override
-    public void openTaskAttachment(int id) throws RemoteException{
+    public void openTaskAttachment(int id) throws IOException {
         dBconnection = new DBconnection();
         try {
             String sql = "SELECT Task_attachment FROM TASKS WHERE Task_id=" + id;
@@ -385,22 +281,14 @@ DBconnection dBconnection;
             if (resultSet.next()) {
 
                 String filepath = resultSet.getString("Task_attachment");
-
-                File file = new File(filepath);
-                try {
-                    java.awt.Desktop.getDesktop().open(file);
-                }catch (IllegalArgumentException e){
-                    ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Файл не найден!");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
+                System.out.println(filepath);
+              /*  File file = new File(filepath);
+                java.awt.Desktop.getDesktop().open(file);*/
 
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
 
     }
 

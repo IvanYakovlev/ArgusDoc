@@ -7,6 +7,7 @@ import entity.Employee;
 import entity.TaskEntity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ButtonType;
 import service.*;
 import dialog.ADInfo;
 import javafx.event.ActionEvent;
@@ -18,7 +19,12 @@ import entity.StatusTask;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
+import java.util.Optional;
 
 public class AddTaskController {
 
@@ -80,8 +86,46 @@ public class AddTaskController {
             taskEntity.setTaskTime(java.sql.Time.valueOf(timePickerTask.getValue()));
             taskEntity.setStatusTaskId(StatusTask.NOT_DONE);
             taskEntity.setTaskIsLetter(0);
-            taskService.addTask(taskEntity);
 
+
+            try {
+                taskService.addTask(taskEntity);
+                if (taskEntity.getTaskIsLetter()==0&& taskEntity.getTaskAttachmentFile()!=null) {
+                    File destFile = new File(taskEntity.getTaskAttachment());
+                    Files.copy(taskEntity.getTaskAttachmentFile().toPath(), destFile.toPath());
+                }
+
+
+            }  catch (SQLException e) {
+                 e.printStackTrace();
+            } catch (IOException e) {
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            //alert.setTitle("Delete File");
+                alert.setHeaderText("Файл с таким именем уже существует! Хотите заменить?");
+
+
+            // option != null.
+                 Optional<ButtonType> option = alert.showAndWait();
+
+                  if (option.get() == null) {
+
+                  } else if (option.get() == ButtonType.OK) {
+                       Path path = Paths.get(taskEntity.getTaskAttachment());
+                       Files.delete(path);
+
+                     if (taskEntity.getTaskIsLetter()==0&& taskEntity.getTaskAttachmentFile()!=null) {
+                         File destFile = new File(taskEntity.getTaskAttachment());
+                         Files.copy(taskEntity.getTaskAttachmentFile().toPath(), destFile.toPath());
+
+                }
+
+            } else if (option.get() == ButtonType.CANCEL) {
+
+            } else {
+
+            }
+        }
 
 
             Stage stage = (Stage) addTaskButton.getScene().getWindow();

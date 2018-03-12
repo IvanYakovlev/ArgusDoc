@@ -40,10 +40,13 @@ import entity.*;
 import dialog.ADInfo;
 
 
-
+import java.io.File;
 import java.io.IOException;
 
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.sql.Time;
@@ -355,7 +358,11 @@ public class MainController {
         filePathLetter.setCellValueFactory(new PropertyValueFactory<Letter, String>("letterFilePath"));
 
 
-        tableLetter.getColumns().setAll(nameLetter, passwordLetter, numberLetter);
+        tableLetter.getColumns().setAll(numberLetter, nameLetter, passwordLetter);
+
+        numberLetter.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
+        nameLetter.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.50));
+        passwordLetter.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.24));
 
         tableLetter.setItems(observableListLetter);
 
@@ -456,28 +463,32 @@ Calendar tab
     public void openDocumentButton(ActionEvent actionEvent) throws RemoteException {
 
         try {
-            documentService.openDocument(document.getDocumentId());
+
+            File file = new File(document.getDocumentFilePath());
+            java.awt.Desktop.getDesktop().open(file);
+
         }catch (NullPointerException e){
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Документ не выбран!");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        }catch (IllegalArgumentException e) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Документ не найден!");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }
 
     public void printDocumentButton(ActionEvent actionEvent) throws RemoteException {
        try {
-           documentService.printDocument(document.getDocumentId());
+           File file = new File(document.getDocumentFilePath());
+           java.awt.Desktop.getDesktop().print(file);
+
        }catch (NullPointerException e){
            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Документ не выбран!");
-       } catch (SQLException e) {
+       }  catch (IOException e) {
            e.printStackTrace();
-       } catch (IOException e) {
-           e.printStackTrace();
+       }catch (IllegalArgumentException e) {
+           ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Документ не найден!");
        }
-
 
         // }
 
@@ -582,8 +593,7 @@ Calendar tab
 
     public void openDoneTaskButton(ActionEvent actionEvent) throws RemoteException {
         if (taskEntity !=null) {
-            taskService.performedTask(taskEntity.getTaskId());
-            refreshData();
+
             FXMLLoader fxmlLoader = new FXMLLoader();
 
             fxmlLoader.setLocation(getClass().getResource("/viewFXML/Done_task_window.fxml"));
@@ -661,10 +671,10 @@ Calendar tab
                         statusTab="myLetter";
                         taskEntity =null;
 
-                        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
+                        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.50));
                         sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
-                        termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-                        timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+                        termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
+                        timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
                         statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
                         tableTask.setItems(list);
@@ -704,12 +714,12 @@ Calendar tab
                         progressBar.setVisible(true);
 
                         final int max = 100;
-               /* for (int i=1; i<=max; i++) {
+                for (int i=1; i<=max; i++) {
                     if (isCancelled()) {
                         break;
                     }
                     updateProgress(i, max);
-                }*/
+                }
 
 
                         statusTab="myTask";
@@ -790,17 +800,9 @@ Calendar tab
                         timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
                         statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
-
-
-
-
                         tableTask.setItems(list);
                         // задаем размер колонок в таблице
                         colorRow();
-
-
-
-
 
                         tableTask.setDisable(false);
                         progressBar.setVisible(false);
@@ -950,7 +952,21 @@ Calendar tab
     public void deleteTaskButton(ActionEvent actionEvent) throws RemoteException {
         if (taskEntity !=null){
 
-            taskService.removeTask(this.taskEntity);
+            try {
+                taskService.removeTask(this.taskEntity);
+//удаляем файл с сервера, если это не письмо
+                if (taskEntity.getTaskAttachment()!=null&& taskEntity.getTaskIsLetter()==0) {
+                    Path path = Paths.get(taskEntity.getTaskAttachment());
+                    try {
+                        Files.delete(path);
+                    } catch (IOException e) {
+                        System.out.println("файл уже удален");
+                        // ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "");
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         } else
         {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Задача не выбрана!");
@@ -1032,7 +1048,7 @@ Calendar tab
     public void letterTabButton(ActionEvent actionEvent) throws RemoteException {
         statusTab="letterTab";
         anchorLetter.toFront();
-
+        ObservableList<Letter> list = observableListLetter;
         Service<Void> service = new Service<Void>() {
             @Override
             protected Task<Void> createTask() {
@@ -1048,8 +1064,7 @@ Calendar tab
                             updateProgress(i, max);
                         }
 
-                        tableLetter.setItems(observableListLetter);
-
+                        tableLetter.setItems(list);
 
                         tableLetter.setDisable(false);
                         progressBar.setVisible(false);
@@ -1715,7 +1730,13 @@ Calendar tab
                                         tableEvent.setItems(observableListSelectDayEvent);
                                     }
                                 });
-
+                            case "letterTab":
+                                Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        tableLetter.setItems(observableListLetter);
+                                    }
+                                });
 
                                 break;
 

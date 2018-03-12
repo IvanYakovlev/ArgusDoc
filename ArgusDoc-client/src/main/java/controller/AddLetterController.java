@@ -96,8 +96,11 @@ public class AddLetterController {
                 taskEntity.setTaskTime(null);
                 taskEntity.setTaskIsLetter(1);
 
+                try {
                     taskService.addTask(taskEntity);
-
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
 
 
             }
