@@ -17,8 +17,6 @@ public class Employee implements Externalizable {
     @Column(name = "Employee_name")
     private String employeeName;
 
-    @Column(name = "Employee_login")
-    private String employeeLogin;
 
     @Column(name = "Employee_password")
     private String employeePassword;
@@ -78,14 +76,6 @@ public class Employee implements Externalizable {
         this.employeeName = employeeName;
     }
 
-    public String getEmployeeLogin() {
-        return employeeLogin;
-    }
-
-    public void setEmployeeLogin(String employeeLogin) {
-        this.employeeLogin = employeeLogin;
-    }
-
     public String getEmployeePassword() {
         return employeePassword;
     }
@@ -115,10 +105,12 @@ public class Employee implements Externalizable {
         return "Employee{" +
                 "employeeId=" + employeeId +
                 ", employeeName='" + employeeName + '\'' +
-                ", employeeLogin='" + employeeLogin + '\'' +
                 ", employeePassword='" + employeePassword + '\'' +
-                ", departmentName=" + departmentName +
-                ", accessName=" + accessName +
+                ", departmentName='" + departmentName + '\'' +
+                ", accessName='" + accessName + '\'' +
+                ", departmentId=" + departmentId +
+                ", accessId=" + accessId +
+                ", employeeOnline=" + employeeOnline +
                 '}';
     }
 
@@ -126,7 +118,6 @@ public class Employee implements Externalizable {
     public void writeExternal(ObjectOutput out) throws IOException {
         out.writeInt(getEmployeeId());
         out.writeObject(getEmployeeName());
-        out.writeObject(getEmployeeLogin());
         out.writeObject(getEmployeePassword());
         out.writeObject(getAccessName());
         out.writeObject(getDepartmentName());
@@ -140,7 +131,6 @@ public class Employee implements Externalizable {
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         setEmployeeId(in.readInt());
         setEmployeeName((String) in.readObject());
-        setEmployeeLogin((String) in.readObject());
         setEmployeePassword((String) in.readObject());
         setAccessName((String) in.readObject());
         setDepartmentName((String) in.readObject());

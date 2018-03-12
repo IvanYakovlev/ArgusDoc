@@ -95,7 +95,8 @@ public class AuthorizationController {
 
 
         } catch (SQLException e) {
-            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Данный пользователь не найден!");
+            e.printStackTrace();
+            //ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Данный пользователь не найден!");
         }catch (NoSuchObjectException e){
             e.printStackTrace();
         }catch (NullPointerException e){

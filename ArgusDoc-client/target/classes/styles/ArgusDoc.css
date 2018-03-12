@@ -221,6 +221,7 @@
     -fx-text-fill: #221E1D;
     -jfx-focus-color: #536DFE;
     -jfx-unfocus-color: #383127;
+
 }
 .label{
      -fx-text-fill: #FFFFFF;
@@ -229,9 +230,16 @@
     -fx-text-fill: #212121;
 }
 .label3{
-    -fx-text-fill: #212121;
     -fx-font-weight: bold;
-    -fx-font-size: 16
+    -fx-text-fill: white;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4px;
+    -fx-background-color:  #03A9F4;
+    -fx-font-weight:bold;
+    -fx-font-size:16px;
+    -fx-padding: 0 0 0 2;
+    -fx-wrap-text: false;
+    -fx-max-height: infinity;
 }
 .password-field{
     -fx-text-fill: #221E1D;

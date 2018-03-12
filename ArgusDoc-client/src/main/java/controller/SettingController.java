@@ -69,8 +69,7 @@ private FontAwesomeIconView closeSettingWindow;
     private ComboBox<String> comboBoxEmployee_Department = new ComboBox<>();
     @FXML
     private TextField txtFIOEmployee;
-    @FXML
-    private TextField txtLoginEmployee;
+
     @FXML
     private TextField txtPasswordEmployee;
     @FXML
@@ -253,7 +252,6 @@ private FontAwesomeIconView closeSettingWindow;
 
     public void clearEmployeeTab() {
         txtFIOEmployee.setText("");
-        txtLoginEmployee.setText("");
         txtPasswordEmployee.setText("");
         comboBoxEmployee_Access.setValue(null);
         comboBoxEmployee_Department.setValue(null);
@@ -271,7 +269,6 @@ private FontAwesomeIconView closeSettingWindow;
         if (employee!=null) {
             this.idEmployee = employee.getEmployeeId();
             txtFIOEmployee.setText(employee.getEmployeeName());
-            txtLoginEmployee.setText(employee.getEmployeeLogin());
             txtPasswordEmployee.setText(employee.getEmployeePassword());
             comboBoxEmployee_Access.setValue(employee.getAccessName());
             comboBoxEmployee_Department.setValue(employee.getDepartmentName());
@@ -279,12 +276,11 @@ private FontAwesomeIconView closeSettingWindow;
     }
 
     public void updateEmployeeButton(ActionEvent actionEvent) throws RemoteException {
-        if (txtFIOEmployee.getText().isEmpty() || txtLoginEmployee.getText().isEmpty() || txtPasswordEmployee.getText().isEmpty() || comboBoxEmployee_Department.getValue()==null || comboBoxEmployee_Access.getValue()==null) {
+        if (txtFIOEmployee.getText().isEmpty() ||  txtPasswordEmployee.getText().isEmpty() || comboBoxEmployee_Department.getValue()==null || comboBoxEmployee_Access.getValue()==null) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
             Employee employee = new Employee();
             employee.setEmployeeName(txtFIOEmployee.getText());
-            employee.setEmployeeLogin(txtLoginEmployee.getText());
             employee.setEmployeePassword(txtPasswordEmployee.getText());
             employee.setDepartmentId(departmentService.getIdDepartmentByName(comboBoxEmployee_Department.getValue()));
             employee.setAccessId(accessService.getIdAccessByName(comboBoxEmployee_Access.getValue()));
@@ -311,20 +307,20 @@ private FontAwesomeIconView closeSettingWindow;
     }
 
     public void addEmployeeButton(ActionEvent actionEvent) throws RemoteException {
-        if (txtFIOEmployee.getText().isEmpty() || txtLoginEmployee.getText().isEmpty() || txtPasswordEmployee.getText().isEmpty() || comboBoxEmployee_Department.getValue()==null || comboBoxEmployee_Access.getValue()==null) {
+        if (txtFIOEmployee.getText().isEmpty() ||  txtPasswordEmployee.getText().isEmpty() || comboBoxEmployee_Department.getValue()==null || comboBoxEmployee_Access.getValue()==null) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
 
             Employee employee = new Employee();
             employee.setEmployeeName(txtFIOEmployee.getText());
-            employee.setEmployeeLogin(txtLoginEmployee.getText());
             employee.setEmployeePassword(txtPasswordEmployee.getText());
             employee.setDepartmentId(departmentService.getIdDepartmentByName(comboBoxEmployee_Department.getValue()));
             employee.setAccessId(accessService.getIdAccessByName(comboBoxEmployee_Access.getValue()));
             try {
                 employeeService.addEmployee(employee);
             } catch (SQLException e) {
-                ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Данный пользователь уже существует!");
+                e.printStackTrace();
+               // ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Данный пользователь уже существует!");
             }
             clearEmployeeTab();
             refreshTableEmployee();

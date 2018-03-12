@@ -189,7 +189,7 @@
                       <TableColumn prefWidth="398.0" text="Напоминания" />
                     </columns>
                   </TableView>
-                  <Label layoutX="438.0" layoutY="14.0" styleClass="label3" text="Дела на" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="16.0" />
+                  <Label layoutX="438.0" layoutY="14.0" prefHeight="25.0" prefWidth="140.0" styleClass="label3" text="Дела на" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="16.0" />
                   <Label fx:id="labelSelectedDate" layoutX="510.0" layoutY="16.0" styleClass="label3" text="сегодня" AnchorPane.leftAnchor="500.0" />
                   <AnchorPane layoutX="10.0" layoutY="290.0" prefHeight="343.0" prefWidth="401.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="300.0">
                      <children>

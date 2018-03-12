@@ -24,12 +24,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void addEmployee(Employee employee) throws RemoteException, SQLException {
         this.dBconnection = new DBconnection();
 
-            PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("INSERT INTO Employees(Employee_name,Employee_login,Employee_password,Department_id,Access_id) VALUES (?,?,?,?,?)");
+            PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("INSERT INTO Employees(Employee_name,Employee_password,Department_id,Access_id) VALUES (?,?,?,?)");
             preparedStatement.setString(1,employee.getEmployeeName());
-            preparedStatement.setString(2,employee.getEmployeeLogin());
-            preparedStatement.setString(3,employee.getEmployeePassword());
-            preparedStatement.setInt(4,employee.getDepartmentId());
-            preparedStatement.setInt(5,employee.getAccessId());
+
+            preparedStatement.setString(2,employee.getEmployeePassword());
+            preparedStatement.setInt(3,employee.getDepartmentId());
+            preparedStatement.setInt(4,employee.getAccessId());
             preparedStatement.execute();
 
     }
@@ -38,13 +38,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void updateEmployee(Employee employee) throws RemoteException, SQLException {
         this.dBconnection = new DBconnection();
 
-            PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("UPDATE Employees SET Employee_name=?,Employee_login=?,Employee_password=?,Department_id=?,Access_id=? WHERE Employee_id=?");
+            PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("UPDATE Employees SET Employee_name=?,Employee_password=?,Department_id=?,Access_id=? WHERE Employee_id=?");
             preparedStatement.setString(1,employee.getEmployeeName());
-            preparedStatement.setString(2,employee.getEmployeeLogin());
-            preparedStatement.setString(3,employee.getEmployeePassword());
-            preparedStatement.setInt(4,employee.getDepartmentId());
-            preparedStatement.setInt(5,employee.getAccessId());
-            preparedStatement.setInt(6,employee.getEmployeeId());
+
+            preparedStatement.setString(2,employee.getEmployeePassword());
+            preparedStatement.setInt(3,employee.getDepartmentId());
+            preparedStatement.setInt(4,employee.getAccessId());
+            preparedStatement.setInt(5,employee.getEmployeeId());
             preparedStatement.execute();
 
     }
@@ -69,7 +69,6 @@ public class EmployeeServiceImpl implements EmployeeService {
                 Employee employee= new Employee();
                     employee.setEmployeeId(resultSet.getInt("Employee_id"));
                     employee.setEmployeeName(resultSet.getString("Employee_name"));
-                    employee.setEmployeeLogin(resultSet.getString("Employee_login"));
                     employee.setEmployeePassword(resultSet.getString("Employee_password"));
                     employee.setDepartmentName(resultSet.getString("Department_name"));
                     employee.setAccessName(resultSet.getString("Access_name"));
@@ -113,7 +112,6 @@ public class EmployeeServiceImpl implements EmployeeService {
             while (resultSet.next()) {
                 employee.setEmployeeId(resultSet.getInt("Employee_id"));
                 employee.setEmployeeName(resultSet.getString("Employee_name"));
-                employee.setEmployeeLogin(resultSet.getString("Employee_login"));
                 employee.setEmployeePassword(resultSet.getString("Employee_password"));
                 employee.setDepartmentName(resultSet.getString("Department_name"));
                 employee.setAccessName(resultSet.getString("Access_name"));
