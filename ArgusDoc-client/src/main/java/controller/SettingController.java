@@ -23,6 +23,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class SettingController {
 
@@ -209,7 +210,28 @@ private FontAwesomeIconView closeSettingWindow;
     public void removeDepartmentButton(ActionEvent actionEvent) throws RemoteException {
 
         try {
-            departmentService.removeDepartment(this.idDepartment);
+            ////////////
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            //alert.setTitle("Delete File");
+            alert.setHeaderText("Вы действительно хотите удалить отдел?");
+
+
+            // option != null.
+            Optional<ButtonType> option = alert.showAndWait();
+
+            if (option.get() == null) {
+
+            } else if (option.get() == ButtonType.OK) {
+                departmentService.removeDepartment(this.idDepartment);
+
+            } else if (option.get() == ButtonType.CANCEL) {
+
+            } else {
+
+            }
+            ////////////
+
+
 
         }catch (SQLException e){
             ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Удаление невозможно, так как есть пользователи в данном отделе!");
@@ -297,7 +319,30 @@ private FontAwesomeIconView closeSettingWindow;
 
     public void removeEmployeeButton(ActionEvent actionEvent) throws RemoteException {
         try {
-            employeeService.removeEmployee(this.idEmployee);
+
+            ////////////
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            //alert.setTitle("Delete File");
+            alert.setHeaderText("Вы действительно хотите удалить сотрудника?");
+
+
+            // option != null.
+            Optional<ButtonType> option = alert.showAndWait();
+
+            if (option.get() == null) {
+
+            } else if (option.get() == ButtonType.OK) {
+                employeeService.removeEmployee(this.idEmployee);
+
+            } else if (option.get() == ButtonType.CANCEL) {
+
+            } else {
+
+            }
+            ////////////
+
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -372,16 +417,40 @@ private FontAwesomeIconView closeSettingWindow;
 
             try {
 
-                documentService.removeDocument(document.getDocumentId(), document.getDocumentFilePath());
+                ////////////
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                //alert.setTitle("Delete File");
+                alert.setHeaderText("Вы действительно хотите удалить документ?");
+
+
+                // option != null.
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if (option.get() == null) {
+
+                } else if (option.get() == ButtonType.OK) {
+                    documentService.removeDocument(document.getDocumentId(), document.getDocumentFilePath());
 //удаляем файл с сервера
-                if (document.getDocumentFilePath()!=null) {
-                    Path path = Paths.get(document.getDocumentFilePath());
-                    try {
-                        Files.delete(path);
-                    } catch (IOException e) {
-                        System.out.println("файл уже удален");
+                    if (document.getDocumentFilePath()!=null) {
+                        Path path = Paths.get(document.getDocumentFilePath());
+                        try {
+                            Files.delete(path);
+                        } catch (IOException e) {
+                            System.out.println("файл уже удален");
+                        }
                     }
+
+
+                } else if (option.get() == ButtonType.CANCEL) {
+
+                } else {
+
                 }
+                ////////////
+
+
+
+
 
             } catch (SQLException e) {
                 e.printStackTrace();

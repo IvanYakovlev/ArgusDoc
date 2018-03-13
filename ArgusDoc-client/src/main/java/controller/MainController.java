@@ -387,7 +387,28 @@ Calendar tab
     public void removeEvent(ActionEvent actionEvent) throws RemoteException {
         if (event!=null){
             try {
-                eventService.removeEvent(event);
+
+                ////////////
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                //alert.setTitle("Delete File");
+                alert.setHeaderText("Вы действительно хотите удалить напоминание?");
+
+                // option != null.
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if (option.get() == null) {
+
+                } else if (option.get() == ButtonType.OK) {
+                    eventService.removeEvent(event);
+
+                } else if (option.get() == ButtonType.CANCEL) {
+
+                } else {
+
+                }
+                ////////////
+
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -953,17 +974,39 @@ Calendar tab
         if (taskEntity !=null){
 
             try {
-                taskService.removeTask(this.taskEntity);
+                ////////////
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                //alert.setTitle("Delete File");
+                alert.setHeaderText("Вы действительно хотите удалить задачу?");
+
+                // option != null.
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if (option.get() == null) {
+
+                } else if (option.get() == ButtonType.OK) {
+                    taskService.removeTask(this.taskEntity);
 //удаляем файл с сервера, если это не письмо
-                if (taskEntity.getTaskAttachment()!=null&& taskEntity.getTaskIsLetter()==0) {
-                    Path path = Paths.get(taskEntity.getTaskAttachment());
-                    try {
-                        Files.delete(path);
-                    } catch (IOException e) {
-                        System.out.println("файл уже удален");
-                        // ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "");
+                    if (taskEntity.getTaskAttachment()!=null&& taskEntity.getTaskIsLetter()==0) {
+                        Path path = Paths.get(taskEntity.getTaskAttachment());
+                        try {
+                            Files.delete(path);
+                        } catch (IOException e) {
+                            System.out.println("файл уже удален");
+                            // ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "");
+                        }
                     }
+
+                } else if (option.get() == ButtonType.CANCEL) {
+
+                } else {
+
                 }
+                ////////////
+
+
+
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -1204,7 +1247,28 @@ Calendar tab
 
     public void removeLetter(ActionEvent actionEvent) throws RemoteException {
         try {
-            letterService.removeLetter(letter.getLetterId(), letter.getLetterFilePath());
+            ////////////
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            //alert.setTitle("Delete File");
+            alert.setHeaderText("Вы действительно хотите удалить письмо?");
+
+            // option != null.
+            Optional<ButtonType> option = alert.showAndWait();
+
+            if (option.get() == null) {
+
+            } else if (option.get() == ButtonType.OK) {
+                letterService.removeLetter(letter.getLetterId(), letter.getLetterFilePath());
+
+            } else if (option.get() == ButtonType.CANCEL) {
+
+            } else {
+
+            }
+            ////////////
+
+
+
         } catch (IOException e) {
             System.out.println("Файл уже удален!");
         } catch (SQLException e) {

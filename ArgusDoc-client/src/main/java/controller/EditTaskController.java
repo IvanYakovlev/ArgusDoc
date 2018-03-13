@@ -184,7 +184,6 @@ public class EditTaskController {
             //taskService.openTaskAttachment(taskEntity.getTaskId());
 
 
-
         } catch (IOException e) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Файл не найден!");
         }
@@ -201,8 +200,6 @@ public class EditTaskController {
         paneEditTask.toFront();
         editButtonBar.toFront();
     }
-
-
 
     public void cancelEditTaskButton(ActionEvent actionEvent) {
         paneViewTask.toFront();

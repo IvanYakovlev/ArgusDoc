@@ -34,7 +34,7 @@ public class Main extends Application {
             primaryStage.setMinHeight(120);
             primaryStage.setMinWidth(220);
             primaryStage.setResizable(false);
-            primaryStage.getIcons().add(new Image("images/icon.jpg"));
+            primaryStage.getIcons().add(new Image("images/1.jpg"));
             primaryStage.initStyle(StageStyle.TRANSPARENT);
 
             root.setOnMousePressed(new EventHandler<MouseEvent>() {
