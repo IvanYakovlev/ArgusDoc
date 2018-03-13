@@ -234,7 +234,8 @@ private FontAwesomeIconView closeSettingWindow;
 
 
         }catch (SQLException e){
-            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Удаление невозможно, так как есть пользователи в данном отделе!");
+
+          ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Удаление невозможно, так как есть пользователи или документы в выбранном отделе!");
         }
 
         clearDepartmentText();
@@ -364,8 +365,8 @@ private FontAwesomeIconView closeSettingWindow;
             try {
                 employeeService.addEmployee(employee);
             } catch (SQLException e) {
-                e.printStackTrace();
-               // ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Данный пользователь уже существует!");
+
+                ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Данный пользователь уже существует!");
             }
             clearEmployeeTab();
             refreshTableEmployee();

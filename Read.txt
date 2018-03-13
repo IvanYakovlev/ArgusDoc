@@ -2,3 +2,23 @@
 2 Удаление групповое
 3 javadoc и
 6 Письма...
+
+
+Letter_name
+Letter_number
+Letter_date
+Letter_text
+Letter_jurist_number
+Letter_jurist_FIO
+Letter_jurist_date
+Letter_technical_liter
+Letter_technical_password
+Letter_technical_FIO
+Letter_technical_date
+Letter_bookkeeping_FIO
+Letter_bookkeeping_date
+Letter_ORIP_FIO
+Letter_ORIP_date
+Letter_Duty_FIO
+Letter_Duty_date
+

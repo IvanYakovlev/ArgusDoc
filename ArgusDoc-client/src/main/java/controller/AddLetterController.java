@@ -2,12 +2,11 @@ package controller;
 
 import argusDocSettings.ServerFilePath;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import entity.Employee;
 import entity.TaskEntity;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.ButtonType;
 import service.*;
 import dialog.ADInfo;
@@ -27,6 +26,7 @@ import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class AddLetterController {
@@ -51,6 +51,10 @@ public class AddLetterController {
     private JFXTextArea textAreaLetter;
     @FXML
     private JFXTextField txtLetterNumber;
+    @FXML
+    private JFXComboBox<String> nameLetterComboBox = new JFXComboBox<String>();
+    private ArrayList<String> list = new ArrayList<String>();
+    private ObservableList<String> listNameLetter;
 
     private DepartmentService departmentService = ServiceRegistry.departmentService;
     private EmployeeService employeeService = ServiceRegistry.employeeService;
@@ -64,8 +68,29 @@ public class AddLetterController {
 
     public  void initialize() throws RemoteException {
 
-        employeeService.listEmployees();
-        checkComboBoxEmployee.getItems().setAll(employeeService.listEmployeesName());
+        //employeeService.listEmployees();
+
+        list.add("Постановка объекта на охрану");
+        list.add("Включение ответственных");
+        list.add("Исключение ответственных");
+        list.add("Возобновление договора");
+        list.add("Изменение режима работы");
+        list.add("Изменение номера телефона для СМС");
+        list.add("Подключение услуги СМС");
+        list.add("Отключение услуги СМС");
+        list.add("Подключение услуги Telegram");
+        list.add("Отключение услуги Telegram");
+        list.add("Постановка объекта под охрану");
+        list.add("Расторжение договора о постановке");
+        list.add("Приостановка договора об охране");
+        list.add("Отчет о постановке/снятии за период");
+        list.add("Проведение сверки");
+        list.add("Заявление ответственного лица с договором");
+        list.add("Гарантийное письмо");
+        list.add("Изготовление ключей");
+        listNameLetter = FXCollections.observableArrayList(list);
+
+        nameLetterComboBox.setItems(listNameLetter);
 
 
     }
@@ -159,5 +184,8 @@ public class AddLetterController {
 
             attachmentFile=file;
         }
+    }
+
+    public void nameLetterComboBox(ActionEvent actionEvent) {
     }
 }
