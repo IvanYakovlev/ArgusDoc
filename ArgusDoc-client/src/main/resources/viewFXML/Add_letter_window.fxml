@@ -113,7 +113,7 @@
          </children>
       </HBox>
       <JFXComboBox fx:id="nameLetterComboBox" layoutX="14.0" layoutY="61.0" onAction="#nameLetterComboBox" prefHeight="25.0" prefWidth="302.0" promptText="Тип письма" />
-      <JFXDatePicker layoutX="551.0" layoutY="61.0" prefHeight="25.0" prefWidth="265.0" promptText="Дата поступления" styleClass="JFXDatePicker" />
+      <JFXDatePicker fx:id="datePickerLetter" layoutX="551.0" layoutY="61.0" prefHeight="25.0" prefWidth="265.0" promptText="Дата поступления" styleClass="JFXDatePicker" />
    </children>
    <effect>
       <DropShadow />

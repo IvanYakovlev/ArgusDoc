@@ -57,6 +57,17 @@ public class TaskEntity extends RecursiveTreeObject<TaskEntity> implements Exter
     private String oldFile;
 
 
+    @Column(name = "Letter_id")
+    private int letterId;
+
+    public int getLetterId() {
+        return letterId;
+    }
+
+    public void setLetterId(int letterId) {
+        this.letterId = letterId;
+    }
+
     public String getStatusTaskId() {
         return statusTaskId;
     }
@@ -184,14 +195,14 @@ public class TaskEntity extends RecursiveTreeObject<TaskEntity> implements Exter
                 ", employeeName='" + employeeName + '\'' +
                 ", taskTerm=" + taskTerm +
                 ", taskTime=" + taskTime +
-                ", statusTaskId=" + statusTaskId +
+                ", statusTaskId='" + statusTaskId + '\'' +
                 ", statusTaskName='" + statusTaskName + '\'' +
                 ", taskAttachmentFile=" + taskAttachmentFile +
                 ", taskIsLetter=" + taskIsLetter +
                 ", oldFile='" + oldFile + '\'' +
+                ", letterId=" + letterId +
                 '}';
     }
-
 
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {

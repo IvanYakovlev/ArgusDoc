@@ -54,17 +54,20 @@ public class AddLetterController {
     private JFXButton attachmentFileButton;
 
     @FXML
-    private JFXTextField txtLetterName;
-    @FXML
     private JFXTextField txtLetterPassword;
+
     @FXML
     private JFXDatePicker datePickerLetter;
+
     @FXML
     private JFXTextArea textAreaLetter;
+
     @FXML
     private JFXTextField txtLetterNumber;
+
     @FXML
     private JFXComboBox<String> nameLetterComboBox = new JFXComboBox<String>();
+
     private ArrayList<String> list = new ArrayList<String>();
     private ObservableList<String> listNameLetter;
 
@@ -79,7 +82,7 @@ public class AddLetterController {
     File attachmentFile;
 
 
-
+    Letter letter = new Letter();
 
     public  void initialize() throws RemoteException {
 
@@ -109,9 +112,8 @@ public class AddLetterController {
         nameLetterComboBox.setItems(listNameLetter);
         employeeService.listEmployees();
         juristCheckComboBox.getItems().setAll(employeeService.listEmployeesNameJurist());
-        System.out.println(employeeService.listEmployeesNameTechnical());
         technicalCheckComboBox.getItems().setAll(employeeService.listEmployeesNameTechnical());
-        oripCheckComboBox.getItems().setAll(employeeService.listEmployeesNameTechnical());
+        oripCheckComboBox.getItems().setAll(employeeService.listEmployeesNameOrip());
         bookkeepingCheckComboBox.getItems().setAll(employeeService.listEmployeesNameBookkeeping());
 
     }
@@ -124,39 +126,20 @@ public class AddLetterController {
         stage.close();
     }
 
-    public void addLetterButton(ActionEvent actionEvent) throws IOException {/*
-        if (txtLetterName.getText().isEmpty() ||  checkComboBoxEmployee.getItems().isEmpty() || datePickerLetter.getValue()==null||textAreaLetter.getText().isEmpty()||attachmentFile==null) {
+    public void addLetterButton(ActionEvent actionEvent) throws IOException {
+        if (false) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
-            for (int i = 0; i < checkComboBoxEmployee.getCheckModel().getCheckedIndices().size(); i++) {
-//формируем задачи для исполнителей
-                TaskEntity taskEntity = new TaskEntity();
-                taskEntity.setTaskName(txtLetterName.getText());
-                taskEntity.setTaskText(textAreaLetter.getText());
-                taskEntity.setTaskAttachment(ServerFilePath.LETTERS_FILE_PATH + attachmentFile.getName());
-                taskEntity.setTaskFromEmployee(authorizedUser.getEmployeeName());
-                taskEntity.setEmployeeId(employeeService.getIdEmployeeByName(checkComboBoxEmployee.getItems().get(checkComboBoxEmployee.getCheckModel().getCheckedIndices().get(i))));
-                taskEntity.setTaskTerm(java.sql.Date.valueOf(datePickerLetter.getValue()));
-                taskEntity.setStatusTaskId(StatusTask.NOT_DONE);
-                taskEntity.setTaskTime(null);
-                taskEntity.setTaskIsLetter(1);
-
-                try {
-                    taskService.addTask(taskEntity);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
 
 
-            }
+            //Добавляем письмо в таблицу и загружаем на сервер
 
-//Добавляем письмо в таблицу и загружаем на сервер
-            Letter letter = new Letter();
-            letter.setLetterName(txtLetterName.getText());
+            letter.setLetterName(nameLetterComboBox.getValue());
+            letter.setLetterNumber(txtLetterNumber.getText());
             letter.setLetterDate(Date.valueOf(datePickerLetter.getValue()));
             letter.setAttachmentFile(attachmentFile);
-            letter.setLetterPassword(Integer.parseInt(txtLetterPassword.getText()));
-            letter.setLetterNumber(txtLetterNumber.getText());
+            letter.setLetterResolution(textAreaLetter.getText());
+
             letter.setLetterFilePath(ServerFilePath.LETTERS_FILE_PATH+attachmentFile.getName());
             try {
                 letterService.addLetter(letter);
@@ -188,12 +171,37 @@ public class AddLetterController {
                 }
             }
 
+
+            for (int i = 0; i < juristCheckComboBox.getCheckModel().getCheckedIndices().size(); i++) {
+//формируем задачи для исполнителей
+                TaskEntity taskEntity = new TaskEntity();
+                taskEntity.setTaskName(nameLetterComboBox.getValue());
+                taskEntity.setTaskText(textAreaLetter.getText());
+                taskEntity.setTaskAttachment(ServerFilePath.LETTERS_FILE_PATH + attachmentFile.getName());
+                taskEntity.setTaskFromEmployee(authorizedUser.getEmployeeName());
+                taskEntity.setEmployeeId(employeeService.getIdEmployeeByName(juristCheckComboBox.getItems().get(juristCheckComboBox.getCheckModel().getCheckedIndices().get(i))));
+                taskEntity.setTaskTerm(java.sql.Date.valueOf(datePickerLetter.getValue()));
+                taskEntity.setStatusTaskId(StatusTask.NOT_DONE);
+                taskEntity.setTaskTime(null);
+                taskEntity.setTaskIsLetter(1);
+                taskEntity.setLetterId(letter.getLetterId());
+
+                try {
+                    taskService.addTask(taskEntity);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+
+
             Stage stage = (Stage) addLetterButton.getScene().getWindow();
             stage.close();
         }
 
 
-*/
     }
 
     public void attachmentFileButton(ActionEvent actionEvent) {

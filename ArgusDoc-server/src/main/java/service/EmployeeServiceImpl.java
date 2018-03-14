@@ -1,10 +1,8 @@
 package service;
 
 
-import dialog.ADInfo;
 import dbConnection.DBconnection;
 
-import javafx.scene.control.Alert;
 import entity.Employee;
 
 import java.rmi.RemoteException;
@@ -20,7 +18,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     DBconnection dBconnection;
     Map<Integer, String> mapEmployee = new HashMap<Integer, String>();
-    Map<String, String> mapEmployeeDepartment = new HashMap<String, String>();
+    List<Employee> listEmployee = new ArrayList<Employee>();
 
     public void addEmployee(Employee employee) throws RemoteException, SQLException {
         this.dBconnection = new DBconnection();
@@ -74,9 +72,9 @@ public class EmployeeServiceImpl implements EmployeeService {
                     employee.setDepartmentName(resultSet.getString("Department_name"));
                     employee.setAccessName(resultSet.getString("Access_name"));
                     mapEmployee.put(employee.getEmployeeId(),employee.getEmployeeName());
-
-                    mapEmployeeDepartment.put(employee.getEmployeeName(),employee.getDepartmentName());
-
+                    if (!listEmployee.contains(employee)) {
+                        listEmployee.add(employee);
+                    }
                 listData.add(employee);
             }
         } catch (SQLException e) {
@@ -97,9 +95,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<String> listEmployeesNameJurist() throws RemoteException {
         List<String> listData = new ArrayList<String>();
-        for(Map.Entry<String, String> e : mapEmployeeDepartment.entrySet()) {
-            if (e.getValue()=="Юридический отдел")
-            listData.add(e.getKey());
+        for(int i = 0; i< listEmployee.size(); i++) {
+            if (listEmployee.get(i).getDepartmentName().equals("Юридический отдел")&&!listData.contains(listEmployee.get(i).getEmployeeName()))
+            listData.add(listEmployee.get(i).getEmployeeName());
         }
         return listData;
     }
@@ -107,9 +105,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<String> listEmployeesNameTechnical() throws RemoteException {
         List<String> listData = new ArrayList<String>();
-        for(Map.Entry<String, String> e : mapEmployeeDepartment.entrySet()) {
-            if (e.getValue()=="Технический отдел")
-                listData.add(e.getKey());
+        for(int i = 0; i< listEmployee.size(); i++) {
+            if (listEmployee.get(i).getDepartmentName().equals("Технический отдел")&&!listData.contains(listEmployee.get(i).getEmployeeName()))
+                listData.add(listEmployee.get(i).getEmployeeName());
         }
         return listData;
     }
@@ -117,9 +115,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<String> listEmployeesNameOrip() throws RemoteException {
         List<String> listData = new ArrayList<String>();
-        for(Map.Entry<String, String> e : mapEmployeeDepartment.entrySet()) {
-            if (e.getValue()=="ОРиП")
-                listData.add(e.getKey());
+        for(int i = 0; i< listEmployee.size(); i++) {
+            if (listEmployee.get(i).getDepartmentName().equals("ОРиП")&&!listData.contains(listEmployee.get(i).getEmployeeName()))
+                listData.add(listEmployee.get(i).getEmployeeName());
         }
         return listData;
     }
@@ -127,9 +125,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<String> listEmployeesNameBookkeeping() throws RemoteException {
         List<String> listData = new ArrayList<String>();
-        for(Map.Entry<String, String> e : mapEmployeeDepartment.entrySet()) {
-            if (e.getValue()=="Бухгалтерия")
-                listData.add(e.getKey());
+        for(int i = 0; i< listEmployee.size(); i++) {
+            if (listEmployee.get(i).getDepartmentName().equals("Бухгалтерия")&&!listData.contains(listEmployee.get(i).getEmployeeName()))
+                listData.add(listEmployee.get(i).getEmployeeName());
         }
         return listData;
     }
