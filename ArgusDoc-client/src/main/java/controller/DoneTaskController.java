@@ -36,7 +36,6 @@ public class DoneTaskController {
         this.taskEntity = taskEntity;
     }
 
-
     private DepartmentService departmentService = ServiceRegistry.departmentService;
     private EmployeeService employeeService = ServiceRegistry.employeeService;
     private AccessService accessService = ServiceRegistry.accessService;
@@ -70,7 +69,6 @@ public class DoneTaskController {
 
     public void initialize(){
         viewButtonBar.toFront();
-
     }
     public void cancelDoneTaskButton(ActionEvent actionEvent) {
         Stage stage = (Stage) cancelDoneTaskButton.getScene().getWindow();

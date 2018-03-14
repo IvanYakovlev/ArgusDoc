@@ -34,10 +34,22 @@ public class AddLetterController {
 
     public Employee authorizedUser ;
 
+
     @FXML
-    CheckComboBox<String> checkComboBoxEmployee;
+    private JFXButton cancelAddLetterButton = new JFXButton();
+    @FXML
+    private CheckComboBox<String> juristCheckComboBox;
+
+    @FXML
+    private CheckComboBox<String> technicalCheckComboBox;
+    @FXML
+    private CheckComboBox<String> oripCheckComboBox;
+    @FXML
+    private CheckComboBox<String> bookkeepingCheckComboBox;
+
     @FXML
     private JFXButton addLetterButton;
+
     @FXML
     private JFXButton attachmentFileButton;
 
@@ -66,6 +78,9 @@ public class AddLetterController {
     final FileChooser fileChooser=new FileChooser();
     File attachmentFile;
 
+
+
+
     public  void initialize() throws RemoteException {
 
         //employeeService.listEmployees();
@@ -88,14 +103,19 @@ public class AddLetterController {
         list.add("Заявление ответственного лица с договором");
         list.add("Гарантийное письмо");
         list.add("Изготовление ключей");
+        list.add("Коммерческое предложения");
         listNameLetter = FXCollections.observableArrayList(list);
 
         nameLetterComboBox.setItems(listNameLetter);
-
+        employeeService.listEmployees();
+        juristCheckComboBox.getItems().setAll(employeeService.listEmployeesNameJurist());
+        System.out.println(employeeService.listEmployeesNameTechnical());
+        technicalCheckComboBox.getItems().setAll(employeeService.listEmployeesNameTechnical());
+        oripCheckComboBox.getItems().setAll(employeeService.listEmployeesNameTechnical());
+        bookkeepingCheckComboBox.getItems().setAll(employeeService.listEmployeesNameBookkeeping());
 
     }
-    @FXML
-    private JFXButton cancelAddLetterButton = new JFXButton();
+
 
 
 
@@ -104,7 +124,7 @@ public class AddLetterController {
         stage.close();
     }
 
-    public void addLetterButton(ActionEvent actionEvent) throws IOException {
+    public void addLetterButton(ActionEvent actionEvent) throws IOException {/*
         if (txtLetterName.getText().isEmpty() ||  checkComboBoxEmployee.getItems().isEmpty() || datePickerLetter.getValue()==null||textAreaLetter.getText().isEmpty()||attachmentFile==null) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
@@ -173,7 +193,7 @@ public class AddLetterController {
         }
 
 
-
+*/
     }
 
     public void attachmentFileButton(ActionEvent actionEvent) {

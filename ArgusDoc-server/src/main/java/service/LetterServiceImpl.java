@@ -38,12 +38,13 @@ public class LetterServiceImpl implements LetterService {
             Files.copy(letter.getAttachmentFile().toPath(), destFile.toPath());
 
             // заносим данные в таблицу Letters
-            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("INSERT INTO LETTERS(Letter_name, Letter_number, Letter_filepath, Letter_password, Letter_date) VALUES(?,?,?,?,?)");
+            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("INSERT INTO LETTERS(Letter_name, Letter_number,Letter_date, Letter_filepath, Letter_resolution) VALUES(?,?,?,?,?)");
             preparedStatement.setString(1, letter.getLetterName());
             preparedStatement.setString(2, letter.getLetterNumber());
-            preparedStatement.setString(3, letter.getLetterFilePath());
-            preparedStatement.setInt(4, letter.getLetterPassword());
-            preparedStatement.setDate(5, letter.getLetterDate());
+            preparedStatement.setDate(3, letter.getLetterDate());
+            preparedStatement.setString(4, letter.getLetterFilePath());
+            preparedStatement.setString(5, letter.getLetterResolution());
+
             preparedStatement.execute();
 
 
@@ -100,10 +101,11 @@ public class LetterServiceImpl implements LetterService {
                 Letter letter= new Letter();
                 letter.setLetterId(resultSet.getInt("Letter_id"));
                 letter.setLetterName(resultSet.getString("Letter_name"));
-                letter.setLetterPassword(resultSet.getInt("Letter_password"));
                 letter.setLetterNumber(resultSet.getString("Letter_number"));
                 letter.setLetterDate(resultSet.getDate("Letter_date"));
                 letter.setLetterFilePath(resultSet.getString("Letter_filepath"));
+                letter.setLetterResolution(resultSet.getString("Letter_resolution"));
+
 
                 listData.add(letter);
             }

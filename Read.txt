@@ -8,6 +8,7 @@ Letter_name
 Letter_number
 Letter_date
 Letter_text
+Letter_filepath
 Letter_jurist_number
 Letter_jurist_FIO
 Letter_jurist_date
@@ -19,6 +20,6 @@ Letter_bookkeeping_FIO
 Letter_bookkeeping_date
 Letter_ORIP_FIO
 Letter_ORIP_date
-Letter_Duty_FIO
-Letter_Duty_date
+
+
 

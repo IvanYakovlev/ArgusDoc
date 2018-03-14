@@ -20,6 +20,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     DBconnection dBconnection;
     Map<Integer, String> mapEmployee = new HashMap<Integer, String>();
+    Map<String, String> mapEmployeeDepartment = new HashMap<String, String>();
 
     public void addEmployee(Employee employee) throws RemoteException, SQLException {
         this.dBconnection = new DBconnection();
@@ -73,6 +74,9 @@ public class EmployeeServiceImpl implements EmployeeService {
                     employee.setDepartmentName(resultSet.getString("Department_name"));
                     employee.setAccessName(resultSet.getString("Access_name"));
                     mapEmployee.put(employee.getEmployeeId(),employee.getEmployeeName());
+
+                    mapEmployeeDepartment.put(employee.getEmployeeName(),employee.getDepartmentName());
+
                 listData.add(employee);
             }
         } catch (SQLException e) {
@@ -86,6 +90,46 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<String> listData = new ArrayList<String>();
         for(Map.Entry<Integer, String> e : mapEmployee.entrySet()) {
             listData.add(e.getValue());
+        }
+        return listData;
+    }
+
+    @Override
+    public List<String> listEmployeesNameJurist() throws RemoteException {
+        List<String> listData = new ArrayList<String>();
+        for(Map.Entry<String, String> e : mapEmployeeDepartment.entrySet()) {
+            if (e.getValue()=="Юридический отдел")
+            listData.add(e.getKey());
+        }
+        return listData;
+    }
+
+    @Override
+    public List<String> listEmployeesNameTechnical() throws RemoteException {
+        List<String> listData = new ArrayList<String>();
+        for(Map.Entry<String, String> e : mapEmployeeDepartment.entrySet()) {
+            if (e.getValue()=="Технический отдел")
+                listData.add(e.getKey());
+        }
+        return listData;
+    }
+
+    @Override
+    public List<String> listEmployeesNameOrip() throws RemoteException {
+        List<String> listData = new ArrayList<String>();
+        for(Map.Entry<String, String> e : mapEmployeeDepartment.entrySet()) {
+            if (e.getValue()=="ОРиП")
+                listData.add(e.getKey());
+        }
+        return listData;
+    }
+
+    @Override
+    public List<String> listEmployeesNameBookkeeping() throws RemoteException {
+        List<String> listData = new ArrayList<String>();
+        for(Map.Entry<String, String> e : mapEmployeeDepartment.entrySet()) {
+            if (e.getValue()=="Бухгалтерия")
+                listData.add(e.getKey());
         }
         return listData;
     }

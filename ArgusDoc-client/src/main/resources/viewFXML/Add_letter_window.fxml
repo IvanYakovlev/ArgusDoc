@@ -13,18 +13,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import org.controlsfx.control.CheckComboBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="642.0" prefWidth="1019.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddLetterController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="642.0" prefWidth="824.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddLetterController">
    <children>
-      <Pane layoutX="11.0" layoutY="107.0" prefHeight="190.0" prefWidth="993.0" styleClass="AnchorPane">
+      <Pane layoutX="11.0" layoutY="107.0" prefHeight="164.0" prefWidth="805.0" styleClass="AnchorPane">
          <children>
-            <JFXTextArea fx:id="textAreaLetter" focusColor="#4eb1ba" layoutY="1.0" prefHeight="190.0" prefWidth="993.0" promptText="Текст резолюции" styleClass="JFXTextArea" />
+            <JFXTextArea fx:id="textAreaLetter" focusColor="#4eb1ba" layoutY="1.0" prefHeight="157.0" prefWidth="804.0" promptText="Текст резолюции" styleClass="JFXTextArea" />
          </children>
       </Pane>
-      <JFXTextField fx:id="txtLetterNumber" focusColor="#4eb1ba" layoutX="484.0" layoutY="61.0" prefHeight="25.0" prefWidth="187.0" promptText="Номер письма" styleClass="JFXTextField" />
+      <JFXTextField fx:id="txtLetterNumber" focusColor="#4eb1ba" layoutX="344.0" layoutY="61.0" prefHeight="25.0" prefWidth="187.0" promptText="Номер письма" styleClass="JFXTextField" />
       <AnchorPane layoutX="-40.0" layoutY="-86.0" prefHeight="40.0" prefWidth="600.0" styleClass="AnchorPane2" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="14.0" layoutY="5.0" styleClass="log-label" text="Добавить письмо" />
+            <Label layoutX="14.0" layoutY="5.0" styleClass="log-label" text="Обработка письма" />
          </children>
          <effect>
             <DropShadow />
@@ -40,6 +41,14 @@
                   <FontAwesomeIconView fill="WHITE" glyphName="PAPERCLIP" size="20" />
                </graphic>
             </JFXButton>
+            <JFXButton fx:id="attachmentFileButton1" onAction="#attachmentFileButton" styleClass="blue-btn" text="Просмотр">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="FILE" size="20" />
+               </graphic>
+            </JFXButton>
             <JFXButton fx:id="cancelAddLetterButton" maxWidth="100.0" onAction="#cancelAddLetterButton" styleClass="blue-btn" text="Отмена">
                <effect>
                   <DropShadow />
@@ -52,66 +61,59 @@
             </JFXButton>
          </buttons>
       </ButtonBar>
-      <HBox layoutX="11.0" layoutY="317.0" prefHeight="265.0" prefWidth="993.0">
+      <HBox layoutX="11.0" layoutY="282.0" prefHeight="300.0" prefWidth="805.0">
          <children>
             <Pane prefHeight="200.0" prefWidth="200.0" styleClass="AnchorPane">
                <children>
                   <Label layoutX="40.0" layoutY="10.0" styleClass="label2" text="Юридический отдел" />
-                  <JFXDatePicker layoutX="11.0" layoutY="226.0" styleClass="JFXDatePicker" />
-                  <Separator layoutX="-3.0" layoutY="37.0" prefHeight="4.0" prefWidth="200.0" />
-                  <Label layoutX="14.0" layoutY="45.0" styleClass="label2" text="Доп. соглашение подписано:" />
-                  <Label layoutX="14.0" layoutY="202.0" prefHeight="17.0" prefWidth="130.0" styleClass="label2" text="ФИО" />
-                  <Label layoutX="11.0" layoutY="176.0" styleClass="label2" text="юрист:" />
-                  <JFXTextField layoutX="14.0" layoutY="100.0" prefHeight="25.0" prefWidth="171.0" promptText="Введите номер договора" />
+                  <JFXDatePicker layoutX="10.0" layoutY="260.0" styleClass="JFXDatePicker" />
+                  <Separator layoutY="70.0" prefHeight="4.0" prefWidth="200.0" />
+                  <Label layoutX="14.0" layoutY="240.0" prefHeight="17.0" prefWidth="130.0" styleClass="label2" text="ФИО" />
+                  <Label layoutX="10.0" layoutY="210.0" styleClass="label2" text="юрист:" />
+                  <JFXTextField layoutX="15.0" layoutY="150.0" prefHeight="25.0" prefWidth="171.0" promptText="Введите номер договора" />
+                  <CheckComboBox fx:id="juristCheckComboBox" layoutX="10.0" layoutY="40.0" prefHeight="25.0" prefWidth="180.0" />
                </children>
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" styleClass="AnchorPane">
                <children>
-                  <Label layoutX="40.0" layoutY="10.0" styleClass="label2" text="Технический отдел" />
-                  <JFXDatePicker layoutX="8.0" layoutY="226.0" styleClass="JFXDatePicker" />
-                  <Separator layoutX="-3.0" layoutY="37.0" prefHeight="4.0" prefWidth="200.0" />
-                  <Label layoutX="5.0" layoutY="45.0" styleClass="label2" text="Присвоить литер:" />
-                  <Label layoutX="10.0" layoutY="199.0" prefHeight="17.0" prefWidth="138.0" styleClass="label2" text="ФИО" />
-                  <Label layoutX="5.0" layoutY="174.0" styleClass="label2" text="Нач.тех.отдела:" />
-                  <JFXTextField layoutX="111.0" layoutY="40.0" prefHeight="25.0" prefWidth="75.0" />
-                  <JFXTextField fx:id="txtLetterPassword" focusColor="#4eb1ba" layoutX="10.0" layoutY="98.0" prefHeight="25.0" prefWidth="171.0" promptText="Введите пароль объекта" styleClass="JFXTextField" />
+                  <Label layoutX="84.0" layoutY="10.0" styleClass="label2" text="ОРиП" />
+                  <JFXDatePicker layoutX="10.0" layoutY="260.0" styleClass="JFXDatePicker" />
+                  <Separator layoutY="70.0" prefHeight="4.0" prefWidth="200.0" />
+                  <Label layoutX="26.0" layoutY="159.0" styleClass="label2" text="..." />
+                  <Label layoutX="10.0" layoutY="240.0" prefHeight="17.0" prefWidth="130.0" styleClass="label2" text="ФИО" />
+                  <Label layoutX="10.0" layoutY="210.0" styleClass="label2" text="Куратор ОРиП:" />
+                  <CheckComboBox fx:id="oripCheckComboBox" layoutX="10.0" layoutY="40.0" prefHeight="25.0" prefWidth="180.0" />
                </children>
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" styleClass="AnchorPane">
                <children>
-                  <Label layoutX="63.0" layoutY="14.0" styleClass="label2" text="Бухгалтерия" />
-                  <JFXDatePicker layoutX="11.0" layoutY="226.0" styleClass="JFXDatePicker" />
-                  <Separator layoutX="-3.0" layoutY="37.0" prefHeight="4.0" prefWidth="200.0" />
-                  <Label layoutX="5.0" layoutY="45.0" styleClass="label2" text="Внесено в 1С:" />
-                  <Label layoutX="15.0" layoutY="197.0" prefHeight="17.0" prefWidth="130.0" styleClass="label2" text="ФИО" />
-                  <Label layoutX="11.0" layoutY="172.0" styleClass="label2" text="юрист:" />
-                  <JFXDatePicker layoutX="85.0" layoutY="40.0" prefHeight="25.0" prefWidth="105.0" styleClass="JFXDatePicker" />
+                  <Label layoutX="43.0" layoutY="10.0" styleClass="label2" text="Технический отдел" />
+                  <JFXDatePicker layoutX="10.0" layoutY="260.0" styleClass="JFXDatePicker" />
+                  <Separator layoutY="70.0" prefHeight="4.0" prefWidth="200.0" />
+                  <Label layoutX="3.0" layoutY="103.0" styleClass="label2" text="Присвоить литер:" />
+                  <Label layoutX="10.0" layoutY="240.0" prefHeight="17.0" prefWidth="138.0" styleClass="label2" text="ФИО" />
+                  <Label layoutX="10.0" layoutY="210.0" styleClass="label2" text="Нач.тех.отдела:" />
+                  <JFXTextField layoutX="111.0" layoutY="99.0" prefHeight="25.0" prefWidth="75.0" />
+                  <JFXTextField fx:id="txtLetterPassword" focusColor="#4eb1ba" layoutX="15.0" layoutY="150.0" prefHeight="25.0" prefWidth="171.0" promptText="Введите пароль объекта" styleClass="JFXTextField" />
+                  <CheckComboBox fx:id="technicalCheckComboBox" layoutX="10.0" layoutY="40.0" prefHeight="25.0" prefWidth="180.0" />
                </children>
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" styleClass="AnchorPane">
                <children>
-                  <Label layoutX="81.0" layoutY="14.0" styleClass="label2" text="ОРиП" />
-                  <JFXDatePicker layoutX="11.0" layoutY="226.0" styleClass="JFXDatePicker" />
-                  <Separator layoutX="-3.0" layoutY="37.0" prefHeight="4.0" prefWidth="200.0" />
-                  <Label layoutX="14.0" layoutY="45.0" styleClass="label2" text="..." />
-                  <Label layoutX="14.0" layoutY="202.0" prefHeight="17.0" prefWidth="130.0" styleClass="label2" text="ФИО" />
-                  <Label layoutX="11.0" layoutY="176.0" styleClass="label2" text="Куратор ОРиП:" />
-               </children>
-            </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="AnchorPane">
-               <children>
-                  <Label layoutX="60.0" layoutY="14.0" styleClass="label2" text="Отдел службы" />
-                  <JFXDatePicker layoutX="11.0" layoutY="226.0" styleClass="JFXDatePicker" />
-                  <Separator layoutX="-3.0" layoutY="37.0" prefHeight="4.0" prefWidth="200.0" />
-                  <Label layoutX="14.0" layoutY="45.0" styleClass="label2" text="..." />
-                  <Label layoutX="14.0" layoutY="202.0" prefHeight="17.0" prefWidth="130.0" styleClass="label2" text="ФИО" />
-                  <Label layoutX="11.0" layoutY="176.0" styleClass="label2" text="Куратор ОРиП:" />
+                  <Label layoutX="67.0" layoutY="10.0" styleClass="label2" text="Бухгалтерия" />
+                  <JFXDatePicker layoutX="10.0" layoutY="260.0" styleClass="JFXDatePicker" />
+                  <Separator layoutY="70.0" prefHeight="4.0" prefWidth="200.0" />
+                  <Label layoutX="9.0" layoutY="154.0" styleClass="label2" text="Внесено в 1С:" />
+                  <Label layoutX="10.0" layoutY="240.0" prefHeight="17.0" prefWidth="130.0" styleClass="label2" text="ФИО" />
+                  <Label layoutX="10.0" layoutY="210.0" styleClass="label2" text="юрист:" />
+                  <JFXDatePicker layoutX="88.0" layoutY="150.0" prefHeight="25.0" prefWidth="105.0" styleClass="JFXDatePicker" />
+                  <CheckComboBox fx:id="bookkeepingCheckComboBox" layoutX="10.0" layoutY="40.0" prefHeight="25.0" prefWidth="180.0" />
                </children>
             </Pane>
          </children>
       </HBox>
-      <JFXComboBox fx:id="nameLetterComboBox" layoutX="14.0" layoutY="61.0" onAction="#nameLetterComboBox" prefHeight="25.0" prefWidth="436.0" promptText="Тип письма" />
-      <JFXDatePicker layoutX="719.0" layoutY="61.0" prefHeight="25.0" prefWidth="265.0" promptText="Дата поступления" styleClass="JFXDatePicker" />
+      <JFXComboBox fx:id="nameLetterComboBox" layoutX="14.0" layoutY="61.0" onAction="#nameLetterComboBox" prefHeight="25.0" prefWidth="302.0" promptText="Тип письма" />
+      <JFXDatePicker layoutX="551.0" layoutY="61.0" prefHeight="25.0" prefWidth="265.0" promptText="Дата поступления" styleClass="JFXDatePicker" />
    </children>
    <effect>
       <DropShadow />
