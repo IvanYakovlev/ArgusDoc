@@ -27,6 +27,7 @@ import java.rmi.RemoteException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class AddLetterController {
@@ -60,7 +61,7 @@ public class AddLetterController {
     private JFXDatePicker datePickerLetter;
 
     @FXML
-    private JFXTextArea textAreaLetter;
+    private JFXTextArea textAreaLetter = new JFXTextArea();
 
     @FXML
     private JFXTextField txtLetterNumber;
@@ -82,7 +83,7 @@ public class AddLetterController {
     File attachmentFile;
 
 
-    Letter letter = new Letter();
+    Letter letter;
 
     public  void initialize() throws RemoteException {
 
@@ -127,10 +128,10 @@ public class AddLetterController {
     }
 
     public void addLetterButton(ActionEvent actionEvent) throws IOException {
-        if (false) {
+        if (textAreaLetter.getText().isEmpty()||attachmentFile==null||nameLetterComboBox.getValue().isEmpty()||txtLetterNumber.getText().isEmpty()) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
-
+            letter = new Letter();
 
             //Добавляем письмо в таблицу и загружаем на сервер
 
@@ -139,13 +140,14 @@ public class AddLetterController {
             letter.setLetterDate(Date.valueOf(datePickerLetter.getValue()));
             letter.setAttachmentFile(attachmentFile);
             letter.setLetterResolution(textAreaLetter.getText());
-
             letter.setLetterFilePath(ServerFilePath.LETTERS_FILE_PATH+attachmentFile.getName());
+
             try {
                 letterService.addLetter(letter);
             } catch (SQLException e) {
                 e.printStackTrace();
             }catch (IOException e) {
+                //e.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 //alert.setTitle("Delete File");
                 alert.setHeaderText("Письмо с таким именем уже существует! Хотите заменить?");
@@ -171,15 +173,23 @@ public class AddLetterController {
                 }
             }
 
+            List<String> listEmployeeNameForTask = new ArrayList<String>();
 
-            for (int i = 0; i < juristCheckComboBox.getCheckModel().getCheckedIndices().size(); i++) {
+            listEmployeeNameForTask.addAll(juristCheckComboBox.getCheckModel().getCheckedItems());
+            listEmployeeNameForTask.addAll(technicalCheckComboBox.getCheckModel().getCheckedItems());
+            listEmployeeNameForTask.addAll(oripCheckComboBox.getCheckModel().getCheckedItems());
+            listEmployeeNameForTask.addAll(bookkeepingCheckComboBox.getCheckModel().getCheckedItems());
+
+            System.out.println(listEmployeeNameForTask);
+
+            for (int i = 0; i < listEmployeeNameForTask.size(); i++) {
 //формируем задачи для исполнителей
                 TaskEntity taskEntity = new TaskEntity();
                 taskEntity.setTaskName(nameLetterComboBox.getValue());
                 taskEntity.setTaskText(textAreaLetter.getText());
                 taskEntity.setTaskAttachment(ServerFilePath.LETTERS_FILE_PATH + attachmentFile.getName());
                 taskEntity.setTaskFromEmployee(authorizedUser.getEmployeeName());
-                taskEntity.setEmployeeId(employeeService.getIdEmployeeByName(juristCheckComboBox.getItems().get(juristCheckComboBox.getCheckModel().getCheckedIndices().get(i))));
+                taskEntity.setEmployeeId(employeeService.getIdEmployeeByName(listEmployeeNameForTask.get(i)));
                 taskEntity.setTaskTerm(java.sql.Date.valueOf(datePickerLetter.getValue()));
                 taskEntity.setStatusTaskId(StatusTask.NOT_DONE);
                 taskEntity.setTaskTime(null);
@@ -194,7 +204,6 @@ public class AddLetterController {
 
 
             }
-
 
 
             Stage stage = (Stage) addLetterButton.getScene().getWindow();
