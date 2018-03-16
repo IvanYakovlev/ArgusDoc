@@ -144,6 +144,10 @@ public class AddLetterController {
 
             try {
                 letterService.addLetter(letter);
+                //Копируем файл на сервер
+                File destFile = new File(letter.getLetterFilePath());
+                Files.copy(letter.getAttachmentFile().toPath(), destFile.toPath());
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }catch (IOException e) {

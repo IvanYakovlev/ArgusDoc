@@ -27,29 +27,58 @@ public class LetterServiceImpl implements LetterService {
     @Override
     public void addLetter(Letter letter) throws IOException, RemoteException, SQLException {
 
-
-
         dBconnection=new DBconnection();
 
-
-
-            //Копируем файл на сервер
-            File destFile = new File(letter.getLetterFilePath());
-            Files.copy(letter.getAttachmentFile().toPath(), destFile.toPath());
-
-            // заносим данные в таблицу Letters
-            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("INSERT INTO LETTERS(Letter_name, Letter_number,Letter_date, Letter_filepath, Letter_resolution) VALUES(?,?,?,?,?)");
+        // заносим данные в таблицу Letters
+            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("INSERT INTO LETTERS(Letter_name, Letter_number,Letter_date, Letter_filepath, Letter_resolution,Letter_jurist_number,Letter_jurist_FIO,Letter_jurist_date,Letter_technical_liter,Letter_technical_password,Letter_technical_FIO,Letter_technical_date,Letter_bookkeeping_FIO,Letter_bookkeeping_date,Letter_ORIP_text,Letter_ORIP_FIO,Letter_ORIP_date) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             preparedStatement.setString(1, letter.getLetterName());
             preparedStatement.setString(2, letter.getLetterNumber());
             preparedStatement.setDate(3, letter.getLetterDate());
             preparedStatement.setString(4, letter.getLetterFilePath());
             preparedStatement.setString(5, letter.getLetterResolution());
+            preparedStatement.setString(6, letter.getLetterJuristNumber());
+            preparedStatement.setString(7, letter.getLetterJuristFio());
+            preparedStatement.setDate(8, letter.getLetterJuristDate());
+            preparedStatement.setString(9, letter.getLetterTechnicalLiter());
+            preparedStatement.setString(10, letter.getLetterTechnicalPassword());
+            preparedStatement.setString(11, letter.getLetterTechnicalFio());
+            preparedStatement.setDate(12, letter.getLetterTechnicalDate());
+            preparedStatement.setString(13, letter.getLetterBookkeepingFio());
+            preparedStatement.setDate(14, letter.getLetterBookkeepingDate());
+            preparedStatement.setString(15, letter.getLetterOripText());
+            preparedStatement.setString(16, letter.getLetterOripFio());
+            preparedStatement.setDate(17, letter.getLetterOripDate());
 
             preparedStatement.execute();
 
+    }
 
+    @Override
+    public void updateLetter(Letter letter) throws IOException, RemoteException, SQLException {
+        dBconnection=new DBconnection();
 
+        // обновляем данные в таблице Letters
+        PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE LETTERS SET Letter_name=?, Letter_number=?,Letter_date=?, Letter_filepath=?, Letter_resolution=?,Letter_jurist_number=?,Letter_jurist_FIO=?,Letter_jurist_date=?,Letter_technical_liter=?,Letter_technical_password=?,Letter_technical_FIO=?,Letter_technical_date=?,Letter_bookkeeping_FIO=?,Letter_bookkeeping_date=?,Letter_ORIP_text=?,Letter_ORIP_FIO=?,Letter_ORIP_date=? WHERE Letter_id=?");
+        preparedStatement.setString(1, letter.getLetterName());
+        preparedStatement.setString(2, letter.getLetterNumber());
+        preparedStatement.setDate(3, letter.getLetterDate());
+        preparedStatement.setString(4, letter.getLetterFilePath());
+        preparedStatement.setString(5, letter.getLetterResolution());
+        preparedStatement.setString(6, letter.getLetterJuristNumber());
+        preparedStatement.setString(7, letter.getLetterJuristFio());
+        preparedStatement.setDate(8, letter.getLetterJuristDate());
+        preparedStatement.setString(9, letter.getLetterTechnicalLiter());
+        preparedStatement.setString(10, letter.getLetterTechnicalPassword());
+        preparedStatement.setString(11, letter.getLetterTechnicalFio());
+        preparedStatement.setDate(12, letter.getLetterTechnicalDate());
+        preparedStatement.setString(13, letter.getLetterBookkeepingFio());
+        preparedStatement.setDate(14, letter.getLetterBookkeepingDate());
+        preparedStatement.setString(15, letter.getLetterOripText());
+        preparedStatement.setString(16, letter.getLetterOripFio());
+        preparedStatement.setDate(17, letter.getLetterOripDate());
+        preparedStatement.setInt(18, letter.getLetterId());
 
+        preparedStatement.execute();
     }
 
     @Override

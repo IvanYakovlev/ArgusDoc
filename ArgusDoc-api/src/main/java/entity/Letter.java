@@ -29,6 +29,9 @@ public class Letter implements Externalizable{
     @Column(name = "Letter_resolution")
     private String letterResolution;
 
+    @Column(name = "Letter_jurist_number")
+    private String letterJuristNumber;
+
     @Column(name = "Letter_jurist_FIO")
     private String letterJuristFio;
 
@@ -61,6 +64,15 @@ public class Letter implements Externalizable{
 
     @Column(name = "Letter_ORIP_text")
     private String letterOripText;
+
+
+    public String getLetterJuristNumber() {
+        return letterJuristNumber;
+    }
+
+    public void setLetterJuristNumber(String letterJuristNumber) {
+        this.letterJuristNumber = letterJuristNumber;
+    }
 
     public int getLetterId() {
         return letterId;
