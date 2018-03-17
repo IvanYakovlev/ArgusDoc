@@ -34,9 +34,7 @@ public class DocumentServiceImpl implements DocumentService {
                 preparedStatement.execute();
 
 
-                //Копируем файл на сервер
-                File destFile = new File(document.getDocumentFilePath());
-                Files.copy(document.getDocumentFile().toPath(), destFile.toPath());
+
 
 
 

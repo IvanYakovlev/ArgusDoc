@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -391,9 +392,19 @@ private FontAwesomeIconView closeSettingWindow;
                 document.setDepartmentId(departmentService.getIdDepartmentByName(comboBoxDocument_Department.getValue()));
                 try {
                     documentService.addDocument(document);
+
                 } catch (SQLException e) {
                     ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Документ с таким названием уже существует!");
                 }
+                try {
+                    //Копируем файл на сервер
+                    File destFile = new File(document.getDocumentFilePath());
+                    Files.copy(document.getDocumentFile().toPath(), destFile.toPath());
+                }catch (FileAlreadyExistsException e){
+                    ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Документ с таким названием уже существует!");
+                }
+
+
                 clearDocumentTab();
                 refreshTableDocument();
             }

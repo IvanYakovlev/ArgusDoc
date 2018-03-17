@@ -40,16 +40,4 @@ public class Access extends RecursiveTreeObject<Access> implements Serializable{
                 '}';
     }
 
-/*    @Override
-    public void writeExternal(ObjectOutput out) throws IOException {
-        out.writeInt(getAccessId());
-        out.writeObject(getAccesName());
-
-    }
-
-    @Override
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        setAccesName((String) in.readObject());
-        setAccessId(in.readInt());
-    }*/
 }

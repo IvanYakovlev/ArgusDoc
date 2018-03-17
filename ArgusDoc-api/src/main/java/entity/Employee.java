@@ -1,14 +1,11 @@
 package entity;
 
 import javax.persistence.*;
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
+import java.io.*;
 
 @Entity
 @Table(name = "EMPLOYEES")
-public class Employee implements Externalizable {
+public class Employee implements Serializable {
     @Id
     @Column(name = "Employee_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -114,28 +111,5 @@ public class Employee implements Externalizable {
                 '}';
     }
 
-    @Override
-    public void writeExternal(ObjectOutput out) throws IOException {
-        out.writeInt(getEmployeeId());
-        out.writeObject(getEmployeeName());
-        out.writeObject(getEmployeePassword());
-        out.writeObject(getAccessName());
-        out.writeObject(getDepartmentName());
-        out.writeInt(getEmployeeOnline());
-        out.writeInt(getDepartmentId());
-        out.writeInt(getAccessId());
 
-    }
-
-    @Override
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        setEmployeeId(in.readInt());
-        setEmployeeName((String) in.readObject());
-        setEmployeePassword((String) in.readObject());
-        setAccessName((String) in.readObject());
-        setDepartmentName((String) in.readObject());
-        setEmployeeOnline(in.readInt());
-        setDepartmentId(in.readInt());
-        setAccessId(in.readInt());
-    }
 }

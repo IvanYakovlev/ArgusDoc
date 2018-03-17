@@ -364,6 +364,7 @@ public class MainController {
         nameLetter.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.50));
         passwordLetter.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.24));
 
+
         tableLetter.setItems(observableListLetter);
 
 
@@ -1184,16 +1185,54 @@ Calendar tab
 
 
 
-    public void openLetter(ActionEvent actionEvent) throws RemoteException {
-        try {
-            letterService.openLetter(letter.getLetterId());
-        } catch (IllegalArgumentException e) {
-            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Письмо было удалено с сервера!");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void openViewEditLetterWindow(ActionEvent actionEvent) {
+
+
+        if (letter.getLetterName()!=null) {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+
+            fxmlLoader.setLocation(getClass().getResource("/viewFXML/view-edit_letter_window.fxml"));
+            try {
+
+                fxmlLoader.load();
+                Stage stage = new Stage();
+                Parent root = fxmlLoader.getRoot();
+                stage.setScene(new Scene(root));
+                editViewLetterController editViewLetterController = fxmlLoader.getController();
+                editViewLetterController.initialize(authorizedUser, letter.getLetterId());
+
+                stage.setTitle("Новая задача");
+                stage.setMinHeight(150);
+                stage.setMinWidth(300);
+                stage.setResizable(false);
+
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+                stage.initStyle(StageStyle.TRANSPARENT);
+                root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        xOffset = event.getSceneX();
+                        yOffset = event.getSceneY();
+                    }
+                });
+                root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        stage.setX(event.getScreenX() - xOffset);
+                        stage.setY(event.getScreenY() - yOffset);
+                    }
+                });
+                stage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+        else {
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Задача не выбрана!");
+        }
+
 
 
     }
@@ -1590,6 +1629,7 @@ Calendar tab
 
                         observableListDepartmentName = FXCollections.observableArrayList(departmentService.listDepartmentName());
                         observableListLetter = FXCollections.observableArrayList(letterService.listLetter());
+
 //Уведомления о новых письмах
                         int newLetter = 0;
                         int idSummLetter = 0;
@@ -1857,4 +1897,6 @@ Calendar tab
 
 
     }
+
+
 }

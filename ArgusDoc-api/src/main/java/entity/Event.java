@@ -1,16 +1,13 @@
 package entity;
 
 import javax.persistence.*;
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
+import java.io.*;
 import java.sql.Date;
 import java.sql.Time;
 
 @Entity
 @Table(name = "EVENTS")
-public class Event implements Externalizable{
+public class Event implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Event_id")
@@ -68,21 +65,5 @@ public class Event implements Externalizable{
         this.eventTime = eventTime;
     }
 
-    @Override
-    public void writeExternal(ObjectOutput out) throws IOException {
-        out.writeInt(getEventId());
-        out.writeObject(getEventName());
-        out.writeObject(getEventDate());
-        out.writeObject(getEventTime());
-        out.writeInt(getEmployeeId());
-    }
 
-    @Override
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        setEventId(in.readInt());
-        setEventName((String) in.readObject());
-        setEventDate((Date) in.readObject());
-        setEventTime((Time) in.readObject());
-        setEmployeeId(in.readInt());
-    }
 }

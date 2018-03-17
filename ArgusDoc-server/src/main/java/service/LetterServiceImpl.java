@@ -56,7 +56,7 @@ public class LetterServiceImpl implements LetterService {
     @Override
     public void updateLetter(Letter letter) throws IOException, RemoteException, SQLException {
         dBconnection=new DBconnection();
-
+        letter.toString();
         // обновляем данные в таблице Letters
         PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE LETTERS SET Letter_name=?, Letter_number=?,Letter_date=?, Letter_filepath=?, Letter_resolution=?,Letter_jurist_number=?,Letter_jurist_FIO=?,Letter_jurist_date=?,Letter_technical_liter=?,Letter_technical_password=?,Letter_technical_FIO=?,Letter_technical_date=?,Letter_bookkeeping_FIO=?,Letter_bookkeeping_date=?,Letter_ORIP_text=?,Letter_ORIP_FIO=?,Letter_ORIP_date=? WHERE Letter_id=?");
         preparedStatement.setString(1, letter.getLetterName());
@@ -134,6 +134,18 @@ public class LetterServiceImpl implements LetterService {
                 letter.setLetterDate(resultSet.getDate("Letter_date"));
                 letter.setLetterFilePath(resultSet.getString("Letter_filepath"));
                 letter.setLetterResolution(resultSet.getString("Letter_resolution"));
+                letter.setLetterJuristNumber(resultSet.getString("Letter_jurist_number"));
+                letter.setLetterJuristFio(resultSet.getString("Letter_jurist_FIO"));
+                letter.setLetterJuristDate(resultSet.getDate("Letter_jurist_date"));
+                letter.setLetterTechnicalLiter(resultSet.getString("Letter_technical_liter"));
+                letter.setLetterTechnicalPassword(resultSet.getString("Letter_technical_password"));
+                letter.setLetterTechnicalFio(resultSet.getString("Letter_technical_FIO"));
+                letter.setLetterTechnicalDate(resultSet.getDate("Letter_technical_date"));
+                letter.setLetterBookkeepingFio(resultSet.getString("Letter_bookkeeping_FIO"));
+                letter.setLetterBookkeepingDate(resultSet.getDate("Letter_bookkeeping_date"));
+                letter.setLetterOripText(resultSet.getString("Letter_ORIP_text"));
+                letter.setLetterOripFio(resultSet.getString("Letter_ORIP_FIO"));
+                letter.setLetterOripDate(resultSet.getDate("Letter_ORIP_date"));
 
 
                 listData.add(letter);
@@ -142,5 +154,40 @@ public class LetterServiceImpl implements LetterService {
             e.printStackTrace();
         }
         return listData;
+    }
+
+    @Override
+    public Letter getLetterById(int id) throws RemoteException {
+        this.dBconnection = new DBconnection();
+        Letter letter = new Letter();
+        try {
+
+            ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT * FROM LETTERS WHERE Letter_id='"+id+"'");
+            while (resultSet.next()){
+
+                letter.setLetterId(resultSet.getInt("Letter_id"));
+                letter.setLetterName(resultSet.getString("Letter_name"));
+                letter.setLetterNumber(resultSet.getString("Letter_number"));
+                letter.setLetterDate(resultSet.getDate("Letter_date"));
+                letter.setLetterFilePath(resultSet.getString("Letter_filepath"));
+                letter.setLetterResolution(resultSet.getString("Letter_resolution"));
+                letter.setLetterJuristNumber(resultSet.getString("Letter_jurist_number"));
+                letter.setLetterJuristFio(resultSet.getString("Letter_jurist_FIO"));
+                letter.setLetterJuristDate(resultSet.getDate("Letter_jurist_date"));
+                letter.setLetterTechnicalLiter(resultSet.getString("Letter_technical_liter"));
+                letter.setLetterTechnicalPassword(resultSet.getString("Letter_technical_password"));
+                letter.setLetterTechnicalFio(resultSet.getString("Letter_technical_FIO"));
+                letter.setLetterTechnicalDate(resultSet.getDate("Letter_technical_date"));
+                letter.setLetterBookkeepingFio(resultSet.getString("Letter_bookkeeping_FIO"));
+                letter.setLetterBookkeepingDate(resultSet.getDate("Letter_bookkeeping_date"));
+                letter.setLetterOripText(resultSet.getString("Letter_ORIP_text"));
+                letter.setLetterOripFio(resultSet.getString("Letter_ORIP_FIO"));
+                letter.setLetterOripDate(resultSet.getDate("Letter_ORIP_date"));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return letter;
     }
 }

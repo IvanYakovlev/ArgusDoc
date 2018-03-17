@@ -6,7 +6,7 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "LETTERS")
-public class Letter implements Externalizable{
+public class Letter implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -218,25 +218,30 @@ public class Letter implements Externalizable{
         this.letterOripText = letterOripText;
     }
 
-    @Override
-    public void writeExternal(ObjectOutput out) throws IOException {
-        out.writeInt(getLetterId());
-        out.writeObject(getLetterName());
-        out.writeObject(getLetterNumber());
-        //out.writeInt(getLetterPassword());
-        out.writeObject(getAttachmentFile());
-        out.writeObject(getLetterFilePath());
-        out.writeObject(getLetterDate());
-    }
+
 
     @Override
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        setLetterId(in.readInt());
-        setLetterName((String) in.readObject());
-        setLetterNumber((String) in.readObject());
-        //setLetterPassword(in.readInt());
-        setAttachmentFile((File) in.readObject());
-        setLetterFilePath((String) in.readObject());
-        setLetterDate((Date) in.readObject());
+    public String toString() {
+        return "Letter{" +
+                "letterId=" + letterId +
+                ", letterName='" + letterName + '\'' +
+                ", letterNumber='" + letterNumber + '\'' +
+                ", letterDate=" + letterDate +
+                ", letterFilePath='" + letterFilePath + '\'' +
+                ", attachmentFile=" + attachmentFile +
+                ", letterResolution='" + letterResolution + '\'' +
+                ", letterJuristNumber='" + letterJuristNumber + '\'' +
+                ", letterJuristFio='" + letterJuristFio + '\'' +
+                ", letterJuristDate=" + letterJuristDate +
+                ", letterTechnicalLiter='" + letterTechnicalLiter + '\'' +
+                ", letterTechnicalPassword='" + letterTechnicalPassword + '\'' +
+                ", letterTechnicalFio='" + letterTechnicalFio + '\'' +
+                ", letterTechnicalDate=" + letterTechnicalDate +
+                ", letterBookkeepingFio='" + letterBookkeepingFio + '\'' +
+                ", letterBookkeepingDate=" + letterBookkeepingDate +
+                ", letterOripFio='" + letterOripFio + '\'' +
+                ", letterOripDate=" + letterOripDate +
+                ", letterOripText='" + letterOripText + '\'' +
+                '}';
     }
 }

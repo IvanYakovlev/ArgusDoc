@@ -17,5 +17,6 @@ public interface LetterService extends Remote {
     public void downloadLetter(Letter letter) throws RemoteException;
     public void openLetter(int id) throws IOException, SQLException;
     public List<Letter> listLetter() throws RemoteException;
+    public Letter getLetterById(int id) throws RemoteException;
 
 }

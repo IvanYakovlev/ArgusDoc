@@ -8,6 +8,7 @@ import entity.TaskEntity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import service.*;
 import dialog.ADInfo;
 import javafx.event.ActionEvent;
@@ -40,7 +41,6 @@ public class AddLetterController {
     private JFXButton cancelAddLetterButton = new JFXButton();
     @FXML
     private CheckComboBox<String> juristCheckComboBox;
-
     @FXML
     private CheckComboBox<String> technicalCheckComboBox;
     @FXML
@@ -49,13 +49,30 @@ public class AddLetterController {
     private CheckComboBox<String> bookkeepingCheckComboBox;
 
     @FXML
+    private JFXComboBox<String> juristComboBox;
+    @FXML
+    private JFXComboBox<String> oripComboBox;
+    @FXML
+    private JFXComboBox<String> technicalComboBox;
+    @FXML
+    private JFXComboBox<String> bookkeepingComboBox;
+
+
+    @FXML
+    private JFXDatePicker juristDatePicker;
+    @FXML
+    private JFXDatePicker oripDatePicker;
+    @FXML
+    private JFXDatePicker technicalDatePicker;
+    @FXML
+    private JFXDatePicker bookkeepingDatePicker;
+
+
+    @FXML
     private JFXButton addLetterButton;
 
     @FXML
     private JFXButton attachmentFileButton;
-
-    @FXML
-    private JFXTextField txtLetterPassword;
 
     @FXML
     private JFXDatePicker datePickerLetter;
@@ -68,6 +85,17 @@ public class AddLetterController {
 
     @FXML
     private JFXComboBox<String> nameLetterComboBox = new JFXComboBox<String>();
+
+    @FXML
+    private JFXTextField juristNumberText;
+    @FXML
+    private JFXTextArea textAreaOripEdit;
+    @FXML
+    private JFXTextField txtTechnicalLiter;
+    @FXML
+    private JFXTextField txtTechnicalPassword;
+    @FXML
+    private JFXDatePicker datePickerBookkeepingDone;
 
     private ArrayList<String> list = new ArrayList<String>();
     private ObservableList<String> listNameLetter;
@@ -117,6 +145,11 @@ public class AddLetterController {
         oripCheckComboBox.getItems().setAll(employeeService.listEmployeesNameOrip());
         bookkeepingCheckComboBox.getItems().setAll(employeeService.listEmployeesNameBookkeeping());
 
+        juristComboBox.getItems().setAll(employeeService.listEmployeesNameJurist());
+        technicalComboBox.getItems().setAll(employeeService.listEmployeesNameTechnical());
+        oripComboBox.getItems().setAll(employeeService.listEmployeesNameOrip());
+        bookkeepingComboBox.getItems().setAll(employeeService.listEmployeesNameBookkeeping());
+
     }
 
 
@@ -141,6 +174,29 @@ public class AddLetterController {
             letter.setAttachmentFile(attachmentFile);
             letter.setLetterResolution(textAreaLetter.getText());
             letter.setLetterFilePath(ServerFilePath.LETTERS_FILE_PATH+attachmentFile.getName());
+            letter.setLetterJuristNumber(juristNumberText.getText());
+            letter.setLetterOripText(textAreaOripEdit.getText());
+            letter.setLetterTechnicalLiter(txtTechnicalLiter.getText());
+            letter.setLetterTechnicalPassword(txtTechnicalPassword.getText());
+            if (datePickerBookkeepingDone.getValue()!=null) {
+                letter.setLetterBookkeepingDate(Date.valueOf(datePickerBookkeepingDone.getValue()));
+            }
+            if (juristComboBox.getValue()!=null&&juristDatePicker.getValue()!=null) {
+                letter.setLetterJuristFio(juristComboBox.getValue());
+                letter.setLetterJuristDate(Date.valueOf(juristDatePicker.getValue()));
+            }
+            if (oripComboBox.getValue()!=null&&oripDatePicker.getValue()!=null) {
+                letter.setLetterOripFio(oripComboBox.getValue());
+                letter.setLetterOripDate(Date.valueOf(oripDatePicker.getValue()));
+            }
+            if (technicalComboBox.getValue()!=null&&technicalDatePicker.getValue()!=null) {
+                letter.setLetterTechnicalFio(technicalComboBox.getValue());
+                letter.setLetterTechnicalDate(Date.valueOf(technicalDatePicker.getValue()));
+            }
+            if (bookkeepingComboBox.getValue()!=null&&bookkeepingDatePicker.getValue()!=null) {
+                letter.setLetterBookkeepingFio(bookkeepingComboBox.getValue());
+                letter.setLetterBookkeepingDate(Date.valueOf(bookkeepingDatePicker.getValue()));
+            }
 
             try {
                 letterService.addLetter(letter);

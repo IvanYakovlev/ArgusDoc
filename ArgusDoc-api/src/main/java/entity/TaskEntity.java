@@ -8,7 +8,7 @@ import java.sql.Time;
 
 @Entity
 @Table(name = "TASKS")
-public class TaskEntity extends RecursiveTreeObject<TaskEntity> implements Externalizable{
+public class TaskEntity extends RecursiveTreeObject<TaskEntity> implements Serializable{
 
 
 
@@ -204,42 +204,4 @@ public class TaskEntity extends RecursiveTreeObject<TaskEntity> implements Exter
                 '}';
     }
 
-    @Override
-    public void writeExternal(ObjectOutput out) throws IOException {
-        out.writeInt(getTaskId());
-        out.writeObject(getTaskName());
-        out.writeObject(getTaskText());
-        out.writeObject(getTaskAttachment());
-        out.writeObject(getTaskAttachmentFile());
-        out.writeInt(getTaskIsLetter());
-        out.writeObject(getTaskFromEmployee());
-        out.writeObject(getOldFile());
-        out.writeInt(getEmployeeId());
-        out.writeObject(getEmployeeName());
-        out.writeObject(getStatusTaskId());
-        out.writeObject(getTaskTerm());
-        out.writeObject(getTaskTime());
-        out.writeObject(getStatusTaskName());
-    }
-
-    @Override
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        setTaskId(in.readInt());
-        setTaskName((String) in.readObject());
-        setTaskText((String) in.readObject());
-        setTaskAttachment((String) in.readObject());
-        setTaskAttachmentFile((File) in.readObject());
-        setTaskIsLetter(in.readInt());
-        setTaskFromEmployee((String) in.readObject());
-        setOldFile((String) in.readObject());
-        setEmployeeId(in.readInt());
-        setEmployeeName((String) in.readObject());
-        setStatusTaskId((String) in.readObject());
-        setTaskTerm((Date) in.readObject());
-        setTaskTime((Time) in.readObject());
-        setStatusTaskName((String) in.readObject());
-
-
-
-    }
 }

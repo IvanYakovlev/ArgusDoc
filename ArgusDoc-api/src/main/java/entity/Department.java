@@ -3,14 +3,11 @@ package entity;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
 import javax.persistence.*;
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
+import java.io.*;
 
 @Entity
 @Table(name = "DEPARTMENS")
-public class Department extends RecursiveTreeObject<Department> implements Externalizable{
+public class Department extends RecursiveTreeObject<Department> implements Serializable{
     @Id
     @Column(name = "Department_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,15 +40,4 @@ public class Department extends RecursiveTreeObject<Department> implements Exter
                 '}';
     }
 
-    @Override
-    public void writeExternal(ObjectOutput out) throws IOException {
-        out.writeInt(getDepartmentId());
-        out.writeObject(getDepartmentName());
-    }
-
-    @Override
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        setDepartmentId(in.readInt());
-        setDepartmentName((String) in.readObject());
-    }
 }
