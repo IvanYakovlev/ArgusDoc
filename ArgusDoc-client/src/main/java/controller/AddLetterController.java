@@ -182,19 +182,19 @@ public class AddLetterController {
                 letter.setLetterBookkeepingDate(Date.valueOf(datePickerBookkeepingDone.getValue()));
             }
             if (juristComboBox.getValue()!=null&&juristDatePicker.getValue()!=null) {
-                letter.setLetterJuristFio(juristComboBox.getValue());
+                letter.setLetterJuristFio(juristComboBox.getValue()+null);
                 letter.setLetterJuristDate(Date.valueOf(juristDatePicker.getValue()));
             }
             if (oripComboBox.getValue()!=null&&oripDatePicker.getValue()!=null) {
-                letter.setLetterOripFio(oripComboBox.getValue());
+                letter.setLetterOripFio(oripComboBox.getValue()+null);
                 letter.setLetterOripDate(Date.valueOf(oripDatePicker.getValue()));
             }
             if (technicalComboBox.getValue()!=null&&technicalDatePicker.getValue()!=null) {
-                letter.setLetterTechnicalFio(technicalComboBox.getValue());
+                letter.setLetterTechnicalFio(technicalComboBox.getValue()+null);
                 letter.setLetterTechnicalDate(Date.valueOf(technicalDatePicker.getValue()));
             }
             if (bookkeepingComboBox.getValue()!=null&&bookkeepingDatePicker.getValue()!=null) {
-                letter.setLetterBookkeepingFio(bookkeepingComboBox.getValue());
+                letter.setLetterBookkeepingFio(bookkeepingComboBox.getValue()+null);
                 letter.setLetterBookkeepingDate(Date.valueOf(bookkeepingDatePicker.getValue()));
             }
 
@@ -241,7 +241,12 @@ public class AddLetterController {
             listEmployeeNameForTask.addAll(bookkeepingCheckComboBox.getCheckModel().getCheckedItems());
 
             System.out.println(listEmployeeNameForTask);
-
+            int letterId =0;
+            try {
+                letterId = letterService.getMaxId();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             for (int i = 0; i < listEmployeeNameForTask.size(); i++) {
 //формируем задачи для исполнителей
                 TaskEntity taskEntity = new TaskEntity();
@@ -254,7 +259,9 @@ public class AddLetterController {
                 taskEntity.setStatusTaskId(StatusTask.NOT_DONE);
                 taskEntity.setTaskTime(null);
                 taskEntity.setTaskIsLetter(1);
-                taskEntity.setLetterId(letter.getLetterId());
+                taskEntity.setLetterId(letterId);
+
+
 
                 try {
                     taskService.addTask(taskEntity);
@@ -265,7 +272,8 @@ public class AddLetterController {
 
             }
 
-
+            listEmployeeNameForTask.clear();
+            System.out.println(listEmployeeNameForTask);
             Stage stage = (Stage) addLetterButton.getScene().getWindow();
             stage.close();
         }

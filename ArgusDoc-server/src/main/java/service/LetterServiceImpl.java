@@ -82,6 +82,68 @@ public class LetterServiceImpl implements LetterService {
     }
 
     @Override
+    public void updateJuristLetter(Letter letter) throws IOException, RemoteException, SQLException {
+        dBconnection=new DBconnection();
+        letter.toString();
+        // обновляем данные внессенные юристом в таблице Letters
+        PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE LETTERS SET Letter_jurist_number=?,Letter_jurist_FIO=?,Letter_jurist_date=? WHERE Letter_id=?");
+
+        preparedStatement.setString(1, letter.getLetterJuristNumber());
+        preparedStatement.setString(2, letter.getLetterJuristFio());
+        preparedStatement.setDate(3, letter.getLetterJuristDate());
+        preparedStatement.setInt(4,letter.getLetterId());
+
+        preparedStatement.execute();
+    }
+
+    @Override
+    public void updateOripLetter(Letter letter) throws IOException, RemoteException, SQLException {
+        dBconnection=new DBconnection();
+        letter.toString();
+        // обновляем данные внессенные Орип в таблице Letters
+        PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE LETTERS SET Letter_ORIP_text=?,Letter_ORIP_FIO=?,Letter_ORIP_date=? WHERE Letter_id=?");
+
+        preparedStatement.setString(1, letter.getLetterOripText());
+        preparedStatement.setString(2, letter.getLetterOripFio());
+        preparedStatement.setDate(3, letter.getLetterOripDate());
+        preparedStatement.setInt(4, letter.getLetterId());
+
+        preparedStatement.execute();
+    }
+
+    @Override
+    public void updateTechnicalLetter(Letter letter) throws IOException, RemoteException, SQLException {
+        dBconnection=new DBconnection();
+        letter.toString();
+        // обновляем данные внессенные тех.отделом в таблице Letters
+        PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE LETTERS SET Letter_technical_liter=?,Letter_technical_password=?,Letter_technical_FIO=?,Letter_technical_date=? WHERE Letter_id=?");
+
+        preparedStatement.setString(1, letter.getLetterTechnicalLiter());
+        preparedStatement.setString(2, letter.getLetterTechnicalPassword());
+        preparedStatement.setString(3, letter.getLetterTechnicalFio());
+        preparedStatement.setDate(4, letter.getLetterTechnicalDate());
+
+        preparedStatement.setInt(5, letter.getLetterId());
+
+        preparedStatement.execute();
+    }
+
+    @Override
+    public void updateBookkeepingLetter(Letter letter) throws IOException, RemoteException, SQLException {
+        dBconnection=new DBconnection();
+        letter.toString();
+        // обновляем данные внессенные бухгалтером в таблице Letters
+        PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE LETTERS SET Letter_bookkeeping_FIO=?,Letter_bookkeeping_date=? WHERE Letter_id=?");
+
+        preparedStatement.setString(1, letter.getLetterBookkeepingFio());
+        preparedStatement.setDate(2, letter.getLetterBookkeepingDate());
+
+        preparedStatement.setInt(3, letter.getLetterId());
+
+        preparedStatement.execute();
+    }
+
+    @Override
     public void removeLetter(int id, String filePath) throws IOException, SQLException {
         dBconnection = new DBconnection();
 
@@ -189,5 +251,17 @@ public class LetterServiceImpl implements LetterService {
             e.printStackTrace();
         }
         return letter;
+    }
+
+    @Override
+    public int getMaxId() throws RemoteException, SQLException {
+        this.dBconnection = new DBconnection();
+        int maxId=0;
+
+        ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT MAX(Letter_id) FROM LETTERS");
+        if (resultSet.next()) {
+            maxId = resultSet.getInt(1);
+        }
+        return maxId;
     }
 }

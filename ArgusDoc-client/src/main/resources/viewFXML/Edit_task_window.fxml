@@ -71,7 +71,7 @@
                   <JFXTextArea fx:id="textViewAreaTask" editable="false" focusColor="#4eb1ba" prefHeight="270.0" prefWidth="560.0" promptText="Введите текст задачи" styleClass="JFXTextArea" />
                </children>
             </Pane>
-            <Label fx:id="labelViewTask" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="131.0" styleClass="label3" />
+            <Label fx:id="labelViewTask" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="560.0" styleClass="label3" />
          </children>
       </Pane>
    </children>

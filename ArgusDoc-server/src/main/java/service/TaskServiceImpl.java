@@ -29,7 +29,7 @@ DBconnection dBconnection;
         dBconnection=new DBconnection();
 //Добавляем данные в таблицу
 
-            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("INSERT INTO TASKS(Task_name, Task_text, Task_attachment, Task_from_employee, Employee_id, Task_term, Status_task_id, Task_time,Task_is_letter) VALUES(?,?,?,?,?,?,?,?,?)");
+            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("INSERT INTO TASKS(Task_name, Task_text, Task_attachment, Task_from_employee, Employee_id, Task_term, Status_task_id, Task_time,Task_is_letter,Letter_id) VALUES(?,?,?,?,?,?,?,?,?,?)");
             preparedStatement.setString(1, taskEntity.getTaskName());
             preparedStatement.setString(2, taskEntity.getTaskText());
             preparedStatement.setString(3, taskEntity.getTaskAttachment());
@@ -39,6 +39,11 @@ DBconnection dBconnection;
             preparedStatement.setInt(7, Integer.parseInt(StatusTask.NOT_DONE));
             preparedStatement.setTime(8, taskEntity.getTaskTime());
             preparedStatement.setInt(9, taskEntity.getTaskIsLetter());
+            if (taskEntity.getLetterId()==0) {
+                preparedStatement.setNull(10, java.sql.Types.INTEGER);
+            }else {
+                preparedStatement.setInt(10, taskEntity.getLetterId());
+            }
             preparedStatement.execute();
 
     }
@@ -46,7 +51,7 @@ DBconnection dBconnection;
     public void updateTask(TaskEntity taskEntity) throws IOException, RemoteException, SQLException {
         dBconnection=new DBconnection();
 
-            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE TASKS SET Task_name=?, Task_text=?, Task_attachment=?, Task_from_employee=?, Employee_id=?, Task_term=?, Status_task_id=?, Task_time=?,Task_is_letter=? WHERE  Task_id =?");
+            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE TASKS SET Task_name=?, Task_text=?, Task_attachment=?, Task_from_employee=?, Employee_id=?, Task_term=?, Status_task_id=?, Task_time=?,Task_is_letter=?,Letter_id=? WHERE  Task_id =?");
             preparedStatement.setString(1, taskEntity.getTaskName());
             preparedStatement.setString(2, taskEntity.getTaskText());
             preparedStatement.setString(3, taskEntity.getTaskAttachment());
@@ -56,7 +61,8 @@ DBconnection dBconnection;
             preparedStatement.setString(7, taskEntity.getStatusTaskId());
             preparedStatement.setTime(8, taskEntity.getTaskTime());
             preparedStatement.setInt(9, taskEntity.getTaskIsLetter());
-            preparedStatement.setInt(10, taskEntity.getTaskId());
+        preparedStatement.setInt(10,taskEntity.getLetterId());
+            preparedStatement.setInt(11, taskEntity.getTaskId());
             preparedStatement.execute();
 
     }
@@ -103,7 +109,7 @@ DBconnection dBconnection;
         this.dBconnection = new DBconnection();
         List<TaskEntity> listData = new ArrayList<TaskEntity>();
         try {
-            ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT * FROM TASKS,EMPLOYEES,STATUS_TASKS WHERE TASKS.Employee_id=EMPLOYEES.Employee_id AND TASKs.status_task_id=STATUS_TASKS.Status_task_id AND TASKS.Employee_id='"+id+"' AND STATUS_TASKS.Status_task_id!="+StatusTask.DONE+"AND STATUS_TASKS.Status_task_id!="+StatusTask.CANCELED+" AND TASKS.Task_is_letter='1'");
+            ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT * FROM TASKS,EMPLOYEES,STATUS_TASKS WHERE TASKS.Employee_id=EMPLOYEES.Employee_id AND TASKS.status_task_id=STATUS_TASKS.Status_task_id  AND TASKS.Employee_id='"+id+"' AND STATUS_TASKS.Status_task_id!="+StatusTask.DONE+"AND STATUS_TASKS.Status_task_id!="+StatusTask.CANCELED+" AND TASKS.Task_is_letter='1'");
             while (resultSet.next()){
                 TaskEntity taskEntity = new TaskEntity();
                 taskEntity.setTaskId(resultSet.getInt("Task_id"));
@@ -118,6 +124,7 @@ DBconnection dBconnection;
                 taskEntity.setTaskFromEmployee(resultSet.getString("Task_from_employee"));
                 taskEntity.setTaskTime(resultSet.getTime("Task_time"));
                 taskEntity.setTaskIsLetter(resultSet.getInt("Task_is_letter"));
+                taskEntity.setLetterId(resultSet.getInt("Letter_id"));
                 listData.add(taskEntity);
             }
         } catch (SQLException e) {

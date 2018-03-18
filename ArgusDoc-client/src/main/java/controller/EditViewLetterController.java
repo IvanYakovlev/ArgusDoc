@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class editViewLetterController {
+public class EditViewLetterController {
 
 
 
@@ -93,26 +93,22 @@ public class editViewLetterController {
 
     @FXML
     private Label labelJuristNamber;
-    @FXML
-    private Label labelJuristFio;
+
     @FXML
     private Label labelJuristDate;
     @FXML
     private JFXTextArea txtAreaOrip;
-    @FXML
-    private Label labelOripFio;
+
     @FXML
     private Label labelOripDate;
     @FXML
     private Label labelTechnicalLiter;
     @FXML
     private Label labelTechnicalPassword;
-    @FXML
-    private Label labelTechnicalFio;
+
     @FXML
     private Label technicalDate;
-    @FXML
-    private Label labelBookkeepingFio;
+
     @FXML
     private Label labelbookeepingDate;
     @FXML
@@ -121,6 +117,16 @@ public class editViewLetterController {
     private Pane viewPane;
     @FXML
     private JFXTextArea textAreaLetterView;
+
+    @FXML
+    private JFXListView<String> listViewTechnical = new JFXListView<String>();
+    @FXML
+    private JFXListView<String> listViewJurist = new JFXListView<String>();
+    @FXML
+    private JFXListView<String> listViewOrip = new JFXListView<String>();
+    @FXML
+    private JFXListView<String> listViewBookkeeping = new JFXListView<String>();
+
     private ArrayList<String> list = new ArrayList<String>();
     private ObservableList<String> listNameLetter;
 
@@ -179,19 +185,7 @@ public class editViewLetterController {
         txtLetterNumber.setDisable(true);
         datePickerLetter.setDisable(true);
 
-        textAreaLetterView.setText(letter.getLetterResolution());
-        labelJuristNamber.setText(letter.getLetterJuristNumber());
-        labelJuristFio.setText(letter.getLetterJuristFio());
-        labelJuristDate.setText(String.valueOf(letter.getLetterJuristDate()));
-        txtAreaOrip.setText(letter.getLetterOripText());
-        labelOripFio.setText(letter.getLetterOripFio());
-        labelOripDate.setText(String.valueOf(letter.getLetterOripDate()));
-        labelTechnicalLiter.setText(letter.getLetterTechnicalLiter());
-        labelTechnicalPassword.setText(letter.getLetterTechnicalPassword());
-        labelTechnicalFio.setText(letter.getLetterTechnicalFio());
-        technicalDate.setText(String.valueOf(letter.getLetterTechnicalDate()));
-        labelBookkeepingFio.setText(letter.getLetterBookkeepingFio());
-        labelbookeepingDate.setText(String.valueOf(letter.getLetterBookkeepingDate()));
+        initView();
         //Инициализируем editPane
         employeeService.listEmployees();
         juristCheckComboBox.getItems().setAll(employeeService.listEmployeesNameJurist());
@@ -219,6 +213,8 @@ public class editViewLetterController {
             oripDatePicker.setValue(letter.getLetterOripDate().toLocalDate());
         }
         if (letter.getLetterTechnicalFio()!=null&&letter.getLetterTechnicalDate()!=null) {
+
+
             technicalComboBox.setValue(letter.getLetterTechnicalFio());
             technicalDatePicker.setValue(letter.getLetterTechnicalDate().toLocalDate());
         }
@@ -272,20 +268,20 @@ public class editViewLetterController {
 
             letter.setLetterOripText(textAreaOripEdit.getText());
             if (technicalDatePicker.getValue()!=null&&technicalComboBox.getValue()!=null) {
-                letter.setLetterTechnicalFio(technicalComboBox.getValue());
+                letter.setLetterTechnicalFio(technicalComboBox.getValue()+null);
                 letter.setLetterTechnicalDate(Date.valueOf(technicalDatePicker.getValue()));
             }
             if (bookkeepingDatePicker.getValue()!=null&&bookkeepingComboBox.getValue()!=null) {
                 letter.setLetterBookkeepingDate(Date.valueOf(bookkeepingDatePicker.getValue()));
-                letter.setLetterBookkeepingFio(bookkeepingComboBox.getValue());
+                letter.setLetterBookkeepingFio(bookkeepingComboBox.getValue()+null);
             }
             if (juristDatePicker.getValue()!=null&&juristComboBox.getValue()!=null) {
-                letter.setLetterJuristFio(juristComboBox.getValue());
+                letter.setLetterJuristFio(juristComboBox.getValue()+null);
                 letter.setLetterJuristDate(Date.valueOf(juristDatePicker.getValue()));
             }
             if (oripDatePicker.getValue()!=null&&oripComboBox.getValue()!=null) {
                 letter.setLetterOripDate(Date.valueOf(oripDatePicker.getValue()));
-                letter.setLetterOripFio(oripComboBox.getValue());
+                letter.setLetterOripFio(oripComboBox.getValue()+null);
             }
             letter.toString();
             try {
@@ -359,7 +355,7 @@ public class editViewLetterController {
                 taskEntity.setStatusTaskId(StatusTask.NOT_DONE);
                 taskEntity.setTaskTime(null);
                 taskEntity.setTaskIsLetter(1);
-                taskEntity.setLetterId(letter.getLetterId());
+                taskEntity.setLetterId(this.letter.getLetterId());
 
                 try {
                     taskService.addTask(taskEntity);
@@ -376,22 +372,12 @@ public class editViewLetterController {
 
 
             viewPane.toFront();
-            nameLetterComboBox.setDisable(true);
-            txtLetterNumber.setDisable(true);
-            datePickerLetter.setDisable(true);
             textAreaLetterView.setText(letter.getLetterResolution());
             labelJuristNamber.setText(letter.getLetterJuristNumber());
-            labelJuristFio.setText(letter.getLetterJuristFio());
-            labelJuristDate.setText(String.valueOf(letter.getLetterJuristDate()));
-            txtAreaOrip.setText(letter.getLetterOripText());
-            labelOripFio.setText(letter.getLetterOripFio());
-            labelOripDate.setText(String.valueOf(letter.getLetterOripDate()));
-            labelTechnicalLiter.setText(letter.getLetterTechnicalLiter());
-            labelTechnicalPassword.setText(letter.getLetterTechnicalPassword());
-            labelTechnicalFio.setText(letter.getLetterTechnicalFio());
-            technicalDate.setText(String.valueOf(letter.getLetterTechnicalDate()));
-            labelBookkeepingFio.setText(letter.getLetterBookkeepingFio());
-            labelbookeepingDate.setText(String.valueOf(letter.getLetterBookkeepingDate()));
+
+
+
+            initView();
         }
     }
 
@@ -418,4 +404,70 @@ public class editViewLetterController {
         Stage stage = (Stage) cancelViewButton.getScene().getWindow();
         stage.close();
     }
+    public void initView(){
+        textAreaLetterView.setText(letter.getLetterResolution());
+        labelJuristNamber.setText(letter.getLetterJuristNumber());
+
+
+        if (letter.getLetterJuristFio() != null) {
+            String listJurist = letter.getLetterJuristFio();
+            ArrayList<String> arrayJurist = new ArrayList<>();
+            for (String fio : listJurist.split("null")) {
+                if (!fio.equals("")) {
+                    arrayJurist.add(fio);
+                }
+            }
+            listViewJurist.getItems().setAll(arrayJurist);
+        }
+
+        labelJuristDate.setText(String.valueOf(letter.getLetterJuristDate()));
+
+        txtAreaOrip.setText(letter.getLetterOripText());
+
+
+        if (letter.getLetterOripFio() != null) {
+            String listOrip = letter.getLetterOripFio();
+            ArrayList<String> arrayOrip = new ArrayList<>();
+            for (String fio : listOrip.split("null")) {
+                if (!fio.equals("")) {
+                    arrayOrip.add(fio);
+                }
+            }
+            listViewOrip.getItems().setAll(arrayOrip);
+        }
+
+
+        labelOripDate.setText(String.valueOf(letter.getLetterOripDate()));
+        labelTechnicalLiter.setText(letter.getLetterTechnicalLiter());
+        labelTechnicalPassword.setText(letter.getLetterTechnicalPassword());
+
+        if (letter.getLetterTechnicalFio() != null) {
+            String listTechnical = letter.getLetterTechnicalFio();
+            ArrayList<String> arrayTechnical = new ArrayList<>();
+            for (String fio : listTechnical.split("null")) {
+                if (!fio.equals("")) {
+                    arrayTechnical.add(fio);
+                }
+            }
+            listViewTechnical.getItems().setAll(arrayTechnical);
+        }
+
+
+        technicalDate.setText(String.valueOf(letter.getLetterTechnicalDate()));
+
+
+        if (letter.getLetterBookkeepingFio()!= null) {
+            String listBookkeeping = letter.getLetterBookkeepingFio();
+            ArrayList<String> arrayBookkeeping = new ArrayList<>();
+            for (String fio : listBookkeeping.split("null")) {
+                if (!fio.equals("")) {
+                    arrayBookkeeping.add(fio);
+                }
+            }
+            listViewBookkeeping.getItems().setAll(arrayBookkeeping);
+        }
+
+        labelbookeepingDate.setText(String.valueOf(letter.getLetterBookkeepingDate()));
+    }
 }
+

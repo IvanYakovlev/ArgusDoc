@@ -13,10 +13,16 @@ public interface LetterService extends Remote {
 
     public void addLetter(Letter letter) throws IOException, RemoteException, SQLException;
     public void updateLetter(Letter letter) throws IOException, RemoteException, SQLException;
+    public void updateJuristLetter(Letter letter) throws IOException, RemoteException, SQLException;
+    public void updateOripLetter(Letter letter) throws IOException, RemoteException, SQLException;
+    public void updateTechnicalLetter(Letter letter) throws IOException, RemoteException, SQLException;
+    public void updateBookkeepingLetter(Letter letter) throws IOException, RemoteException, SQLException;
+
+
     public void removeLetter(int id, String filePath) throws IOException, SQLException;
     public void downloadLetter(Letter letter) throws RemoteException;
     public void openLetter(int id) throws IOException, SQLException;
     public List<Letter> listLetter() throws RemoteException;
     public Letter getLetterById(int id) throws RemoteException;
-
+    public int getMaxId() throws RemoteException, SQLException;
 }

@@ -7,7 +7,6 @@ import javafx.collections.FXCollections;
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
 import javafx.util.Duration;
 import notification.NotificationEvent;
 import service.*;
@@ -30,7 +29,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -43,7 +41,6 @@ import dialog.ADInfo;
 import java.io.File;
 import java.io.IOException;
 
-import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -96,7 +93,7 @@ public class MainController {
     private double xOffset;
     private double yOffset;
 
-    private TaskEntity taskEntity = new TaskEntity();
+    private TaskEntity taskEntity;
     private Document document = new Document();
     private Letter letter = new Letter();
     private Event event = new Event();
@@ -614,52 +611,109 @@ Calendar tab
     }
 
     public void openDoneTaskButton(ActionEvent actionEvent) throws RemoteException {
-        if (taskEntity !=null) {
 
-            FXMLLoader fxmlLoader = new FXMLLoader();
+        try {
 
-            fxmlLoader.setLocation(getClass().getResource("/viewFXML/Done_task_window.fxml"));
-            try {
+            if (taskEntity.getTaskIsLetter()==0) {
 
-                fxmlLoader.load();
-                Stage stage = new Stage();
-                Parent root = fxmlLoader.getRoot();
-                stage.setScene(new Scene(root));
-                DoneTaskController doneController = fxmlLoader.getController();
-                doneController.setTaskEntity(taskEntity);
-                doneController.initTab(taskEntity);
+                if (taskEntity != null) {
 
-                stage.setTitle("Выполнение задачи");
-                stage.setMinHeight(150);
-                stage.setMinWidth(300);
-                stage.setResizable(false);
+                    FXMLLoader fxmlLoader = new FXMLLoader();
 
-                stage.initModality(Modality.WINDOW_MODAL);
-                stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
-                stage.initStyle(StageStyle.TRANSPARENT);
-                root.setOnMousePressed(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        xOffset = event.getSceneX();
-                        yOffset = event.getSceneY();
+                    fxmlLoader.setLocation(getClass().getResource("/viewFXML/Done_task_window.fxml"));
+                    try {
+
+                        fxmlLoader.load();
+                        Stage stage = new Stage();
+                        Parent root = fxmlLoader.getRoot();
+                        stage.setScene(new Scene(root));
+                        DoneTaskController doneController = fxmlLoader.getController();
+                        doneController.setTaskEntity(taskEntity);
+                        doneController.initTab(taskEntity);
+
+                        stage.setTitle("Выполнение задачи");
+                        stage.setMinHeight(150);
+                        stage.setMinWidth(300);
+                        stage.setResizable(false);
+
+                        stage.initModality(Modality.WINDOW_MODAL);
+                        stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+                        stage.initStyle(StageStyle.TRANSPARENT);
+                        root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent event) {
+                                xOffset = event.getSceneX();
+                                yOffset = event.getSceneY();
+                            }
+                        });
+                        root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent event) {
+                                stage.setX(event.getScreenX() - xOffset);
+                                stage.setY(event.getScreenY() - yOffset);
+                            }
+                        });
+                        stage.show();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                });
-                root.setOnMouseDragged(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        stage.setX(event.getScreenX() - xOffset);
-                        stage.setY(event.getScreenY() - yOffset);
-                    }
-                });
-                stage.show();
+                } else {
+                    ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Задача не выбрана!");
+                }
+            } else {
+                if (taskEntity!=null) {
+                    FXMLLoader fxmlLoader = new FXMLLoader();
 
-            } catch (IOException e) {
-                e.printStackTrace();
+                    fxmlLoader.setLocation(getClass().getResource("/viewFXML/Done_letter_window.fxml"));
+                    try {
+
+                        fxmlLoader.load();
+                        Stage stage = new Stage();
+                        Parent root = fxmlLoader.getRoot();
+                        stage.setScene(new Scene(root));
+                        DoneLetterController doneLetterController = fxmlLoader.getController();
+                        doneLetterController.initialize(authorizedUser, taskEntity.getLetterId(), taskEntity.getTaskId());
+
+                        stage.setTitle("Новая задача");
+                        stage.setMinHeight(150);
+                        stage.setMinWidth(300);
+                        stage.setResizable(false);
+
+                        stage.initModality(Modality.WINDOW_MODAL);
+                        stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+                        stage.initStyle(StageStyle.TRANSPARENT);
+                        root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent event) {
+                                xOffset = event.getSceneX();
+                                yOffset = event.getSceneY();
+                            }
+                        });
+                        root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent event) {
+                                stage.setX(event.getScreenX() - xOffset);
+                                stage.setY(event.getScreenY() - yOffset);
+                            }
+                        });
+                        stage.show();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Задача не выбрана!");
+                }
             }
-        }
-        else {
+
+        }catch (NullPointerException e){
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Задача не выбрана!");
         }
+
+    taskEntity=null;
+
     }
 
 
@@ -959,6 +1013,7 @@ Calendar tab
         TaskEntity taskEntity = tableTask.getSelectionModel().getSelectedItems().get(0);
         if (taskEntity !=null){
             this.taskEntity = taskEntity;
+            System.out.println(taskEntity.toString());
         }
 
     }
@@ -1198,7 +1253,7 @@ Calendar tab
                 Stage stage = new Stage();
                 Parent root = fxmlLoader.getRoot();
                 stage.setScene(new Scene(root));
-                editViewLetterController editViewLetterController = fxmlLoader.getController();
+                EditViewLetterController editViewLetterController = fxmlLoader.getController();
                 editViewLetterController.initialize(authorizedUser, letter.getLetterId());
 
                 stage.setTitle("Новая задача");

@@ -86,6 +86,7 @@ public class AddTaskController {
             taskEntity.setTaskTime(java.sql.Time.valueOf(timePickerTask.getValue()));
             taskEntity.setStatusTaskId(StatusTask.NOT_DONE);
             taskEntity.setTaskIsLetter(0);
+            taskEntity.setLetterId(0);
 
 
             try {
