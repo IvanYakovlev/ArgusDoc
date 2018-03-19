@@ -10,7 +10,7 @@ import java.sql.Time;
 @Table(name = "TASKS")
 public class TaskEntity extends RecursiveTreeObject<TaskEntity> implements Serializable{
 
-
+/*Entity класс соответсвующий таблице TASKS*/
 
 
 

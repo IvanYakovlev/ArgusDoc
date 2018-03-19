@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="442.0" prefWidth="600.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditTaskController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="442.0" prefWidth="600.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditTaskController">
    <children>
       <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="40.0" prefWidth="200.0" styleClass="AnchorPane2" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -71,7 +71,8 @@
                   <JFXTextArea fx:id="textViewAreaTask" editable="false" focusColor="#4eb1ba" prefHeight="270.0" prefWidth="560.0" promptText="Введите текст задачи" styleClass="JFXTextArea" />
                </children>
             </Pane>
-            <Label fx:id="labelViewTask" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="560.0" styleClass="label3" />
+            <Label fx:id="labelViewTask" layoutX="75.0" layoutY="14.0" prefHeight="25.0" prefWidth="499.0" styleClass="label4" />
+            <Label layoutX="12.0" layoutY="18.0" styleClass="label2" text="Название:" />
          </children>
       </Pane>
    </children>

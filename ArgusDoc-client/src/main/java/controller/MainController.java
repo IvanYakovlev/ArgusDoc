@@ -109,6 +109,14 @@ public class MainController {
     @FXML
     private JFXButton myTasksButton = new JFXButton();
     @FXML
+    private JFXButton templateTabButton = new JFXButton();
+
+    @FXML
+    private JFXButton myDoneTasksButton = new JFXButton();
+    @FXML
+    private JFXButton archiveTasks = new JFXButton();
+
+    @FXML
     private JFXButton myLetterButton = new JFXButton();
     @FXML
     private JFXButton fromEmpTaskButton = new JFXButton();
@@ -219,7 +227,7 @@ public class MainController {
 
         tableDocumentTemplate.setItems(observableListDocument);
 //задаем размер колонок в таблицу
-        documentNameTemplate.prefWidthProperty().bind(tableTask.widthProperty().multiply(1));
+        documentNameTemplate.prefWidthProperty().bind(tableDocumentTemplate.widthProperty().multiply(1));
 
 
     /*initialize combobox Document template tab*/
@@ -253,16 +261,16 @@ public class MainController {
         isLetter.setCellValueFactory(new PropertyValueFactory<TaskEntity, String>("taskIsLetter"));
 
 // задаем размер колонок в таблице
-        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
+        nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.50));
         sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
-        termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
-        timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
+        termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
+        timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
         statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
 
         tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
 
-        tableTask.setItems(observableListMyTaskEntity);
+        tableTask.setItems(observableListMyLetterTaskEntity);
 
         labelUserAuth.setText(authorizedUser.getEmployeeName());
 
@@ -357,10 +365,9 @@ public class MainController {
 
         tableLetter.getColumns().setAll(numberLetter, nameLetter, passwordLetter);
 
-        numberLetter.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
-        nameLetter.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.50));
-        passwordLetter.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.24));
-
+        numberLetter.prefWidthProperty().bind(tableLetter.widthProperty().multiply(0.25));
+        nameLetter.prefWidthProperty().bind(tableLetter.widthProperty().multiply(0.50));
+        passwordLetter.prefWidthProperty().bind(tableLetter.widthProperty().multiply(0.24));
 
         tableLetter.setItems(observableListLetter);
 
@@ -369,7 +376,9 @@ public class MainController {
 
 
         anchorTask.toFront();
+        myLetterButton.setStyle("-fx-font-weight: bold; -fx-font-size: 14");
         myTaskBtnBar.toFront();
+
     }
 /*
 Calendar tab
@@ -459,9 +468,7 @@ Calendar tab
         dateEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.25));
         timeEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.25));
     }
-    public void clickCalendarPicker(MouseEvent mouseEvent) {
 
-    }
 
 
 /*Document template tab*/
@@ -719,7 +726,8 @@ Calendar tab
 
 
     public void myLetterButton(ActionEvent actionEvent) {
-
+        clearButtonMenuSelected();
+        myLetterButton.setStyle("-fx-font-weight: bold; -fx-font-size: 14");
 
         anchorTask.toFront();
         myTaskBtnBar.toFront();
@@ -733,6 +741,8 @@ Calendar tab
             protected Task<Void> createTask() {
                 return new Task<Void>() {
                     @Override public Void call() throws RemoteException {
+
+
                         tableTask.setDisable(true);
                         progressBar.setVisible(true);
 
@@ -773,7 +783,8 @@ Calendar tab
 
     }
     public void myTasksButton(ActionEvent actionEvent) throws RemoteException {
-
+        clearButtonMenuSelected();
+        myTasksButton.setStyle("-fx-font-weight: bold; -fx-font-size: 14");
 
         anchorTask.toFront();
         myTaskBtnBar.toFront();
@@ -786,6 +797,8 @@ Calendar tab
             protected Task<Void> createTask() {
                 return new Task<Void>() {
                     @Override public Void call() throws RemoteException {
+
+
                         tableTask.setDisable(true);
                         progressBar.setVisible(true);
 
@@ -814,7 +827,10 @@ Calendar tab
                         updateProgress(60, max);
 
 
-                        tableTask.setItems(list);
+                        Platform.runLater(() ->{
+                            tableTask.setItems(list);
+
+                        });
                         // задаем размер колонок в таблице
                         colorRow();
 
@@ -842,8 +858,23 @@ Calendar tab
         });
     }
 
-    public void myDoneTasksButton(ActionEvent actionEvent) throws RemoteException {
+    private void clearButtonMenuSelected() {
+        myTasksButton.setStyle("");
+        myLetterButton.setStyle("");
+        myDoneTasksButton.setStyle("-fx-text-fill: white");
+        fromEmpTaskButton.setStyle("-fx-text-fill: white");
+        archiveTasks.setStyle("-fx-text-fill: white");
+        templateTabButton.setStyle("-fx-text-fill: white");
+        calendarTabButton.setStyle("-fx-text-fill: white");
+        letterTabButton.setStyle("-fx-text-fill: white");
+        settingTabButton.setStyle("-fx-text-fill: white");
 
+
+    }
+
+    public void myDoneTasksButton(ActionEvent actionEvent) throws RemoteException {
+        clearButtonMenuSelected();
+        myDoneTasksButton.setStyle("-fx-font-weight: bold; -fx-font-size: 14");
         anchorTask.toFront();
         myTaskDoneBtnBar.toFront();
         ObservableList<TaskEntity> list = observableListMyDoneTaskEntity;
@@ -876,7 +907,12 @@ Calendar tab
                         timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
                         statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
-                        tableTask.setItems(list);
+
+                        Platform.runLater(() ->{
+                            tableTask.setItems(list);
+
+                        });
+
                         // задаем размер колонок в таблице
                         colorRow();
 
@@ -895,7 +931,8 @@ Calendar tab
         });
     }
     public void fromEmpTaskButton(ActionEvent actionEvent) throws RemoteException {
-
+        clearButtonMenuSelected();
+        fromEmpTaskButton.setStyle("-fx-font-weight: bold; -fx-font-size: 14");
 
         anchorTask.toFront();
         fromEmpTaskBtnBar.toFront();
@@ -927,8 +964,11 @@ Calendar tab
                         timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
                         statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
+                        Platform.runLater(() ->{
+                            tableTask.setItems(list);
 
-                        tableTask.setItems(list);
+                        });
+
                         colorRow();
                         // задаем размер колонок в таблице
 
@@ -949,7 +989,8 @@ Calendar tab
     }
 
     public void archiveTasks(ActionEvent actionEvent) throws RemoteException {
-
+        clearButtonMenuSelected();
+        archiveTasks.setStyle("-fx-font-weight: bold; -fx-font-size: 14");
         anchorTask.toFront();
         archiveTaskBtnBar.toFront();
 
@@ -985,7 +1026,10 @@ Calendar tab
                         statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
 
-                        tableTask.setItems(list);
+                        Platform.runLater(() ->{
+                            tableTask.setItems(list);
+
+                        });
                         colorRow();
                         // задаем размер колонок в таблице
 
@@ -1072,6 +1116,8 @@ Calendar tab
         }
     }
     public void templateTabButton(ActionEvent actionEvent) throws RemoteException {
+        clearButtonMenuSelected();
+        templateTabButton.setStyle("-fx-font-weight: bold; -fx-font-size: 14");
         anchorTemplate.toFront();
 
         Service<Void> service = new Service<Void>() {
@@ -1113,7 +1159,8 @@ Calendar tab
     }
 
     public void calendarTabButton(ActionEvent actionEvent) {
-
+        clearButtonMenuSelected();
+        calendarTabButton.setStyle("-fx-font-weight: bold; -fx-font-size: 14");
 
         anchorCalendar.toFront();
 
@@ -1145,6 +1192,8 @@ Calendar tab
     }
 
     public void letterTabButton(ActionEvent actionEvent) throws RemoteException {
+        clearButtonMenuSelected();
+        letterTabButton.setStyle("-fx-font-weight: bold; -fx-font-size: 14");
         statusTab="letterTab";
         anchorLetter.toFront();
         ObservableList<Letter> list = observableListLetter;
@@ -1246,7 +1295,7 @@ Calendar tab
         if (letter.getLetterName()!=null) {
             FXMLLoader fxmlLoader = new FXMLLoader();
 
-            fxmlLoader.setLocation(getClass().getResource("/viewFXML/view-edit_letter_window.fxml"));
+            fxmlLoader.setLocation(getClass().getResource("/viewFXML/View-edit_letter_window.fxml"));
             try {
 
                 fxmlLoader.load();
@@ -1672,8 +1721,8 @@ Calendar tab
                         observableListDocument = FXCollections.observableArrayList(documentService.listDocuments());
                         observableListDocumentsByDepartment = FXCollections.observableArrayList(documentService.listDocumentsByDepartment(comboBoxDocument_Template.getValue()));
 
-                        observableListMyTaskEntity = FXCollections.observableArrayList(taskService.listMyTasks(authorizedUser.getEmployeeId()));
                         observableListMyLetterTaskEntity = FXCollections.observableArrayList(taskService.listMyLetterTasks(authorizedUser.getEmployeeId()));
+                        observableListMyTaskEntity = FXCollections.observableArrayList(taskService.listMyTasks(authorizedUser.getEmployeeId()));
                         observableListMyDoneTaskEntity = FXCollections.observableArrayList(taskService.listMyDoneTasks(authorizedUser.getEmployeeId()));
                         observableListFromEmpTaskEntity = FXCollections.observableArrayList(taskService.listFromEmpTasks((authorizedUser.getEmployeeName())));
                         observableListArchiveTaskEntity = FXCollections.observableArrayList(taskService.listArchiveTasks(Integer.parseInt(StatusTask.CANCELED)));

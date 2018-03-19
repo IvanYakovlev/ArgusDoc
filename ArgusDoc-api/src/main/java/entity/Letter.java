@@ -8,6 +8,8 @@ import java.sql.Date;
 @Table(name = "LETTERS")
 public class Letter implements Serializable{
 
+    /*Entity класс соответсвующий таблице LETTERS*/
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Letter_id")

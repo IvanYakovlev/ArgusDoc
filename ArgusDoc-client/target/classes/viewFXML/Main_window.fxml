@@ -60,7 +60,7 @@
                         <FontAwesomeIconView fill="WHITE" glyphName="CALENDAR" size="16" />
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="letterTabButton" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#letterTabButton" styleClass="JFXButton" text="   Регистрация писем" visible="false">
+                  <JFXButton fx:id="letterTabButton" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#letterTabButton" styleClass="JFXButton" text="   Архив писем" visible="false">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="ENVELOPE_SQUARE" size="16" />
                      </graphic>
@@ -174,7 +174,7 @@
             </HBox>
             <AnchorPane fx:id="anchorCalendar" layoutX="20.0" layoutY="52.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
                <children>
-                  <CalendarPicker fx:id="calendarPicker" layoutX="4.0" layoutY="14.0" onMouseClicked="#clickCalendarPicker" prefHeight="280.0" prefWidth="395.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                  <CalendarPicker fx:id="calendarPicker" layoutX="4.0" layoutY="14.0" prefHeight="280.0" prefWidth="395.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
                   </CalendarPicker>
                   <TableView fx:id="tableEvent" layoutX="464.0" layoutY="50.0" onMouseClicked="#clickTableEvent" prefHeight="590.0" prefWidth="372.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="430.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
                     <columns>

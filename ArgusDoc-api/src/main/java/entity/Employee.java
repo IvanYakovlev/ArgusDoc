@@ -6,6 +6,9 @@ import java.io.*;
 @Entity
 @Table(name = "EMPLOYEES")
 public class Employee implements Serializable {
+
+     /*Entity класс соответсвующий таблице EMPLOYEES*/
+
     @Id
     @Column(name = "Employee_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

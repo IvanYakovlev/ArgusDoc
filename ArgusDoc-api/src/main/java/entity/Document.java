@@ -5,6 +5,9 @@ import java.io.*;
 @Entity
 @Table(name ="DOCUMENTS")
 public class Document implements Serializable{
+
+    /*Entity класс соответсвующий таблице DOCUMENTS*/
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Document_id")

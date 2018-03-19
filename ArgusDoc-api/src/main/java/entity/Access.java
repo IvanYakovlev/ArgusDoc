@@ -7,6 +7,9 @@ import java.io.*;
 @Entity
 @Table(name = "ACCESS")
 public class Access extends RecursiveTreeObject<Access> implements Serializable{
+
+    /*Entity класс соответсвующий таблице ACCESS*/
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Access_id")

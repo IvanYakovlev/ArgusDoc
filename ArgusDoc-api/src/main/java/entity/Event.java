@@ -8,6 +8,9 @@ import java.sql.Time;
 @Entity
 @Table(name = "EVENTS")
 public class Event implements Serializable{
+
+    /*Entity класс соответсвующий таблице EVENTS*/
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Event_id")

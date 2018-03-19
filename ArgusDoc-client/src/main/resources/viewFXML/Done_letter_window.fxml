@@ -98,12 +98,12 @@
             </Pane>
          </children>
       </Pane>
-      <Label layoutX="14.0" layoutY="57.0" styleClass="label2" text="Тип письма:" />
-      <Label fx:id="labelNameLetter" layoutX="90.0" layoutY="57.0" prefHeight="17.0" prefWidth="385.0" styleClass="label2" text="..." />
-      <Label layoutX="492.0" layoutY="57.0" styleClass="label2" text="№ письма:" />
-      <Label fx:id="labelNumberLetter" layoutX="565.0" layoutY="57.0" styleClass="label2" text="..." />
-      <Label layoutX="636.0" layoutY="57.0" styleClass="label2" text="Дата поступления" />
-      <Label fx:id="lebelDateLetter" layoutX="745.0" layoutY="57.0" styleClass="label2" text="..." />
+      <Label layoutX="14.0" layoutY="57.0" styleClass="label2" text="Тип:" />
+      <Label fx:id="labelNameLetter" layoutX="43.0" layoutY="53.0" prefHeight="25.0" prefWidth="426.0" styleClass="label4" text="..." />
+      <Label layoutX="492.0" layoutY="57.0" styleClass="label2" text="№:" />
+      <Label fx:id="labelNumberLetter" layoutX="520.0" layoutY="53.0" prefHeight="25.0" prefWidth="82.0" styleClass="label4" text="..." />
+      <Label layoutX="679.0" layoutY="57.0" styleClass="label2" text="Дата:" />
+      <Label fx:id="lebelDateLetter" layoutX="717.0" layoutY="53.0" styleClass="label4" text="..." />
    </children>
    <effect>
       <DropShadow />

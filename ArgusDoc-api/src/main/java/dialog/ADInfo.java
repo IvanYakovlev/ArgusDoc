@@ -5,6 +5,9 @@ import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 
 public class ADInfo {
+
+    /*Класс-singleton для показа диалоговых окон*/
+
     private static ADInfo adInfo;
 
     public static ADInfo getAdInfo(){

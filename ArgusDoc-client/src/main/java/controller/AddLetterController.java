@@ -79,13 +79,10 @@ public class AddLetterController {
 
     @FXML
     private JFXTextArea textAreaLetter = new JFXTextArea();
-
     @FXML
     private JFXTextField txtLetterNumber;
-
     @FXML
     private JFXComboBox<String> nameLetterComboBox = new JFXComboBox<String>();
-
     @FXML
     private JFXTextField juristNumberText;
     @FXML
@@ -100,23 +97,18 @@ public class AddLetterController {
     private ArrayList<String> list = new ArrayList<String>();
     private ObservableList<String> listNameLetter;
 
-    private DepartmentService departmentService = ServiceRegistry.departmentService;
     private EmployeeService employeeService = ServiceRegistry.employeeService;
-    private AccessService accessService = ServiceRegistry.accessService;
-    private DocumentService documentService = ServiceRegistry.documentService;
     private LetterService letterService = ServiceRegistry.letterService;
     private TaskService taskService = ServiceRegistry.taskService;
-    private EventService eventService = ServiceRegistry.eventService;
+
     final FileChooser fileChooser=new FileChooser();
     File attachmentFile;
-
 
     Letter letter;
 
     public  void initialize() throws RemoteException {
 
-        //employeeService.listEmployees();
-
+//Формируем список для отображения в nameLetterComboBox
         list.add("Постановка объекта на охрану");
         list.add("Включение ответственных");
         list.add("Исключение ответственных");
@@ -137,9 +129,11 @@ public class AddLetterController {
         list.add("Изготовление ключей");
         list.add("Коммерческое предложения");
         listNameLetter = FXCollections.observableArrayList(list);
-
         nameLetterComboBox.setItems(listNameLetter);
-        employeeService.listEmployees();
+
+        employeeService.listEmployees();//вызов метода необходим для заполнения массива listEmployee в классе employeeService
+
+//Заполняем элементы combobox и checkcombobox в соответсвии с прикрепленными там сотрудниками
         juristCheckComboBox.getItems().setAll(employeeService.listEmployeesNameJurist());
         technicalCheckComboBox.getItems().setAll(employeeService.listEmployeesNameTechnical());
         oripCheckComboBox.getItems().setAll(employeeService.listEmployeesNameOrip());
@@ -149,7 +143,6 @@ public class AddLetterController {
         technicalComboBox.getItems().setAll(employeeService.listEmployeesNameTechnical());
         oripComboBox.getItems().setAll(employeeService.listEmployeesNameOrip());
         bookkeepingComboBox.getItems().setAll(employeeService.listEmployeesNameBookkeeping());
-
     }
 
 

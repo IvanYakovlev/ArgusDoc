@@ -126,6 +126,12 @@ public class EditViewLetterController {
     private JFXListView<String> listViewOrip = new JFXListView<String>();
     @FXML
     private JFXListView<String> listViewBookkeeping = new JFXListView<String>();
+    @FXML
+    private Label labelLetterName;
+    @FXML
+    private Label labelLetterNumber;
+    @FXML
+    private Label labelLetterDate;
 
     private ArrayList<String> list = new ArrayList<String>();
     private ObservableList<String> listNameLetter;
@@ -179,11 +185,12 @@ public class EditViewLetterController {
         txtLetterNumber.setText(letter.getLetterNumber());
         datePickerLetter.setValue(letter.getLetterDate().toLocalDate());
 
+        labelLetterName.setText(letter.getLetterName());
+        labelLetterNumber.setText(letter.getLetterNumber());
+        labelLetterDate.setText(String.valueOf(letter.getLetterDate()));
         //Инициализируем viewPane
 
-        nameLetterComboBox.setDisable(true);
-        txtLetterNumber.setDisable(true);
-        datePickerLetter.setDisable(true);
+
 
         initView();
         //Инициализируем editPane
@@ -207,6 +214,7 @@ public class EditViewLetterController {
         if (letter.getLetterJuristFio()!=null&&letter.getLetterJuristDate()!=null) {
             juristComboBox.setValue(letter.getLetterJuristFio());
             juristDatePicker.setValue(letter.getLetterJuristDate().toLocalDate());
+
         }
         if (letter.getLetterOripFio()!=null&&letter.getLetterOripDate()!=null) {
             oripComboBox.setValue(letter.getLetterOripFio());
@@ -241,9 +249,7 @@ public class EditViewLetterController {
 
     public void cancelEditLetterButton(ActionEvent actionEvent) {
         viewPane.toFront();
-        nameLetterComboBox.setDisable(true);
-        txtLetterNumber.setDisable(true);
-        datePickerLetter.setDisable(true);
+
     }
 
     public void editLetterButton(ActionEvent actionEvent) {
@@ -374,7 +380,9 @@ public class EditViewLetterController {
             viewPane.toFront();
             textAreaLetterView.setText(letter.getLetterResolution());
             labelJuristNamber.setText(letter.getLetterJuristNumber());
-
+            labelLetterName.setText(letter.getLetterName());
+            labelLetterNumber.setText(letter.getLetterNumber());
+            labelLetterDate.setText(String.valueOf(letter.getLetterDate()));
 
 
             initView();
@@ -383,9 +391,7 @@ public class EditViewLetterController {
 
     public void openEditView(ActionEvent actionEvent) {
         editPane.toFront();
-        nameLetterComboBox.setDisable(false);
-        txtLetterNumber.setDisable(false);
-        datePickerLetter.setDisable(false);
+
     }
 
     public void openLetterFile(ActionEvent actionEvent) {

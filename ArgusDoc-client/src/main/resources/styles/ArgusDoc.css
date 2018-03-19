@@ -180,6 +180,7 @@
 .JFXButton{
     -fx-background-color: transparent;
     -fx-text-fill: #FFFFFF;
+
 }
 .blue-btn{
     -fx-background-color: #536DFE;
@@ -240,6 +241,18 @@
     -fx-padding: 0 0 0 2;
     -fx-wrap-text: false;
     -fx-max-height: infinity;
+}
+.label4{
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4px;
+    -fx-font-weight:bold;
+    -fx-font-size:16px;
+    -fx-padding: 0 0 0 2;
+    -fx-wrap-text: false;
+    -fx-max-height: infinity;
+    -fx-alignment: top-left;
 }
 .password-field{
     -fx-text-fill: #221E1D;

@@ -6,8 +6,11 @@ import javax.persistence.*;
 import java.io.*;
 
 @Entity
-@Table(name = "DEPARTMENS")
+@Table(name = "DEPARTMENTS")
 public class Department extends RecursiveTreeObject<Department> implements Serializable{
+
+    /*Entity класс соответсвующий таблице DEPARTMENTS*/
+
     @Id
     @Column(name = "Department_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
