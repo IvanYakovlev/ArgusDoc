@@ -73,7 +73,7 @@ public class MainController {
 
 
 
-    String statusTab="myTask";
+    String statusTab="myLetter";
 
 
     Calendar calendar = Calendar.getInstance();
@@ -270,7 +270,7 @@ public class MainController {
 
         tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
 
-        tableTask.setItems(observableListMyLetterTaskEntity);
+        tableTask.setItems(observableListMyDoneTaskEntity);
 
         labelUserAuth.setText(authorizedUser.getEmployeeName());
 
@@ -1489,6 +1489,44 @@ Calendar tab
            /*Сортировка*/
 
         switch (statusTab){
+            case "myLetter":
+// 1. Wrap the ObservableList in a FilteredList (initially display all data).
+                //  ObservableList<TaskEntity> observableListMyTaskEntities = FXCollections.observableArrayList(taskService.listMyTasks(authorizedUser.getEmployeeId()));
+                FilteredList<TaskEntity> filteredMyLetterTaskEntity = new FilteredList<TaskEntity>(observableListMyLetterTaskEntity, p -> true);
+
+                // 2. Set the filter Predicate whenever the filter changes.
+                txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
+                    filteredMyLetterTaskEntity.setPredicate(task -> {
+                        // If filter text is empty, display all persons.
+                        if (newValue == null || newValue.isEmpty()) {
+                            return true;
+                        }
+
+                        // Compare first name and last name of every person with filter text.
+                        String lowerCaseFilter = newValue.toLowerCase();
+
+                        if (task.getTaskName().toLowerCase().contains(lowerCaseFilter)) {
+                            return true; // Filter matches first name.
+                        } else if (task.getTaskFromEmployee().toLowerCase().contains(lowerCaseFilter)){
+                            return true;
+                        } else if(2>0){
+
+                        }
+                        return false; // Does not match.
+                    });
+                });
+
+                // 3. Wrap the FilteredList in a SortedList.
+                SortedList<TaskEntity> sortedMyLetterTaskEntity = new SortedList<>(filteredMyLetterTaskEntity);
+
+                // 4. Bind the SortedList comparator to the TableView comparator.
+                sortedMyLetterTaskEntity.comparatorProperty().bind(tableTask.comparatorProperty());
+                colorRow();
+                // 5. Add sorted (and filtered) data to the table.
+                tableTask.setItems(sortedMyLetterTaskEntity);
+
+
+                break;
             case "myTask":
 // 1. Wrap the ObservableList in a FilteredList (initially display all data).
               //  ObservableList<TaskEntity> observableListMyTaskEntities = FXCollections.observableArrayList(taskService.listMyTasks(authorizedUser.getEmployeeId()));
