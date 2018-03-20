@@ -20,12 +20,12 @@ public class EventServiceImpl implements EventService {
     public void addEvent(Event event) throws RemoteException, SQLException {
         this.dBconnection = new DBconnection();
 
-            PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("INSERT INTO EVENTS(Event_name, Event_date, Event_time, Employee_id) VALUES (?,?,?,?)");
+            PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("INSERT INTO EVENTS(Event_name, Event_date, Event_time, Employee_id, Event_periodicity) VALUES (?,?,?,?,?)");
             preparedStatement.setString(1,event.getEventName());
             preparedStatement.setDate(2,event.getEventDate());
             preparedStatement.setTime(3,event.getEventTime());
             preparedStatement.setInt(4,event.getEmployeeId());
-
+            preparedStatement.setInt(5,event.getEventPeriodicity());
             preparedStatement.execute();
 
     }
@@ -54,7 +54,7 @@ public class EventServiceImpl implements EventService {
                 event.setEventTime(resultSet.getTime("Event_time"));
                 event.setEventDate(resultSet.getDate("Event_date"));
                 event.setEventName(resultSet.getString("Event_name"));
-
+                event.setEventPeriodicity(resultSet.getInt("Event_periodicity"));
 
                 listData.add(event);
             }
@@ -76,7 +76,7 @@ public class EventServiceImpl implements EventService {
                 event.setEventDate(resultSet.getDate("Event_date"));
                 event.setEventName(resultSet.getString("Event_name"));
                 event.setEventTime(resultSet.getTime("Event_time"));
-
+                event.setEventPeriodicity(resultSet.getInt("Event_periodicity"));
                 listData.add(event);
             }
         } catch (SQLException e) {

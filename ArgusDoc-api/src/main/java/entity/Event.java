@@ -28,6 +28,18 @@ public class Event implements Serializable{
     @Column(name = "Employee_id")
     private int employeeId;
 
+    @Column(name = "Event_periodicity")
+    private int eventPeriodicity;
+
+
+    public int getEventPeriodicity() {
+        return eventPeriodicity;
+    }
+
+    public void setEventPeriodicity(int eventPeriodicity) {
+        this.eventPeriodicity = eventPeriodicity;
+    }
+
     public int getEmployeeId() {
         return employeeId;
     }
@@ -68,5 +80,15 @@ public class Event implements Serializable{
         this.eventTime = eventTime;
     }
 
-
+    @Override
+    public String toString() {
+        return "Event{" +
+                "eventId=" + eventId +
+                ", eventName='" + eventName + '\'' +
+                ", eventDate=" + eventDate +
+                ", eventTime=" + eventTime +
+                ", employeeId=" + employeeId +
+                ", eventPeriodicity=" + eventPeriodicity +
+                '}';
+    }
 }

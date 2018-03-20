@@ -3,6 +3,8 @@ package controller;
 
 import com.jfoenix.controls.*;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Service;
@@ -191,7 +193,8 @@ public class MainController {
     @FXML
     private JFXComboBox<String> comboBoxRepeate;
 
-
+    ArrayList<String> arrayListEventperiodicity = new ArrayList<String>();
+    ObservableList<String> observableListEventperiodicity;
 //Letter Tab
     @FXML
     private TextField txtFilter;
@@ -278,6 +281,15 @@ public class MainController {
         colorRow();//цвет ячеек
 
 //Calendar Tab
+
+        arrayListEventperiodicity.add("Ежедневно");
+        arrayListEventperiodicity.add("Еженедельно");
+        arrayListEventperiodicity.add("Ежемесячно");
+
+        observableListEventperiodicity = FXCollections.observableArrayList(arrayListEventperiodicity);
+
+        comboBoxRepeate.setValue("");
+
         nameEvent = new TableColumn<Event, String>("Напоминание");
         nameEvent.setCellValueFactory(new PropertyValueFactory<Event, String>("eventName"));
         dateEvent = new TableColumn<Event, String>("Дата");
@@ -340,6 +352,7 @@ public class MainController {
                 }
         });
 
+//Создаем повторяющиеся события
 
 
 
@@ -424,7 +437,7 @@ Calendar tab
     }
 
     public void addEvent(ActionEvent actionEvent) throws RemoteException {
-        if (textAreaEvent.getText().isEmpty()) {
+        if (textAreaEvent.getText().isEmpty()||timePickerEvent.getValue()==null) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Введите текст напоминания!");
         } else {
             Event event = new Event();
@@ -433,8 +446,34 @@ Calendar tab
             event.setEventDate(datesql);
             event.setEmployeeId(authorizedUser.getEmployeeId());
 
+
+                switch (comboBoxRepeate.getValue()) {
+
+                    case "Ежедневно": {
+                        event.setEventPeriodicity(EventPeriodicity.EVERY_DAY);
+                        break;
+                    }
+                    case "Еженедельно": {
+                        event.setEventPeriodicity(EventPeriodicity.EVERY_WEEK);
+                        break;
+                    }
+                    case "Ежемесячно": {
+                        event.setEventPeriodicity(EventPeriodicity.EVERY_MONTH);
+                        break;
+                    }
+                    default: {
+                        event.setEventPeriodicity(EventPeriodicity.SINGLE_TIME);
+                        break;
+                    }
+
+                }
+
+
+
+
             try {
                 eventService.addEvent(event);
+                System.out.println(event.toString());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -457,6 +496,19 @@ Calendar tab
     }
 
     public void repeateEventToggleBtn(ActionEvent actionEvent) {
+
+        if (repeateEventToggleBtn.isSelected()){
+            comboBoxRepeate.setVisible(true);
+            repeateEventToggleBtn.setText("Повторять");
+            comboBoxRepeate.setItems(observableListEventperiodicity);
+            comboBoxRepeate.setValue("Ежедневно");
+        } else {
+            comboBoxRepeate.setValue("");
+            comboBoxRepeate.setVisible(false);
+            repeateEventToggleBtn.setText("Не повторять");
+            comboBoxRepeate.setValue("");
+        }
+
 
     }
 

@@ -172,6 +172,16 @@
                   <JFXTextField fx:id="txtFilter" onKeyPressed="#keyPressSort" prefHeight="25.0" prefWidth="391.0" />
                </children>
             </HBox>
+            <JFXProgressBar fx:id="progressBar" layoutX="430.0" layoutY="350.0" progress="0.0" visible="false" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+            <FontAwesomeIconView fill="#303f9f" glyphName="REFRESH" layoutX="343.0" layoutY="26.0" onMouseClicked="#refreshTabIcon" size="22" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="7.0" />
+            <AnchorPane fx:id="anchorLetter" layoutX="30.0" layoutY="62.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
+               <children>
+                  <TableView fx:id="tableLetter" layoutX="446.0" layoutY="46.0" onMouseClicked="#clickLetterTable" prefHeight="524.0" prefWidth="809.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <JFXButton layoutX="569.0" layoutY="608.0" onAction="#openViewEditLetterWindow" styleClass="blue-btn" text="Просмотр" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="103.0" />
+                  <JFXButton layoutX="437.0" layoutY="608.0" onAction="#openAddLetterWindow" styleClass="blue-btn" text="Новое письмо" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="210.0" />
+                  <JFXButton layoutX="705.0" layoutY="608.0" onAction="#removeLetter" styleClass="blue-btn" text="Удалить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+               </children>
+            </AnchorPane>
             <AnchorPane fx:id="anchorCalendar" layoutX="20.0" layoutY="52.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
                <children>
                   <CalendarPicker fx:id="calendarPicker" layoutX="4.0" layoutY="14.0" prefHeight="280.0" prefWidth="395.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
@@ -189,22 +199,12 @@
                         <JFXButton onAction="#addEvent" styleClass="blue-btn" text="Добавить" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
                         <JFXTextArea fx:id="textAreaEvent" focusColor="#4eb1ba" layoutX="2.0" layoutY="58.0" prefHeight="157.0" prefWidth="395.0" promptText="Введите текст напоминания" styleClass="JFXTextArea" AnchorPane.bottomAnchor="125.0" AnchorPane.topAnchor="50.0" />
                         <JFXTimePicker fx:id="timePickerEvent" defaultColor="#4eb1ba" layoutX="10.0" layoutY="242.0" prefHeight="25.0" prefWidth="249.0" promptText="Выберите время" styleClass="JFXTimePicker" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="10.0" />
-                        <JFXToggleButton fx:id="repeateEventToggleBtn" layoutX="263.0" layoutY="225.0" onAction="#repeateEventToggleBtn" prefHeight="26.0" prefWidth="128.0" text="Повторять" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="10.0" />
-                        <JFXComboBox fx:id="comboBoxRepeate" layoutX="256.0" layoutY="281.0" prefHeight="25.0" prefWidth="129.0" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="10.0" />
+                        <JFXToggleButton fx:id="repeateEventToggleBtn" layoutX="247.0" layoutY="229.0" onAction="#repeateEventToggleBtn" prefHeight="58.0" prefWidth="149.0" text="Не повторять" AnchorPane.bottomAnchor="53.0" AnchorPane.rightAnchor="5.0" />
+                        <JFXComboBox fx:id="comboBoxRepeate" layoutX="256.0" layoutY="281.0" prefHeight="25.0" prefWidth="129.0" visible="false" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="10.0" />
                         <Label layoutX="15.0" layoutY="14.0" styleClass="label3" text="Добавить напоминание:" AnchorPane.topAnchor="10.0" />
                      </children>
                   </AnchorPane>
                   <JFXButton layoutX="583.0" layoutY="9.0" onAction="#showAllEventButton" prefHeight="17.0" prefWidth="122.0" styleClass="blue-btn" text="показать все" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
-               </children>
-            </AnchorPane>
-            <JFXProgressBar fx:id="progressBar" layoutX="430.0" layoutY="350.0" progress="0.0" visible="false" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-            <FontAwesomeIconView fill="#303f9f" glyphName="REFRESH" layoutX="343.0" layoutY="26.0" onMouseClicked="#refreshTabIcon" size="22" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="7.0" />
-            <AnchorPane fx:id="anchorLetter" layoutX="30.0" layoutY="62.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
-               <children>
-                  <TableView fx:id="tableLetter" layoutX="446.0" layoutY="46.0" onMouseClicked="#clickLetterTable" prefHeight="524.0" prefWidth="809.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <JFXButton layoutX="569.0" layoutY="608.0" onAction="#openViewEditLetterWindow" styleClass="blue-btn" text="Просмотр" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="103.0" />
-                  <JFXButton layoutX="437.0" layoutY="608.0" onAction="#openAddLetterWindow" styleClass="blue-btn" text="Новое письмо" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="210.0" />
-                  <JFXButton layoutX="705.0" layoutY="608.0" onAction="#removeLetter" styleClass="blue-btn" text="Удалить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
                </children>
             </AnchorPane>
          </children>
