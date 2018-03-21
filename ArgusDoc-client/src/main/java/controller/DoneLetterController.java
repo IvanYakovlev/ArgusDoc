@@ -1,6 +1,7 @@
 package controller;
 
 import com.jfoenix.controls.*;
+import dialog.ADInfo;
 import entity.Employee;
 import entity.Letter;
 import entity.TaskEntity;
@@ -8,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
@@ -270,5 +272,17 @@ public class DoneLetterController {
         Stage stage = (Stage) doneLetterButton.getScene().getWindow();
         stage.close();
 
+    }
+
+    public void openLetterFile(ActionEvent actionEvent) {
+        try {
+            letterService.openLetter(letter.getLetterId());
+        } catch (IllegalArgumentException e) {
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Письмо было удалено с сервера!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
