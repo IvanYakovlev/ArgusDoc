@@ -31,6 +31,21 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    public void updateEvent(Event event) throws RemoteException, SQLException {
+        this.dBconnection = new DBconnection();
+
+        PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("UPDATE EVENTS SET Event_name=?, Event_date=?, Event_time=?, Event_periodicity=? WHERE Event_id=?");
+        preparedStatement.setString(1,event.getEventName());
+        preparedStatement.setDate(2,event.getEventDate());
+        preparedStatement.setTime(3,event.getEventTime());
+        preparedStatement.setInt(4,event.getEventPeriodicity());
+        preparedStatement.setInt(5,event.getEventId());
+        preparedStatement.execute();
+
+    }
+
+
+    @Override
     public void removeEvent(Event event) throws RemoteException, SQLException {
         this.dBconnection = new DBconnection();
 

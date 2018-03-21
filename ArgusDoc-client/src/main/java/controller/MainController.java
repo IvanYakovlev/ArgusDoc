@@ -3,8 +3,6 @@ package controller;
 
 import com.jfoenix.controls.*;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Service;
@@ -82,9 +80,11 @@ public class MainController {
     int year = calendar.get(Calendar.YEAR);
     int month = calendar.get(Calendar.MONTH);
     int day = calendar.get(Calendar.DAY_OF_MONTH);
+    int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
+    private final java.sql.Date today = new java.sql.Date(System.currentTimeMillis());
 
-    java.sql.Date datesql = new java.sql.Date(calendar.getTimeInMillis());
+    java.sql.Date datesql = new java.sql.Date(System.currentTimeMillis());
 
 
     Date date = new Date();
@@ -352,7 +352,6 @@ public class MainController {
                 }
         });
 
-//Создаем повторяющиеся события
 
 
 
@@ -450,15 +449,15 @@ Calendar tab
                 switch (comboBoxRepeate.getValue()) {
 
                     case "Ежедневно": {
-                        event.setEventPeriodicity(EventPeriodicity.EVERY_DAY);
+                        event.setEventPeriodicity(EventPeriodicity.DAILY);
                         break;
                     }
                     case "Еженедельно": {
-                        event.setEventPeriodicity(EventPeriodicity.EVERY_WEEK);
+                        event.setEventPeriodicity(EventPeriodicity.WEEKLY);
                         break;
                     }
                     case "Ежемесячно": {
-                        event.setEventPeriodicity(EventPeriodicity.EVERY_MONTH);
+                        event.setEventPeriodicity(EventPeriodicity.MONTHLY);
                         break;
                     }
                     default: {
@@ -1231,6 +1230,7 @@ Calendar tab
                             updateProgress(i, max);
                         }
                         statusTab="calendarTab";
+                        tableEvent.setItems(observableListSelectDayEvent);
 
                         progressBar.setVisible(false);
                         return null;
@@ -1926,6 +1926,62 @@ Calendar tab
                                 }
                             });
 
+                        }
+//Создаем повторяющиеся события
+                        for(int i = 0; i<observableListAllEvent.size();i++){
+
+                            switch (observableListAllEvent.get(i).getEventPeriodicity()){
+                                case EventPeriodicity.SINGLE_TIME:{
+                                    break;
+                                }
+                                case EventPeriodicity.DAILY:{
+                                    Event dailyEvent = observableListAllEvent.get(i);
+                                    dailyEvent.setEventDate(today);
+
+                                    try {
+                                        eventService.updateEvent(dailyEvent);
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                    }
+                                    break;
+                                }
+                                case EventPeriodicity.WEEKLY:{
+                                    Calendar cal = Calendar.getInstance();
+                                    cal.setTime(observableListAllEvent.get(i).getEventDate());
+
+                                    int dayOfWeekEvent = cal.get(Calendar.DAY_OF_WEEK);
+
+                                    if (dayOfWeekEvent==dayOfWeek) {
+                                        Event weeklyEvent = observableListAllEvent.get(i);
+                                        weeklyEvent.setEventDate(today);
+
+                                        try {
+                                            eventService.updateEvent(weeklyEvent);
+                                        } catch (SQLException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    break;
+                                }
+                                case EventPeriodicity.MONTHLY:{
+                                    Calendar cal = Calendar.getInstance();
+                                    cal.setTime(observableListAllEvent.get(i).getEventDate());
+
+                                    int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
+
+                                    if (dayOfMonth==day) {
+                                        Event monthlyEvent = observableListAllEvent.get(i);
+                                        monthlyEvent.setEventDate(today);
+
+                                        try {
+                                            eventService.updateEvent(monthlyEvent);
+                                        } catch (SQLException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
                         }
 //Уведомления о событиях
                         int newEvent = 0;
