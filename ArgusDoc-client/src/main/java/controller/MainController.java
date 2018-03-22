@@ -1,6 +1,7 @@
 package controller;
 
 
+import argusDocSettings.ServerFilePath;
 import com.jfoenix.controls.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -214,11 +215,23 @@ public class MainController {
 
 
     public void initialize(Employee authorizedUser) throws RemoteException {
+
+        Path documentsPath = Paths.get(ServerFilePath.DOCUMENTS_FILE_PATH);
+        Path tasksPath = Paths.get(ServerFilePath.TASKS_FILE_PATH);
+        Path lettersPath = Paths.get(ServerFilePath.LETTERS_FILE_PATH);
+
+        if (Files.exists(documentsPath)&&Files.exists(tasksPath)&&Files.exists(lettersPath)) {
+            System.out.println("Соединение с хранилищем устанолено!");
+        } else {
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Хранилище недоступно! Обратитесь к системному администратору!");
+            Platform.exit();
+        }
+
         this.authorizedUser=authorizedUser;
         refreshData();
-
-
         serviceStart();
+
+
     /*initialize table Document Template tab*/
 //заполняем таблицу данными
         documentNameTemplate = new TableColumn<Document, String>("Название документа");
@@ -618,54 +631,113 @@ Calendar tab
 
     public void openEditTaskButton(ActionEvent actionEvent) {
 
-        if (taskEntity !=null) {
-            EditTaskController editTaskController = new EditTaskController();
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("/viewFXML/Edit_task_window.fxml"));
+        try {
+
+            if (taskEntity.getTaskIsLetter()==0) {
+
+                if (taskEntity !=null) {
+                    EditTaskController editTaskController = new EditTaskController();
+                    FXMLLoader fxmlLoader = new FXMLLoader();
+                    fxmlLoader.setLocation(getClass().getResource("/viewFXML/Edit_task_window.fxml"));
 
 
-            try {
+                    try {
 
-                fxmlLoader.load();
-                Stage stage = new Stage();
-                Parent root = fxmlLoader.getRoot();
-                stage.setScene(new Scene(root));
-                EditTaskController editController = fxmlLoader.getController();
-                editController.authorizedUser= authorizedUser;
-                editController.taskEntity = taskEntity;
-                editController.initTab(taskEntity);
+                        fxmlLoader.load();
+                        Stage stage = new Stage();
+                        Parent root = fxmlLoader.getRoot();
+                        stage.setScene(new Scene(root));
+                        EditTaskController editController = fxmlLoader.getController();
+                        editController.authorizedUser= authorizedUser;
+                        editController.taskEntity = taskEntity;
+                        editController.initTab(taskEntity);
 
-                stage.setTitle("Редактирование задачи");
-                stage.setMinHeight(150);
-                stage.setMinWidth(300);
-                stage.setResizable(false);
+                        stage.setTitle("Редактирование задачи");
+                        stage.setMinHeight(150);
+                        stage.setMinWidth(300);
+                        stage.setResizable(false);
 
-                stage.initModality(Modality.WINDOW_MODAL);
-                stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
-                stage.initStyle(StageStyle.TRANSPARENT);
-                root.setOnMousePressed(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        xOffset = event.getSceneX();
-                        yOffset = event.getSceneY();
+                        stage.initModality(Modality.WINDOW_MODAL);
+                        stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+                        stage.initStyle(StageStyle.TRANSPARENT);
+                        root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent event) {
+                                xOffset = event.getSceneX();
+                                yOffset = event.getSceneY();
+                            }
+                        });
+                        root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent event) {
+                                stage.setX(event.getScreenX() - xOffset);
+                                stage.setY(event.getScreenY() - yOffset);
+                            }
+                        });
+                        stage.show();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                });
-                root.setOnMouseDragged(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        stage.setX(event.getScreenX() - xOffset);
-                        stage.setY(event.getScreenY() - yOffset);
-                    }
-                });
-                stage.show();
+                }
+                else {
+                    ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Задача не выбрана!");
+                }
+            } else {
+                if (taskEntity.getLetterId()!=0) {
+                    FXMLLoader fxmlLoader = new FXMLLoader();
 
-            } catch (IOException e) {
-                e.printStackTrace();
+                    fxmlLoader.setLocation(getClass().getResource("/viewFXML/View-edit_letter_window.fxml"));
+                    try {
+
+                        fxmlLoader.load();
+                        Stage stage = new Stage();
+                        Parent root = fxmlLoader.getRoot();
+                        stage.setScene(new Scene(root));
+                        EditViewLetterController editViewLetterController = fxmlLoader.getController();
+                        editViewLetterController.initialize(authorizedUser, taskEntity.getLetterId());
+
+                        //stage.setTitle("Новая задача");
+                        stage.setMinHeight(150);
+                        stage.setMinWidth(300);
+                        stage.setResizable(false);
+
+                        stage.initModality(Modality.WINDOW_MODAL);
+                        stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+                        stage.initStyle(StageStyle.TRANSPARENT);
+                        root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent event) {
+                                xOffset = event.getSceneX();
+                                yOffset = event.getSceneY();
+                            }
+                        });
+                        root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent event) {
+                                stage.setX(event.getScreenX() - xOffset);
+                                stage.setY(event.getScreenY() - yOffset);
+                            }
+                        });
+                        stage.show();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Задача не выбрана!");
+                }
             }
-        }
-        else {
+
+        }catch (NullPointerException e){
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Задача не выбрана!");
         }
+
+        taskEntity=null;
+
+
+
     }
 
     public void openDoneTaskButton(ActionEvent actionEvent) throws RemoteException {
@@ -792,7 +864,6 @@ Calendar tab
             protected Task<Void> createTask() {
                 return new Task<Void>() {
                     @Override public Void call() throws RemoteException {
-
 
                         tableTask.setDisable(true);
                         progressBar.setVisible(true);

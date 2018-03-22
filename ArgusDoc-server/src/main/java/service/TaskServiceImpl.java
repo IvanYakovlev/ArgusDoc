@@ -61,7 +61,11 @@ DBconnection dBconnection;
             preparedStatement.setString(7, taskEntity.getStatusTaskId());
             preparedStatement.setTime(8, taskEntity.getTaskTime());
             preparedStatement.setInt(9, taskEntity.getTaskIsLetter());
-        preparedStatement.setInt(10,taskEntity.getLetterId());
+             if (taskEntity.getLetterId()==0) {
+                preparedStatement.setNull(10, java.sql.Types.INTEGER);
+            }else {
+               preparedStatement.setInt(10, taskEntity.getLetterId());
+            }
             preparedStatement.setInt(11, taskEntity.getTaskId());
             preparedStatement.execute();
 
@@ -181,7 +185,7 @@ DBconnection dBconnection;
                 taskEntity.setTaskTime(resultSet.getTime("Task_time"));
                 taskEntity.setTaskFromEmployee(resultSet.getString("Task_from_employee"));
                 taskEntity.setTaskIsLetter(resultSet.getInt("Task_is_letter"));
-
+                taskEntity.setLetterId(resultSet.getInt("Letter_id"));
                 listData.add(taskEntity);
             }
         } catch (SQLException e) {

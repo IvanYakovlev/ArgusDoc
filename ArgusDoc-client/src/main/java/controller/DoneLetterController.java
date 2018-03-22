@@ -278,7 +278,7 @@ public class DoneLetterController {
         try {
             letterService.openLetter(letter.getLetterId());
         } catch (IllegalArgumentException e) {
-            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Письмо было удалено с сервера!");
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Письмо не найдено!");
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (IOException e) {

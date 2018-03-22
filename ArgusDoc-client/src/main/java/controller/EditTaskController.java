@@ -111,6 +111,8 @@ public class EditTaskController {
             taskEntity.setTaskTime(java.sql.Time.valueOf(timePickerTask.getValue()));
             taskEntity.setStatusTaskId(StatusTask.NOT_DONE);
             taskEntity.setTaskIsLetter(0);
+            taskEntity.setLetterId(this.taskEntity.getLetterId());
+
             taskEntity.setOldFile(this.taskEntity.getTaskAttachment());
             System.out.println(this.taskEntity.getTaskAttachment());
             try {

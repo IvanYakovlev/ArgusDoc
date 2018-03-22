@@ -191,14 +191,18 @@ public class AddLetterController {
                 letter.setLetterBookkeepingDate(Date.valueOf(bookkeepingDatePicker.getValue()));
             }
 
+
             try {
-                letterService.addLetter(letter);
                 //Копируем файл на сервер
                 File destFile = new File(letter.getLetterFilePath());
                 Files.copy(letter.getAttachmentFile().toPath(), destFile.toPath());
+                //Добавляем запись в БД
+                letterService.addLetter(letter);
 
             } catch (SQLException e) {
                 e.printStackTrace();
+            }catch (java.nio.file.NoSuchFileException ex) {
+                ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не удалось загрузить файл, Хранилище недоступно!");
             }catch (IOException e) {
                 //e.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -212,10 +216,14 @@ public class AddLetterController {
                 if (option.get() == null) {
 
                 } else if (option.get() == ButtonType.OK) {
-                    Path path = Paths.get(letter.getLetterFilePath());
-                    Files.delete(path);
-                    File destFile = new File(letter.getLetterFilePath());
-                    Files.copy(letter.getAttachmentFile().toPath(), destFile.toPath());
+
+                        Path path = Paths.get(letter.getLetterFilePath());
+                        Files.delete(path);
+
+                        File destFile = new File(letter.getLetterFilePath());
+                        Files.copy(letter.getAttachmentFile().toPath(), destFile.toPath());
+
+
 
 
 
