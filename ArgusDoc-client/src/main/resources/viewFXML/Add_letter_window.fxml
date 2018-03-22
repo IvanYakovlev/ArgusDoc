@@ -6,6 +6,7 @@
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -19,7 +20,7 @@
    <children>
       <Pane layoutX="11.0" layoutY="107.0" prefHeight="136.0" prefWidth="805.0" styleClass="AnchorPane">
          <children>
-            <JFXTextArea fx:id="textAreaLetter" focusColor="#4eb1ba" layoutY="1.0" prefHeight="110.0" prefWidth="804.0" promptText="Текст резолюции" styleClass="JFXTextArea" />
+            <JFXTextArea fx:id="textAreaLetter" focusColor="#4eb1ba" layoutY="1.0" prefHeight="126.0" prefWidth="804.0" promptText="Текст резолюции" styleClass="JFXTextArea" />
          </children>
       </Pane>
       <JFXTextField fx:id="txtLetterNumber" focusColor="#4eb1ba" layoutX="344.0" layoutY="61.0" prefHeight="25.0" prefWidth="187.0" promptText="Номер письма" styleClass="JFXTextField" />
@@ -61,7 +62,10 @@
                   <Separator layoutY="70.0" prefHeight="4.0" prefWidth="200.0" />
                   <Label layoutX="10.0" layoutY="190.0" styleClass="label2" text="Юрист:" />
                   <JFXTextField fx:id="juristNumberText" layoutX="15.0" layoutY="90.0" prefHeight="25.0" prefWidth="171.0" promptText="Введите номер договора" />
-                  <CheckComboBox fx:id="juristCheckComboBox" layoutX="10.0" layoutY="40.0" prefHeight="25.0" prefWidth="180.0" />
+                  <CheckComboBox fx:id="juristCheckComboBox" layoutX="10.0" layoutY="40.0" prefHeight="25.0" prefWidth="180.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets></CheckComboBox>
                   <JFXComboBox fx:id="juristComboBox" layoutX="10.0" layoutY="210.0" prefHeight="25.0" prefWidth="180.0" />
                   <JFXDatePicker fx:id="juristDatePicker" layoutX="10.0" layoutY="270.0" prefHeight="25.0" prefWidth="180.0" styleClass="JFXDatePicker" />
                   <Label layoutX="10.0" layoutY="250.0" styleClass="label2" text="Дата обработки:" />

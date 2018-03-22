@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
@@ -11,6 +10,7 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import org.controlsfx.control.CheckComboBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="600.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddTaskController">
    <children>
@@ -35,7 +35,6 @@
          </children>
       </Pane>
       <JFXTextField fx:id="txtTaskName" focusColor="#4eb1ba" layoutX="10.0" layoutY="59.0" prefHeight="25.0" prefWidth="270.0" promptText="Введите название" styleClass="JFXTextField" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="55.0" />
-      <JFXComboBox fx:id="comboBoxEmployee" layoutX="14.0" layoutY="99.0" prefHeight="25.0" prefWidth="270.0" promptText="Выберите исполнителя" styleClass="JFXTextField" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="311.0" AnchorPane.topAnchor="95.0" />
       <JFXDatePicker fx:id="datePickerTask" defaultColor="#4eb1ba" layoutX="326.0" layoutY="59.0" prefHeight="25.0" prefWidth="270.0" promptText="Выберите дату" styleClass="JFXDatePicker" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0" />
       <JFXTimePicker fx:id="timePickerTask" defaultColor="#4eb1ba" layoutX="327.0" layoutY="99.0" prefHeight="25.0" prefWidth="270.0" promptText="Выберите время" styleClass="JFXTimePicker" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="95.0" />
       <AnchorPane prefHeight="40.0" prefWidth="200.0" styleClass="AnchorPane2" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -46,6 +45,7 @@
             <DropShadow />
          </effect>
       </AnchorPane>
+      <CheckComboBox fx:id="checkComboBoxEmployee" layoutX="14.0" layoutY="93.0" prefHeight="30.0" prefWidth="270.0" styleClass="combo-box" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="92.0" />
    </children>
    <effect>
       <DropShadow />
