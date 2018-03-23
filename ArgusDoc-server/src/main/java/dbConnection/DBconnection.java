@@ -38,4 +38,13 @@ public class DBconnection{
         }
         return this.connection;
     }
+    public void close(){
+        try {
+            connection.close();
+            connection=null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Соединение с БД закрыто!");
+    }
 }

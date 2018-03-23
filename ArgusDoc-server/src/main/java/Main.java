@@ -1,6 +1,13 @@
 import dbConnection.DBconnection;
 import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import service.*;
 
 import java.rmi.Remote;
@@ -11,43 +18,38 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class Main extends Application{
     DBconnection dBconnection = new DBconnection();
-
+    private double xOffset = 0;
+    private double yOffset = 0;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        dBconnection.connect();
 
-        Registry registry = LocateRegistry.createRegistry(8966);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/viewFXML/Server_window.fxml"));
 
-        AccessServiceImpl accessServiceImpl = new AccessServiceImpl();
-        AccessService accessService = (AccessService) UnicastRemoteObject.exportObject(accessServiceImpl,0);
-        registry.rebind("accessService", accessService);
+        Parent root = loader.load();
 
-        DepartmentServiceImpl departmentServiceImpl = new DepartmentServiceImpl();
-        DepartmentService departmentService = (DepartmentService) UnicastRemoteObject.exportObject(departmentServiceImpl, 0);
-        registry.rebind("departmentService", departmentService);
+        primaryStage.setMinHeight(400);
+        primaryStage.setMinWidth(600);
+        primaryStage.setResizable(false);
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
 
-        DocumentServiceImpl documentServiceImpl = new DocumentServiceImpl();
-        DocumentService documentService = (DocumentService) UnicastRemoteObject.exportObject(documentServiceImpl, 0);
-        registry.rebind("documentService",documentService);
-
-        EmployeeServiceImpl employeeServiceImpl = new EmployeeServiceImpl();
-        EmployeeService employeeService = (EmployeeService) UnicastRemoteObject.exportObject(employeeServiceImpl, 0);
-        registry.rebind("employeeService",employeeService);
-
-        EventServiceImpl eventServiceImpl = new EventServiceImpl();
-        EventService eventService = (EventService) UnicastRemoteObject.exportObject(eventServiceImpl,0);
-        registry.rebind("eventService", eventService);
-
-        LetterServiceImpl letterServiceImpl = new LetterServiceImpl();
-        LetterService letterService = (LetterService) UnicastRemoteObject.exportObject(letterServiceImpl,0);
-        registry.rebind("letterService", letterService);
-
-        TaskServiceImpl taskServiceImpl = new TaskServiceImpl();
-        TaskService taskService = (TaskService) UnicastRemoteObject.exportObject(taskServiceImpl, 0);
-        registry.rebind("taskService", taskService);
-
-        System.out.println("Сервер запущен..");
+        root.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            }
+        });
+        root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                primaryStage.setX(event.getScreenX() - xOffset);
+                primaryStage.setY(event.getScreenY() - yOffset);
+            }
+        });
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
     public static void main(String[] args) throws RemoteException {
         launch(args);
