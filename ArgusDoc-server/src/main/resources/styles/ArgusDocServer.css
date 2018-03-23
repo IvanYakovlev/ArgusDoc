@@ -1,0 +1,346 @@
+.AnchorPane{
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #221E1D;
+    -fx-effect: dropshadow( gaussian,rgba(0,0,0,0.16),5,0,0,2);
+
+
+
+}
+.AnchorPane2{
+    -fx-background-color: #3F51B5;
+}
+.AnchorPane3{
+    -fx-background-color: #303F9F;
+}
+
+.AnchorPaneWindow{
+    -fx-background-color: #FFFFFF;
+}
+
+.Pane{
+    -fx-background-color: #FFFFFF;
+    -fx-table-cell-border-color: transparent;
+    -fx-effect: dropshadow( gaussian,rgba(0,0,0,0.16),5,0,0,2);
+    -fx-background-radius: 3px;
+
+    -fx-background-insets: 0;
+}
+.ButtonBar{
+    -fx-background-color: #FFFFFF;
+}
+.lgBtn{
+    -fx-background-color: #536DFE;
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: right;
+    -fx-font-size:16px;
+    -fx-font-weight:bold;
+}
+/*Buttons*/
+.fab{
+    -fx-font-size: 18px bold;
+    -fx-button-type: RAISED;
+    -fx-pref-width:50;
+    -fx-pref-height:50;
+    -fx-text-fill:white;
+    -fx-background-color:rgb(77,102,204);
+    -fx-background-radius: 5em;
+}
+.drawer-buttons{
+    -fx-background-color: rgb(240, 240, 240);
+    -fx-text-alignment: left;
+    -fx-text-fill: #222d32;
+    -fx-font-size:14px;
+    -fx-padding: 0 0 0 30;
+    -fx-alignment:left ;
+}
+.drawer-buttons:hover{
+    -fx-background-color:#cccccc;
+
+}
+
+
+
+.blue-btn{
+    -fx-background-color: #536DFE;
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: right;
+    -fx-button-type:raised;
+    -fx-font-size:16px;
+    -fx-font-weight:bold ;
+}
+
+.cancel-button{
+    -fx-animated: true;
+    -fx-background-color: #DDDDDD;
+    -fx-font-size:16px;
+    -fx-font-weight:bold ;
+    -fx-pref-width: 100px;
+
+}
+
+.blue-label{
+    -fx-text-fill: #303F9F;
+
+}
+.log-label{
+    -fx-text-fill: white;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4px;
+    -fx-background-color: transparent;
+    -fx-font-weight:bold;
+    -fx-font-size:20px;
+    -fx-padding: 0 0 0 2;
+}
+
+
+.jfx-tab-pane .headers-region {
+    -fx-background-color: #3F51B5;
+}
+.jfx-tab-pane .tab-header-background {
+    -fx-background-color: #3F51B5;
+}
+.jfx-tab-pane .tab-selected-line {
+    -fx-stroke: #FFFFFF;
+    -fx-stroke-width: 3pt;
+}
+/** TableView**/
+
+.table-view{
+    -fx-table-cell-border-color: transparent;
+    -fx-effect: dropshadow( gaussian,rgba(0,0,0,0.16),5,0,0,2);
+    -fx-background-radius: 3px;
+    -fx-background-color: white;
+    -fx-background-insets: 0;
+    -fx-selection-bar-color: #3F51B5;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: white;
+}
+.table-view .column-header:last-visible{
+    -fx-border-width: 0 0 1 0;
+}
+.table-view .column-header-background{
+    -fx-background-color: transparent;
+}
+.table-view .column-header{
+    -fx-border-width: 0 1 1 0;
+    -fx-border-color: rgba(1,1,1,0.15);
+}
+.table-view .column-header .label{
+    -fx-font-size:14px;
+    -fx-text-fill: #221E1D;
+    -fx-padding:16 0 16 0;
+    -fx-alignment:CENTER-LEFT;
+    -fx-font-weight:400;
+}
+.table-view .table-row-cell .table-cell{
+    -fx-border-width: 0 0 0 0;
+
+}
+
+.table-view .table-row-cell:selected .table-cell{
+    -fx-text-fill: white;
+    -fx-border-width: 0 0 0 0;
+    -fx-background-color: #536DFE;
+}
+.table-view .table-row-cell:selected{
+    -fx-background-color: rgba(0,0,0,0.04);
+    -fx-background-insets:0;
+}
+
+
+.table-view .table-row-cell{
+    -fx-background-color:transparent;
+    -fx-background-insets:0;
+}
+
+.table-view .table-column{
+    -fx-alignment:CENTER-LEFT;
+    -fx-padding:0 16 0 16;
+}
+
+.table-view .table-cell{
+    -fx-font-size: 13px;
+}
+.table-view .table-cell .ripple-circle{
+    -fx-fill:#2196F3;
+}
+.table-view .table-cell > .text-field{
+    -fx-background-color:transparent;
+    -fx-padding:0 8 8 8;
+    -fx-background-insets: 0;
+    -fx-border-width:0 0 2 0;
+    -fx-border-color: transparent;
+}
+
+.table-view .corner{
+    -fx-background-color:transparent;
+}
+.JFXButton{
+    -fx-background-color: transparent;
+    -fx-text-fill: #FFFFFF;
+
+}
+.blue-btn{
+    -fx-background-color: #536DFE;
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: right;
+    -fx-button-type:raised;
+    -fx-font-size:16px;
+    -fx-font-weight:bold ;
+}
+.JFXButtonTab{
+    -fx-background-color: #536DFE;
+    -fx-text-fill: #FFFFFF;
+}
+
+.JFXDatePicker{
+
+    -fx-text-fill: #FFFFFF;
+    -jfx-default-color: #536DFE;
+}
+
+.JFXTimePicker{
+
+    -jfx-default-color: #536DFE;
+    -fx-text-fill: #FFFFFF;
+}
+
+.JFXTextField {
+    -fx-text-fill: #221E1D;
+    -jfx-focus-color: #536DFE;
+    -jfx-unfocus-color: #383127;
+}
+.JFXComboBox{
+    -fx-text-fill: #221E1D;
+    -jfx-focus-color: #536DFE;
+    -jfx-unfocus-color: #383127;
+}
+
+.JFXTextArea{
+    -fx-text-fill: #221E1D;
+    -jfx-focus-color: #536DFE;
+    -jfx-unfocus-color: #383127;
+
+}
+.label{
+     -fx-text-fill: #FFFFFF;
+ }
+.label2{
+    -fx-text-fill: #212121;
+}
+.label3{
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4px;
+    -fx-background-color:  #03A9F4;
+    -fx-font-weight:bold;
+    -fx-font-size:16px;
+    -fx-padding: 0 0 0 2;
+    -fx-wrap-text: false;
+    -fx-max-height: infinity;
+}
+.label4{
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4px;
+    -fx-font-weight:bold;
+    -fx-font-size:16px;
+    -fx-padding: 0 0 0 2;
+    -fx-wrap-text: false;
+    -fx-max-height: infinity;
+    -fx-alignment: top-left;
+}
+.password-field{
+    -fx-text-fill: #221E1D;
+
+    -jfx-focus-color: #536DFE;
+    -jfx-unfocus-color: #383127;
+}
+/* Calendar Picker */
+.CalendarPicker {
+}
+
+.CalendarPickerControlSkin {
+}
+
+
+
+.CalendarPickerControlSkin .weeknumber {
+}
+
+.CalendarPickerControlSkin .non-weekend {
+}
+
+.CalendarPickerControlSkin .weekend {
+    -fx-text-fill: #303F9F;
+}
+
+.CalendarPickerControlSkin .day-button {
+    -fx-color: #536DFE;
+    -fx-border-width: 0 0 0 0;
+  /*  -fx-background-color:transparent;*/
+    /*-fx-background-color: #536DFE;*/
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: right;
+    -fx-button-type:raised;
+    -fx-font-size:16px;
+    -fx-font-weight:bold ;
+}
+
+/* highlight today */
+.CalendarPickerControlSkin .today {
+    -fx-color: #303F9F;
+}
+
+.CalendarPickerControlSkin .today-button {
+    -fx-cursor: hand;
+    -fx-background-color: #303F9F;
+    -fx-padding: 0 0 0 0;
+}
+
+/* highlight today */
+.CalendarPickerControlSkin .highlight {
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+}
+
+.CalendarPicker .ListSpinner {
+    -fxx-arrow-position:SPLIT;
+    -fxx-value-alignment:CENTER;
+    -fx-padding:4 4 4 4;
+    -fx-background-insets: 0;
+    -fx-effect: inherit;
+    -fx-text-alignment: center;
+    -fx-border-color: transparent;
+    -fx-body-color: #536DFE;
+
+
+}
+.ListView .list-cell:selected{
+    -fx-text-fill: black;
+
+    -fx-background-color: white;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * ComboBox                                                                    *
+ *                                                                             *
+ ******************************************************************************/
+
+.combo-box {
+    -fx-background-color: transparent;
+    -fx-border-color: black;
+    -fx-border-width: 0 0 0 0;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-focus-color: #536DFE;
+
+}
+
+
+

@@ -323,6 +323,7 @@ public class MainController {
 
 
         calendarPicker.calendarProperty().addListener( (observable) -> {
+            tableEvent.getColumns().setAll( timeEvent, nameEvent);
             if (calendarPicker.getCalendar()!=null) {
                 calendar = calendarPicker.getCalendar();
                 datesql = new java.sql.Date(calendar.getTimeInMillis());
@@ -339,9 +340,10 @@ public class MainController {
                 } else {
                     labelSelectedDate.setText(dateForView.format(datesql));
                 }
+
                 timeEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.30));
                 nameEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.70));
-                dateEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0));
+               // dateEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0));
                 try {
                     refreshData();
                 } catch (RemoteException e) {
@@ -355,7 +357,7 @@ public class MainController {
                 labelSelectedDate.setText("сегодня");
                 timeEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.30));
                 nameEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.70));
-                dateEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0));
+               // dateEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0));
                 tableEvent.setItems(observableListSelectDayEvent);
                 try {
                     refreshData();
@@ -528,8 +530,8 @@ Calendar tab
 
         tableEvent.setItems(observableListAllEvent);
         tableEvent.getColumns().setAll(dateEvent, timeEvent, nameEvent);
-        nameEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.50));
-        dateEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.25));
+        nameEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.45));
+        dateEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.30));
         timeEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.25));
     }
 
