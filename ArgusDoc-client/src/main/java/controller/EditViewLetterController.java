@@ -15,6 +15,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.controlsfx.control.CheckComboBox;
@@ -90,7 +91,8 @@ public class EditViewLetterController {
     private JFXDatePicker bookkeepingDatePicker;
 
 //view pane
-
+    @FXML
+    private JFXButton downloadFileButton = new JFXButton();
     @FXML
     private Label labelJuristNamber;
 
@@ -144,6 +146,7 @@ public class EditViewLetterController {
     private TaskService taskService = ServiceRegistry.taskService;
     private EventService eventService = ServiceRegistry.eventService;
     final FileChooser fileChooser=new FileChooser();
+    private DirectoryChooser directoryChooser = new DirectoryChooser();
     File attachmentFile;
 
 
@@ -474,6 +477,24 @@ public class EditViewLetterController {
         }
 
         labelbookeepingDate.setText(String.valueOf(letter.getLetterBookkeepingDate()));
+    }
+
+    public void downloadFileButton(ActionEvent actionEvent) {
+        File file = new File(letter.getLetterFilePath());
+        String choosingDirectory = String.valueOf(directoryChooser.showDialog(downloadFileButton.getScene().getWindow()));
+        System.out.println(choosingDirectory);
+        if (choosingDirectory.equals("null")){
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Файл не сохранен!");
+        } else {
+            //System.out.println(directoryChooser.showDialog(downloadFile.getScene().getWindow())+"\\"+file.getName());
+            File destFile = new File(choosingDirectory + "\\" + file.getName());
+            try {
+                Files.copy(file.toPath(), destFile.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ADInfo.getAdInfo().dialog(Alert.AlertType.INFORMATION, "Файл сохранен!");
+        }
     }
 }
 

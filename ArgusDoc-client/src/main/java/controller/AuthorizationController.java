@@ -3,6 +3,7 @@ package controller;
 import com.jfoenix.controls.JFXPasswordField;
 
 import dialog.ADInfo;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -62,7 +63,8 @@ public class AuthorizationController {
             authorizedUser = employeeService.getEmployeeByPassword(txtPasswordEnter.getText());
 
             if (authorizedUser.getEmployeeName() == null) {
-                dialog.ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Пользователь не найден");
+                ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Данный пользователь не найден!");
+                Platform.exit();
             } else {
 
 
@@ -77,13 +79,13 @@ public class AuthorizationController {
                     Stage stage = new Stage();
                     Parent root = fxmlLoader.getRoot();
                     stage.setScene(new Scene(root));
-                    MainController mainController = fxmlLoader.getController();
-                    mainController.initialize(authorizedUser);
+
                     stage.setTitle("Аргус");
                     stage.setMinHeight(715);
                     stage.setMinWidth(1000);
                     stage.getIcons().add(new Image("images/1.jpg"));
-
+                    MainController mainController = fxmlLoader.getController();
+                    mainController.initialize(authorizedUser,stage);
 
                     stage.show();
 
@@ -96,12 +98,13 @@ public class AuthorizationController {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            //ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Данный пользователь не найден!");
+
         }catch (NoSuchObjectException e){
             e.printStackTrace();
         }catch (NullPointerException e){
-            e.printStackTrace();
-            //ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Сервер незапущен!");
+          //  e.printStackTrace();
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Сервер незапущен!");
+            Platform.exit();
         }
 
 

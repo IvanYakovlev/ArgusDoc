@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.controlsfx.control.CheckComboBox;
@@ -19,6 +20,7 @@ import service.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.rmi.RemoteException;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -27,7 +29,7 @@ import java.util.ArrayList;
 public class DoneLetterController {
 
     @FXML
-    private JFXButton editLetterButton = new JFXButton();
+    private JFXButton downloadLetterFile = new JFXButton();
 
     @FXML
     private JFXButton cancelDoneLetterButton;
@@ -90,7 +92,9 @@ public class DoneLetterController {
     private LetterService letterService = ServiceRegistry.letterService;
     private TaskService taskService = ServiceRegistry.taskService;
     private EventService eventService = ServiceRegistry.eventService;
+
     final FileChooser fileChooser=new FileChooser();
+    private DirectoryChooser directoryChooser = new DirectoryChooser();
     File attachmentFile;
 
 
@@ -283,6 +287,24 @@ public class DoneLetterController {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void downloadLetterFile(ActionEvent actionEvent) {
+        File file = new File(letter.getLetterFilePath());
+        String choosingDirectory = String.valueOf(directoryChooser.showDialog(downloadLetterFile.getScene().getWindow()));
+        System.out.println(choosingDirectory);
+        if (choosingDirectory.equals("null")){
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Файл не сохранен!");
+        } else {
+            //System.out.println(directoryChooser.showDialog(downloadFile.getScene().getWindow())+"\\"+file.getName());
+            File destFile = new File(choosingDirectory + "\\" + file.getName());
+            try {
+                Files.copy(file.toPath(), destFile.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ADInfo.getAdInfo().dialog(Alert.AlertType.INFORMATION, "Файл сохранен!");
         }
     }
 }

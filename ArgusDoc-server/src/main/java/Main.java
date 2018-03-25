@@ -1,5 +1,7 @@
+import controller.ServerController;
 import dbConnection.DBconnection;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,6 +29,9 @@ public class Main extends Application{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/viewFXML/Server_window.fxml"));
 
         Parent root = loader.load();
+// не завершать приложение когда последнее окно закрыто
+        Platform.setImplicitExit(false);
+
 
         primaryStage.setMinHeight(400);
         primaryStage.setMinWidth(600);
@@ -48,8 +53,13 @@ public class Main extends Application{
             }
         });
         Scene scene = new Scene(root);
+
         primaryStage.setScene(scene);
-        primaryStage.show();
+        System.out.println(primaryStage);
+        ServerController serverController = loader.getController();
+        serverController.initStage(primaryStage);
+        //primaryStage.show();
+
     }
     public static void main(String[] args) throws RemoteException {
         launch(args);

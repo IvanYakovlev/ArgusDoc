@@ -4,6 +4,7 @@ package main;
 import controller.AuthorizationController;
 import controller.MainController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,6 +26,8 @@ public class Main extends Application {
 
         @Override
     public void start(Stage primaryStage) throws Exception {
+// не завершать приложение когда последнее окно закрыто
+            Platform.setImplicitExit(false);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../viewFXML/Authorization_window.fxml"));
 

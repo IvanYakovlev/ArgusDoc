@@ -2,15 +2,23 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import dbConnection.DBconnection;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import service.*;
 
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
+import javax.print.DocFlavor;
+import java.awt.*;
 import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -21,7 +29,12 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class ServerController {
@@ -55,7 +68,99 @@ public class ServerController {
     private JFXButton stopServerButton;
     @FXML
     private JFXButton startServerButton;
+
+
+
+    // application stage is stored so that it can be shown and hidden based on system tray icon operations.
+    public Stage stage;
+
+
+
+
+
     public void initialize() throws RemoteException {
+
+        try {
+            //Инициализируем toolkit
+            java.awt.Toolkit.getDefaultToolkit();
+
+            //Проверка на поддержку в трее
+            if (!java.awt.SystemTray.isSupported()) {
+                System.out.println("No system tray support, application exiting.");
+                Platform.exit();
+            }
+
+            //создаем трей иконку
+            java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
+            java.awt.TrayIcon trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().createImage("ArgusDoc-server/src/main/resources/images/trayIcon.jpg"));
+
+            //двойное нажатие мыши - показываем stage
+            trayIcon.addActionListener(event -> Platform.runLater(this::showStage));
+
+            //выбор меню по умолчанию - показываем stage
+            java.awt.MenuItem openItem = new java.awt.MenuItem("Восстановить");
+            openItem.addActionListener(event -> Platform.runLater(this::showStage));
+
+            // Устанавливаем шрифт для пункта меню по умолчанию
+            java.awt.Font defaultFont = java.awt.Font.decode(null);
+            java.awt.Font boldFont = defaultFont.deriveFont(java.awt.Font.BOLD);
+            openItem.setFont(boldFont);
+
+            //меню выход из приложения, удаляем из трея и закрываем программу
+            java.awt.MenuItem exitItem = new java.awt.MenuItem("Выход");
+            exitItem.addActionListener(event -> {
+
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (serverCondition.equals("running")) {
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setHeaderText("При выходе из программы сервер будет остановлен. Вы действительно хотите выйти?");
+
+                            // option != null.
+                            Optional<ButtonType> option = alert.showAndWait();
+
+                            if (option.get() == null) {
+
+                            } else if (option.get() == ButtonType.OK) {
+                                if (!serverCondition.equals("stopped")) {
+                                    stopServer();
+                                }
+
+                                Platform.exit();
+                                tray.remove(trayIcon);
+
+
+                            } else if (option.get() == ButtonType.CANCEL) {
+
+                            } else {
+
+                            }
+                        } else {
+                            Platform.exit();
+                            tray.remove(trayIcon);
+                        }
+                    }
+                });
+
+            });
+
+            // устанавливаем  popup меню для приложения
+            final java.awt.PopupMenu popup = new java.awt.PopupMenu();
+            popup.add(openItem);
+            popup.addSeparator();
+            popup.add(exitItem);
+            trayIcon.setPopupMenu(popup);
+
+
+            // добавляем иконку в трей
+            tray.add(trayIcon);
+        } catch (AWTException e) {
+            System.out.println("Unable to init system tray");
+            e.printStackTrace();
+        }
+
+
         stopServerButton.setDisable(true);
         startServer();
 
@@ -87,33 +192,7 @@ public class ServerController {
         }
     }
 
-    public void closeServer(MouseEvent mouseEvent) {
-        if (serverCondition.equals("running")) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setHeaderText("При выходе из программы сервер будет остановлен. Вы действительно хотите выйти?");
 
-            // option != null.
-            Optional<ButtonType> option = alert.showAndWait();
-
-            if (option.get() == null) {
-
-            } else if (option.get() == ButtonType.OK) {
-                if (!serverCondition.equals("stopped")) {
-                    stopServer();
-                }
-
-                ((Node) mouseEvent.getSource()).getScene().getWindow().hide();
-
-
-            } else if (option.get() == ButtonType.CANCEL) {
-
-            } else {
-
-            }
-        } else {
-            ((Node) mouseEvent.getSource()).getScene().getWindow().hide();
-        }
-    }
     private void startServer() throws RemoteException {
         dBconnection.connect();
 
@@ -201,5 +280,21 @@ public class ServerController {
         }
         System.out.println("Сервер остановлен.");
         serverCondition="stopped";
+    }
+
+
+    private void showStage() {
+        if (stage != null) {
+            stage.show();
+            stage.toFront();
+        }
+        System.out.println("work");
+    }
+    public void initStage(Stage stage){
+        this.stage = stage;
+    }
+
+    public void minimizeServer(MouseEvent mouseEvent) {
+        stage.hide();
     }
 }

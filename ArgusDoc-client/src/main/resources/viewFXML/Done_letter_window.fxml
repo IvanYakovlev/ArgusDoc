@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -28,17 +29,28 @@
                <children>
                   <ButtonBar layoutY="325.0" prefHeight="40.0" prefWidth="800.0" style="-fx-background-color: white;">
                      <buttons>
-                        <JFXButton fx:id="openLetterFile" layoutX="579.0" layoutY="12.0" maxWidth="162.0" onAction="#openLetterFile" prefHeight="37.0" styleClass="blue-btn" text="Открыть файл">
+                        <JFXButton fx:id="downloadLetterFile" layoutX="407.0" layoutY="12.0" maxWidth="162.0" onAction="#downloadLetterFile" prefHeight="37.0" styleClass="blue-btn" text="Скачать">
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="DOWNLOAD" size="20" />
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="openLetterFile" layoutX="579.0" layoutY="12.0" maxWidth="162.0" onAction="#openLetterFile" prefHeight="37.0" styleClass="blue-btn" text="Открыть">
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="FILE" size="20" />
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="cancelDoneLetterButton" maxWidth="100.0" onAction="#cancelDoneLetterButton" styleClass="blue-btn" text="Отмена">
                            <effect>
                               <DropShadow />
                            </effect>
                         </JFXButton>
                         <JFXButton fx:id="doneLetterButton" maxWidth="121.0" minWidth="71.0" onAction="#doneLetterButton" prefHeight="37.0" prefWidth="179.0" styleClass="blue-btn" text="Применить">
-                           <effect>
-                              <DropShadow />
-                           </effect>
-                        </JFXButton>
-                        <JFXButton fx:id="cancelDoneLetterButton" maxWidth="100.0" onAction="#cancelDoneLetterButton" styleClass="blue-btn" text="Отмена">
                            <effect>
                               <DropShadow />
                            </effect>

@@ -4,6 +4,7 @@ import argusDocSettings.ServerFilePath;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import entity.TaskEntity;
+import javafx.stage.DirectoryChooser;
 import service.*;
 
 import dialog.ADInfo;
@@ -44,6 +45,7 @@ public class DoneTaskController {
     private TaskService taskService = ServiceRegistry.taskService;
     private EventService eventService = ServiceRegistry.eventService;
     final FileChooser fileChooser=new FileChooser();
+    DirectoryChooser directoryChooser = new DirectoryChooser();
     File attachmentFile;
     @FXML
     private JFXButton downloadFile = new JFXButton();
@@ -67,7 +69,14 @@ public class DoneTaskController {
     private JFXButton doneTaskButton = new JFXButton();
 
 
-    public void initialize(){
+    public void initialize(TaskEntity taskEntity){
+        this.taskEntity = taskEntity;
+        labelNameTask.setText(taskEntity.getTaskName());
+        textAreaTask.setText(taskEntity.getTaskText());
+        if (taskEntity.getTaskAttachment()!=null){
+            downloadFile.setVisible(true);
+            openFile.setVisible(true);
+        }
         viewButtonBar.toFront();
     }
     public void cancelDoneTaskButton(ActionEvent actionEvent) {
@@ -81,7 +90,7 @@ public class DoneTaskController {
         } else {
 
 
-            TaskEntity taskEntity = new TaskEntity();
+            TaskEntity taskEntity = this.taskEntity;
             taskEntity.setTaskId(this.taskEntity.getTaskId());
             taskEntity.setTaskText(textAreaTask.getText());
             taskEntity.setStatusTaskId(StatusTask.DONE);
@@ -139,14 +148,7 @@ public class DoneTaskController {
             attachmentFile=file;
         }
     }
-    public void initTab(TaskEntity taskEntity){
-        labelNameTask.setText(taskEntity.getTaskName());
-        textAreaTask.setText(taskEntity.getTaskText());
-        if (taskEntity.getTaskAttachment()!=null){
-            downloadFile.setVisible(true);
-            openFile.setVisible(true);
-        }
-    }
+
 
     public void stopDoneTaskButton(ActionEvent actionEvent) {
         textAreaTask.setEditable(false);
@@ -154,7 +156,22 @@ public class DoneTaskController {
     }
 
     public void downloadFile(ActionEvent actionEvent) {
-        System.out.println(taskEntity.getTaskAttachment());
+
+        File file = new File(taskEntity.getTaskAttachment());
+        String choosingDirectory = String.valueOf(directoryChooser.showDialog(downloadFile.getScene().getWindow()));
+        System.out.println(choosingDirectory);
+        if (choosingDirectory.equals("null")){
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Файл не сохранен!");
+        } else {
+            //System.out.println(directoryChooser.showDialog(downloadFile.getScene().getWindow())+"\\"+file.getName());
+            File destFile = new File(choosingDirectory + "\\" + file.getName());
+            try {
+                Files.copy(file.toPath(), destFile.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ADInfo.getAdInfo().dialog(Alert.AlertType.INFORMATION, "Файл сохранен!");
+        }
 
     }
 

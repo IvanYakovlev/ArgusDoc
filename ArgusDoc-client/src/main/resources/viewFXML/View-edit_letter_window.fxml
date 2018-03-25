@@ -26,101 +26,6 @@
             <DropShadow />
          </effect>
       </AnchorPane>
-      <Pane fx:id="viewPane" layoutY="50.0" prefHeight="700.0" prefWidth="800.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
-         <children>
-            <Pane prefHeight="320.0" prefWidth="800.0" styleClass="AnchorPane">
-               <children>
-                  <JFXTextArea fx:id="textAreaLetterView" editable="false" focusColor="#4eb1ba" layoutY="50.0" prefHeight="265.0" prefWidth="800.0" promptText="Текст резолюции" styleClass="JFXTextArea" />
-                  <Label layoutX="14.0" layoutY="14.0" styleClass="label2" text="Тип:" />
-                  <Label layoutX="531.0" layoutY="14.0" styleClass="label2" text="№:" />
-                  <Label layoutX="659.0" layoutY="14.0" styleClass="label2" text="Дата:" />
-                  <Label fx:id="labelLetterName" layoutX="45.0" layoutY="10.0" prefHeight="25.0" prefWidth="460.0" styleClass="label4" text="..." />
-                  <Label fx:id="labelLetterNumber" layoutX="555.0" layoutY="10.0" styleClass="label4" text="123-/65666" />
-                  <Label fx:id="labelLetterDate" layoutX="696.0" layoutY="10.0" styleClass="label4" text="22/22/2222" />
-               </children>
-            </Pane>
-            <Pane layoutY="330.0" prefHeight="370.0" prefWidth="800.0" style="-fx-background-color: white;">
-               <children>
-                  <ButtonBar layoutY="325.0" prefHeight="40.0" prefWidth="800.0" style="-fx-background-color: white;">
-                     <buttons>
-                        <JFXButton fx:id="openEditView" onAction="#openEditView" styleClass="blue-btn" text="Редактировать">
-                           <effect>
-                              <DropShadow />
-                           </effect>
-                           <graphic>
-                              <FontAwesomeIconView fill="WHITE" glyphName="EDIT" size="20" />
-                           </graphic>
-                        </JFXButton>
-                        <JFXButton fx:id="openLetterFile" layoutX="496.0" layoutY="12.0" onAction="#openLetterFile" styleClass="blue-btn" text="Открыть документ">
-                           <effect>
-                              <DropShadow />
-                           </effect>
-                           <graphic>
-                              <FontAwesomeIconView fill="WHITE" glyphName="FILE" size="20" />
-                           </graphic>
-                        </JFXButton>
-                        <JFXButton fx:id="cancelViewButton" maxWidth="76.0" onAction="#cancelViewButton" prefHeight="37.0" prefWidth="58.0" styleClass="blue-btn" text="Ок">
-                           <effect>
-                              <DropShadow />
-                           </effect>
-                        </JFXButton>
-                     </buttons>
-                  </ButtonBar>
-                  <HBox fx:id="viewHBox" prefHeight="310.0" prefWidth="800.0">
-                     <children>
-                        <Pane prefWidth="200.0" styleClass="AnchorPane">
-                           <children>
-                              <Label layoutX="40.0" layoutY="10.0" styleClass="label2" text="Юридический отдел" />
-                              <Separator layoutY="40.0" prefHeight="4.0" prefWidth="200.0" />
-                              <Label layoutX="10.0" layoutY="260.0" prefHeight="17.0" prefWidth="130.0" styleClass="label2" text="Дата обработки:" />
-                              <Label layoutX="10.0" layoutY="160.0" styleClass="label2" text="Юридический отдел:" />
-                              <Label layoutX="14.0" layoutY="66.0" styleClass="label2" text="№ Договора:" />
-                              <Label fx:id="labelJuristNamber" layoutX="108.0" layoutY="66.0" styleClass="label2" text="..." />
-                              <Label fx:id="labelJuristDate" layoutX="120.0" layoutY="260.0" prefHeight="17.0" prefWidth="66.0" styleClass="label2" text="..." />
-                              <JFXListView fx:id="listViewJurist" layoutX="10.0" layoutY="180.0" prefHeight="70.0" prefWidth="175.0" styleClass="ListView" />
-                           </children>
-                        </Pane>
-                        <Pane prefWidth="200.0" styleClass="AnchorPane">
-                           <children>
-                              <JFXTextArea fx:id="txtAreaOrip" editable="false" layoutX="10.0" layoutY="50.0" prefHeight="87.0" prefWidth="187.0" text="....&#10;" />
-                              <Label layoutX="84.0" layoutY="10.0" styleClass="label2" text="ОРиП" />
-                              <Separator layoutY="40.0" prefHeight="4.0" prefWidth="200.0" />
-                              <Label layoutX="10.0" layoutY="160.0" styleClass="label2" text="ОРиП:" />
-                              <Label layoutX="10.0" layoutY="260.0" prefHeight="17.0" prefWidth="130.0" styleClass="label2" text="Дата обработки:" />
-                              <Label fx:id="labelOripDate" layoutX="125.0" layoutY="260.0" prefHeight="17.0" prefWidth="66.0" styleClass="label2" text="..." />
-                              <JFXListView fx:id="listViewOrip" layoutX="10.0" layoutY="180.0" prefHeight="70.0" prefWidth="175.0" styleClass="ListView" />
-                           </children>
-                        </Pane>
-                        <Pane prefWidth="200.0" styleClass="AnchorPane">
-                           <children>
-                              <Label layoutX="43.0" layoutY="10.0" styleClass="label2" text="Технический отдел" />
-                              <Separator layoutY="40.0" prefHeight="4.0" prefWidth="200.0" />
-                              <Label layoutX="14.0" layoutY="81.0" styleClass="label2" text="Присвоен литер:" />
-                              <Label layoutX="10.0" layoutY="160.0" styleClass="label2" text="Технический отдел:" />
-                              <Label fx:id="labelTechnicalLiter" layoutX="132.0" layoutY="81.0" styleClass="label2" text="..." />
-                              <Label layoutX="14.0" layoutY="112.0" styleClass="label2" text="Пароль объекта:" />
-                              <Label fx:id="labelTechnicalPassword" layoutX="123.0" layoutY="112.0" styleClass="label2" text="..." />
-                              <Label layoutX="10.0" layoutY="260.0" prefHeight="17.0" prefWidth="130.0" styleClass="label2" text="Дата обработки:" />
-                              <Label fx:id="technicalDate" layoutX="125.0" layoutY="260.0" prefHeight="17.0" prefWidth="66.0" styleClass="label2" text="..." />
-                              <JFXListView fx:id="listViewTechnical" layoutX="10.0" layoutY="180.0" prefHeight="70.0" prefWidth="175.0" styleClass="ListView" />
-                           </children>
-                        </Pane>
-                        <Pane prefWidth="200.0" styleClass="AnchorPane">
-                           <children>
-                              <Label layoutX="67.0" layoutY="10.0" styleClass="label2" text="Бухгалтерия" />
-                              <Separator layoutY="40.0" prefHeight="4.0" prefWidth="200.0" />
-                              <Label layoutX="10.0" layoutY="160.0" styleClass="label2" text="Бухгалтерия:" />
-                              <Label layoutX="10.0" layoutY="260.0" prefHeight="17.0" prefWidth="130.0" styleClass="label2" text="Дата обработки:" />
-                              <Label fx:id="labelbookeepingDate" layoutX="125.0" layoutY="260.0" prefHeight="17.0" prefWidth="66.0" styleClass="label2" text="..." />
-                              <JFXListView fx:id="listViewBookkeeping" layoutX="10.0" layoutY="180.0" prefHeight="70.0" prefWidth="175.0" styleClass="ListView" />
-                           </children>
-                        </Pane>
-                     </children>
-                  </HBox>
-               </children>
-            </Pane>
-         </children>
-      </Pane>
       <Pane fx:id="editPane" layoutY="50.0" prefHeight="700.0" prefWidth="800.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
          <children>
             <Pane prefHeight="320.0" prefWidth="800.0" styleClass="AnchorPane">
@@ -204,6 +109,109 @@
                               <JFXComboBox fx:id="bookkeepingComboBox" layoutX="10.0" layoutY="210.0" prefHeight="25.0" prefWidth="180.0" />
                               <Label layoutX="10.0" layoutY="250.0" styleClass="label2" text="Дата обработки:" />
                               <JFXDatePicker fx:id="bookkeepingDatePicker" layoutX="10.0" layoutY="270.0" prefHeight="25.0" prefWidth="180.0" styleClass="JFXDatePicker" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <Pane fx:id="viewPane" layoutY="50.0" prefHeight="700.0" prefWidth="800.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <Pane prefHeight="320.0" prefWidth="800.0" styleClass="AnchorPane">
+               <children>
+                  <JFXTextArea fx:id="textAreaLetterView" editable="false" focusColor="#4eb1ba" layoutY="50.0" prefHeight="265.0" prefWidth="800.0" promptText="Текст резолюции" styleClass="JFXTextArea" />
+                  <Label layoutX="14.0" layoutY="14.0" styleClass="label2" text="Тип:" />
+                  <Label layoutX="531.0" layoutY="14.0" styleClass="label2" text="№:" />
+                  <Label layoutX="659.0" layoutY="14.0" styleClass="label2" text="Дата:" />
+                  <Label fx:id="labelLetterName" layoutX="45.0" layoutY="10.0" prefHeight="25.0" prefWidth="460.0" styleClass="label4" text="..." />
+                  <Label fx:id="labelLetterNumber" layoutX="555.0" layoutY="10.0" styleClass="label4" text="123-/65666" />
+                  <Label fx:id="labelLetterDate" layoutX="696.0" layoutY="10.0" styleClass="label4" text="22/22/2222" />
+               </children>
+            </Pane>
+            <Pane layoutY="330.0" prefHeight="370.0" prefWidth="800.0" style="-fx-background-color: white;">
+               <children>
+                  <ButtonBar layoutY="325.0" prefHeight="40.0" prefWidth="800.0" style="-fx-background-color: white;">
+                     <buttons>
+                        <JFXButton fx:id="downloadFileButton" onAction="#downloadFileButton" styleClass="blue-btn" text="Скачать">
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="DOWNLOAD" size="20" />
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="openLetterFile" layoutX="496.0" layoutY="12.0" onAction="#openLetterFile" styleClass="blue-btn" text="Открыть">
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="FILE" size="20" />
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="openEditView" onAction="#openEditView" styleClass="blue-btn" text="Редактировать">
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="EDIT" size="20" />
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="cancelViewButton" maxWidth="76.0" onAction="#cancelViewButton" prefHeight="37.0" prefWidth="58.0" styleClass="blue-btn" text="Ок">
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </JFXButton>
+                     </buttons>
+                  </ButtonBar>
+                  <HBox fx:id="viewHBox" prefHeight="310.0" prefWidth="800.0">
+                     <children>
+                        <Pane prefWidth="200.0" styleClass="AnchorPane">
+                           <children>
+                              <Label layoutX="40.0" layoutY="10.0" styleClass="label2" text="Юридический отдел" />
+                              <Separator layoutY="40.0" prefHeight="4.0" prefWidth="200.0" />
+                              <Label layoutX="10.0" layoutY="260.0" prefHeight="17.0" prefWidth="130.0" styleClass="label2" text="Дата обработки:" />
+                              <Label layoutX="10.0" layoutY="160.0" styleClass="label2" text="Юридический отдел:" />
+                              <Label layoutX="14.0" layoutY="66.0" styleClass="label2" text="№ Договора:" />
+                              <Label fx:id="labelJuristNamber" layoutX="108.0" layoutY="66.0" styleClass="label2" text="..." />
+                              <Label fx:id="labelJuristDate" layoutX="120.0" layoutY="260.0" prefHeight="17.0" prefWidth="66.0" styleClass="label2" text="..." />
+                              <JFXListView fx:id="listViewJurist" layoutX="10.0" layoutY="180.0" prefHeight="70.0" prefWidth="175.0" styleClass="ListView" />
+                           </children>
+                        </Pane>
+                        <Pane prefWidth="200.0" styleClass="AnchorPane">
+                           <children>
+                              <JFXTextArea fx:id="txtAreaOrip" editable="false" layoutX="10.0" layoutY="50.0" prefHeight="87.0" prefWidth="187.0" text="....&#10;" />
+                              <Label layoutX="84.0" layoutY="10.0" styleClass="label2" text="ОРиП" />
+                              <Separator layoutY="40.0" prefHeight="4.0" prefWidth="200.0" />
+                              <Label layoutX="10.0" layoutY="160.0" styleClass="label2" text="ОРиП:" />
+                              <Label layoutX="10.0" layoutY="260.0" prefHeight="17.0" prefWidth="130.0" styleClass="label2" text="Дата обработки:" />
+                              <Label fx:id="labelOripDate" layoutX="125.0" layoutY="260.0" prefHeight="17.0" prefWidth="66.0" styleClass="label2" text="..." />
+                              <JFXListView fx:id="listViewOrip" layoutX="10.0" layoutY="180.0" prefHeight="70.0" prefWidth="175.0" styleClass="ListView" />
+                           </children>
+                        </Pane>
+                        <Pane prefWidth="200.0" styleClass="AnchorPane">
+                           <children>
+                              <Label layoutX="43.0" layoutY="10.0" styleClass="label2" text="Технический отдел" />
+                              <Separator layoutY="40.0" prefHeight="4.0" prefWidth="200.0" />
+                              <Label layoutX="14.0" layoutY="81.0" styleClass="label2" text="Присвоен литер:" />
+                              <Label layoutX="10.0" layoutY="160.0" styleClass="label2" text="Технический отдел:" />
+                              <Label fx:id="labelTechnicalLiter" layoutX="132.0" layoutY="81.0" styleClass="label2" text="..." />
+                              <Label layoutX="14.0" layoutY="112.0" styleClass="label2" text="Пароль объекта:" />
+                              <Label fx:id="labelTechnicalPassword" layoutX="123.0" layoutY="112.0" styleClass="label2" text="..." />
+                              <Label layoutX="10.0" layoutY="260.0" prefHeight="17.0" prefWidth="130.0" styleClass="label2" text="Дата обработки:" />
+                              <Label fx:id="technicalDate" layoutX="125.0" layoutY="260.0" prefHeight="17.0" prefWidth="66.0" styleClass="label2" text="..." />
+                              <JFXListView fx:id="listViewTechnical" layoutX="10.0" layoutY="180.0" prefHeight="70.0" prefWidth="175.0" styleClass="ListView" />
+                           </children>
+                        </Pane>
+                        <Pane prefWidth="200.0" styleClass="AnchorPane">
+                           <children>
+                              <Label layoutX="67.0" layoutY="10.0" styleClass="label2" text="Бухгалтерия" />
+                              <Separator layoutY="40.0" prefHeight="4.0" prefWidth="200.0" />
+                              <Label layoutX="10.0" layoutY="160.0" styleClass="label2" text="Бухгалтерия:" />
+                              <Label layoutX="10.0" layoutY="260.0" prefHeight="17.0" prefWidth="130.0" styleClass="label2" text="Дата обработки:" />
+                              <Label fx:id="labelbookeepingDate" layoutX="125.0" layoutY="260.0" prefHeight="17.0" prefWidth="66.0" styleClass="label2" text="..." />
+                              <JFXListView fx:id="listViewBookkeeping" layoutX="10.0" layoutY="180.0" prefHeight="70.0" prefWidth="175.0" styleClass="ListView" />
                            </children>
                         </Pane>
                      </children>

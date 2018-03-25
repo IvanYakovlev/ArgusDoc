@@ -3,11 +3,15 @@ package controller;
 
 import argusDocSettings.ServerFilePath;
 import com.jfoenix.controls.*;
+import entity.Event;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.util.Duration;
 import notification.NotificationEvent;
 import service.*;
@@ -39,6 +43,7 @@ import entity.*;
 import dialog.ADInfo;
 
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -53,6 +58,8 @@ import java.util.*;
 
 
 public class MainController {
+
+    Stage stage;
     NotificationEvent notificationEvent=new NotificationEvent();
     public Employee authorizedUser;
 
@@ -214,14 +221,15 @@ public class MainController {
 
 
 
-    public void initialize(Employee authorizedUser) throws RemoteException {
+    public void initialize(Employee authorizedUser,Stage stage) throws RemoteException {
+        this.stage=stage;
 
         Path documentsPath = Paths.get(ServerFilePath.DOCUMENTS_FILE_PATH);
         Path tasksPath = Paths.get(ServerFilePath.TASKS_FILE_PATH);
         Path lettersPath = Paths.get(ServerFilePath.LETTERS_FILE_PATH);
 
         if (Files.exists(documentsPath)&&Files.exists(tasksPath)&&Files.exists(lettersPath)) {
-            System.out.println("Соединение с хранилищем устанолено!");
+            System.out.println("Соединение с хранилищем установлено!");
         } else {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Хранилище недоступно! Обратитесь к системному администратору!");
             Platform.exit();
@@ -230,7 +238,54 @@ public class MainController {
         this.authorizedUser=authorizedUser;
         refreshData();
         serviceStart();
+//Добавляем приложение В трей
+        try {
+            //Инициализируем toolkit
+            java.awt.Toolkit.getDefaultToolkit();
 
+            //Проверка на поддержку в трее
+            if (!java.awt.SystemTray.isSupported()) {
+                System.out.println("No system tray support, application exiting.");
+                Platform.exit();
+            }
+
+            //создаем трей иконку
+            java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
+            java.awt.TrayIcon trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().createImage("ArgusDoc-client/src/main/resources/images/trayIcon.jpg"));
+
+            //двойное нажатие мыши - показываем stage
+            trayIcon.addActionListener(event -> Platform.runLater(this::showStage));
+
+            //выбор меню по умолчанию - показываем stage
+            java.awt.MenuItem openItem = new java.awt.MenuItem("Восстановить");
+            openItem.addActionListener(event -> Platform.runLater(this::showStage));
+
+            // Устанавливаем шрифт для пункта меню по умолчанию
+            java.awt.Font defaultFont = java.awt.Font.decode(null);
+            java.awt.Font boldFont = defaultFont.deriveFont(java.awt.Font.BOLD);
+            openItem.setFont(boldFont);
+
+            //меню выход из приложения, удаляем из трея и закрываем программу
+            java.awt.MenuItem exitItem = new java.awt.MenuItem("Выход");
+            exitItem.addActionListener(event -> {
+                Platform.exit();
+                tray.remove(trayIcon);
+            });
+
+            // устанавливаем  popup меню для приложения
+            final java.awt.PopupMenu popup = new java.awt.PopupMenu();
+            popup.add(openItem);
+            popup.addSeparator();
+            popup.add(exitItem);
+            trayIcon.setPopupMenu(popup);
+
+
+            // добавляем иконку в трей
+            tray.add(trayIcon);
+        } catch (AWTException e) {
+            System.out.println("Unable to init system tray");
+            e.printStackTrace();
+        }
 
     /*initialize table Document Template tab*/
 //заполняем таблицу данными
@@ -650,9 +705,8 @@ Calendar tab
                         Parent root = fxmlLoader.getRoot();
                         stage.setScene(new Scene(root));
                         EditTaskController editController = fxmlLoader.getController();
-                        editController.authorizedUser= authorizedUser;
-                        editController.taskEntity = taskEntity;
-                        editController.initTab(taskEntity);
+
+                        editController.initialize(taskEntity, authorizedUser);
 
                         stage.setTitle("Редактирование задачи");
                         stage.setMinHeight(150);
@@ -760,8 +814,7 @@ Calendar tab
                         Parent root = fxmlLoader.getRoot();
                         stage.setScene(new Scene(root));
                         DoneTaskController doneController = fxmlLoader.getController();
-                        doneController.setTaskEntity(taskEntity);
-                        doneController.initTab(taskEntity);
+                        doneController.initialize(taskEntity);
 
                         stage.setTitle("Выполнение задачи");
                         stage.setMinHeight(150);
@@ -1966,6 +2019,7 @@ Calendar tab
                             });
 
                         }
+
 //Уведомления о выполненых задачах
                         int newFromEmpTask = 0;
                         int idSummNewFromEmpTask = 0;
@@ -2000,6 +2054,7 @@ Calendar tab
                             });
 
                         }
+
 //Создаем повторяющиеся события
                         for(int i = 0; i<observableListAllEvent.size();i++){
 
@@ -2093,6 +2148,43 @@ Calendar tab
                                 @Override
                                 public void run() {
                                     calendarTabButton.setText("   Календарь");
+                                }
+                            });
+
+                        }
+//Уведомления о просроченных задачах
+
+                        String messageOverdueTask="";
+                        int overdueTask = 0;
+                        try {
+                            for (int i=0;i<observableListMyTaskEntity.size();i++){
+
+                                if (((observableListMyTaskEntity.get(i).getTaskTerm().getTime()+observableListMyTaskEntity.get(i).getTaskTime().getTime()+25200000)<dateNow)&&(String.valueOf(observableListMyTaskEntity.get(i).getTaskTerm()).equals(String.valueOf(today)))){
+                                    messageOverdueTask=messageOverdueTask+" "+observableListMyTaskEntity.get(i).getTaskName();
+                                    taskService.overdueTask(observableListMyTaskEntity.get(i).getTaskId());
+                                    overdueTask++;
+                                }
+
+                            }
+                        }catch (ArrayIndexOutOfBoundsException e){
+                            System.out.println("Просроченные задачи");
+                        }
+                        if (overdueTask>0){
+                            String finalMessageOverdueTask = messageOverdueTask;
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //myTasksButton
+                                    notificationEvent.overdueTask(finalMessageOverdueTask);
+
+                                }
+                            });
+
+                        } else if (overdueTask==0){
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //myTasksButton
                                 }
                             });
 
@@ -2221,5 +2313,11 @@ Calendar tab
 
     }
 
-
+    private void showStage() {
+        if (stage != null) {
+            stage.show();
+            stage.toFront();
+        }
+        System.out.println("work");
+    }
 }

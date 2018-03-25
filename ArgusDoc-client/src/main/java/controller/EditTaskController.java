@@ -6,6 +6,7 @@ import entity.Employee;
 import entity.TaskEntity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.stage.DirectoryChooser;
 import service.*;
 import dialog.ADInfo;
 import javafx.event.ActionEvent;
@@ -34,6 +35,7 @@ public class EditTaskController {
 
     MainController mainController = new MainController();
     final FileChooser fileChooser=new FileChooser();
+    private DirectoryChooser directoryChooser = new DirectoryChooser();
     File attachmentFile;
 
     @FXML
@@ -79,8 +81,18 @@ public class EditTaskController {
     private EventService eventService = ServiceRegistry.eventService;
     public TaskEntity taskEntity;
 
-    public void initialize() throws RemoteException {
-
+    public void initialize(TaskEntity taskEntity, Employee authorizedUser) throws RemoteException {
+        this.taskEntity = taskEntity;
+        this.authorizedUser = authorizedUser;
+        txtTaskName.setText(taskEntity.getTaskName());
+        textAreaTask.setText(taskEntity.getTaskText());
+        textViewAreaTask.setText(taskEntity.getTaskText());
+        labelViewTask.setText(taskEntity.getTaskName());
+        comboBoxEmployee.getSelectionModel().select(taskEntity.getEmployeeName());
+        if (taskEntity.getTaskAttachment()==null){
+            downloadFileButton.setVisible(false);
+            openFileButton.setVisible(false);
+        }
 
         employeeService.listEmployees();
         ObservableList<String> observableListEmployeesName = FXCollections.observableArrayList(employeeService.listEmployeesName());
@@ -124,6 +136,8 @@ public class EditTaskController {
                         Files.delete(path);
                     }catch (NoSuchFileException e){
 
+                    }catch (NullPointerException e){
+
                     }
 
                     if (taskEntity.getTaskIsLetter()==0&& taskEntity.getTaskAttachmentFile()!=null) {
@@ -156,17 +170,7 @@ public class EditTaskController {
             attachmentFile=file;
         }
     }
-    public void initTab(TaskEntity taskEntity){
-        txtTaskName.setText(taskEntity.getTaskName());
-        textAreaTask.setText(taskEntity.getTaskText());
-        textViewAreaTask.setText(taskEntity.getTaskText());
-        labelViewTask.setText(taskEntity.getTaskName());
-        comboBoxEmployee.getSelectionModel().select(taskEntity.getEmployeeName());
-        if (taskEntity.getTaskAttachment()==null){
-            downloadFileButton.setVisible(false);
-            openFileButton.setVisible(false);
-        }
-    }
+
 
 
 
@@ -195,7 +199,21 @@ public class EditTaskController {
     }
 
     public void downloadFileButton(ActionEvent actionEvent) {
-
+        File file = new File(taskEntity.getTaskAttachment());
+        String choosingDirectory = String.valueOf(directoryChooser.showDialog(downloadFileButton.getScene().getWindow()));
+        System.out.println(choosingDirectory);
+        if (choosingDirectory.equals("null")){
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Файл не сохранен!");
+        } else {
+            //System.out.println(directoryChooser.showDialog(downloadFile.getScene().getWindow())+"\\"+file.getName());
+            File destFile = new File(choosingDirectory + "\\" + file.getName());
+            try {
+                Files.copy(file.toPath(), destFile.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ADInfo.getAdInfo().dialog(Alert.AlertType.INFORMATION, "Файл сохранен!");
+        }
     }
 
     public void doEditTaskButton(ActionEvent actionEvent) {

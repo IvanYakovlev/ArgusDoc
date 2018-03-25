@@ -28,6 +28,18 @@ public class NotificationEvent {
             tray.showAndWait();
         }
     }
+    public void overdueTask(String message){
+        String title = "У вас есть просроченные задачи:";
+        NotificationType notificationType = NotificationType.WARNING;
+
+        TrayNotification tray = new TrayNotification();
+        tray.setTitle(title);
+        tray.setMessage(message);
+        tray.setAnimationType(AnimationType.SLIDE);
+        tray.setNotificationType(notificationType);
+        tray.showAndDismiss(Duration.millis(5000));
+    }
+
     public void  newFromEmpTask(String message, int idSumm){
         if (!listNewFromEmpTask.contains(idSumm)) {
             listNewFromEmpTask.add(idSumm);
