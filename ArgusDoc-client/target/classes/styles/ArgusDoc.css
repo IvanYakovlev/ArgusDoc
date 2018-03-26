@@ -52,6 +52,7 @@
     -fx-font-size:14px;
     -fx-padding: 0 0 0 30;
     -fx-alignment:left ;
+
 }
 .drawer-buttons:hover{
     -fx-background-color:#cccccc;
@@ -182,6 +183,17 @@
     -fx-text-fill: #FFFFFF;
 
 }
+
+.JFXButtonMenu{
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+
+}
+.JFXButtonMenu:hover {
+    -fx-background-color:  #03A9F4;
+
+}
+
 .blue-btn{
     -fx-background-color: #536DFE;
     -fx-text-fill: #ffffff;
@@ -344,3 +356,4 @@
 
 
 .jfx-hamburger StackPane { -fx-background-color: white }
+

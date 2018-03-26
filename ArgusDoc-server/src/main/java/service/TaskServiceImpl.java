@@ -283,28 +283,5 @@ DBconnection dBconnection;
         }
     }
 
-    @Override
-    public void openTaskAttachment(int id) throws IOException {
-        dBconnection = new DBconnection();
-        try {
-            String sql = "SELECT Task_attachment FROM TASKS WHERE Task_id=" + id;
-            ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
-            if (resultSet.next()) {
 
-                String filepath = resultSet.getString("Task_attachment");
-                System.out.println(filepath);
-              /*  File file = new File(filepath);
-                java.awt.Desktop.getDesktop().open(file);*/
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    @Override
-    public void downloadAttachmentFile(int id)throws RemoteException {
-
-    }
 }

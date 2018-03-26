@@ -159,28 +159,7 @@ public class LetterServiceImpl implements LetterService {
 
     }
 
-    @Override
-    public void downloadLetter(Letter letter) throws RemoteException {
 
-    }
-
-    @Override
-    public void openLetter(int id) throws IOException, SQLException {
-        dBconnection = new DBconnection();
-
-            String sql = "SELECT Letter_filepath FROM LETTERS WHERE Letter_id=" + id;
-            ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
-            if (resultSet.next()) {
-
-                String filepath = resultSet.getString("Letter_filepath");
-
-                File file = new File(filepath);
-
-                java.awt.Desktop.getDesktop().open(file);
-
-            }
-
-    }
 
     @Override
     public List<Letter> listLetter() throws RemoteException {

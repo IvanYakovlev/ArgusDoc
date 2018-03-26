@@ -1,5 +1,6 @@
 package controller;
 
+import argusDocSettings.FileManager;
 import com.jfoenix.controls.*;
 import dialog.ADInfo;
 import entity.Employee;
@@ -279,32 +280,15 @@ public class DoneLetterController {
     }
 
     public void openLetterFile(ActionEvent actionEvent) {
-        try {
-            letterService.openLetter(letter.getLetterId());
-        } catch (IllegalArgumentException e) {
-            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Письмо не найдено!");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        FileManager.openFile(letter.getLetterFilePath());
+
+
     }
 
     public void downloadLetterFile(ActionEvent actionEvent) {
         File file = new File(letter.getLetterFilePath());
         String choosingDirectory = String.valueOf(directoryChooser.showDialog(downloadLetterFile.getScene().getWindow()));
         System.out.println(choosingDirectory);
-        if (choosingDirectory.equals("null")){
-            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Файл не сохранен!");
-        } else {
-            //System.out.println(directoryChooser.showDialog(downloadFile.getScene().getWindow())+"\\"+file.getName());
-            File destFile = new File(choosingDirectory + "\\" + file.getName());
-            try {
-                Files.copy(file.toPath(), destFile.toPath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            ADInfo.getAdInfo().dialog(Alert.AlertType.INFORMATION, "Файл сохранен!");
-        }
+        FileManager.downloadFile(file, choosingDirectory);
     }
 }

@@ -20,8 +20,6 @@ public interface LetterService extends Remote {
 
 
     public void removeLetter(int id, String filePath) throws IOException, SQLException;
-    public void downloadLetter(Letter letter) throws RemoteException;
-    public void openLetter(int id) throws IOException, SQLException;
     public List<Letter> listLetter() throws RemoteException;
     public Letter getLetterById(int id) throws RemoteException;
     public int getMaxId() throws RemoteException, SQLException;

@@ -1,6 +1,7 @@
 package controller;
 
 
+import argusDocSettings.FileManager;
 import argusDocSettings.ServerFilePath;
 import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
@@ -632,37 +633,12 @@ Calendar tab
     }
 
     public void openDocumentButton(ActionEvent actionEvent) throws RemoteException {
-
-        try {
-
-            File file = new File(document.getDocumentFilePath());
-            java.awt.Desktop.getDesktop().open(file);
-
-        }catch (NullPointerException e){
-            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Документ не выбран!");
-        }catch (IllegalArgumentException e) {
-            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Документ не найден!");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        FileManager.openFile(document.getDocumentFilePath());
 
     }
 
     public void printDocumentButton(ActionEvent actionEvent) throws RemoteException {
-       try {
-           File file = new File(document.getDocumentFilePath());
-           java.awt.Desktop.getDesktop().print(file);
-
-       }catch (NullPointerException e){
-           ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Документ не выбран!");
-       }  catch (IOException e) {
-           e.printStackTrace();
-       }catch (IllegalArgumentException e) {
-           ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Документ не найден!");
-       }
-
-        // }
-
+        FileManager.printFile(document.getDocumentFilePath());
     }
 
 
@@ -1034,11 +1010,6 @@ Calendar tab
                         });
                         // задаем размер колонок в таблице
                         colorRow();
-
-
-
-
-
 
                         progressBar.setVisible(false);
                         tableTask.setDisable(false);
@@ -1586,7 +1557,7 @@ Calendar tab
             }
         }
         else {
-            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Задача не выбрана!");
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Письмо не выбрано!");
         }
     }
 
@@ -2307,7 +2278,9 @@ Calendar tab
                         return null;
                     }
                 };
+
             }
+
         };
                 service.start();
 

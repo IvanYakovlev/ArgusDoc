@@ -17,6 +17,5 @@ public interface DocumentService extends Remote {
     public List<String> listDocumentName() throws RemoteException;
     public int getIdDocumentByName(String value) throws RemoteException;
     public List<Document> listDocumentsByDepartment(String value) throws RemoteException;
-    public void openDocument(int id) throws IOException, SQLException;
-    public void printDocument(int id) throws IOException, SQLException;
+
 }

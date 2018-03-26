@@ -6,17 +6,26 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="TOP_CENTER" maxWidth="170.0" prefWidth="170.0" style="-fx-background-color: #303F9F;" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DrawerMainMenuController">
+<VBox alignment="TOP_CENTER" maxWidth="170.0" prefWidth="170.0" style="-fx-background-color: white;" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DrawerMainMenuController">
    <children>
-      <Pane prefHeight="100.0" prefWidth="170.0" />
-      <ImageView fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/drawlerLog.jpg" />
-         </image>
-      </ImageView>
-      <Pane prefHeight="40.0" prefWidth="170.0" />
-      <JFXButton prefHeight="30.0" prefWidth="170.0" styleClass="JFXButton" text="Смена пользователя" />
-      <JFXButton prefHeight="30.0" prefWidth="170.0" styleClass="JFXButton" text="О программе" />
-      <JFXButton fx:id="exitProgram" onAction="#exitProgram" prefHeight="30.0" prefWidth="170.0" styleClass="JFXButton" text="Выход из программы" />
+      <Pane prefHeight="36.0" prefWidth="170.0" styleClass="AnchorPane3" />
+      <Pane styleClass="AnchorPane3">
+         <children>
+            <ImageView layoutX="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/drawlerLog.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane prefHeight="32.0" prefWidth="170.0" styleClass="AnchorPane3" />
+      <Pane prefHeight="33.0" prefWidth="170.0" />
+      <Pane prefHeight="150.0" prefWidth="170.0">
+         <children>
+            <JFXButton fx:id="changeUser" onAction="#changeUser" prefHeight="45.0" prefWidth="170.0" styleClass="JFXButtonMenu" text="Смена пользователя" />
+            <JFXButton fx:id="aboutProgramm" layoutY="50.0" onAction="#aboutProgramm" prefHeight="45.0" prefWidth="170.0" styleClass="JFXButtonMenu" text="О программе" />
+            <JFXButton fx:id="exitProgram" layoutY="100.0" onAction="#exitProgram" prefHeight="45.0" prefWidth="170.0" styleClass="JFXButtonMenu" text="Выход из программы" />
+         </children>
+      </Pane>
    </children>
 </VBox>

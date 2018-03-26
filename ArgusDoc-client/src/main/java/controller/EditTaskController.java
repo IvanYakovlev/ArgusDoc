@@ -1,5 +1,6 @@
 package controller;
 
+import argusDocSettings.FileManager;
 import argusDocSettings.ServerFilePath;
 import com.jfoenix.controls.*;
 import entity.Employee;
@@ -184,36 +185,16 @@ public class EditTaskController {
     }
 
     public void openFileButton(ActionEvent actionEvent) throws RemoteException {
-        try {
-            File file = new File(taskEntity.getTaskAttachment());
-            java.awt.Desktop.getDesktop().open(file);
-            //taskService.openTaskAttachment(taskEntity.getTaskId());
-
-
-        } catch (IOException e) {
-            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Файл не найден!");
-        }
-        catch (IllegalArgumentException e){
-            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Файл не найден!");
-        }
+        FileManager.openFile(taskEntity.getTaskAttachment());
     }
+
+
 
     public void downloadFileButton(ActionEvent actionEvent) {
         File file = new File(taskEntity.getTaskAttachment());
         String choosingDirectory = String.valueOf(directoryChooser.showDialog(downloadFileButton.getScene().getWindow()));
         System.out.println(choosingDirectory);
-        if (choosingDirectory.equals("null")){
-            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Файл не сохранен!");
-        } else {
-            //System.out.println(directoryChooser.showDialog(downloadFile.getScene().getWindow())+"\\"+file.getName());
-            File destFile = new File(choosingDirectory + "\\" + file.getName());
-            try {
-                Files.copy(file.toPath(), destFile.toPath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            ADInfo.getAdInfo().dialog(Alert.AlertType.INFORMATION, "Файл сохранен!");
-        }
+        FileManager.downloadFile(file, choosingDirectory);
     }
 
     public void doEditTaskButton(ActionEvent actionEvent) {

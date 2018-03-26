@@ -204,10 +204,10 @@ public class AddLetterController {
             }catch (java.nio.file.NoSuchFileException ex) {
                 ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не удалось загрузить файл, Хранилище недоступно!");
             }catch (IOException e) {
-                //e.printStackTrace();
+                e.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 //alert.setTitle("Delete File");
-                alert.setHeaderText("Письмо с таким именем уже существует! Хотите заменить?");
+                //alert.setHeaderText("Письмо с таким именем уже существует! Хотите заменить?");
 
 
                 // option != null.

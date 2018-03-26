@@ -398,7 +398,10 @@ private FontAwesomeIconView closeSettingWindow;
                 }
                 try {
                     //Копируем файл на сервер
+
                     File destFile = new File(document.getDocumentFilePath());
+                    System.out.println(document.getDocumentFile().toPath());
+                    System.out.println(destFile.toPath());
                     Files.copy(document.getDocumentFile().toPath(), destFile.toPath());
                 }catch (FileAlreadyExistsException e){
                     ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Документ с таким названием уже существует!");

@@ -22,8 +22,7 @@ public interface TaskService extends Remote {
     public void performedTask(int id) throws RemoteException;
     public void overdueTask(int id) throws RemoteException;
     public void canceledTask(int id) throws RemoteException;
-    public void openTaskAttachment(int id) throws IOException;
-    public void downloadAttachmentFile(int id) throws RemoteException;
+
 
 
 }
