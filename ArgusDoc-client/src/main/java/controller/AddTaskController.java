@@ -71,11 +71,11 @@ public class AddTaskController {
     }
 
     public void addTaskButton(ActionEvent actionEvent) throws IOException {
-        if (txtTaskName.getText().isEmpty() || checkComboBoxEmployee.getCheckModel().getCheckedItems() == null || datePickerTask.getValue() == null || textAreaTask.getText().isEmpty()) {
+        if (txtTaskName.getText().isEmpty() || checkComboBoxEmployee.getCheckModel().getCheckedItems().isEmpty() || datePickerTask.getValue() == null || textAreaTask.getText().isEmpty()) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
 
-
+            System.out.println( checkComboBoxEmployee.getCheckModel().getCheckedItems());
 
 
 //создаем задачи

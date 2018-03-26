@@ -3,6 +3,7 @@ package controller;
 
 import argusDocSettings.ServerFilePath;
 import com.jfoenix.controls.*;
+import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 import entity.Event;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -12,6 +13,7 @@ import javafx.concurrent.Task;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import notification.NotificationEvent;
 import service.*;
@@ -58,6 +60,11 @@ import java.util.*;
 
 
 public class MainController {
+
+
+    //создаем трей иконку
+    public static java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
+    public static java.awt.TrayIcon trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().createImage("ArgusDoc-client/src/main/resources/images/trayIcon.jpg"));
 
     Stage stage;
     NotificationEvent notificationEvent=new NotificationEvent();
@@ -115,7 +122,12 @@ public class MainController {
     private EventService eventService = ServiceRegistry.eventService;
 
 // Window control
-
+    @FXML
+    private JFXHamburger hamburger ;
+    @FXML
+    private JFXDrawer drawer ;
+    @FXML
+    private AnchorPane achorPaneMenu;
     @FXML
     private JFXButton myTasksButton = new JFXButton();
     @FXML
@@ -220,7 +232,7 @@ public class MainController {
     }
 
 
-
+    HamburgerBackArrowBasicTransition transition;
     public void initialize(Employee authorizedUser,Stage stage) throws RemoteException {
         this.stage=stage;
 
@@ -249,9 +261,7 @@ public class MainController {
                 Platform.exit();
             }
 
-            //создаем трей иконку
-            java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
-            java.awt.TrayIcon trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().createImage("ArgusDoc-client/src/main/resources/images/trayIcon.jpg"));
+
 
             //двойное нажатие мыши - показываем stage
             trayIcon.addActionListener(event -> Platform.runLater(this::showStage));
@@ -341,7 +351,7 @@ public class MainController {
 
         tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
 
-        tableTask.setItems(observableListMyDoneTaskEntity);
+        tableTask.setItems(observableListMyLetterTaskEntity);
 
         labelUserAuth.setText(authorizedUser.getEmployeeName());
 
@@ -438,7 +448,7 @@ public class MainController {
         nameLetter = new TableColumn<Letter, String>("Название");
         nameLetter.setCellValueFactory(new PropertyValueFactory<Letter, String>("letterName"));
         passwordLetter = new TableColumn<Letter, String>("Пароль");
-        passwordLetter.setCellValueFactory(new PropertyValueFactory<Letter, String>("letterPassword"));
+        passwordLetter.setCellValueFactory(new PropertyValueFactory<Letter, String>("letterTechnicalPassword"));
         numberLetter = new TableColumn<Letter, String>("Номер");
         numberLetter.setCellValueFactory(new PropertyValueFactory<Letter, String>("letterNumber"));
         filePathLetter = new TableColumn<Letter, String>("файл");
@@ -460,6 +470,20 @@ public class MainController {
         anchorTask.toFront();
         myLetterButton.setStyle("-fx-font-weight: bold; -fx-font-size: 14");
         myTaskBtnBar.toFront();
+
+
+        try {
+            VBox box = FXMLLoader.load(getClass().getResource("/viewFXML/DrawerMainMenu.fxml"));
+            drawer.setSidePane(box);
+        } catch (IOException ex) {
+           ex.printStackTrace();
+        }
+
+//Hamburger
+        transition = new HamburgerBackArrowBasicTransition(hamburger);
+        transition.setRate(-1);
+        drawer.toBack();
+
 
     }
 /*
@@ -1038,13 +1062,13 @@ Calendar tab
     private void clearButtonMenuSelected() {
         myTasksButton.setStyle("");
         myLetterButton.setStyle("");
-        myDoneTasksButton.setStyle("-fx-text-fill: white");
-        fromEmpTaskButton.setStyle("-fx-text-fill: white");
-        archiveTasks.setStyle("-fx-text-fill: white");
-        templateTabButton.setStyle("-fx-text-fill: white");
-        calendarTabButton.setStyle("-fx-text-fill: white");
-        letterTabButton.setStyle("-fx-text-fill: white");
-        settingTabButton.setStyle("-fx-text-fill: white");
+        myDoneTasksButton.setStyle("");
+        fromEmpTaskButton.setStyle("");
+        archiveTasks.setStyle("");
+        templateTabButton.setStyle("");
+        calendarTabButton.setStyle("");
+        letterTabButton.setStyle("");
+        settingTabButton.setStyle("");
 
 
     }
@@ -1899,6 +1923,8 @@ Calendar tab
                             return true; // Filter matches first name.
                         } else if (letter.getLetterNumber().toLowerCase().contains(lowerCaseFilter)) {
                             return true; // Filter matches last name.
+                        }else if (letter.getLetterTechnicalPassword().toLowerCase().contains(lowerCaseFilter)) {
+                            return true; // Filter matches last name.
                         }
                         return false; // Does not match.
                     });
@@ -2157,9 +2183,13 @@ Calendar tab
                         String messageOverdueTask="";
                         int overdueTask = 0;
                         try {
+                            System.out.println(observableListMyTaskEntity.get(0).getTaskTerm().getTime()+observableListMyTaskEntity.get(0).getTaskTime().getTime()+25200000);
+
+                            System.out.println(dateNow);
+
                             for (int i=0;i<observableListMyTaskEntity.size();i++){
 
-                                if (((observableListMyTaskEntity.get(i).getTaskTerm().getTime()+observableListMyTaskEntity.get(i).getTaskTime().getTime()+25200000)<dateNow)&&(String.valueOf(observableListMyTaskEntity.get(i).getTaskTerm()).equals(String.valueOf(today)))){
+                                if (((observableListMyTaskEntity.get(i).getTaskTerm().getTime()+observableListMyTaskEntity.get(i).getTaskTime().getTime()+25200000)<dateNow)){
                                     messageOverdueTask=messageOverdueTask+" "+observableListMyTaskEntity.get(i).getTaskName();
                                     taskService.overdueTask(observableListMyTaskEntity.get(i).getTaskId());
                                     overdueTask++;
@@ -2174,7 +2204,7 @@ Calendar tab
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    //myTasksButton
+                                    myTasksButton.setStyle("-fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 14;");
                                     notificationEvent.overdueTask(finalMessageOverdueTask);
 
                                 }
@@ -2184,7 +2214,7 @@ Calendar tab
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    //myTasksButton
+                                    myTasksButton.setStyle("-fx-text-fill: white;");
                                 }
                             });
 
@@ -2319,5 +2349,26 @@ Calendar tab
             stage.toFront();
         }
         System.out.println("work");
+    }
+
+    public void clickHamburger(MouseEvent mouseEvent) {
+
+                transition.setRate(transition.getRate()*-1);
+                transition.play();
+
+                if(drawer.isShown())
+                {
+
+                    drawer.close();
+                    drawer.toBack();
+                    hamburger.toFront();
+
+                }else {
+
+                    drawer.toFront();
+                    drawer.open();
+                    hamburger.toFront();
+                }
+
     }
 }
