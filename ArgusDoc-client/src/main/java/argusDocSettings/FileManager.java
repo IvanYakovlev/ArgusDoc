@@ -35,6 +35,7 @@ public class FileManager {
             ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Файл не найден!");
         }
     }
+
   public static void printFile(String documentFilePath){
       try {
           File file = new File(documentFilePath);

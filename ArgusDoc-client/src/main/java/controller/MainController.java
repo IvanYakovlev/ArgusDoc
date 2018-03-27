@@ -5,7 +5,9 @@ import argusDocSettings.FileManager;
 import argusDocSettings.ServerFilePath;
 import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import entity.Event;
+import javafx.animation.RotateTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.concurrent.ScheduledService;
@@ -61,6 +63,12 @@ import java.util.*;
 
 
 public class MainController {
+    @FXML
+    private FontAwesomeIconView refreshTabIcon;
+
+
+
+
 
 
     //создаем трей иконку
@@ -74,7 +82,7 @@ public class MainController {
 
     private ObservableList<Document> observableListDocument ;
     private ObservableList<Document> observableListDocumentsByDepartment ;
-
+    private ObservableList<Event> observableListTodayEvent;
     private ObservableList<TaskEntity> observableListMyTaskEntity ;
     private ObservableList<TaskEntity> observableListMyLetterTaskEntity ;
     private ObservableList<TaskEntity> observableListMyDoneTaskEntity;
@@ -178,7 +186,7 @@ public class MainController {
     private TableColumn<Document, String> documentNameTemplate;
     private TableColumn<Document, String> documentFilePathTemplate;
     @FXML
-    private ComboBox<String> comboBoxDocument_Template = new ComboBox<>();
+    private ComboBox<String> comboBoxDocument_Template;
 
 //Tasks tab
 
@@ -249,8 +257,9 @@ public class MainController {
         }
 
         this.authorizedUser=authorizedUser;
-        refreshData();
+
         serviceStart();
+
 //Добавляем приложение В трей
         try {
             //Инициализируем toolkit
@@ -306,7 +315,6 @@ public class MainController {
         documentFilePathTemplate.setCellValueFactory(new PropertyValueFactory<Document, String>("documentFilePath"));
 
         tableDocumentTemplate.getColumns().setAll(documentNameTemplate);
-
         tableDocumentTemplate.setItems(observableListDocument);
 //задаем размер колонок в таблицу
         documentNameTemplate.prefWidthProperty().bind(tableDocumentTemplate.widthProperty().multiply(1));
@@ -316,6 +324,10 @@ public class MainController {
 
         departmentService.listDepartments();
 
+
+        observableListDepartmentName = FXCollections.observableArrayList(departmentService.listDepartmentName());
+        observableListLetter = FXCollections.observableArrayList(letterService.listLetter());
+        ////
         comboBoxDocument_Template.setItems(observableListDepartmentName);
         comboBoxDocument_Template.setPromptText("Выберите отдел:");
     /*initialize TaskEntity tab*/
@@ -626,9 +638,18 @@ Calendar tab
 
 
     }
-    public void choiceDepartmentDocument(ActionEvent actionEvent) throws RemoteException {
-
-        tableDocumentTemplate.setItems(observableListDocumentsByDepartment);
+    public void comboBoxDocument_Template(ActionEvent actionEvent) throws RemoteException {
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                observableListDocumentsByDepartment = FXCollections.observableArrayList(documentService.listDocumentsByDepartment(comboBoxDocument_Template.getValue()));
+                tableDocumentTemplate.setItems(observableListDocumentsByDepartment);
+                return null;
+            }
+        };
+        Platform.runLater(() ->{
+            new Thread(task).start();
+        });
 
     }
 
@@ -641,7 +662,9 @@ Calendar tab
         FileManager.printFile(document.getDocumentFilePath());
     }
 
-
+    public void showAllDocumentButton(ActionEvent actionEvent) {
+        tableDocumentTemplate.setItems(observableListDocument);
+    }
 /*Tasks  tab*/
 
     public void openAddTaskButton(ActionEvent actionEvent) throws IOException {
@@ -991,9 +1014,6 @@ Calendar tab
                         statusTab="myTask";
                         taskEntity =null;
 
-
-
-
                         nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
                         sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
                         termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
@@ -1310,10 +1330,10 @@ Calendar tab
                         statusTab="templateTab";
 
                         departmentService.listDepartments();
+/*
+                        tableDocumentTemplate.setItems(observableListDocument);*/
 
-                        tableDocumentTemplate.setItems(observableListDocument);
-         /*       ObservableList<String> observableListDepartmentName = FXCollections.observableArrayList(departmentService.listDepartmentName());
-                comboBoxDocument_Template.setItems(observableListDepartmentName);*/
+
 
                         tableDocumentTemplate.setDisable(false);
                         progressBar.setVisible(false);
@@ -1920,8 +1940,21 @@ Calendar tab
 
 
     public void refreshTabIcon(MouseEvent mouseEvent) throws RemoteException {
-        refreshData();
-        colorRow();
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                RotateTransition rt = new RotateTransition(Duration.seconds(1),refreshTabIcon);
+                rt.setByAngle(360);
+                rt.setCycleCount(1);
+                rt.setAutoReverse(false);
+                rt.play();
+                refreshData();
+                colorRow();
+                return null;
+            }
+        };
+        new Thread(task).start();
+
     }
 
     public  void refreshData() throws RemoteException {
@@ -1932,7 +1965,6 @@ Calendar tab
                     @Override
                     protected Void call() throws Exception {
                         observableListDocument = FXCollections.observableArrayList(documentService.listDocuments());
-                        observableListDocumentsByDepartment = FXCollections.observableArrayList(documentService.listDocumentsByDepartment(comboBoxDocument_Template.getValue()));
 
                         observableListMyLetterTaskEntity = FXCollections.observableArrayList(taskService.listMyLetterTasks(authorizedUser.getEmployeeId()));
                         observableListMyTaskEntity = FXCollections.observableArrayList(taskService.listMyTasks(authorizedUser.getEmployeeId()));
@@ -1941,7 +1973,7 @@ Calendar tab
                         observableListArchiveTaskEntity = FXCollections.observableArrayList(taskService.listArchiveTasks(Integer.parseInt(StatusTask.CANCELED)));
 
                         observableListSelectDayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), datesql));
-                        ObservableList<Event> observableListTodayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), new java.sql.Date(System.currentTimeMillis())));
+                        observableListTodayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), new java.sql.Date(System.currentTimeMillis())));
                         observableListAllEvent = FXCollections.observableArrayList(eventService.listAllEvent(authorizedUser.getEmployeeId()));
 
                         observableListDepartmentName = FXCollections.observableArrayList(departmentService.listDepartmentName());
@@ -2193,11 +2225,12 @@ Calendar tab
 
 
 //Обновление текущей вкладки
-                        switch (statusTab){
+                        switch (statusTab) {
                             case "myTask":
                                 Platform.runLater(new Runnable() {
                                     @Override
                                     public void run() {
+                                        System.out.println("ffffff");
                                         tableTask.setItems(observableListMyTaskEntity);
                                     }
                                 });
@@ -2250,7 +2283,8 @@ Calendar tab
                                         tableEvent.setItems(observableListSelectDayEvent);
                                     }
                                 });
-                            case "letterTab":
+                                break;
+                            case "letterTab": {
                                 Platform.runLater(new Runnable() {
                                     @Override
                                     public void run() {
@@ -2258,6 +2292,8 @@ Calendar tab
                                     }
                                 });
 
+
+                            }
                                 break;
 
                             case "templateTab":
@@ -2283,9 +2319,8 @@ Calendar tab
 
         };
                 service.start();
-
-
     }
+
     public void serviceStart(){
         ScheduledService<Void> service = new ScheduledService<Void>() {
             @Override
@@ -2344,4 +2379,6 @@ Calendar tab
                 }
 
     }
+
+
 }
