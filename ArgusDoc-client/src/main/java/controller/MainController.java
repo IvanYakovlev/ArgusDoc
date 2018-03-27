@@ -1955,6 +1955,7 @@ Calendar tab
         };
         new Thread(task).start();
 
+
     }
 
     public  void refreshData() throws RemoteException {
@@ -2083,7 +2084,7 @@ Calendar tab
                             });
 
                         }
-
+                        System.out.println("doneTask");
 //Создаем повторяющиеся события
                         for(int i = 0; i<observableListAllEvent.size();i++){
 
@@ -2140,6 +2141,7 @@ Calendar tab
                                 }
                             }
                         }
+                        System.out.println("repeatEvent");
 //Уведомления о событиях
                         int newEvent = 0;
                         long dateNow = System.currentTimeMillis();
@@ -2181,6 +2183,8 @@ Calendar tab
                             });
 
                         }
+                        System.out.println("Event");
+/*
 //Уведомления о просроченных задачах
 
                         String messageOverdueTask="";
@@ -2222,7 +2226,8 @@ Calendar tab
                             });
 
                         }
-
+                        System.out.println("Taskoverdue");
+*/
 
 //Обновление текущей вкладки
                         switch (statusTab) {
