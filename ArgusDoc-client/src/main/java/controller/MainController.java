@@ -13,9 +13,11 @@ import javafx.collections.FXCollections;
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import notification.NotificationEvent;
@@ -126,6 +128,9 @@ public class MainController {
     private EventService eventService = ServiceRegistry.eventService;
 
 // Window control
+
+    @FXML
+    private Button doneEvent;
     @FXML
     private JFXHamburger hamburger ;
     @FXML
@@ -250,6 +255,7 @@ public class MainController {
         } else {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Хранилище недоступно! Обратитесь к системному администратору!");
             Platform.exit();
+
         }
 
         this.authorizedUser=authorizedUser;
@@ -540,6 +546,7 @@ Calendar tab
             }
         }
         refreshTableEvent();
+        colorRowEvent();
     }
 
     public void addEvent(ActionEvent actionEvent) throws RemoteException {
@@ -678,10 +685,12 @@ Calendar tab
     public void showAllEventButton(ActionEvent actionEvent) throws RemoteException {
 
         tableEvent.setItems(observableListAllEvent);
-        tableEvent.getColumns().setAll(dateEvent, timeEvent, nameEvent);
+        tableEvent.getColumns().setAll(dateEvent, timeEvent, nameEvent,statusEvent);
         nameEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.45));
         dateEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.30));
         timeEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.25));
+        statusEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0));
+        colorRowEvent();
     }
 
 
@@ -2495,5 +2504,7 @@ Calendar tab
     }
 
 
-
+    public void onMouseExiteddoneButton(MouseDragEvent mouseDragEvent) {
+        doneEvent.setTooltip(new Tooltip("asd"));
+    }
 }

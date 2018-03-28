@@ -87,6 +87,7 @@ public class AuthorizationController {
                     MainController mainController = fxmlLoader.getController();
                     mainController.initialize(authorizedUser,stage);
 
+
                     stage.show();
 
                 } catch (IOException e) {

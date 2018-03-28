@@ -274,6 +274,7 @@
 }
 /* Calendar Picker */
 .CalendarPicker {
+ -fx-background-color: white;
 }
 
 .CalendarPickerControlSkin {
@@ -282,10 +283,14 @@
 
 
 .CalendarPickerControlSkin .weeknumber {
+    -fx-text-fill: #303F9F;
 }
 
 .CalendarPickerControlSkin .non-weekend {
+    -fx-text-fill: #303F9F;
+
 }
+
 
 .CalendarPickerControlSkin .weekend {
     -fx-text-fill: #303F9F;

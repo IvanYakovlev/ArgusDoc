@@ -2,6 +2,7 @@ package main;
 
 
 import controller.AuthorizationController;
+import controller.DrawerMainMenuController;
 import controller.MainController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -22,7 +23,7 @@ import java.rmi.registry.Registry;
 public class Main extends Application {
     private double xOffset = 0;
     private double yOffset = 0;
-
+    public static Stage stage;
 
         @Override
     public void start(Stage primaryStage) throws Exception {
@@ -30,6 +31,7 @@ public class Main extends Application {
             Platform.setImplicitExit(false);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../viewFXML/Authorization_window.fxml"));
+
 
             Parent root = loader.load();
 
@@ -56,6 +58,8 @@ public class Main extends Application {
             });
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
+
+            stage=primaryStage;
             primaryStage.show();
 
         }

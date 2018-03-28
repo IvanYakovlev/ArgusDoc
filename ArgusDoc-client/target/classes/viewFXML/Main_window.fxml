@@ -12,10 +12,12 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -107,31 +109,59 @@
             </AnchorPane>
             <AnchorPane fx:id="anchorCalendar" layoutX="20.0" layoutY="52.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
                <children>
-                  <CalendarPicker fx:id="calendarPicker" layoutX="4.0" layoutY="14.0" prefHeight="280.0" prefWidth="395.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
-                  </CalendarPicker>
-                  <TableView fx:id="tableEvent" layoutX="464.0" layoutY="50.0" onMouseClicked="#clickTableEvent" prefHeight="533.0" prefWidth="370.0" AnchorPane.bottomAnchor="67.0" AnchorPane.leftAnchor="430.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                       <CalendarPicker fx:id="calendarPicker" layoutX="4.0" layoutY="14.0" prefHeight="280.0" prefWidth="395.0" styleClass="CalendarPicker" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                    </CalendarPicker>
+
+                    <Label layoutX="438.0" layoutY="14.0" prefHeight="25.0" prefWidth="140.0" styleClass="label3" text="Дела на" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="16.0" />
+
+                  <TableView fx:id="tableEvent" layoutX="464.0" layoutY="50.0" onMouseClicked="#clickTableEvent" prefHeight="590.0" prefWidth="370.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="430.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
                     <columns>
                       <TableColumn prefWidth="398.0" text="Напоминания" />
                     </columns>
                   </TableView>
                   <Label layoutX="438.0" layoutY="14.0" prefHeight="25.0" prefWidth="140.0" styleClass="label3" text="Дела на" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="16.0" />
                   <Label fx:id="labelSelectedDate" layoutX="510.0" layoutY="16.0" styleClass="label3" text="сегодня" AnchorPane.leftAnchor="500.0" />
-                  <AnchorPane layoutX="10.0" layoutY="290.0" prefHeight="343.0" prefWidth="401.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="300.0">
+                  <AnchorPane layoutX="15.0" layoutY="303.0" prefHeight="343.0" prefWidth="401.0" styleClass="AnchorPane">
                      <children>
-                        <JFXButton layoutX="172.0" layoutY="293.0" onAction="#removeEvent" prefHeight="37.0" prefWidth="56.0" styleClass="blue-btn" text="-" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="172.0" />
-                        <JFXButton onAction="#addEvent" prefHeight="37.0" prefWidth="56.0" styleClass="blue-btn" text="+" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
                         <JFXTextArea fx:id="textAreaEvent" focusColor="#4eb1ba" layoutX="2.0" layoutY="58.0" prefHeight="157.0" prefWidth="395.0" promptText="Введите текст напоминания" styleClass="JFXTextArea" AnchorPane.bottomAnchor="125.0" AnchorPane.topAnchor="50.0" />
-                        <JFXTimePicker fx:id="timePickerEvent" defaultColor="#4eb1ba" layoutX="10.0" layoutY="242.0" prefHeight="25.0" prefWidth="249.0" promptText="Выберите время" styleClass="JFXTimePicker" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="10.0" />
+                        <JFXTimePicker fx:id="timePickerEvent" defaultColor="#4eb1ba" layoutX="10.0" layoutY="242.0" prefHeight="25.0" prefWidth="250.0" promptText="Выберите время" styleClass="JFXTimePicker" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="10.0" />
                         <JFXToggleButton fx:id="repeateEventToggleBtn" layoutX="247.0" layoutY="229.0" onAction="#repeateEventToggleBtn" prefHeight="58.0" prefWidth="149.0" text="Не повторять" AnchorPane.bottomAnchor="53.0" AnchorPane.rightAnchor="5.0" />
                         <JFXComboBox fx:id="comboBoxRepeate" layoutX="256.0" layoutY="281.0" prefHeight="25.0" prefWidth="129.0" visible="false" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="10.0" />
                         <Label layoutX="15.0" layoutY="14.0" styleClass="label3" text="Напоминание:" AnchorPane.topAnchor="10.0" />
-                        <JFXButton layoutX="89.0" layoutY="293.0" onAction="#updateEvent" prefHeight="37.0" prefWidth="6.0" styleClass="blue-btn" text=" ">
+                        <Button fx:id="updateEvent" layoutX="70.0" layoutY="290.0" mnemonicParsing="false" onAction="#updateEvent" prefHeight="35.0" prefWidth="50.0" styleClass="blue-btn">
                            <graphic>
-                              <FontAwesomeIconView fill="#303f9f" glyphName="EDIT" size="22" />
-                           </graphic></JFXButton>
+                              <FontAwesomeIconView fill="WHITE" glyphName="EDIT" size="22" />
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Редактировать напоминание" />
+                           </tooltip>
+                        </Button>
+                        <Button fx:id="addEvent" layoutX="10.0" layoutY="290.0" mnemonicParsing="false" onAction="#addEvent" prefHeight="35.0" prefWidth="50.0" styleClass="blue-btn">
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="22" />
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Добавить напоминание" />
+                           </tooltip>
+                        </Button>
+                        <Button fx:id="removeEvent" layoutX="130.0" layoutY="290.0" mnemonicParsing="false" onAction="#removeEvent" prefHeight="35.0" prefWidth="50.0" styleClass="blue-btn">
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="MINUS" size="22" wrappingWidth="17.285715103149414" />
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Удалить напоминание" />
+                           </tooltip>
+                        </Button>
+                        <Button fx:id="doneEvent" layoutX="190.0" layoutY="290.0" mnemonicParsing="false" onAction="#doneEvent" onMouseDragExited="#onMouseExiteddoneButton" prefHeight="35.0" prefWidth="50.0" styleClass="blue-btn">
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="CHECK" size="22" />
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Пометить как выполненное" />
+                           </tooltip>
+                        </Button>
                      </children>
                   </AnchorPane>
-                  <JFXButton layoutX="674.0" layoutY="599.0" onAction="#doneEvent" prefHeight="17.0" prefWidth="122.0" styleClass="blue-btn" text="Выполнено" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="599.0" />
                   <JFXButton layoutX="674.0" layoutY="10.0" onAction="#showAllEventButton" prefHeight="17.0" prefWidth="122.0" styleClass="blue-btn" text="показать все" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="10.0" />
                </children>
             </AnchorPane>
