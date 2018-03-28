@@ -28,12 +28,20 @@
       </AnchorPane>
       <Pane fx:id="editPane" layoutY="50.0" prefHeight="700.0" prefWidth="800.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
          <children>
-            <Pane prefHeight="320.0" prefWidth="800.0" styleClass="AnchorPane">
+            <Pane prefHeight="325.0" prefWidth="800.0" styleClass="AnchorPane">
                <children>
-                  <JFXTextArea fx:id="textAreaLetterEdit" focusColor="#4eb1ba" layoutY="50.0" prefHeight="265.0" prefWidth="800.0" promptText="Текст резолюции" styleClass="JFXTextArea" />
-                  <JFXDatePicker fx:id="datePickerLetter" editable="false" layoutX="600.0" layoutY="2.0" prefHeight="25.0" prefWidth="200.0" promptText="Дата поступления" styleClass="JFXDatePicker" />
-                  <JFXTextField fx:id="txtLetterNumber" editable="false" focusColor="#4eb1ba" layoutX="442.0" layoutY="3.0" prefHeight="25.0" prefWidth="144.0" promptText="Номер письма" styleClass="JFXTextField" />
-                  <JFXComboBox fx:id="nameLetterComboBox" layoutX="7.0" layoutY="3.0" onAction="#nameLetterComboBox" prefHeight="25.0" prefWidth="414.0" promptText="Тип письма" />
+                  <Pane layoutY="50.0" prefHeight="265.0" prefWidth="800.0" styleClass="AnchorPane">
+                     <children>
+                        <JFXTextArea fx:id="textAreaLetterEdit" focusColor="#4eb1ba" prefHeight="262.0" prefWidth="800.0" promptText="Текст резолюции" styleClass="JFXTextArea" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="38.0" prefWidth="800.0" styleClass="AnchorPane">
+                     <children>
+                        <JFXDatePicker fx:id="datePickerLetter" editable="false" layoutX="595.0" layoutY="5.0" prefHeight="25.0" prefWidth="200.0" promptText="Дата поступления" styleClass="JFXDatePicker" />
+                        <JFXTextField fx:id="txtLetterNumber" editable="false" focusColor="#4eb1ba" layoutX="435.0" layoutY="5.0" prefHeight="25.0" prefWidth="144.0" promptText="Номер письма" styleClass="JFXTextField" />
+                        <JFXComboBox fx:id="nameLetterComboBox" layoutX="5.0" layoutY="5.0" onAction="#nameLetterComboBox" prefHeight="25.0" prefWidth="414.0" promptText="Тип письма" />
+                     </children>
+                  </Pane>
                </children>
             </Pane>
             <Pane layoutY="330.0" prefHeight="370.0" prefWidth="800.0" style="-fx-background-color: white;">
@@ -121,13 +129,21 @@
          <children>
             <Pane prefHeight="320.0" prefWidth="800.0" styleClass="AnchorPane">
                <children>
-                  <JFXTextArea fx:id="textAreaLetterView" editable="false" focusColor="#4eb1ba" layoutY="50.0" prefHeight="265.0" prefWidth="800.0" promptText="Текст резолюции" styleClass="JFXTextArea" />
-                  <Label layoutX="14.0" layoutY="14.0" styleClass="label2" text="Тип:" />
-                  <Label layoutX="531.0" layoutY="14.0" styleClass="label2" text="№:" />
-                  <Label layoutX="659.0" layoutY="14.0" styleClass="label2" text="Дата:" />
-                  <Label fx:id="labelLetterName" layoutX="45.0" layoutY="10.0" prefHeight="25.0" prefWidth="460.0" styleClass="label4" text="..." />
-                  <Label fx:id="labelLetterNumber" layoutX="555.0" layoutY="10.0" styleClass="label4" text="123-/65666" />
-                  <Label fx:id="labelLetterDate" layoutX="696.0" layoutY="10.0" styleClass="label4" text="22/22/2222" />
+                  <Pane layoutY="50.0" prefHeight="265.0" prefWidth="800.0" styleClass="AnchorPane">
+                     <children>
+                        <JFXTextArea fx:id="textAreaLetterView" editable="false" focusColor="#4eb1ba" prefHeight="258.0" prefWidth="800.0" promptText="Текст резолюции" styleClass="JFXTextArea" />
+                     </children>
+                  </Pane>
+                  <Pane layoutY="10.0" prefHeight="30.0" prefWidth="800.0" styleClass="AnchorPane">
+                     <children>
+                        <Label layoutX="5.0" layoutY="5.0" styleClass="label2" text="Тип:" />
+                        <Label layoutX="520.0" layoutY="5.0" styleClass="label2" text="№:" />
+                        <Label layoutX="645.0" layoutY="5.0" styleClass="label2" text="Дата:" />
+                        <Label fx:id="labelLetterName" layoutX="30.0" prefHeight="25.0" prefWidth="460.0" styleClass="label4" text="..." />
+                        <Label fx:id="labelLetterNumber" layoutX="540.0" styleClass="label4" text="123-/65666" />
+                        <Label fx:id="labelLetterDate" layoutX="682.0" styleClass="label4" text="22/22/2222" />
+                     </children>
+                  </Pane>
                </children>
             </Pane>
             <Pane layoutY="330.0" prefHeight="370.0" prefWidth="800.0" style="-fx-background-color: white;">

@@ -11,7 +11,9 @@ public class NotificationEvent {
     private ArrayList<Integer> listNewTask = new ArrayList<Integer>();
     private ArrayList<Integer> listNewFromEmpTask = new ArrayList<Integer>();
     private ArrayList<Integer> listNewLetter = new ArrayList<Integer>();
-    private ArrayList<Integer> listNewEvent = new ArrayList<Integer>();
+    private int countEvent = 0;
+    private int countLetter = 0;
+    private int countTask = 0;
 
     public void newTask(String message, int idSumm){
         if (!listNewTask.contains(idSumm)) {
@@ -29,15 +31,36 @@ public class NotificationEvent {
         }
     }
     public void overdueTask(String message){
-        String title = "У вас есть просроченные задачи:";
-        NotificationType notificationType = NotificationType.WARNING;
+        if (countTask==0||countTask>30){
+            String title = "У вас есть просроченные задачи:";
+            NotificationType notificationType = NotificationType.WARNING;
 
-        TrayNotification tray = new TrayNotification();
-        tray.setTitle(title);
-        tray.setMessage(message);
-        tray.setAnimationType(AnimationType.SLIDE);
-        tray.setNotificationType(notificationType);
-        tray.showAndDismiss(Duration.millis(5000));
+            TrayNotification tray = new TrayNotification();
+            tray.setTitle(title);
+            tray.setMessage(message);
+            tray.setAnimationType(AnimationType.SLIDE);
+            tray.setNotificationType(notificationType);
+            tray.showAndDismiss(Duration.millis(5000));
+            countTask=0;
+        }
+        countTask++;
+
+    }
+    public void overdueLetter(String message){
+        if (countLetter==0||countLetter>30){
+            String title = "У вас есть необработанные письма:";
+            NotificationType notificationType = NotificationType.WARNING;
+
+            TrayNotification tray = new TrayNotification();
+            tray.setTitle(title);
+            tray.setMessage(message);
+            tray.setAnimationType(AnimationType.SLIDE);
+            tray.setNotificationType(notificationType);
+            tray.showAndDismiss(Duration.millis(5000));
+            countLetter=0;
+        }
+        countLetter++;
+
     }
 
     public void  newFromEmpTask(String message, int idSumm){
@@ -74,7 +97,7 @@ public class NotificationEvent {
     }
 
     public void newEvent(String message) {
-
+        if (countEvent==0||countEvent>10){
             String title = "Напоминание:";
             NotificationType notificationType = NotificationType.INFORMATION;
 
@@ -84,6 +107,9 @@ public class NotificationEvent {
             tray.setAnimationType(AnimationType.SLIDE);
             tray.setNotificationType(notificationType);
             tray.showAndDismiss(Duration.millis(5000));
+            countEvent=0;
+        }
+        countEvent++;
 
     }
 }

@@ -108,7 +108,7 @@
                   </HBox>
                </children>
             </Pane>
-            <Pane prefHeight="266.0" prefWidth="800.0" styleClass="AnchorPane">
+            <Pane prefHeight="270.0" prefWidth="800.0" styleClass="AnchorPane">
                <children>
                   <JFXTextArea fx:id="textAreaLetter" editable="false" focusColor="#4eb1ba" prefHeight="260.0" prefWidth="800.0" promptText="Текст резолюции" styleClass="JFXTextArea" />
                </children>

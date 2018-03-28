@@ -66,11 +66,6 @@ public class MainController {
     @FXML
     private FontAwesomeIconView refreshTabIcon;
 
-
-
-
-
-
     //создаем трей иконку
     public static java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
     public static java.awt.TrayIcon trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().createImage("ArgusDoc-client/src/main/resources/images/trayIcon.jpg"));
@@ -209,6 +204,7 @@ public class MainController {
     private TableColumn<Event, String> nameEvent;
     private TableColumn<Event, String> dateEvent;
     private TableColumn<Event, String> timeEvent;
+    private TableColumn<Event, String> statusEvent;
     @FXML
     private Label labelSelectedDate;
     @FXML
@@ -387,13 +383,15 @@ public class MainController {
         dateEvent.setCellValueFactory(new PropertyValueFactory<Event, String>("eventDate"));
         timeEvent = new TableColumn<Event, String>("Время");
         timeEvent.setCellValueFactory(new PropertyValueFactory<Event, String>("eventTime"));
+        statusEvent = new TableColumn<Event, String>("Статус события");
+        statusEvent.setCellValueFactory(new PropertyValueFactory<Event, String>("eventStatus"));
 
         timeEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.30));
         nameEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.70));
         dateEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0));
+        statusEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0));
 
-
-        tableEvent.getColumns().setAll(timeEvent, nameEvent ,dateEvent);
+        tableEvent.getColumns().setAll(timeEvent, nameEvent ,dateEvent,statusEvent);
 
         tableEvent.setItems(observableListSelectDayEvent);
 
@@ -505,7 +503,9 @@ Calendar tab
     public void clickTableEvent(MouseEvent mouseEvent) {
         Event event = tableEvent.getSelectionModel().getSelectedItems().get(0);
         if (event!=null){
-            this.event = event;
+            this.event=event;
+            textAreaEvent.setText(event.getEventName());
+            timePickerEvent.setValue(event.getEventTime().toLocalTime());
         }
 
     }
@@ -589,10 +589,67 @@ Calendar tab
 
         }
     }
+    public void updateEvent(ActionEvent actionEvent) throws RemoteException {
+        if (textAreaEvent.getText().isEmpty()||timePickerEvent.getValue()==null) {
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Введите текст напоминания!");
+        } else {
+            Event event = this.event;
+            event.setEventName(textAreaEvent.getText());
+            event.setEventTime(Time.valueOf(timePickerEvent.getValue()));
+            event.setEventDate(datesql);
+            event.setEmployeeId(authorizedUser.getEmployeeId());
 
+
+            switch (comboBoxRepeate.getValue()) {
+
+                case "Ежедневно": {
+                    event.setEventPeriodicity(EventPeriodicity.DAILY);
+                    break;
+                }
+                case "Еженедельно": {
+                    event.setEventPeriodicity(EventPeriodicity.WEEKLY);
+                    break;
+                }
+                case "Ежемесячно": {
+                    event.setEventPeriodicity(EventPeriodicity.MONTHLY);
+                    break;
+                }
+                default: {
+                    event.setEventPeriodicity(EventPeriodicity.SINGLE_TIME);
+                    break;
+                }
+
+            }
+
+
+
+
+            try {
+                eventService.updateEvent(event);
+                System.out.println(event.toString());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
+            clearEventText();
+            refreshTableEvent();
+
+        }
+
+    }
+    public void doneEvent(ActionEvent actionEvent) {
+        try {
+            eventService.doneEvent(event.getEventId());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
     private void refreshTableEvent() throws RemoteException {
-
-
         tableEvent.setItems(observableListSelectDayEvent);
     }
 
@@ -1622,55 +1679,102 @@ Calendar tab
 
 
     private void colorRow() {
-            Service<Void> service = new Service<Void>() {
-                @Override
-                protected Task<Void> createTask() {
-                    return new Task<Void>() {
-                        @Override
-                        protected Void call() throws Exception {
-                            statusTask.setCellFactory(column -> {
-                                return new TableCell<TaskEntity, String>() {
-                                    @Override
-                                    protected void updateItem(String item, boolean empty) {
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        statusTask.setCellFactory(column -> {
+                            return new TableCell<TaskEntity, String>() {
+                                @Override
+                                protected void updateItem(String item, boolean empty) {
 
-                                        setStyle("");
-                                        super.updateItem(item, empty);
+                                    setStyle("");
+                                    super.updateItem(item, empty);
 
-                                        setText(empty ? "" : getItem().toString());
-                                        setGraphic(null);
+                                    setText(empty ? "" : getItem().toString());
+                                    setGraphic(null);
 
-                                        TableRow<TaskEntity> currentRow = getTableRow();
+                                    TableRow<TaskEntity> currentRow = getTableRow();
 
-                                        if (!isEmpty()) {
-                                            switch (item) {
-                                                case "1":
-                                                    currentRow.setStyle("-fx-background-color:#6BFF61");
-                                                    break;
-                                                case "2":
-                                                    currentRow.setStyle("-fx-background-color:#FBCEB1; -fx-font-weight: bold; -fx-font-size: 16");
-                                                    break;
-                                                case "3":
-                                                    currentRow.setStyle("-fx-background-color:#F3FF80");
-                                                    break;
-                                                case "4":
-                                                    currentRow.setStyle("-fx-background-color:red");
-                                                    break;
-                                                case "5":
-                                                    currentRow.setStyle("-fx-background-color:#BCCDC4");
-                                                    break;
-                                                default:
-                                                    currentRow.setStyle("");
-                                                    break;
-                                            }
+                                    if (!isEmpty()) {
+                                        switch (item) {
+                                            case "1":
+                                                currentRow.setStyle("-fx-background-color:#6BFF61");
+                                                break;
+                                            case "2":
+                                                currentRow.setStyle("-fx-background-color:#FBCEB1; -fx-font-weight: bold; -fx-font-size: 16");
+                                                break;
+                                            case "3":
+                                                currentRow.setStyle("-fx-background-color:#F3FF80");
+                                                break;
+                                            case "4":
+                                                currentRow.setStyle("-fx-background-color:red");
+                                                break;
+                                            case "5":
+                                                currentRow.setStyle("-fx-background-color:#BCCDC4");
+                                                break;
+                                            default:
+                                                currentRow.setStyle("");
+                                                break;
                                         }
                                     }
-                                };
-                            });
-                            return null;
-                        }
-                    };
-                }
-            };
+                                }
+                            };
+                        });
+                        return null;
+                    }
+                };
+            }
+        };
+
+
+        Platform.runLater(() -> {
+            service.start();
+        });
+    }
+    private void colorRowEvent() {
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        statusEvent.setCellFactory(column -> {
+                            return new TableCell<Event, String>() {
+                                @Override
+                                protected void updateItem(String item, boolean empty) {
+
+                                    setStyle("");
+                                    super.updateItem(item, empty);
+
+                                    setText(empty ? "" : getItem().toString());
+                                    setGraphic(null);
+
+                                    TableRow<TaskEntity> currentRow = getTableRow();
+
+                                    if (!isEmpty()) {
+                                        switch (item) {
+                                            case "1":
+                                                currentRow.setStyle("-fx-background-color:#6BFF61");
+                                                break;
+                                            case "0":
+                                                currentRow.setStyle("-fx-background-color:#FBCEB1; -fx-font-weight: bold; -fx-font-size: 16");
+                                                break;
+                                            default:
+                                                currentRow.setStyle("");
+                                                break;
+                                        }
+                                    }
+                                }
+                            };
+                        });
+                        return null;
+                    }
+                };
+            }
+        };
 
 
         Platform.runLater(() -> {
@@ -1980,15 +2084,26 @@ Calendar tab
                         observableListDepartmentName = FXCollections.observableArrayList(departmentService.listDepartmentName());
                         observableListLetter = FXCollections.observableArrayList(letterService.listLetter());
 
-//Уведомления о новых письмах
+//Уведомления о новых/просроченных письмах
+                        long dateNow = System.currentTimeMillis();
                         int newLetter = 0;
                         int idSummLetter = 0;
                         String messageNameLetter="";
+
+                        String messageOverdueLetter="";
+                        int overdueLetter = 0;
                         for (int i = 0;i<observableListMyLetterTaskEntity.size();i++){
+                            //новые
                             if (observableListMyLetterTaskEntity.get(i).getStatusTaskId().equals(StatusTask.NOT_DONE)){
                                 newLetter++;
                                 idSummLetter=idSummLetter+observableListMyLetterTaskEntity.get(i).getTaskId();
                                 messageNameLetter=messageNameLetter+" "+observableListMyLetterTaskEntity.get(i).getTaskName();
+                            }
+                            //просроченные
+                            if (((observableListMyLetterTaskEntity.get(i).getTaskTerm().getTime())<dateNow)){
+                                messageOverdueLetter=messageOverdueLetter+" "+observableListMyLetterTaskEntity.get(i).getTaskName();
+                                taskService.overdueTask(observableListMyLetterTaskEntity.get(i).getTaskId());
+                                overdueLetter++;
                             }
                         }
                         if (newLetter>0) {
@@ -2015,15 +2130,37 @@ Calendar tab
                             });
 
                         }
-//Уведомления о новых задачах
+                        if (overdueLetter>0) {
+                            String finalMessageOverdueLetter = messageOverdueLetter;
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    notificationEvent.overdueLetter(finalMessageOverdueLetter);
+
+                                }
+                            });
+                        }
+//Уведомления о новых/просроченных задачах
                         int newTask = 0;
                         int idSummNewTask = 0;
                         String messageNameTask="";
+
+                        String messageOverdueTask="";
+                        int overdueTask = 0;
+
                         for (int i = 0;i<observableListMyTaskEntity.size();i++){
+                            //новые
                             if (observableListMyTaskEntity.get(i).getStatusTaskId().equals(StatusTask.NOT_DONE)){
                                 newTask++;
                                 messageNameTask=messageNameTask+" "+observableListMyTaskEntity.get(i).getTaskName();
                                 idSummNewTask=idSummNewTask+observableListMyTaskEntity.get(i).getTaskId();
+
+                            }
+                            //просроченные
+                            if (((observableListMyTaskEntity.get(i).getTaskTerm().getTime()+observableListMyTaskEntity.get(i).getTaskTime().getTime()+25200000)<dateNow)){
+                                messageOverdueTask=messageOverdueTask+" "+observableListMyTaskEntity.get(i).getTaskName();
+                                taskService.overdueTask(observableListMyTaskEntity.get(i).getTaskId());
+                                overdueTask++;
                             }
                         }
                         if (newTask>0) {
@@ -2039,6 +2176,7 @@ Calendar tab
                                 }
                             });
 
+
                         } else if (newTask==0){
                             Platform.runLater(new Runnable() {
                                 @Override
@@ -2049,7 +2187,17 @@ Calendar tab
                             });
 
                         }
+                        if (overdueTask>0) {
+                            String finalMessageOverdueTask = messageOverdueTask;
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    notificationEvent.overdueTask(finalMessageOverdueTask);
 
+                                }
+                            });
+
+                        }
 //Уведомления о выполненых задачах
                         int newFromEmpTask = 0;
                         int idSummNewFromEmpTask = 0;
@@ -2139,12 +2287,15 @@ Calendar tab
                                     }
                                     break;
                                 }
+                                default:{
+                                    break;
+                                }
                             }
                         }
                         System.out.println("repeatEvent");
 //Уведомления о событиях
                         int newEvent = 0;
-                        long dateNow = System.currentTimeMillis();
+
                         String messageEvent="";
                         java.sql.Date today = new java.sql.Date(dateNow);
 
@@ -2153,7 +2304,7 @@ Calendar tab
                         try {
                             for (int i=0;i<observableListTodayEvent.size();i++){
 
-                                if (((observableListTodayEvent.get(i).getEventTime().getTime()+observableListTodayEvent.get(i).getEventDate().getTime()+25200000)<dateNow)&&(String.valueOf(observableListTodayEvent.get(i).getEventDate()).equals(String.valueOf(today)))){
+                                if (((observableListTodayEvent.get(i).getEventTime().getTime()+observableListTodayEvent.get(i).getEventDate().getTime()+25200000)<dateNow)&&(String.valueOf(observableListTodayEvent.get(i).getEventDate()).equals(String.valueOf(today)))&&(observableListTodayEvent.get(i).getEventStatus().equals("0"))){
                                     newEvent++;
                                     messageEvent=messageEvent+" "+observableListTodayEvent.get(i).getEventName();
                                 }
@@ -2184,50 +2335,7 @@ Calendar tab
 
                         }
                         System.out.println("Event");
-/*
-//Уведомления о просроченных задачах
 
-                        String messageOverdueTask="";
-                        int overdueTask = 0;
-                        try {
-                            System.out.println(observableListMyTaskEntity.get(0).getTaskTerm().getTime()+observableListMyTaskEntity.get(0).getTaskTime().getTime()+25200000);
-
-                            System.out.println(dateNow);
-
-                            for (int i=0;i<observableListMyTaskEntity.size();i++){
-
-                                if (((observableListMyTaskEntity.get(i).getTaskTerm().getTime()+observableListMyTaskEntity.get(i).getTaskTime().getTime()+25200000)<dateNow)){
-                                    messageOverdueTask=messageOverdueTask+" "+observableListMyTaskEntity.get(i).getTaskName();
-                                    taskService.overdueTask(observableListMyTaskEntity.get(i).getTaskId());
-                                    overdueTask++;
-                                }
-
-                            }
-                        }catch (ArrayIndexOutOfBoundsException e){
-                            System.out.println("Просроченные задачи");
-                        }
-                        if (overdueTask>0){
-                            String finalMessageOverdueTask = messageOverdueTask;
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    myTasksButton.setStyle("-fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 14;");
-                                    notificationEvent.overdueTask(finalMessageOverdueTask);
-
-                                }
-                            });
-
-                        } else if (overdueTask==0){
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    myTasksButton.setStyle("-fx-text-fill: white;");
-                                }
-                            });
-
-                        }
-                        System.out.println("Taskoverdue");
-*/
 
 //Обновление текущей вкладки
                         switch (statusTab) {
@@ -2316,6 +2424,7 @@ Calendar tab
                             }
                         }
                         colorRow();
+                        colorRowEvent();
                         return null;
                     }
                 };
@@ -2350,7 +2459,7 @@ Calendar tab
                 };
             }
         };
-        service.setPeriod(Duration.seconds(30));
+        service.setPeriod(Duration.seconds(60));
         service.start();
 
 
@@ -2384,6 +2493,7 @@ Calendar tab
                 }
 
     }
+
 
 
 }

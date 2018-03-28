@@ -31,6 +31,16 @@ public class Event implements Serializable{
     @Column(name = "Event_periodicity")
     private int eventPeriodicity;
 
+    @Column(name = "Event_status")
+    private String eventStatus;
+
+    public String getEventStatus() {
+        return eventStatus;
+    }
+
+    public void setEventStatus(String eventStatus) {
+        this.eventStatus = eventStatus;
+    }
 
     public int getEventPeriodicity() {
         return eventPeriodicity;

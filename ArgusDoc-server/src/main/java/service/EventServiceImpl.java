@@ -70,7 +70,7 @@ public class EventServiceImpl implements EventService {
                 event.setEventDate(resultSet.getDate("Event_date"));
                 event.setEventName(resultSet.getString("Event_name"));
                 event.setEventPeriodicity(resultSet.getInt("Event_periodicity"));
-
+                event.setEventStatus(String.valueOf(resultSet.getInt("Event_status")));
                 listData.add(event);
             }
         } catch (SQLException e) {
@@ -92,11 +92,19 @@ public class EventServiceImpl implements EventService {
                 event.setEventName(resultSet.getString("Event_name"));
                 event.setEventTime(resultSet.getTime("Event_time"));
                 event.setEventPeriodicity(resultSet.getInt("Event_periodicity"));
+                event.setEventStatus(String.valueOf(resultSet.getInt("Event_status")));
                 listData.add(event);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return listData;
+    }
+
+    @Override
+    public void doneEvent(int id) throws RemoteException, SQLException {
+        this.dBconnection = new DBconnection();
+        PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("UPDATE EVENTS SET Event_status='1' WHERE Event_id='"+id+"'");
+        preparedStatement.execute();
     }
 }

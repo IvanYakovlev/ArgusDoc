@@ -24,7 +24,7 @@
                         <JFXButton layoutX="466.0" layoutY="583.0" onAction="#addDepartmentButton" styleClass="blue-btn" text="Добавить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="213.0" />
                         <JFXButton layoutX="589.0" layoutY="583.0" onAction="#updateDepartmentButton" styleClass="blue-btn" text="Обновить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="105.0" />
                         <JFXButton layoutX="555.0" layoutY="399.0" onAction="#removeDepartmentButton" styleClass="blue-btn" text="Удалить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-                        <TableView fx:id="tableDepartment" onMouseClicked="#clickTableDepartment" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
+                        <TableView fx:id="tableDepartment" onMouseClicked="#clickTableDepartment" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                      </children>
                   </AnchorPane>
                </content>
@@ -44,7 +44,7 @@
                         <Label layoutX="30.0" layoutY="349.0" styleClass="label2" text="Пароль:" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="730.0" />
                         <Label layoutX="470.0" layoutY="322.0" styleClass="label2" text="Доступ:" AnchorPane.bottomAnchor="90.0" AnchorPane.rightAnchor="280.0" />
                         <Label layoutX="30.0" layoutY="399.0" styleClass="label2" text="Отдел:" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="734.0" />
-                        <TableView fx:id="tableEmployee" onMouseClicked="#clickTableEmployee" prefHeight="282.0" prefWidth="800.0" AnchorPane.bottomAnchor="138.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
+                        <TableView fx:id="tableEmployee" onMouseClicked="#clickTableEmployee" prefHeight="282.0" prefWidth="800.0" AnchorPane.bottomAnchor="138.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                      </children>
                   </AnchorPane>
                </content>
@@ -57,7 +57,7 @@
                         <JFXButton fx:id="documentButtonId" layoutX="484.0" layoutY="400.0" onAction="#addDocumentButton" styleClass="blue-btn" text="Добавить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="105.0" />
                         <JFXButton layoutX="553.0" layoutY="400.0" onAction="#removeDocumentButton" styleClass="blue-btn" text="Удалить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
                         <Label layoutX="69.0" layoutY="393.0" styleClass="label2" text="Отдел:" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="700.0" />
-                        <TableView fx:id="tableDocument" layoutX="14.0" layoutY="14.0" onMouseClicked="#clickTableDocument" prefHeight="558.0" prefWidth="809.0" styleClass="TableView" AnchorPane.bottomAnchor="63.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="-14.0" AnchorPane.topAnchor="14.0" />
+                        <TableView fx:id="tableDocument" layoutX="14.0" layoutY="14.0" onMouseClicked="#clickTableDocument" prefHeight="558.0" prefWidth="809.0" styleClass="TableView" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                      </children>
                   </AnchorPane>
                </content>

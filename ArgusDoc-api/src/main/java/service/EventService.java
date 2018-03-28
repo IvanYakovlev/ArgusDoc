@@ -15,5 +15,6 @@ public interface EventService extends Remote {
     public void removeEvent(Event event) throws RemoteException, SQLException;
     public List<Event> listSelectedDayEvent(int authUserId, java.sql.Date selectedDate) throws RemoteException;
     public List<Event> listAllEvent(int authUserId) throws RemoteException;
+    public void doneEvent(int id) throws RemoteException, SQLException;
 
 }

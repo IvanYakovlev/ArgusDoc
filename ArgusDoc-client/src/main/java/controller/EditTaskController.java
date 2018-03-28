@@ -90,6 +90,8 @@ public class EditTaskController {
         textViewAreaTask.setText(taskEntity.getTaskText());
         labelViewTask.setText(taskEntity.getTaskName());
         comboBoxEmployee.getSelectionModel().select(taskEntity.getEmployeeName());
+        datePickerTask.setValue(taskEntity.getTaskTerm().toLocalDate());
+        timePickerTask.setValue(taskEntity.getTaskTime().toLocalTime());
         if (taskEntity.getTaskAttachment()==null){
             downloadFileButton.setVisible(false);
             openFileButton.setVisible(false);
