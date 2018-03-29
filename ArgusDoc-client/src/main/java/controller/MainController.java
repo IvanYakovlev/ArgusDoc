@@ -2503,8 +2503,4 @@ Calendar tab
 
     }
 
-
-    public void onMouseExiteddoneButton(MouseDragEvent mouseDragEvent) {
-        doneEvent.setTooltip(new Tooltip("asd"));
-    }
 }
