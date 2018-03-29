@@ -1,8 +1,12 @@
 package controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import dbConnection.DBconnection;
+import dialog.ADInfo;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -16,8 +20,8 @@ import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
 import javax.print.DocFlavor;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.net.BindException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -28,17 +32,15 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.ExportException;
 import java.rmi.server.UnicastRemoteObject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Optional;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 
 public class ServerController {
-    DBconnection dBconnection = new DBconnection();
+    DBconnection dBconnection;
 
     Registry registry;
     AccessServiceImpl accessServiceImpl;
@@ -68,17 +70,31 @@ public class ServerController {
     private JFXButton stopServerButton;
     @FXML
     private JFXButton startServerButton;
+    @FXML
+    private JFXTextField txtDBURL;
 
+    @FXML
+    private JFXTextField txtDBUser;
+
+    @FXML
+    private JFXTextField txtDBPassword;
+
+    @FXML
+    private JFXTextField txtDBServerPort;
 
 
     // application stage is stored so that it can be shown and hidden based on system tray icon operations.
     public Stage stage;
 
+    public static int serverPort;
 
+    private Properties properties;
+    private FileInputStream in;
+    private OutputStream out;
+    public static java.awt.SystemTray tray;
+    public static  java.awt.TrayIcon trayIcon;
 
-
-
-    public void initialize() throws RemoteException {
+    public void initialize() throws IOException {
 
         try {
             //Инициализируем toolkit
@@ -91,8 +107,8 @@ public class ServerController {
             }
 
             //создаем трей иконку
-            java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
-            java.awt.TrayIcon trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().createImage("ArgusDoc-server/src/main/resources/images/trayIcon.jpg"));
+            tray = java.awt.SystemTray.getSystemTray();
+            trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().createImage("ArgusDoc-server/src/main/resources/images/trayIcon.jpg"));
 
             //двойное нажатие мыши - показываем stage
             trayIcon.addActionListener(event -> Platform.runLater(this::showStage));
@@ -160,6 +176,24 @@ public class ServerController {
             e.printStackTrace();
         }
 
+        txtDBServerPort.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    txtDBServerPort.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+
+        properties = new Properties();
+        in = new FileInputStream("../ArgusDoc/ArgusDoc-server/src/main/resources/ArgusDocServer.properties");
+        properties.load(in);
+
+        txtDBURL.setText(properties.getProperty("URL"));
+        txtDBUser.setText(properties.getProperty("User"));
+        txtDBPassword.setText(properties.getProperty("Password"));
+        txtDBServerPort.setText(properties.getProperty("Port"));
 
         stopServerButton.setDisable(true);
         startServer();
@@ -194,9 +228,32 @@ public class ServerController {
 
 
     private void startServer() throws RemoteException {
-        dBconnection.connect();
 
-        registry = LocateRegistry.createRegistry(8966);
+        DBconnection.URL=txtDBURL.getText();
+        DBconnection.USER=txtDBUser.getText();
+        DBconnection.PASSWORD=txtDBPassword.getText();
+        try {
+            serverPort= Integer.parseInt(txtDBServerPort.getText());
+        }catch (NumberFormatException e){
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Некорректный порт!");
+            System.exit(0);
+
+        }
+
+
+
+        dBconnection=new DBconnection();
+        dBconnection.connect();
+        try {
+            registry = LocateRegistry.createRegistry(serverPort);
+        }catch (IllegalArgumentException e){
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Некорректный порт!");
+            System.exit(0);
+        }catch (ExportException e1){
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Порт занят!");
+            System.exit(0);
+        }
+
         accessServiceImpl = new AccessServiceImpl();
         accessService = (AccessService) UnicastRemoteObject.exportObject(accessServiceImpl,0);
         registry.rebind("accessService", accessService);
@@ -229,6 +286,8 @@ public class ServerController {
         serverCondition = "running";
         startServerButton.setDisable(true);
         stopServerButton.setDisable(false);
+
+
     }
 
     public void stopServer(){

@@ -2,8 +2,11 @@ package controller;
 
 import com.jfoenix.controls.JFXPasswordField;
 
+import com.jfoenix.controls.JFXTextField;
 import dialog.ADInfo;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,34 +24,53 @@ import entity.Employee;
 import service.*;
 
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class AuthorizationController {
 
 
     @FXML
     private JFXPasswordField txtPasswordEnter;
+    @FXML
+    private JFXTextField txtIpAddress;
+    @FXML
+    private JFXTextField txtPort;
 
 
+    private EmployeeService employeeService;
 
-
-
-    private DepartmentService departmentService = ServiceRegistry.departmentService;
-    private EmployeeService employeeService = ServiceRegistry.employeeService;
-    private AccessService accessService = ServiceRegistry.accessService;
-    private DocumentService documentService = ServiceRegistry.documentService;
-    private LetterService letterService = ServiceRegistry.letterService;
-    private TaskService taskService = ServiceRegistry.taskService;
-    private EventService eventService = ServiceRegistry.eventService;
     private double xOffset;
     private double yOffset;
+    private Properties properties;
+    private FileInputStream in;
 
+    public void initialize() throws IOException {
+        properties = new Properties();
+        in = new FileInputStream("../ArgusDoc/ArgusDoc-client/src/main/resources/ArgusDocClient.properties");
+        properties.load(in);
 
+        txtIpAddress.setText(properties.getProperty("ipAddress"));
+        txtPort.setText(properties.getProperty("port"));
 
-    public void loginButton(ActionEvent actionEvent) throws RemoteException {
+        txtPort.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    txtPort.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+    }
+
+    public void loginButton(ActionEvent actionEvent) throws IOException {
         ((Node) actionEvent.getSource()).getScene().getWindow().hide();
         enter();
 
@@ -56,10 +78,21 @@ public class AuthorizationController {
 
 
 
-    public void enter() throws RemoteException {
+    public void enter() throws IOException {
+
+
+        ServiceRegistry.ipAddress=txtIpAddress.getText();
+
+        ServiceRegistry.port= Integer.parseInt(txtPort.getText());
+
+        ServiceRegistry.init();
+
+        employeeService = ServiceRegistry.employeeService;
 
         Employee authorizedUser = null;
+
         try {
+
             authorizedUser = employeeService.getEmployeeByPassword(txtPasswordEnter.getText());
 
             if (authorizedUser.getEmployeeName() == null) {
@@ -89,6 +122,11 @@ public class AuthorizationController {
 
 
                     stage.show();
+// если успешно подключились сохраняем IP и Порт
+                    properties.setProperty("ipAddress", txtIpAddress.getText());
+                    properties.setProperty("port", txtPort.getText());
+                    FileOutputStream outputStream = new FileOutputStream("../ArgusDoc/ArgusDoc-client/src/main/resources/ArgusDocClient.properties");
+                    properties.store(outputStream, "");
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -103,11 +141,10 @@ public class AuthorizationController {
         }catch (NoSuchObjectException e){
             e.printStackTrace();
         }catch (NullPointerException e){
-           // e.printStackTrace();
-            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Сервер не запущен!");
+            //e.printStackTrace();
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Не удалось соединиться с сервером!");
             Platform.exit();
         }
-
 
 
 
@@ -123,6 +160,8 @@ public class AuthorizationController {
                         enter();
                     } catch (RemoteException e) {
                         e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                     ((Node) keyEvent.getSource()).getScene().getWindow().hide();
                 }
@@ -133,31 +172,7 @@ public class AuthorizationController {
     }
 
 
-    public DepartmentService getDepartmentService() {
-        return departmentService;
-    }
-
-    public EmployeeService getEmployeeService() {
-        return employeeService;
-    }
-
-    public AccessService getAccessService() {
-        return accessService;
-    }
-
-    public DocumentService getDocumentService() {
-        return documentService;
-    }
-
-    public LetterService getLetterService() {
-        return letterService;
-    }
-
-    public TaskService getTaskService() {
-        return taskService;
-    }
-
-    public EventService getEventService() {
-        return eventService;
+    public void cancelButton(ActionEvent actionEvent) {
+        Platform.exit();
     }
 }

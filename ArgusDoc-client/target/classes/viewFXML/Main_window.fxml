@@ -15,7 +15,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.effect.DropShadow?>
@@ -23,9 +22,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+
 <?import jfxtras.scene.control.CalendarPicker?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1000.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<?import javafx.scene.control.TableColumn?>
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
       <AnchorPane layoutX="171.0" prefHeight="500.0" prefWidth="630.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="170.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -121,14 +122,14 @@
                   </TableView>
                   <Label layoutX="438.0" layoutY="14.0" prefHeight="25.0" prefWidth="140.0" styleClass="label3" text="Дела на" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="16.0" />
                   <Label fx:id="labelSelectedDate" layoutX="510.0" layoutY="16.0" styleClass="label3" text="сегодня" AnchorPane.leftAnchor="500.0" />
-                  <AnchorPane layoutX="15.0" layoutY="303.0" prefHeight="343.0" prefWidth="401.0" styleClass="AnchorPane">
+                  <AnchorPane layoutX="15.0" layoutY="303.0" prefHeight="343.0" prefWidth="401.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="280.0">
                      <children>
                         <JFXTextArea fx:id="textAreaEvent" focusColor="#4eb1ba" layoutX="2.0" layoutY="58.0" prefHeight="157.0" prefWidth="395.0" promptText="Введите текст напоминания" styleClass="JFXTextArea" AnchorPane.bottomAnchor="125.0" AnchorPane.topAnchor="50.0" />
                         <JFXTimePicker fx:id="timePickerEvent" defaultColor="#4eb1ba" layoutX="10.0" layoutY="242.0" prefHeight="25.0" prefWidth="250.0" promptText="Выберите время" styleClass="JFXTimePicker" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="10.0" />
                         <JFXToggleButton fx:id="repeateEventToggleBtn" layoutX="247.0" layoutY="229.0" onAction="#repeateEventToggleBtn" prefHeight="58.0" prefWidth="149.0" text="Не повторять" AnchorPane.bottomAnchor="53.0" AnchorPane.rightAnchor="5.0" />
                         <JFXComboBox fx:id="comboBoxRepeate" layoutX="256.0" layoutY="281.0" prefHeight="25.0" prefWidth="129.0" visible="false" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="10.0" />
                         <Label layoutX="15.0" layoutY="14.0" styleClass="label3" text="Напоминание:" AnchorPane.topAnchor="10.0" />
-                        <Button fx:id="updateEvent" layoutX="70.0" layoutY="290.0" mnemonicParsing="false" onAction="#updateEvent" prefHeight="35.0" prefWidth="50.0" styleClass="blue-btn">
+                        <Button fx:id="updateEvent" layoutX="70.0" layoutY="290.0" mnemonicParsing="false" onAction="#updateEvent" prefHeight="35.0" prefWidth="50.0" styleClass="blue-btn" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="70.0">
                            <graphic>
                               <FontAwesomeIconView fill="WHITE" glyphName="EDIT" size="22" />
                            </graphic>
@@ -136,7 +137,7 @@
                               <Tooltip text="Редактировать напоминание" />
                            </tooltip>
                         </Button>
-                        <Button fx:id="addEvent" layoutX="10.0" layoutY="290.0" mnemonicParsing="false" onAction="#addEvent" prefHeight="35.0" prefWidth="50.0" styleClass="blue-btn">
+                        <Button fx:id="addEvent" layoutX="10.0" layoutY="290.0" mnemonicParsing="false" onAction="#addEvent" prefHeight="35.0" prefWidth="50.0" styleClass="blue-btn" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0">
                            <graphic>
                               <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="22" />
                            </graphic>
@@ -144,7 +145,7 @@
                               <Tooltip text="Добавить напоминание" />
                            </tooltip>
                         </Button>
-                        <Button fx:id="removeEvent" layoutX="130.0" layoutY="290.0" mnemonicParsing="false" onAction="#removeEvent" prefHeight="35.0" prefWidth="50.0" styleClass="blue-btn">
+                        <Button fx:id="removeEvent" layoutX="130.0" layoutY="290.0" mnemonicParsing="false" onAction="#removeEvent" prefHeight="35.0" prefWidth="50.0" styleClass="blue-btn" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="130.0">
                            <graphic>
                               <FontAwesomeIconView fill="WHITE" glyphName="MINUS" size="22" wrappingWidth="17.285715103149414" />
                            </graphic>
@@ -152,7 +153,7 @@
                               <Tooltip text="Удалить напоминание" />
                            </tooltip>
                         </Button>
-                        <Button fx:id="doneEvent" layoutX="190.0" layoutY="290.0" mnemonicParsing="false" onAction="#doneEvent" onMouseDragExited="#onMouseExiteddoneButton" prefHeight="35.0" prefWidth="50.0" styleClass="blue-btn">
+                        <Button fx:id="doneEvent" layoutX="190.0" layoutY="290.0" mnemonicParsing="false" onAction="#doneEvent" onMouseDragExited="#onMouseExiteddoneButton" prefHeight="35.0" prefWidth="50.0" styleClass="blue-btn" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="190.0">
                            <graphic>
                               <FontAwesomeIconView fill="WHITE" glyphName="CHECK" size="22" />
                            </graphic>

@@ -7,7 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDocServer.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ServerController">
+<AnchorPane prefHeight="286.0" prefWidth="437.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDocServer.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ServerController">
    <children>
       <AnchorPane layoutY="6.0" prefHeight="40.0" prefWidth="200.0" styleClass="AnchorPane3" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -29,11 +29,13 @@
             </JFXButton>
          </buttons>
       </ButtonBar>
-      <Label layoutX="44.0" layoutY="64.0" styleClass="label2" text="URL:" AnchorPane.topAnchor="60.0" />
-      <Label layoutX="42.0" layoutY="101.0" styleClass="label2" text="User:" AnchorPane.topAnchor="100.0" />
-      <Label layoutX="43.0" layoutY="138.0" styleClass="label2" text="Password:" AnchorPane.topAnchor="140.0" />
-      <JFXTextField layoutX="120.0" layoutY="60.0" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="60.0" />
-      <JFXTextField layoutX="120.0" layoutY="97.0" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="100.0" />
-      <JFXTextField layoutX="120.0" layoutY="134.0" AnchorPane.topAnchor="140.0" />
+      <Label layoutX="44.0" layoutY="64.0" styleClass="label2" text="URL:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="60.0" />
+      <Label layoutX="42.0" layoutY="101.0" styleClass="label2" text="User:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="100.0" />
+      <Label layoutX="43.0" layoutY="138.0" styleClass="label2" text="Password:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="140.0" />
+      <JFXTextField fx:id="txtDBURL" layoutX="80.0" layoutY="56.0" prefHeight="25.0" prefWidth="326.0" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="56.0" />
+      <JFXTextField fx:id="txtDBUser" layoutX="80.0" layoutY="96.0" prefHeight="25.0" prefWidth="326.0" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="96.0" />
+      <JFXTextField fx:id="txtDBPassword" layoutX="80.0" layoutY="136.0" prefHeight="25.0" prefWidth="326.0" AnchorPane.topAnchor="136.0" />
+      <JFXTextField fx:id="txtDBServerPort" layoutX="80.0" layoutY="176.0" prefHeight="25.0" prefWidth="326.0" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="176.0" />
+      <Label layoutX="43.0" layoutY="185.0" styleClass="label2" text="Server port:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="180.0" />
    </children>
 </AnchorPane>

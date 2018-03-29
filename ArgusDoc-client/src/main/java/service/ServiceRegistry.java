@@ -15,9 +15,13 @@ public class ServiceRegistry {
     public static EventService eventService;
     public static LetterService letterService;
     public static TaskService taskService;
-    static {
+    public static String ipAddress;
+    public static int port;
+
+
+    public static void init() {
         try {
-            registry = LocateRegistry.getRegistry("localhost", 8966);
+            registry = LocateRegistry.getRegistry(ipAddress, port);
             accessService = (AccessService) registry.lookup("accessService");
             departmentService = (DepartmentService) registry.lookup("departmentService");
             documentService = (DocumentService) registry.lookup("documentService");
@@ -34,7 +38,5 @@ public class ServiceRegistry {
             System.out.println("сервер не запущен");
         }
     }
-
-
 
 }

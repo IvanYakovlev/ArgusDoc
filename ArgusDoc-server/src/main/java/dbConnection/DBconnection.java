@@ -1,5 +1,11 @@
 package dbConnection;
 
+import com.sun.security.ntlm.Server;
+import controller.ServerController;
+import dialog.ADInfo;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -8,11 +14,11 @@ import java.sql.SQLException;
 
 public class DBconnection{
 
-    private String URL = "jdbc:sqlserver://95.188.110.171:1433;database=ArgusDoc";
+    public static String URL ;
 
-    private String USER = "sql_admin";
+    public static String USER ;
 
-    private String PASSWORD = "Qaz123wsx456";
+    public static String PASSWORD ;
 
     private Connection connection;
 
@@ -29,11 +35,11 @@ public class DBconnection{
                 if (!connection.isClosed()) {
                     System.out.println("Соединение с БД установлено!");
                 }
-/*                connection.close();
-                System.out.println("Соединение с БД закрыто!");*/
 
-            } catch (Exception e) {
-                System.out.println("Ошибка соединения!");
+            } catch (SQLException e) {
+                ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Соединение с БД не установлено");
+                System.exit(0);
+
             }
         }
         return this.connection;
