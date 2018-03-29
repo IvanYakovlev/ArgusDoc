@@ -28,6 +28,7 @@ public class NotificationEvent {
             tray.setAnimationType(AnimationType.POPUP);
             tray.setNotificationType(notificationType);
             tray.showAndWait();
+
         }
     }
     public void overdueTask(String message){
@@ -57,6 +58,7 @@ public class NotificationEvent {
             tray.setAnimationType(AnimationType.SLIDE);
             tray.setNotificationType(notificationType);
             tray.showAndDismiss(Duration.millis(5000));
+
             countLetter=0;
         }
         countLetter++;
