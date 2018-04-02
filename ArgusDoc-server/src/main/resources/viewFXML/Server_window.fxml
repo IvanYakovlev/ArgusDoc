@@ -17,14 +17,15 @@
       </AnchorPane>
       <ButtonBar layoutX="367.0" layoutY="335.0" prefHeight="40.0" prefWidth="577.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <buttons>
-            <JFXButton fx:id="startServerButton" onAction="#startServerButton" prefHeight="37.0" prefWidth="133.0" styleClass="blue-btn" text="Запустить">
-               <graphic>
-                  <FontAwesomeIconView fill="#00f510" glyphName="PLAY" size="20" />
-               </graphic>
-            </JFXButton>
+            <JFXButton fx:id="writeSettings" onAction="#writeSettings" styleClass="blue-btn" text="Запомнить" />
             <JFXButton fx:id="stopServerButton" onAction="#stopServerButton" styleClass="blue-btn" text="Остановить">
                <graphic>
                   <FontAwesomeIconView fill="RED" glyphName="CLOSE" size="20" />
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="startServerButton" onAction="#startServerButton" prefHeight="37.0" prefWidth="133.0" styleClass="blue-btn" text="Запустить">
+               <graphic>
+                  <FontAwesomeIconView fill="#00f510" glyphName="PLAY" size="20" />
                </graphic>
             </JFXButton>
          </buttons>

@@ -52,7 +52,6 @@ public class DrawerMainMenuController {
 
         fxmlLoader.setLocation(getClass().getResource("../viewFXML/Authorization_window.fxml"));
 
-
         Parent root = fxmlLoader.load();
         Stage primaryStage = new Stage();
         primaryStage.setTitle("Авторизация");

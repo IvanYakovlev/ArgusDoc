@@ -4,6 +4,7 @@ import argusDocSettings.ServerFilePath;
 import com.jfoenix.controls.JFXTextField;
 import entity.*;
 import javafx.collections.FXCollections;
+import javafx.scene.image.Image;
 import service.*;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import dialog.ADInfo;
@@ -28,8 +29,6 @@ import java.util.Optional;
 
 public class SettingController {
 
-
-
     private double xOffset;
     private double yOffset;
 
@@ -53,7 +52,7 @@ public class SettingController {
     final FileChooser fileChooser=new FileChooser();
 
 
-    //Department settings
+//Department settings
 @FXML
 private FontAwesomeIconView closeSettingWindow;
     @FXML
@@ -99,9 +98,6 @@ private FontAwesomeIconView closeSettingWindow;
 
 //initialize Departments settings table
 
-
-
-
         nameDep = new TableColumn<Department, String>("Название отдела");
         nameDep.setCellValueFactory(new PropertyValueFactory<Department, String>("departmentName"));
 
@@ -140,20 +136,12 @@ private FontAwesomeIconView closeSettingWindow;
         comboBoxEmployee_Department.setItems(observableListDepartmentName);
 //initialize Document settings table
 
-
-
         nameDoc = new TableColumn<Document, String>("Название документа");
         nameDoc.setCellValueFactory(new PropertyValueFactory<Document, String>("documentName"));
         departmentDoc = new TableColumn<Document, String>("Отдел");
         departmentDoc.setCellValueFactory(new PropertyValueFactory<Document, String>("departmentName"));
 
-
-
-
-
-
         tableDocument.getColumns().setAll( nameDoc, departmentDoc);
-
 
         nameDoc.prefWidthProperty().bind(tableEmployee.widthProperty().multiply(0.70));
         departmentDoc.prefWidthProperty().bind(tableEmployee.widthProperty().multiply(0.30));
@@ -184,7 +172,6 @@ private FontAwesomeIconView closeSettingWindow;
         ObservableList<String> observableListDepartmentName = FXCollections.observableArrayList(departmentService.listDepartmentName());
         comboBoxEmployee_Department.setItems(observableListDepartmentName);
         comboBoxDocument_Department.setItems(observableListDepartmentName);
-      //  comboBoxDocument_Template.setItems(departmentService.listDepartmentName());
 
     }
 
@@ -211,11 +198,11 @@ private FontAwesomeIconView closeSettingWindow;
     public void removeDepartmentButton(ActionEvent actionEvent) throws RemoteException {
 
         try {
-            ////////////
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            //alert.setTitle("Delete File");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/images/1.jpg"));
+            alert.setTitle("Удаление");
             alert.setHeaderText("Вы действительно хотите удалить отдел?");
-
 
             // option != null.
             Optional<ButtonType> option = alert.showAndWait();
@@ -230,9 +217,6 @@ private FontAwesomeIconView closeSettingWindow;
             } else {
 
             }
-            ////////////
-
-
 
         }catch (SQLException e){
 
@@ -267,10 +251,8 @@ private FontAwesomeIconView closeSettingWindow;
 
             clearDepartmentText();
             refreshTableDepartment();
-
         }
     }
-
 
 //Employees tab CRUD
 
@@ -322,11 +304,11 @@ private FontAwesomeIconView closeSettingWindow;
     public void removeEmployeeButton(ActionEvent actionEvent) throws RemoteException {
         try {
 
-            ////////////
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            //alert.setTitle("Delete File");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/images/1.jpg"));
+            alert.setTitle("Удаление");
             alert.setHeaderText("Вы действительно хотите удалить сотрудника?");
-
 
             // option != null.
             Optional<ButtonType> option = alert.showAndWait();
@@ -341,9 +323,6 @@ private FontAwesomeIconView closeSettingWindow;
             } else {
 
             }
-            ////////////
-
-
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -373,7 +352,6 @@ private FontAwesomeIconView closeSettingWindow;
             refreshTableEmployee();
         }
     }
-
 
 //Documents tab CRUD
 
@@ -423,7 +401,6 @@ private FontAwesomeIconView closeSettingWindow;
     }
 
     private void clearDocumentTab() {
-
         comboBoxDocument_Department.setValue(null);
     }
 
@@ -434,7 +411,9 @@ private FontAwesomeIconView closeSettingWindow;
 
                 ////////////
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                //alert.setTitle("Delete File");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image("/images/1.jpg"));
+                alert.setTitle("Удаление");
                 alert.setHeaderText("Вы действительно хотите удалить документ?");
 
 
@@ -461,11 +440,6 @@ private FontAwesomeIconView closeSettingWindow;
                 } else {
 
                 }
-                ////////////
-
-
-
-
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -486,7 +460,6 @@ private FontAwesomeIconView closeSettingWindow;
         if (document!=null) {
             comboBoxDocument_Department.setValue(document.getDepartmentName());
         }
-
     }
 
     public void closeSettingWindow(MouseEvent mouseEvent) {

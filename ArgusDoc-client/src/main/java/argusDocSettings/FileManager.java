@@ -9,6 +9,8 @@ import java.nio.file.Files;
 
 public class FileManager {
 
+    /*Класс для управлением файлами письма/задачи/документы*/
+
     public static void downloadFile(File file, String choosingDirectory) {
         if (choosingDirectory.equals("null")){
             ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Файл не сохранен!");

@@ -17,7 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseDragEvent;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import notification.NotificationEvent;
@@ -51,7 +51,6 @@ import dialog.ADInfo;
 
 
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 
 import java.nio.file.Files;
@@ -65,8 +64,7 @@ import java.util.*;
 
 
 public class MainController {
-    @FXML
-    private FontAwesomeIconView refreshTabIcon;
+
 
     //создаем трей иконку
     public static java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
@@ -128,15 +126,14 @@ public class MainController {
     private EventService eventService = ServiceRegistry.eventService;
 
 // Window control
-
+    @FXML
+    private FontAwesomeIconView refreshTabIcon;
     @FXML
     private Button doneEvent;
     @FXML
     private JFXHamburger hamburger ;
     @FXML
     private JFXDrawer drawer ;
-    @FXML
-    private AnchorPane achorPaneMenu;
     @FXML
     private JFXButton myTasksButton = new JFXButton();
     @FXML
@@ -227,11 +224,16 @@ public class MainController {
     ObservableList<String> observableListEventperiodicity;
 //Letter Tab
     @FXML
+    private JFXButton openAddLetterWindow;
+    @FXML
+    private JFXButton removeLetter;
+    @FXML
     private TextField txtFilter;
     @FXML
     private TableView<Letter> tableLetter;
     private TableColumn<Letter, String> idLetter;
     private TableColumn<Letter, String> nameLetter;
+    private TableColumn<Letter, String> dateLetter;
     private TableColumn<Letter, String> passwordLetter;
     private TableColumn<Letter, String> numberLetter;
     private TableColumn<Letter, String> filePathLetter;
@@ -273,8 +275,6 @@ public class MainController {
                 Platform.exit();
             }
 
-
-
             //двойное нажатие мыши - показываем stage
             trayIcon.addActionListener(event -> Platform.runLater(this::showStage));
 
@@ -300,8 +300,6 @@ public class MainController {
             popup.addSeparator();
             popup.add(exitItem);
             trayIcon.setPopupMenu(popup);
-
-
             // добавляем иконку в трей
             tray.add(trayIcon);
         } catch (AWTException e) {
@@ -449,21 +447,22 @@ public class MainController {
                 }
         });
 
-
-
-
-
 // If access - administrator
     if (authorizedUser.getAccessId()==1) {
-
-        letterTabButton.setVisible(true);
         settingTabButton.setVisible(true);
+        openAddLetterWindow.setVisible(true);
+        removeLetter.setVisible(true);
+
+    }
+
     /*initialize Letter  tab*/
 
         idLetter = new TableColumn<Letter, String>("id");
         idLetter.setCellValueFactory(new PropertyValueFactory<Letter, String>("letterId"));
         nameLetter = new TableColumn<Letter, String>("Название");
         nameLetter.setCellValueFactory(new PropertyValueFactory<Letter, String>("letterName"));
+        dateLetter = new TableColumn<Letter,String>("Дата");
+        dateLetter.setCellValueFactory(new PropertyValueFactory<Letter, String>("letterDate"));
         passwordLetter = new TableColumn<Letter, String>("Пароль");
         passwordLetter.setCellValueFactory(new PropertyValueFactory<Letter, String>("letterTechnicalPassword"));
         numberLetter = new TableColumn<Letter, String>("Номер");
@@ -471,23 +470,18 @@ public class MainController {
         filePathLetter = new TableColumn<Letter, String>("файл");
         filePathLetter.setCellValueFactory(new PropertyValueFactory<Letter, String>("letterFilePath"));
 
+        tableLetter.getColumns().setAll(numberLetter, dateLetter,nameLetter, passwordLetter);
 
-        tableLetter.getColumns().setAll(numberLetter, nameLetter, passwordLetter);
-
-        numberLetter.prefWidthProperty().bind(tableLetter.widthProperty().multiply(0.25));
+        numberLetter.prefWidthProperty().bind(tableLetter.widthProperty().multiply(0.15));
+        dateLetter.prefWidthProperty().bind(tableLetter.widthProperty().multiply(0.15));
         nameLetter.prefWidthProperty().bind(tableLetter.widthProperty().multiply(0.50));
-        passwordLetter.prefWidthProperty().bind(tableLetter.widthProperty().multiply(0.24));
+        passwordLetter.prefWidthProperty().bind(tableLetter.widthProperty().multiply(0.20));
 
         tableLetter.setItems(observableListLetter);
-
-
-    }
-
 
         anchorTask.toFront();
         myLetterButton.setStyle("-fx-font-weight: bold; -fx-font-size: 14");
         myTaskBtnBar.toFront();
-
 
         try {
             VBox box = FXMLLoader.load(getClass().getResource("/viewFXML/DrawerMainMenu.fxml"));
@@ -513,16 +507,16 @@ Calendar tab
             textAreaEvent.setText(event.getEventName());
             timePickerEvent.setValue(event.getEventTime().toLocalTime());
         }
-
     }
 
     public void removeEvent(ActionEvent actionEvent) throws RemoteException {
         if (event!=null){
             try {
 
-                ////////////
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                //alert.setTitle("Delete File");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image("/images/1.jpg"));
+                alert.setTitle("Удаление");
                 alert.setHeaderText("Вы действительно хотите удалить напоминание?");
 
                 // option != null.
@@ -533,19 +527,19 @@ Calendar tab
                 } else if (option.get() == ButtonType.OK) {
                     eventService.removeEvent(event);
 
+
                 } else if (option.get() == ButtonType.CANCEL) {
 
                 } else {
 
                 }
-                ////////////
-
-
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        refreshTableEvent();
+
+        observableListSelectDayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), datesql));
+        tableEventRefresh(observableListSelectDayEvent);
         colorRowEvent();
     }
 
@@ -559,12 +553,11 @@ Calendar tab
             event.setEventDate(datesql);
             event.setEmployeeId(authorizedUser.getEmployeeId());
 
-
                 switch (comboBoxRepeate.getValue()) {
 
                     case "Ежедневно": {
                         event.setEventPeriodicity(EventPeriodicity.DAILY);
-                        break;
+                         break;
                     }
                     case "Еженедельно": {
                         event.setEventPeriodicity(EventPeriodicity.WEEKLY);
@@ -581,20 +574,17 @@ Calendar tab
 
                 }
 
-
-
-
             try {
                 eventService.addEvent(event);
                 System.out.println(event.toString());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
             clearEventText();
-            refreshTableEvent();
-
         }
+        observableListSelectDayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), datesql));
+        tableEventRefresh(observableListSelectDayEvent);
+        colorRowEvent();
     }
     public void updateEvent(ActionEvent actionEvent) throws RemoteException {
         if (textAreaEvent.getText().isEmpty()||timePickerEvent.getValue()==null) {
@@ -605,7 +595,6 @@ Calendar tab
             event.setEventTime(Time.valueOf(timePickerEvent.getValue()));
             event.setEventDate(datesql);
             event.setEmployeeId(authorizedUser.getEmployeeId());
-
 
             switch (comboBoxRepeate.getValue()) {
 
@@ -628,9 +617,6 @@ Calendar tab
 
             }
 
-
-
-
             try {
                 eventService.updateEvent(event);
                 System.out.println(event.toString());
@@ -641,12 +627,13 @@ Calendar tab
             }
 
             clearEventText();
-            refreshTableEvent();
-
         }
+        observableListSelectDayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), datesql));
+        tableEventRefresh(observableListSelectDayEvent);
+        colorRowEvent();
 
     }
-    public void doneEvent(ActionEvent actionEvent) {
+    public void doneEvent(ActionEvent actionEvent) throws RemoteException {
         try {
             eventService.doneEvent(event.getEventId());
         } catch (RemoteException e) {
@@ -654,10 +641,9 @@ Calendar tab
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-    }
-    private void refreshTableEvent() throws RemoteException {
-        tableEvent.setItems(observableListSelectDayEvent);
+        observableListSelectDayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), datesql));
+        tableEventRefresh(observableListSelectDayEvent);
+        colorRowEvent();
     }
 
     private void clearEventText() {
@@ -683,7 +669,6 @@ Calendar tab
     }
 
     public void showAllEventButton(ActionEvent actionEvent) throws RemoteException {
-
         tableEvent.setItems(observableListAllEvent);
         tableEvent.getColumns().setAll(dateEvent, timeEvent, nameEvent,statusEvent);
         nameEvent.prefWidthProperty().bind(tableEvent.widthProperty().multiply(0.45));
@@ -693,8 +678,6 @@ Calendar tab
         colorRowEvent();
     }
 
-
-
 /*Document template tab*/
     public void clickTableDocumentTemplate(MouseEvent mouseEvent) {
 
@@ -702,9 +685,9 @@ Calendar tab
 
         document = clickDocument;
 
-
     }
     public void comboBoxDocument_Template(ActionEvent actionEvent) throws RemoteException {
+
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
@@ -716,12 +699,10 @@ Calendar tab
         Platform.runLater(() ->{
             new Thread(task).start();
         });
-
     }
 
     public void openDocumentButton(ActionEvent actionEvent) throws RemoteException {
         FileManager.openFile(document.getDocumentFilePath());
-
     }
 
     public void printDocumentButton(ActionEvent actionEvent) throws RemoteException {
@@ -743,7 +724,6 @@ Calendar tab
 
             AddTaskController addTaskController = loader.getController();
             addTaskController.authorizedUser=authorizedUser;
-
 
             stage.setTitle("Создание задачи");
             stage.setMinHeight(150);
@@ -767,16 +747,20 @@ Calendar tab
                     stage.setY(event.getScreenY() - yOffset);
                 }
             });
-            stage.show();
+            stage.showAndWait();
+            if (addTaskController.okButton)
+            {
+                observableListFromEmpTaskEntity = FXCollections.observableArrayList(taskService.listFromEmpTasks((authorizedUser.getEmployeeName())));
+                tableTaskRefresh(observableListFromEmpTaskEntity);
+                colorRow();
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public void openEditTaskButton(ActionEvent actionEvent) {
-
         try {
 
             if (taskEntity.getTaskIsLetter()==0) {
@@ -785,7 +769,6 @@ Calendar tab
                     EditTaskController editTaskController = new EditTaskController();
                     FXMLLoader fxmlLoader = new FXMLLoader();
                     fxmlLoader.setLocation(getClass().getResource("/viewFXML/Edit_task_window.fxml"));
-
 
                     try {
 
@@ -819,7 +802,14 @@ Calendar tab
                                 stage.setY(event.getScreenY() - yOffset);
                             }
                         });
-                        stage.show();
+                        stage.showAndWait();
+                        if (editController.okButton)
+                        {
+                            observableListFromEmpTaskEntity = FXCollections.observableArrayList(taskService.listFromEmpTasks((authorizedUser.getEmployeeName())));
+                            tableTaskRefresh(observableListFromEmpTaskEntity);
+                            colorRow();
+                        }
+
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -864,7 +854,13 @@ Calendar tab
                                 stage.setY(event.getScreenY() - yOffset);
                             }
                         });
-                        stage.show();
+                        stage.showAndWait();
+                        if (editViewLetterController.okButton)
+                        {
+                            observableListFromEmpTaskEntity = FXCollections.observableArrayList(taskService.listFromEmpTasks((authorizedUser.getEmployeeName())));
+                            tableTaskRefresh(observableListFromEmpTaskEntity);
+                            colorRow();
+                        }
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -880,15 +876,11 @@ Calendar tab
         }
 
         taskEntity=null;
-
-
-
     }
 
     public void openDoneTaskButton(ActionEvent actionEvent) throws RemoteException {
 
         try {
-
             if (taskEntity.getTaskIsLetter()==0) {
 
                 if (taskEntity != null) {
@@ -896,8 +888,8 @@ Calendar tab
                     FXMLLoader fxmlLoader = new FXMLLoader();
 
                     fxmlLoader.setLocation(getClass().getResource("/viewFXML/Done_task_window.fxml"));
-                    try {
 
+                    try {
                         fxmlLoader.load();
                         Stage stage = new Stage();
                         Parent root = fxmlLoader.getRoot();
@@ -927,7 +919,20 @@ Calendar tab
                                 stage.setY(event.getScreenY() - yOffset);
                             }
                         });
-                        stage.show();
+                        stage.showAndWait();
+                        if (doneController.okButton)
+                        {
+                            if (statusTab.equals("myDoneTask")){
+                                observableListMyDoneTaskEntity = FXCollections.observableArrayList(taskService.listMyDoneTasks(authorizedUser.getEmployeeId()));
+                                tableTaskRefresh(observableListMyDoneTaskEntity);
+
+                            } else if (statusTab.equals("myTask")){
+                                observableListMyTaskEntity = FXCollections.observableArrayList(taskService.listMyTasks(authorizedUser.getEmployeeId()));
+                                tableTaskRefresh( observableListMyTaskEntity);
+                            }
+
+                            colorRow();
+                        }
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -941,7 +946,6 @@ Calendar tab
 
                     fxmlLoader.setLocation(getClass().getResource("/viewFXML/Done_letter_window.fxml"));
                     try {
-
                         fxmlLoader.load();
                         Stage stage = new Stage();
                         Parent root = fxmlLoader.getRoot();
@@ -971,7 +975,13 @@ Calendar tab
                                 stage.setY(event.getScreenY() - yOffset);
                             }
                         });
-                        stage.show();
+                        stage.showAndWait();
+                        if (doneLetterController.okButton)
+                        {
+                            observableListMyLetterTaskEntity = FXCollections.observableArrayList(taskService.listMyLetterTasks(authorizedUser.getEmployeeId()));
+                            tableTaskRefresh(observableListMyLetterTaskEntity);
+                            colorRow();
+                        }
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -987,10 +997,7 @@ Calendar tab
         }
 
     taskEntity=null;
-
     }
-
-
 
     public void myLetterButton(ActionEvent actionEvent) {
         clearButtonMenuSelected();
@@ -1064,7 +1071,6 @@ Calendar tab
                 return new Task<Void>() {
                     @Override public Void call() throws RemoteException {
 
-
                         tableTask.setDisable(true);
                         progressBar.setVisible(true);
 
@@ -1075,8 +1081,6 @@ Calendar tab
                     }
                     updateProgress(i, max);
                 }
-
-
                         statusTab="myTask";
                         taskEntity =null;
 
@@ -1086,9 +1090,7 @@ Calendar tab
                         timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
                         statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
-
                         updateProgress(60, max);
-
 
                         Platform.runLater(() ->{
                             tableTask.setItems(list);
@@ -1101,13 +1103,11 @@ Calendar tab
                         tableTask.setDisable(false);
                         updateProgress(max, max);
 
-
                         return null;
                     }
                 };
             }
         };
-
 
         Platform.runLater(() ->{
         service.start();
@@ -1117,6 +1117,7 @@ Calendar tab
     }
 
     private void clearButtonMenuSelected() {
+
         myTasksButton.setStyle("");
         myLetterButton.setStyle("");
         myDoneTasksButton.setStyle("");
@@ -1127,16 +1128,15 @@ Calendar tab
         letterTabButton.setStyle("");
         settingTabButton.setStyle("");
 
-
     }
 
     public void myDoneTasksButton(ActionEvent actionEvent) throws RemoteException {
+
         clearButtonMenuSelected();
         myDoneTasksButton.setStyle("-fx-font-weight: bold; -fx-font-size: 14");
         anchorTask.toFront();
         myTaskDoneBtnBar.toFront();
         ObservableList<TaskEntity> list = observableListMyDoneTaskEntity;
-
 
         tableTask.getColumns().setAll(nameTask, sender, termTask, timeTask, statusTask);
 
@@ -1157,21 +1157,18 @@ Calendar tab
                         }
                         statusTab="myDoneTask";
                         taskEntity =null;
-
-
+                        // задаем размер колонок в таблице
                         nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
                         sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
                         termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
                         timeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
                         statusTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0));
 
-
                         Platform.runLater(() ->{
                             tableTask.setItems(list);
 
                         });
 
-                        // задаем размер колонок в таблице
                         colorRow();
 
                         tableTask.setDisable(false);
@@ -1215,7 +1212,7 @@ Calendar tab
                         }
                         statusTab="fromEmpTask";
                         taskEntity =null;
-
+                        // задаем размер колонок в таблице
                         nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.40));
                         employeeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.30));
                         termTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.15));
@@ -1228,7 +1225,6 @@ Calendar tab
                         });
 
                         colorRow();
-                        // задаем размер колонок в таблице
 
                         tableTask.setDisable(false);
                         progressBar.setVisible(false);
@@ -1275,7 +1271,7 @@ Calendar tab
 
                         statusTab="archiveTask";
                         taskEntity =null;
-
+                        // задаем размер колонок в таблице
                         nameTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
                         sender.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.25));
                         employeeTask.prefWidthProperty().bind(tableTask.widthProperty().multiply(0.20));
@@ -1289,11 +1285,6 @@ Calendar tab
 
                         });
                         colorRow();
-                        // задаем размер колонок в таблице
-
-
-
-
 
                         tableTask.setDisable(false);
                         progressBar.setVisible(false);
@@ -1307,8 +1298,6 @@ Calendar tab
         service.start();
         progressBar.progressProperty().bind(service.progressProperty());
         });
-
-
     }
 
     public void clickTableTask(MouseEvent mouseEvent) {
@@ -1323,18 +1312,22 @@ Calendar tab
     public void acceptTask(ActionEvent actionEvent) throws RemoteException {
         if (taskEntity !=null) {
             taskService.performedTask(taskEntity.getTaskId());
-            refreshData();
+            observableListMyTaskEntity = FXCollections.observableArrayList(taskService.listMyTasks(authorizedUser.getEmployeeId()));
+            tableTaskRefresh( observableListMyTaskEntity);
+            colorRow();
         }
     }
 
 
-    public void deleteTaskButton(ActionEvent actionEvent) throws RemoteException {
+    public void removeTaskButton(ActionEvent actionEvent) throws RemoteException {
         if (taskEntity !=null){
 
             try {
                 ////////////
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                //alert.setTitle("Delete File");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image("/images/1.jpg"));
+                alert.setTitle("Удаление");
                 alert.setHeaderText("Вы действительно хотите удалить задачу?");
 
                 // option != null.
@@ -1360,10 +1353,6 @@ Calendar tab
                 } else {
 
                 }
-                ////////////
-
-
-
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -1372,6 +1361,17 @@ Calendar tab
         {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Задача не выбрана!");
         }
+        if (statusTab.equals("archiveTask")){
+            observableListArchiveTaskEntity = FXCollections.observableArrayList(taskService.listArchiveTasks(Integer.parseInt(StatusTask.CANCELED)));
+            tableTaskRefresh(observableListArchiveTaskEntity);
+
+        } else if (statusTab.equals("fromEmpTask")){
+            observableListFromEmpTaskEntity = FXCollections.observableArrayList(taskService.listFromEmpTasks((authorizedUser.getEmployeeName())));
+            tableTaskRefresh(observableListFromEmpTaskEntity);
+        }
+
+        colorRow();
+
     }
     public void templateTabButton(ActionEvent actionEvent) throws RemoteException {
         clearButtonMenuSelected();
@@ -1396,15 +1396,9 @@ Calendar tab
                         statusTab="templateTab";
 
                         departmentService.listDepartments();
-/*
-                        tableDocumentTemplate.setItems(observableListDocument);*/
-
-
 
                         tableDocumentTemplate.setDisable(false);
                         progressBar.setVisible(false);
-
-
 
                         return null;
                     }
@@ -1421,7 +1415,7 @@ Calendar tab
         calendarTabButton.setStyle("-fx-font-weight: bold; -fx-font-size: 14");
 
         anchorCalendar.toFront();
-
+        ObservableList<Event> list = observableListSelectDayEvent;
         Service<Void> service = new Service<Void>() {
             @Override
             protected Task<Void> createTask() {
@@ -1437,7 +1431,10 @@ Calendar tab
                             updateProgress(i, max);
                         }
                         statusTab="calendarTab";
-                        tableEvent.setItems(observableListSelectDayEvent);
+                        Platform.runLater(()->{
+                            tableEvent.setItems(list);
+                        });
+
 
                         progressBar.setVisible(false);
                         return null;
@@ -1488,7 +1485,6 @@ Calendar tab
 
     public void settingTabButton(ActionEvent actionEvent) {
 
-
         FXMLLoader fxmlLoader = new FXMLLoader();
 
         fxmlLoader.setLocation(getClass().getResource("/viewFXML/Setting_window.fxml"));
@@ -1527,29 +1523,11 @@ Calendar tab
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-    /*    Task task = new Task<Void>() {
-
-            @Override public Void call() throws RemoteException {
-
-
-
-                return null;
-            }
-        };
-        new Thread(task).start();*/
-
-
     }
-
 
 //Letter Tab
 
-
-
-
     public void openViewEditLetterWindow(ActionEvent actionEvent) {
-
 
         if (letter.getLetterName()!=null) {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -1586,17 +1564,21 @@ Calendar tab
                         stage.setY(event.getScreenY() - yOffset);
                     }
                 });
-                stage.show();
+                stage.showAndWait();
+                if (editViewLetterController.okButton)
+                {
+                    observableListLetter = FXCollections.observableArrayList(letterService.listLetter());
+                    tableLetterRefresh(observableListLetter);
+                    colorRow();
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         else {
-            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Задача не выбрана!");
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Письмо не выбрано!");
         }
-
-
 
     }
 
@@ -1636,7 +1618,13 @@ Calendar tab
                         stage.setY(event.getScreenY() - yOffset);
                     }
                 });
-                stage.show();
+                stage.showAndWait();
+                if (addLetterController.okButton)
+                {
+                    observableListLetter = FXCollections.observableArrayList(letterService.listLetter());
+                    tableLetterRefresh(observableListLetter);
+                    colorRow();
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -1649,9 +1637,11 @@ Calendar tab
 
     public void removeLetter(ActionEvent actionEvent) throws RemoteException {
         try {
-            ////////////
+
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            //alert.setTitle("Delete File");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/images/1.jpg"));
+            alert.setTitle("Удаление");
             alert.setHeaderText("Вы действительно хотите удалить письмо?");
 
             // option != null.
@@ -1667,15 +1657,16 @@ Calendar tab
             } else {
 
             }
-            ////////////
-
-
 
         } catch (IOException e) {
             System.out.println("Файл уже удален!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        observableListLetter = FXCollections.observableArrayList(letterService.listLetter());
+        tableLetterRefresh(observableListLetter);
+        colorRow();
     }
 
     public void clickLetterTable(MouseEvent mouseEvent) {
@@ -1685,9 +1676,7 @@ Calendar tab
         }
     }
 
-
-
-    private void colorRow() {
+    private void colorRow() { //красим строки tableTask в зависимости от значения столбца statusTask
         Service<Void> service = new Service<Void>() {
             @Override
             protected Task<Void> createTask() {
@@ -1743,7 +1732,8 @@ Calendar tab
             service.start();
         });
     }
-    private void colorRowEvent() {
+
+    private void colorRowEvent() { //Красим строки tableEvent
         Service<Void> service = new Service<Void>() {
             @Override
             protected Task<Void> createTask() {
@@ -1785,274 +1775,233 @@ Calendar tab
             }
         };
 
-
         Platform.runLater(() -> {
             service.start();
         });
     }
 
-    public void keyPressSort(KeyEvent keyEvent) throws RemoteException {
+    public void keyPressSort(KeyEvent keyEvent) throws RemoteException { //Реализуем сортировку по таблицам в соответсвующих вкладках при вводе в txtFilter
            /*Сортировка*/
 
         switch (statusTab){
             case "myLetter":
-// 1. Wrap the ObservableList in a FilteredList (initially display all data).
-                //  ObservableList<TaskEntity> observableListMyTaskEntities = FXCollections.observableArrayList(taskService.listMyTasks(authorizedUser.getEmployeeId()));
                 FilteredList<TaskEntity> filteredMyLetterTaskEntity = new FilteredList<TaskEntity>(observableListMyLetterTaskEntity, p -> true);
 
-                // 2. Set the filter Predicate whenever the filter changes.
                 txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
                     filteredMyLetterTaskEntity.setPredicate(task -> {
-                        // If filter text is empty, display all persons.
+
                         if (newValue == null || newValue.isEmpty()) {
                             return true;
                         }
 
-                        // Compare first name and last name of every person with filter text.
                         String lowerCaseFilter = newValue.toLowerCase();
 
                         if (task.getTaskName().toLowerCase().contains(lowerCaseFilter)) {
-                            return true; // Filter matches first name.
+                            return true;
                         } else if (task.getTaskFromEmployee().toLowerCase().contains(lowerCaseFilter)){
                             return true;
                         } else if(2>0){
 
                         }
-                        return false; // Does not match.
+                        return false;
                     });
                 });
 
-                // 3. Wrap the FilteredList in a SortedList.
                 SortedList<TaskEntity> sortedMyLetterTaskEntity = new SortedList<>(filteredMyLetterTaskEntity);
 
-                // 4. Bind the SortedList comparator to the TableView comparator.
                 sortedMyLetterTaskEntity.comparatorProperty().bind(tableTask.comparatorProperty());
                 colorRow();
-                // 5. Add sorted (and filtered) data to the table.
-                tableTask.setItems(sortedMyLetterTaskEntity);
 
+                tableTask.setItems(sortedMyLetterTaskEntity);
 
                 break;
             case "myTask":
-// 1. Wrap the ObservableList in a FilteredList (initially display all data).
-              //  ObservableList<TaskEntity> observableListMyTaskEntities = FXCollections.observableArrayList(taskService.listMyTasks(authorizedUser.getEmployeeId()));
+
                 FilteredList<TaskEntity> filteredMyTaskEntity = new FilteredList<TaskEntity>(observableListMyTaskEntity, p -> true);
 
-                // 2. Set the filter Predicate whenever the filter changes.
                 txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
                     filteredMyTaskEntity.setPredicate(task -> {
-                        // If filter text is empty, display all persons.
+
                         if (newValue == null || newValue.isEmpty()) {
                             return true;
                         }
 
-                        // Compare first name and last name of every person with filter text.
                         String lowerCaseFilter = newValue.toLowerCase();
 
                         if (task.getTaskName().toLowerCase().contains(lowerCaseFilter)) {
-                            return true; // Filter matches first name.
+                            return true;
                         } else if (task.getTaskFromEmployee().toLowerCase().contains(lowerCaseFilter)){
                             return true;
                         }
-                        return false; // Does not match.
+                        return false;
                     });
                 });
 
-                // 3. Wrap the FilteredList in a SortedList.
                 SortedList<TaskEntity> sortedMyTaskEntity = new SortedList<>(filteredMyTaskEntity);
 
-                // 4. Bind the SortedList comparator to the TableView comparator.
                 sortedMyTaskEntity.comparatorProperty().bind(tableTask.comparatorProperty());
                 colorRow();
-                // 5. Add sorted (and filtered) data to the table.
-                tableTask.setItems(sortedMyTaskEntity);
 
+                tableTask.setItems(sortedMyTaskEntity);
 
                 break;
             case "myDoneTask":
-                // 1. Wrap the ObservableList in a FilteredList (initially display all data).
-               // ObservableList<TaskEntity> observableListMyDoneTaskEntities = FXCollections.observableArrayList(taskService.listMyDoneTasks(authorizedUser.getEmployeeId()));
+
                 FilteredList<TaskEntity> filteredMyDoneTaskEntity = new FilteredList<TaskEntity>(observableListMyDoneTaskEntity, p -> true);
 
-                // 2. Set the filter Predicate whenever the filter changes.
                 txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
                     filteredMyDoneTaskEntity.setPredicate(task -> {
-                        // If filter text is empty, display all persons.
+
                         if (newValue == null || newValue.isEmpty()) {
                             return true;
                         }
 
-                        // Compare first name and last name of every person with filter text.
                         String lowerCaseFilter = newValue.toLowerCase();
 
                         if (task.getTaskFromEmployee().toLowerCase().contains(lowerCaseFilter)) {
-                            return true; // Filter matches first name.
+                            return true;
                         } else if (task.getTaskName().toLowerCase().contains(lowerCaseFilter)){
                             return true;
                         }
-                        return false; // Does not match.
+                        return false;
                     });
                 });
 
-                // 3. Wrap the FilteredList in a SortedList.
                 SortedList<TaskEntity> sortedMyDoneTaskEntity = new SortedList<>(filteredMyDoneTaskEntity);
 
-                // 4. Bind the SortedList comparator to the TableView comparator.
                 sortedMyDoneTaskEntity.comparatorProperty().bind(tableTask.comparatorProperty());
                 colorRow();
-                // 5. Add sorted (and filtered) data to the table.
+
                 tableTask.setItems(sortedMyDoneTaskEntity);
                 break;
             case "fromEmpTask":
-                // 1. Wrap the ObservableList in a FilteredList (initially display all data).
-                //ObservableList<TaskEntity> observableListFromEmpTaskEntities = FXCollections.observableArrayList(taskService.listFromEmpTasks((authorizedUser.getEmployeeName())));
+
                 FilteredList<TaskEntity> filteredFromEmpTaskEntity = new FilteredList<TaskEntity>(observableListFromEmpTaskEntity, p -> true);
 
-                // 2. Set the filter Predicate whenever the filter changes.
+
                 txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
                     filteredFromEmpTaskEntity.setPredicate(task -> {
-                        // If filter text is empty, display all persons.
+
                         if (newValue == null || newValue.isEmpty()) {
                             return true;
                         }
 
-                        // Compare first name and last name of every person with filter text.
                         String lowerCaseFilter = newValue.toLowerCase();
 
                         if (task.getTaskName().toLowerCase().contains(lowerCaseFilter)) {
-                            return true; // Filter matches first name.
+                            return true;
                         } else if (task.getEmployeeName().toLowerCase().contains(lowerCaseFilter)){
                             return true;
                         }
-                        return false; // Does not match.
+                        return false;
                     });
                 });
 
-                // 3. Wrap the FilteredList in a SortedList.
                 SortedList<TaskEntity> sortedFromEmpTaskEntity = new SortedList<>(filteredFromEmpTaskEntity);
 
-                // 4. Bind the SortedList comparator to the TableView comparator.
                 sortedFromEmpTaskEntity.comparatorProperty().bind(tableTask.comparatorProperty());
                 colorRow();
-                // 5. Add sorted (and filtered) data to the table.
+
                 tableTask.setItems(sortedFromEmpTaskEntity);
                 break;
             case "archiveTask":
-                // 1. Wrap the ObservableList in a FilteredList (initially display all data).
-                //ObservableList<TaskEntity> observableListArchiveTaskEntities = FXCollections.observableArrayList(taskService.listArchiveTasks(Integer.parseInt(StatusTask.CANCELED)));
+
                 FilteredList<TaskEntity> filteredArchiveTaskEntity = new FilteredList<TaskEntity>(observableListArchiveTaskEntity, p -> true);
 
-                // 2. Set the filter Predicate whenever the filter changes.
                 txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
                     filteredArchiveTaskEntity.setPredicate(task -> {
-                        // If filter text is empty, display all persons.
+
                         if (newValue == null || newValue.isEmpty()) {
                             return true;
                         }
 
-                        // Compare first name and last name of every person with filter text.
                         String lowerCaseFilter = newValue.toLowerCase();
 
                         if (task.getTaskName().toLowerCase().contains(lowerCaseFilter)) {
-                            return true; // Filter matches first name.
+                            return true;
                         } else if (task.getEmployeeName().toLowerCase().contains(lowerCaseFilter)){
                             return true;
                         } else if (task.getTaskFromEmployee().toLowerCase().contains(lowerCaseFilter)){
                             return true;
                         }
-                        return false; // Does not match.
+                        return false;
                     });
                 });
 
-                // 3. Wrap the FilteredList in a SortedList.
                 SortedList<TaskEntity> sortedTaskEntityArchive = new SortedList<>(filteredArchiveTaskEntity);
 
-                // 4. Bind the SortedList comparator to the TableView comparator.
                 sortedTaskEntityArchive.comparatorProperty().bind(tableTask.comparatorProperty());
                 colorRow();
-                // 5. Add sorted (and filtered) data to the table.
+
                 tableTask.setItems(sortedTaskEntityArchive);
                 break;
             case "templateTab":
-                // 1. Wrap the ObservableList in a FilteredList (initially display all data).
-                //ObservableList<Document> observableListDocuments = FXCollections.observableArrayList(documentService.listDocuments());
+
                 FilteredList<Document> filteredDocument = new FilteredList<Document>(observableListDocument, p -> true);
 
-                // 2. Set the filter Predicate whenever the filter changes.
                 txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
                     filteredDocument.setPredicate(document -> {
-                        // If filter text is empty, display all persons.
+
                         if (newValue == null || newValue.isEmpty()) {
                             return true;
                         }
 
-                        // Compare first name and last name of every person with filter text.
                         String lowerCaseFilter = newValue.toLowerCase();
 
                         if (document.getDocumentName().toLowerCase().contains(lowerCaseFilter)) {
-                            return true; // Filter matches first name.
+                            return true;
                         }
-                        return false; // Does not match.
+                        return false;
                     });
                 });
 
-                // 3. Wrap the FilteredList in a SortedList.
                 SortedList<Document> sortedDocument = new SortedList<>(filteredDocument);
 
-                // 4. Bind the SortedList comparator to the TableView comparator.
                 sortedDocument.comparatorProperty().bind(tableDocumentTemplate.comparatorProperty());
 
-                // 5. Add sorted (and filtered) data to the table.
                 tableDocumentTemplate.setItems(sortedDocument);
                 break;
             case "calendarTab":
                 break;
             case "letterTab":
-                // 1. Wrap the ObservableList in a FilteredList (initially display all data).
-                //ObservableList<Letter> observableListLetters = FXCollections.observableArrayList(letterService.listLetter());
+
                 FilteredList<Letter> filteredLetter = new FilteredList<Letter>( observableListLetter, p -> true);
 
-                // 2. Set the filter Predicate whenever the filter changes.
                 txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
                     filteredLetter.setPredicate(letter -> {
-                        // If filter text is empty, display all persons.
+
                         if (newValue == null || newValue.isEmpty()) {
                             return true;
                         }
 
-                        // Compare first name and last name of every person with filter text.
+
                         String lowerCaseFilter = newValue.toLowerCase();
 
                         if (letter.getLetterName().toLowerCase().contains(lowerCaseFilter)) {
-                            return true; // Filter matches first name.
+                            return true;
                         } else if (letter.getLetterNumber().toLowerCase().contains(lowerCaseFilter)) {
-                            return true; // Filter matches last name.
+                            return true;
                         }else if (letter.getLetterTechnicalPassword().toLowerCase().contains(lowerCaseFilter)) {
-                            return true; // Filter matches last name.
+                            return true;
+                        }else if ((String.valueOf(letter.getLetterDate())).toLowerCase().contains(lowerCaseFilter)) {
+                            return true;
                         }
-                        return false; // Does not match.
+                        return false;
                     });
                 });
 
-                // 3. Wrap the FilteredList in a SortedList.
                 SortedList<Letter> sortedLetter = new SortedList<>(filteredLetter);
 
-                // 4. Bind the SortedList comparator to the TableView comparator.
                 sortedLetter.comparatorProperty().bind(tableLetter.comparatorProperty());
 
-                // 5. Add sorted (and filtered) data to the table.
                 tableLetter.setItems(sortedLetter);
                 break;
             default:
                 break;
-
         }
-
-
     }
 
-
-    public void refreshTabIcon(MouseEvent mouseEvent) throws RemoteException {
+    public void refreshTabIcon(MouseEvent mouseEvent) throws RemoteException {//Нажатие на иконку обновления
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
@@ -2067,11 +2016,9 @@ Calendar tab
             }
         };
         new Thread(task).start();
-
-
     }
 
-    public  void refreshData() throws RemoteException {
+    public  void refreshData() throws RemoteException { //Обновление всех ObservableList и таблиц в зависимости от открытой вкладки, формирование уведомлений
         Service<Void> service = new Service<Void>() {
             @Override
             protected Task<Void> createTask() {
@@ -2239,9 +2186,8 @@ Calendar tab
 
                                 }
                             });
-
                         }
-                        System.out.println("doneTask");
+
 //Создаем повторяющиеся события
                         for(int i = 0; i<observableListAllEvent.size();i++){
 
@@ -2271,7 +2217,7 @@ Calendar tab
                                         weeklyEvent.setEventDate(today);
 
                                         try {
-                                            eventService.updateEvent(weeklyEvent);
+                                             eventService.updateEvent(weeklyEvent);
                                         } catch (SQLException e) {
                                             e.printStackTrace();
                                         }
@@ -2301,14 +2247,12 @@ Calendar tab
                                 }
                             }
                         }
-                        System.out.println("repeatEvent");
+
 //Уведомления о событиях
                         int newEvent = 0;
 
                         String messageEvent="";
                         java.sql.Date today = new java.sql.Date(dateNow);
-
-
 
                         try {
                             for (int i=0;i<observableListTodayEvent.size();i++){
@@ -2330,7 +2274,6 @@ Calendar tab
                                 public void run() {
                                     calendarTabButton.setText("   Календарь(" + (finalNewEvent)+")");
                                     notificationEvent.newEvent(finalMessageEvent);
-
                                 }
                             });
 
@@ -2341,91 +2284,41 @@ Calendar tab
                                     calendarTabButton.setText("   Календарь");
                                 }
                             });
-
                         }
-                        System.out.println("Event");
-
 
 //Обновление текущей вкладки
                         switch (statusTab) {
                             case "myTask":
-                                Platform.runLater(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        System.out.println("ffffff");
-                                        tableTask.setItems(observableListMyTaskEntity);
-                                    }
-                                });
-
-
+                                tableTaskRefresh(observableListMyTaskEntity);
                                 break;
+
                             case "myLetter":
-                                Platform.runLater(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        tableTask.setItems(observableListMyLetterTaskEntity);
-                                    }
-                                });
-
+                                tableTaskRefresh(observableListMyLetterTaskEntity);
                                 break;
-                            case "myDoneTask":
-                                Platform.runLater(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        tableTask.setItems(observableListMyDoneTaskEntity);
-                                    }
-                                });
 
+                            case "myDoneTask":
+                                tableTaskRefresh(observableListMyDoneTaskEntity);
                                 break;
 
                             case "fromEmpTask":
-                                Platform.runLater(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        tableTask.setItems(observableListFromEmpTaskEntity);
-                                    }
-                                });
-
+                                tableTaskRefresh(observableListFromEmpTaskEntity);
                                 break;
 
                             case "archiveTask":
-                                Platform.runLater(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        tableTask.setItems(observableListArchiveTaskEntity);
-                                    }
-                                });
-
+                                tableTaskRefresh(observableListArchiveTaskEntity);
                                 break;
 
                             case "calendarTab":
-                                Platform.runLater(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        tableEvent.setItems(observableListSelectDayEvent);
-                                    }
-                                });
+                                tableEventRefresh(observableListSelectDayEvent);
                                 break;
+
                             case "letterTab": {
-                                Platform.runLater(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        tableLetter.setItems(observableListLetter);
-                                    }
-                                });
-
-
+                                tableLetterRefresh(observableListLetter);
                             }
                                 break;
 
                             case "templateTab":
-                                Platform.runLater(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        tableDocumentTemplate.setItems(observableListDocument);
-                                    }
-                                });
-
+                                tableDocumentTemplateRefresh(observableListDocument);
                                 break;
 
                             default:{
@@ -2444,14 +2337,48 @@ Calendar tab
                 service.start();
     }
 
-    public void serviceStart(){
+    public void tableTaskRefresh(ObservableList<TaskEntity> list){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                tableTask.setItems(list);
+            }
+        });
+
+    }
+    public void tableLetterRefresh(ObservableList<Letter> list){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                tableLetter.setItems(list);
+            }
+        });
+
+    }
+    public void tableEventRefresh(ObservableList<Event> list){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                tableEvent.setItems(list);
+            }
+        });
+    }
+    public void tableDocumentTemplateRefresh(ObservableList<Document> list){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                tableDocumentTemplate.setItems(list);
+            }
+        });
+    }
+    public void serviceStart(){//Сервис который запускает обновление каждые 60 секунд
         ScheduledService<Void> service = new ScheduledService<Void>() {
             @Override
             protected Task<Void> createTask() {
                 return new Task<Void>() {
                     @Override
                     protected Void call() throws Exception {
-                        System.out.println("Hello");
+
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
@@ -2470,8 +2397,6 @@ Calendar tab
         };
         service.setPeriod(Duration.seconds(60));
         service.start();
-
-
     }
 
     private void showStage() {
@@ -2479,28 +2404,23 @@ Calendar tab
             stage.show();
             stage.toFront();
         }
-        System.out.println("work");
     }
 
-    public void clickHamburger(MouseEvent mouseEvent) {
+    public void clickHamburger(MouseEvent mouseEvent) { //Открывает меню (drawer)
 
                 transition.setRate(transition.getRate()*-1);
                 transition.play();
 
                 if(drawer.isShown())
                 {
-
                     drawer.close();
                     drawer.toBack();
                     hamburger.toFront();
 
                 }else {
-
                     drawer.toFront();
                     drawer.open();
                     hamburger.toFront();
                 }
-
     }
-
 }

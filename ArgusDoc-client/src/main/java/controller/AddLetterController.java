@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.image.Image;
 import service.*;
 import dialog.ADInfo;
 import javafx.event.ActionEvent;
@@ -106,6 +107,8 @@ public class AddLetterController {
 
     Letter letter;
 
+    public Boolean okButton = false;
+
     public  void initialize() throws RemoteException {
 
 //Формируем список для отображения в nameLetterComboBox
@@ -154,7 +157,7 @@ public class AddLetterController {
     }
 
     public void addLetterButton(ActionEvent actionEvent) throws IOException {
-        if (textAreaLetter.getText().isEmpty()||attachmentFile==null||nameLetterComboBox.getValue().isEmpty()||txtLetterNumber.getText().isEmpty()) {
+        if (textAreaLetter.getText().isEmpty()||attachmentFile==null||nameLetterComboBox.getValue()==null||txtLetterNumber.getText().isEmpty()||datePickerLetter.getValue()==null) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
             letter = new Letter();
@@ -203,10 +206,13 @@ public class AddLetterController {
                 e.printStackTrace();
             }catch (java.nio.file.NoSuchFileException ex) {
                 ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не удалось загрузить файл, Хранилище недоступно!");
+                ex.printStackTrace();
             }catch (IOException e) {
                 //e.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Delete File");
+                alert.setTitle("Замена");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image("/images/1.jpg"));
                 alert.setHeaderText("Письмо с таким именем уже существует! Хотите заменить?");
 
 
@@ -275,10 +281,10 @@ public class AddLetterController {
             stage.close();
         }
 
-
+        okButton = true;
     }
 
-    public void attachmentFileButton(ActionEvent actionEvent) {
+    public void attachmentFileButton(ActionEvent actionEvent) {//выбираем файл для загрузки
         File file = fileChooser.showOpenDialog(attachmentFileButton.getScene().getWindow());
         if (file == null) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Письмо не выбрано!");

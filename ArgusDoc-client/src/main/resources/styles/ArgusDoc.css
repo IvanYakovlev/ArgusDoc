@@ -25,6 +25,10 @@
 
     -fx-background-insets: 0;
 }
+.PaneCheckBox{
+    -fx-border-color: #4d4d4d;
+    -fx-border-width: 0 0 1 0;
+}
 .ButtonBar{
     -fx-background-color: #FFFFFF;
 }
@@ -335,7 +339,6 @@
     -fx-border-color: transparent;
     -fx-body-color: #536DFE;
 
-
 }
 .ListView .list-cell:selected{
     -fx-text-fill: black;
@@ -352,7 +355,7 @@
 .combo-box {
     -fx-background-color: transparent;
     -fx-border-color: black;
-    -fx-border-width: 0 0 0 0;
+    -fx-border-width: 0 0 -1 0;
     -fx-background-radius: 0;
     -fx-border-radius: 0;
     -fx-focus-color: #536DFE;

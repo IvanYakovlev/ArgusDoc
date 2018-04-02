@@ -8,6 +8,7 @@ import entity.TaskEntity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import org.controlsfx.control.CheckComboBox;
 import service.*;
 import dialog.ADInfo;
@@ -60,6 +61,9 @@ public class AddTaskController {
     private EventService eventService = ServiceRegistry.eventService;
 
     TaskEntity taskEntity;
+
+    public Boolean okButton = false;
+
     public  void initialize() throws RemoteException {
 
         employeeService.listEmployees();
@@ -111,7 +115,9 @@ public class AddTaskController {
                 } catch (IOException e) {
 
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    //alert.setTitle("Delete File");
+                    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                    stage.getIcons().add(new Image("/images/1.jpg"));
+                    alert.setTitle("Замена");
                     alert.setHeaderText("Файл с таким именем уже существует! Хотите заменить?");
 
 
@@ -142,6 +148,7 @@ public class AddTaskController {
 
 
         }
+        okButton = true;
     }
     public void cancelAddTaskButton(ActionEvent actionEvent) {
         Stage stage = (Stage) cancelAddTaskButton.getScene().getWindow();
@@ -149,7 +156,7 @@ public class AddTaskController {
 
     }
 
-    public void attachmentFileButton(ActionEvent actionEvent) {
+    public void attachmentFileButton(ActionEvent actionEvent) { //выбираем файл для загрузки
         File file;
         file = fileChooser.showOpenDialog(attachmentFileButton.getScene().getWindow());
         if (file == null) {

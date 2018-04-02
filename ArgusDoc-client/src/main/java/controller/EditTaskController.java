@@ -73,15 +73,10 @@ public class EditTaskController {
     @FXML
     private JFXTextArea textAreaTask;
 
-    private DepartmentService departmentService = ServiceRegistry.departmentService;
     private EmployeeService employeeService = ServiceRegistry.employeeService;
-    private AccessService accessService = ServiceRegistry.accessService;
-    private DocumentService documentService = ServiceRegistry.documentService;
-    private LetterService letterService = ServiceRegistry.letterService;
     private TaskService taskService = ServiceRegistry.taskService;
-    private EventService eventService = ServiceRegistry.eventService;
     public TaskEntity taskEntity;
-
+    public Boolean okButton = false;
     public void initialize(TaskEntity taskEntity, Employee authorizedUser) throws RemoteException {
         this.taskEntity = taskEntity;
         this.authorizedUser = authorizedUser;
@@ -161,6 +156,7 @@ public class EditTaskController {
             stage.close();
 
         }
+        okButton = true;
     }
 
     public void attachmentFileButton(ActionEvent actionEvent) {
@@ -219,5 +215,6 @@ public class EditTaskController {
 
         Stage stage = (Stage) editTaskButton.getScene().getWindow();
         stage.close();
+        okButton=true;
     }
 }

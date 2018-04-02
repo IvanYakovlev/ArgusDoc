@@ -18,7 +18,7 @@ public class ServiceRegistry {
     public static String ipAddress;
     public static int port;
 
-
+//Подключение к серверу инициализация registry и сервисов
     public static void init() {
         try {
             registry = LocateRegistry.getRegistry(ipAddress, port);
@@ -29,8 +29,6 @@ public class ServiceRegistry {
             eventService = (EventService) registry.lookup("eventService");
             letterService = (LetterService) registry.lookup("letterService");
             taskService = (TaskService) registry.lookup("taskService");
-
-
 
         } catch (RemoteException e) {
             System.out.println("сервер не запущен");

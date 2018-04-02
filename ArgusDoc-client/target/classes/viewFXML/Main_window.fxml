@@ -57,7 +57,7 @@
                   <ButtonBar fx:id="archiveTaskBtnBar" layoutX="30.0" layoutY="477.0" prefHeight="29.0" prefWidth="629.0" styleClass="ButtonBar" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0">
                      <buttons>
                         <JFXButton onAction="#openDoneTaskButton" styleClass="blue-btn" text="Просмотр" />
-                        <JFXButton fx:id="" onAction="#deleteTaskButton" styleClass="blue-btn" text="Удалить" />
+                        <JFXButton fx:id="" onAction="#removeTaskButton" styleClass="blue-btn" text="Удалить" />
                      </buttons>
                      <opaqueInsets>
                         <Insets />
@@ -68,7 +68,7 @@
                      <buttons>
                         <JFXButton onAction="#openAddTaskButton" styleClass="blue-btn" text="Создать" />
                         <JFXButton onAction="#openEditTaskButton" styleClass="blue-btn" text="Проверить" />
-                        <JFXButton fx:id="deleteTaskButton" onAction="#deleteTaskButton" styleClass="blue-btn" text="Удалить" />
+                        <JFXButton fx:id="deleteTaskButton" onAction="#removeTaskButton" styleClass="blue-btn" text="Удалить" />
                      </buttons>
                      <opaqueInsets>
                         <Insets />
@@ -83,14 +83,6 @@
                </children>
             </HBox>
             <JFXProgressBar fx:id="progressBar" layoutX="430.0" layoutY="350.0" progress="0.0" visible="false" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-            <AnchorPane fx:id="anchorLetter" layoutX="30.0" layoutY="62.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
-               <children>
-                  <TableView fx:id="tableLetter" layoutX="446.0" layoutY="46.0" onMouseClicked="#clickLetterTable" prefHeight="524.0" prefWidth="809.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <JFXButton layoutX="569.0" layoutY="608.0" onAction="#openViewEditLetterWindow" styleClass="blue-btn" text="Просмотр" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="103.0" />
-                  <JFXButton layoutX="437.0" layoutY="608.0" onAction="#openAddLetterWindow" styleClass="blue-btn" text="Новое письмо" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="210.0" />
-                  <JFXButton layoutX="705.0" layoutY="608.0" onAction="#removeLetter" styleClass="blue-btn" text="Удалить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-               </children>
-            </AnchorPane>
             <AnchorPane fx:id="anchorTemplate" layoutX="10.0" layoutY="42.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
                <children>
                   <ButtonBar fx:id="archiveTaskBtnBar1" layoutX="30.0" layoutY="477.0" prefHeight="29.0" prefWidth="629.0" styleClass="ButtonBar" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0">
@@ -121,7 +113,7 @@
                   </TableView>
                   <Label layoutX="438.0" layoutY="14.0" prefHeight="25.0" prefWidth="140.0" styleClass="label3" text="Дела на" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="16.0" />
                   <Label fx:id="labelSelectedDate" layoutX="510.0" layoutY="16.0" styleClass="label3" text="сегодня" AnchorPane.leftAnchor="500.0" />
-                  <AnchorPane layoutX="15.0" layoutY="303.0" prefHeight="343.0" prefWidth="401.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="280.0">
+                  <AnchorPane layoutX="15.0" layoutY="297.0" prefHeight="343.0" prefWidth="401.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="297.0">
                      <children>
                         <JFXTextArea fx:id="textAreaEvent" focusColor="#4eb1ba" layoutX="2.0" layoutY="58.0" prefHeight="157.0" prefWidth="395.0" promptText="Введите текст напоминания" styleClass="JFXTextArea" AnchorPane.bottomAnchor="125.0" AnchorPane.topAnchor="50.0" />
                         <JFXTimePicker fx:id="timePickerEvent" defaultColor="#4eb1ba" layoutX="10.0" layoutY="242.0" prefHeight="25.0" prefWidth="250.0" promptText="Выберите время" styleClass="JFXTimePicker" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="10.0" />
@@ -165,6 +157,18 @@
                   <JFXButton layoutX="674.0" layoutY="10.0" onAction="#showAllEventButton" prefHeight="17.0" prefWidth="122.0" styleClass="blue-btn" text="показать все" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="10.0" />
                </children>
             </AnchorPane>
+            <AnchorPane fx:id="anchorLetter" layoutX="30.0" layoutY="62.0" prefHeight="468.0" prefWidth="629.0" styleClass="AnchorPane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
+               <children>
+                  <TableView fx:id="tableLetter" layoutX="446.0" layoutY="46.0" onMouseClicked="#clickLetterTable" prefHeight="524.0" prefWidth="809.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <ButtonBar layoutX="156.0" layoutY="596.0" prefHeight="40.0" prefWidth="800.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                     <buttons>
+                        <JFXButton fx:id="openAddLetterWindow" onAction="#openAddLetterWindow" styleClass="blue-btn" text="Новое письмо" visible="false" />
+                        <JFXButton fx:id="removeLetter" onAction="#removeLetter" styleClass="blue-btn" text="Удалить" visible="false" />
+                        <JFXButton onAction="#openViewEditLetterWindow" styleClass="blue-btn" text="Просмотр" />
+                     </buttons>
+                  </ButtonBar>
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="achorPaneMenu" layoutX="31.0" prefHeight="500.0" prefWidth="170.0" styleClass="AnchorPane2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -200,7 +204,7 @@
                         <FontAwesomeIconView fill="WHITE" glyphName="CALENDAR" size="16" />
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="letterTabButton" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#letterTabButton" styleClass="JFXButton" text="   Архив писем" visible="false">
+                  <JFXButton fx:id="letterTabButton" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#letterTabButton" styleClass="JFXButton" text="   Архив писем">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="ENVELOPE_SQUARE" size="16" />
                      </graphic>

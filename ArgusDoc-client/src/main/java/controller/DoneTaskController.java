@@ -29,22 +29,7 @@ import java.sql.SQLException;
 public class DoneTaskController {
 
     private TaskEntity taskEntity = new TaskEntity();
-
-    public TaskEntity getTaskEntity() {
-        return taskEntity;
-    }
-
-    public void setTaskEntity(TaskEntity taskEntity) {
-        this.taskEntity = taskEntity;
-    }
-
-    private DepartmentService departmentService = ServiceRegistry.departmentService;
-    private EmployeeService employeeService = ServiceRegistry.employeeService;
-    private AccessService accessService = ServiceRegistry.accessService;
-    private DocumentService documentService = ServiceRegistry.documentService;
-    private LetterService letterService = ServiceRegistry.letterService;
     private TaskService taskService = ServiceRegistry.taskService;
-    private EventService eventService = ServiceRegistry.eventService;
     final FileChooser fileChooser=new FileChooser();
     DirectoryChooser directoryChooser = new DirectoryChooser();
     File attachmentFile;
@@ -68,7 +53,7 @@ public class DoneTaskController {
 
     @FXML
     private JFXButton doneTaskButton = new JFXButton();
-
+    public Boolean okButton = false;
 
     public void initialize(TaskEntity taskEntity){
         this.taskEntity = taskEntity;
@@ -117,14 +102,13 @@ public class DoneTaskController {
 
                         }
 
-
-
                         //if (taskEntity.getTaskIsLetter()==0&& taskEntity.getTaskAttachmentFile()!=null) {
                         File destFile = new File(taskEntity.getTaskAttachment());
                         Files.copy(taskEntity.getTaskAttachmentFile().toPath(), destFile.toPath());
 
                         // }
                         ADInfo.getAdInfo().dialog(Alert.AlertType.CONFIRMATION, "Файл обновлен!");
+
                     }
                 }
             } catch (SQLException e) {
@@ -137,6 +121,7 @@ public class DoneTaskController {
             stage.close();
 
         }
+        okButton = true;
     }
 
     public void attachmentFileButton(ActionEvent actionEvent) {

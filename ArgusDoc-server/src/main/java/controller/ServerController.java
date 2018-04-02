@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import service.*;
@@ -83,7 +84,7 @@ public class ServerController {
     private JFXTextField txtDBServerPort;
 
 
-    // application stage is stored so that it can be shown and hidden based on system tray icon operations.
+
     public Stage stage;
 
     public static int serverPort;
@@ -131,6 +132,9 @@ public class ServerController {
                     public void run() {
                         if (serverCondition.equals("running")) {
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                            stage.getIcons().add(new Image("/images/1.jpg"));
+                            alert.setTitle("Выход");
                             alert.setHeaderText("При выходе из программы сервер будет остановлен. Вы действительно хотите выйти?");
 
                             // option != null.
@@ -196,7 +200,7 @@ public class ServerController {
         txtDBServerPort.setText(properties.getProperty("Port"));
 
         stopServerButton.setDisable(true);
-        startServer();
+        //startServer();
 
     }
     public void startServerButton(ActionEvent actionEvent) throws RemoteException {
@@ -206,6 +210,9 @@ public class ServerController {
 
     public void stopServerButton(ActionEvent actionEvent) throws RemoteException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("/images/1.jpg"));
+        alert.setTitle("Остановка сервера");
         alert.setHeaderText("Вы действительно хотите остановить сервер?");
 
         // option != null.
@@ -355,5 +362,17 @@ public class ServerController {
 
     public void minimizeServer(MouseEvent mouseEvent) {
         stage.hide();
+    }
+
+    public void writeSettings(ActionEvent actionEvent) throws IOException {
+        // если успешно подключились сохраняем IP и Порт
+        properties.setProperty("URL", txtDBURL.getText());
+        properties.setProperty("User", txtDBUser.getText());
+        properties.setProperty("Password", txtDBPassword.getText());
+        properties.setProperty("Port", txtDBServerPort.getText());
+
+        FileOutputStream outputStream = new FileOutputStream("../ArgusDoc/ArgusDoc-server/src/main/resources/ArgusDocServer.properties");
+        properties.store(outputStream, "");
+
     }
 }

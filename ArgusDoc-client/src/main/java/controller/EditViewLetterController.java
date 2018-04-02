@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -96,7 +97,8 @@ public class EditViewLetterController {
     private JFXButton downloadFileButton = new JFXButton();
     @FXML
     private Label labelJuristNamber;
-
+    @FXML
+    private JFXButton openEditView;
     @FXML
     private Label labelJuristDate;
     @FXML
@@ -153,14 +155,16 @@ public class EditViewLetterController {
 
     Letter letter;
     Employee authorizedUser;
+    public Boolean okButton = false;
 
     public void initialize(Employee authorizedUser, int letterId) throws RemoteException {
-
 
         this.letter = letterService.getLetterById(letterId);
         this.authorizedUser = authorizedUser;
 
-
+        if (authorizedUser.getAccessId()==1) {
+            openEditView.setVisible(true);
+        }
         list.add("Постановка объекта на охрану");
         list.add("Включение ответственных");
         list.add("Исключение ответственных");
@@ -193,8 +197,6 @@ public class EditViewLetterController {
         labelLetterNumber.setText(letter.getLetterNumber());
         labelLetterDate.setText(String.valueOf(letter.getLetterDate()));
         //Инициализируем viewPane
-
-
 
         initView();
         //Инициализируем editPane
@@ -307,6 +309,8 @@ public class EditViewLetterController {
             }catch (IOException e) {
                 //e.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image("/images/1.jpg"));
                 //alert.setTitle("Delete File");
                 alert.setHeaderText("Письмо с таким именем уже существует! Хотите заменить?");
 
@@ -323,7 +327,6 @@ public class EditViewLetterController {
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
-
 
                     File destFile = new File(letter.getLetterFilePath());
                     try {
@@ -376,11 +379,7 @@ public class EditViewLetterController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-
             }
-
-
             viewPane.toFront();
             textAreaLetterView.setText(letter.getLetterResolution());
             labelJuristNamber.setText(letter.getLetterJuristNumber());
@@ -391,6 +390,7 @@ public class EditViewLetterController {
 
             initView();
         }
+        okButton=true;
     }
 
     public void openEditView(ActionEvent actionEvent) {
@@ -455,7 +455,6 @@ public class EditViewLetterController {
             }
             listViewTechnical.getItems().setAll(arrayTechnical);
         }
-
 
         technicalDate.setText(String.valueOf(letter.getLetterTechnicalDate()));
 

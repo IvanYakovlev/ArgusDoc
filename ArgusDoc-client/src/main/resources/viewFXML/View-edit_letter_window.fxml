@@ -76,7 +76,11 @@
                               <Separator layoutY="70.0" prefHeight="4.0" prefWidth="200.0" />
                               <Label layoutX="10.0" layoutY="190.0" styleClass="label2" text="Юрист:" />
                               <JFXTextField fx:id="juristNumberText" layoutX="15.0" layoutY="90.0" prefHeight="25.0" prefWidth="171.0" promptText="Введите номер договора" />
-                              <CheckComboBox fx:id="juristCheckComboBox" layoutX="10.0" layoutY="40.0" prefHeight="25.0" prefWidth="180.0" />
+                              <Pane layoutX="10.0" layoutY="40.0" styleClass="PaneCheckBox">
+                                 <children>
+                                    <CheckComboBox fx:id="juristCheckComboBox" prefHeight="25.0" prefWidth="180.0" />
+                                 </children>
+                              </Pane>
                               <JFXComboBox fx:id="juristComboBox" layoutX="10.0" layoutY="210.0" prefHeight="25.0" prefWidth="180.0" />
                               <JFXDatePicker fx:id="juristDatePicker" layoutX="10.0" layoutY="270.0" prefHeight="25.0" prefWidth="180.0" styleClass="JFXDatePicker" />
                               <Label layoutX="10.0" layoutY="250.0" styleClass="label2" text="Дата обработки:" />
@@ -87,7 +91,11 @@
                               <Label layoutX="84.0" layoutY="10.0" styleClass="label2" text="ОРиП" />
                               <Separator layoutY="70.0" prefHeight="4.0" prefWidth="200.0" />
                               <Label layoutX="10.0" layoutY="190.0" styleClass="label2" text="Куратор ОРиП:" />
-                              <CheckComboBox fx:id="oripCheckComboBox" layoutX="10.0" layoutY="40.0" prefHeight="25.0" prefWidth="180.0" />
+                              <Pane layoutX="10.0" layoutY="40.0" styleClass="PaneCheckBox">
+                                 <children>
+                                    <CheckComboBox fx:id="oripCheckComboBox" prefHeight="25.0" prefWidth="180.0" />
+                                 </children>
+                              </Pane>
                               <JFXTextArea fx:id="textAreaOripEdit" layoutX="15.0" layoutY="90.0" prefHeight="87.0" prefWidth="171.0" promptText="комментарий.." />
                               <JFXComboBox fx:id="oripComboBox" layoutX="10.0" layoutY="210.0" prefHeight="25.0" prefWidth="180.0" />
                               <Label layoutX="10.0" layoutY="250.0" styleClass="label2" text="Дата обработки:" />
@@ -102,7 +110,7 @@
                               <Label layoutX="10.0" layoutY="190.0" styleClass="label2" text="Администратор БД" />
                               <JFXTextField fx:id="txtTechnicalLiter" layoutX="111.0" layoutY="78.0" prefHeight="25.0" prefWidth="75.0" />
                               <JFXTextField fx:id="txtTechnicalPassword" focusColor="#4eb1ba" layoutX="15.0" layoutY="119.0" prefHeight="25.0" prefWidth="171.0" promptText="Введите пароль объекта" styleClass="JFXTextField" />
-                              <CheckComboBox fx:id="technicalCheckComboBox" layoutX="10.0" layoutY="40.0" prefHeight="25.0" prefWidth="180.0" />
+                              <CheckComboBox fx:id="technicalCheckComboBox" layoutX="10.0" layoutY="40.0" prefHeight="25.0" prefWidth="180.0" styleClass="PaneCheckBox" />
                               <JFXComboBox fx:id="technicalComboBox" layoutX="10.0" layoutY="210.0" prefHeight="25.0" prefWidth="180.0" />
                               <Label layoutX="10.0" layoutY="250.0" styleClass="label2" text="Дата обработки:" />
                               <JFXDatePicker fx:id="technicalDatePicker" layoutX="10.0" layoutY="270.0" prefHeight="25.0" prefWidth="180.0" styleClass="JFXDatePicker" />
@@ -113,7 +121,7 @@
                               <Label layoutX="67.0" layoutY="10.0" styleClass="label2" text="Бухгалтерия" />
                               <Separator layoutY="70.0" prefHeight="4.0" prefWidth="200.0" />
                               <Label layoutX="14.0" layoutY="190.0" styleClass="label2" text="Бухгалтер:" />
-                              <CheckComboBox fx:id="bookkeepingCheckComboBox" layoutX="10.0" layoutY="40.0" prefHeight="25.0" prefWidth="180.0" />
+                              <CheckComboBox fx:id="bookkeepingCheckComboBox" layoutX="10.0" layoutY="40.0" prefHeight="25.0" prefWidth="180.0" styleClass="PaneCheckBox" />
                               <JFXComboBox fx:id="bookkeepingComboBox" layoutX="10.0" layoutY="210.0" prefHeight="25.0" prefWidth="180.0" />
                               <Label layoutX="10.0" layoutY="250.0" styleClass="label2" text="Дата обработки:" />
                               <JFXDatePicker fx:id="bookkeepingDatePicker" layoutX="10.0" layoutY="270.0" prefHeight="25.0" prefWidth="180.0" styleClass="JFXDatePicker" />
@@ -150,12 +158,12 @@
                <children>
                   <ButtonBar layoutY="325.0" prefHeight="40.0" prefWidth="800.0" style="-fx-background-color: white;">
                      <buttons>
-                        <JFXButton fx:id="downloadFileButton" onAction="#downloadFileButton" styleClass="blue-btn" text="Скачать">
+                        <JFXButton fx:id="openEditView" onAction="#openEditView" styleClass="blue-btn" text="Редактировать" visible="false">
                            <effect>
                               <DropShadow />
                            </effect>
                            <graphic>
-                              <FontAwesomeIconView fill="WHITE" glyphName="DOWNLOAD" size="20" />
+                              <FontAwesomeIconView fill="WHITE" glyphName="EDIT" size="20" />
                            </graphic>
                         </JFXButton>
                         <JFXButton fx:id="openLetterFile" layoutX="496.0" layoutY="12.0" onAction="#openLetterFile" styleClass="blue-btn" text="Открыть">
@@ -166,12 +174,12 @@
                               <FontAwesomeIconView fill="WHITE" glyphName="FILE" size="20" />
                            </graphic>
                         </JFXButton>
-                        <JFXButton fx:id="openEditView" onAction="#openEditView" styleClass="blue-btn" text="Редактировать">
+                        <JFXButton fx:id="downloadFileButton" onAction="#downloadFileButton" styleClass="blue-btn" text="Скачать">
                            <effect>
                               <DropShadow />
                            </effect>
                            <graphic>
-                              <FontAwesomeIconView fill="WHITE" glyphName="EDIT" size="20" />
+                              <FontAwesomeIconView fill="WHITE" glyphName="DOWNLOAD" size="20" />
                            </graphic>
                         </JFXButton>
                         <JFXButton fx:id="cancelViewButton" maxWidth="76.0" onAction="#cancelViewButton" prefHeight="37.0" prefWidth="58.0" styleClass="blue-btn" text="Ок">

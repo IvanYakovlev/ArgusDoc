@@ -31,7 +31,6 @@ public class DoneLetterController {
 
     @FXML
     private JFXButton downloadLetterFile = new JFXButton();
-
     @FXML
     private JFXButton cancelDoneLetterButton;
     @FXML
@@ -44,7 +43,6 @@ public class DoneLetterController {
     private Label labelNumberLetter;
     @FXML
     private Label lebelDateLetter;
-
     @FXML
     private JFXTextField juristNumberText;
     @FXML
@@ -53,30 +51,20 @@ public class DoneLetterController {
     private JFXTextField txtTechnicalLiter;
     @FXML
     private JFXTextField txtTechnicalPassword;
-
-
-
-
-
     @FXML
     private Label labelJuristFio;
     @FXML
     private Label labelJuristDate;
-
     @FXML
     private Label labelOripFio;
     @FXML
     private Label labelOripDate;
-    @FXML
-    private Label labelTechnicalFio;
+
     @FXML
     private Label labelTechnicalDate;
-    @FXML
-    private Label labelBookkeepingFio;
+
     @FXML
     private Label labelbookeepingDate;
-
-
     @FXML
     private JFXListView<String> listViewTechnical = new JFXListView<String>();
     @FXML
@@ -86,15 +74,9 @@ public class DoneLetterController {
     @FXML
     private JFXListView<String> listViewBookkeeping = new JFXListView<String>();
 
-    private DepartmentService departmentService = ServiceRegistry.departmentService;
-    private EmployeeService employeeService = ServiceRegistry.employeeService;
-    private AccessService accessService = ServiceRegistry.accessService;
-    private DocumentService documentService = ServiceRegistry.documentService;
     private LetterService letterService = ServiceRegistry.letterService;
     private TaskService taskService = ServiceRegistry.taskService;
-    private EventService eventService = ServiceRegistry.eventService;
 
-    final FileChooser fileChooser=new FileChooser();
     private DirectoryChooser directoryChooser = new DirectoryChooser();
     File attachmentFile;
 
@@ -106,6 +88,7 @@ public class DoneLetterController {
 
     private java.sql.Date dateDone;
     private String userDone;
+    public Boolean okButton = false;
 
     public void initialize(Employee authorizedUser, int letterId,int taskId) throws RemoteException {
 
@@ -222,13 +205,23 @@ public class DoneLetterController {
     }
 
     public void doneLetterButton(ActionEvent actionEvent) throws IOException, SQLException {
-        Letter letter = new Letter();
+        Letter letter = this.letter;
         TaskEntity taskEntity = new TaskEntity();
         letter.setLetterId(this.letter.getLetterId());
         switch (authorizedUser.getDepartmentName()){
             case "Юридический отдел":{
                 letter.setLetterJuristNumber(juristNumberText.getText());
-                letter.setLetterJuristFio(null+this.letter.getLetterJuristFio()+userDone+null);
+
+                if (this.letter.getLetterJuristFio()!=null) {
+                    if (this.letter.getLetterJuristFio().indexOf(userDone)!=-1) {
+                        // не добавляем если уже есть
+                    } else {
+                        letter.setLetterJuristFio(null+this.letter.getLetterJuristFio()+userDone+null);
+                    }
+                } else {
+                    letter.setLetterJuristFio(null+this.letter.getLetterJuristFio()+userDone+null);
+                }
+
                 letter.setLetterJuristDate(dateDone);
                 letterService.updateJuristLetter(letter);
 
@@ -239,7 +232,15 @@ public class DoneLetterController {
             case "Технический отдел":{
                 letter.setLetterTechnicalLiter(txtTechnicalLiter.getText());
                 letter.setLetterTechnicalPassword(txtTechnicalPassword.getText());
-                letter.setLetterTechnicalFio("null"+this.letter.getLetterTechnicalFio()+userDone+null);
+                if (this.letter.getLetterTechnicalFio()!=null) {
+                    if (this.letter.getLetterTechnicalFio().indexOf(userDone) != -1) {
+                        // не добавляем если уже есть
+                    } else {
+                        letter.setLetterTechnicalFio("null" + this.letter.getLetterTechnicalFio() + userDone + null);
+                    }
+                } else {
+                    letter.setLetterTechnicalFio("null" + this.letter.getLetterTechnicalFio() + userDone + null);
+                }
                 letter.setLetterTechnicalDate(dateDone);
                 letterService.updateTechnicalLetter(letter);
 
@@ -249,7 +250,16 @@ public class DoneLetterController {
             }
             case "ОРиП":{
                 letter.setLetterOripText(textAreaOrip.getText());
-                letter.setLetterOripFio(null+this.letter.getLetterOripFio()+userDone+null);
+
+                if (this.letter.getLetterOripFio()!=null) {
+                    if (this.letter.getLetterOripFio().indexOf(userDone)!=-1) {
+                        // не добавляем если уже есть
+                    } else {
+                        letter.setLetterOripFio(null+this.letter.getLetterOripFio()+userDone+null);
+                    }
+                } else {
+                    letter.setLetterOripFio(null+this.letter.getLetterOripFio()+userDone+null);
+                }
                 letter.setLetterOripDate(dateDone);
                 letterService.updateOripLetter(letter);
 
@@ -258,7 +268,16 @@ public class DoneLetterController {
                 break;
             }
             case "Бухгалтерия":{
-                letter.setLetterBookkeepingFio(null+this.letter.getLetterBookkeepingFio()+userDone+null);
+                if (this.letter.getLetterBookkeepingFio()!=null) {
+                    if (this.letter.getLetterBookkeepingFio().indexOf(userDone)!=-1) {
+                        // не добавляем если уже есть
+                    } else {
+                        letter.setLetterBookkeepingFio(null+this.letter.getLetterBookkeepingFio()+userDone+null);
+                    }
+                } else {
+                    letter.setLetterBookkeepingFio(null+this.letter.getLetterBookkeepingFio()+userDone+null);
+                }
+
                 letter.setLetterBookkeepingDate(dateDone);
                 letterService.updateBookkeepingLetter(letter);
 
@@ -276,7 +295,7 @@ public class DoneLetterController {
 
         Stage stage = (Stage) doneLetterButton.getScene().getWindow();
         stage.close();
-
+        okButton = true;
     }
 
     public void openLetterFile(ActionEvent actionEvent) {

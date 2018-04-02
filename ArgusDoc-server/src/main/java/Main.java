@@ -58,7 +58,7 @@ public class Main extends Application{
         System.out.println(primaryStage);
         ServerController serverController = loader.getController();
         serverController.initStage(primaryStage);
-        //primaryStage.show();
+        primaryStage.show();
 
     }
     public static void main(String[] args) throws RemoteException {

@@ -39,7 +39,11 @@
             <JFXTextField fx:id="txtTaskName" focusColor="#4eb1ba" layoutX="5.0" layoutY="5.0" prefHeight="25.0" prefWidth="270.0" promptText="Введите название" styleClass="JFXTextField" />
             <JFXDatePicker fx:id="datePickerTask" defaultColor="#4eb1ba" layoutX="310.0" layoutY="5.0" prefHeight="25.0" prefWidth="270.0" promptText="Выберите дату" styleClass="JFXDatePicker" />
             <JFXTimePicker fx:id="timePickerTask" defaultColor="#4eb1ba" layoutX="310.0" layoutY="40.0" prefHeight="25.0" prefWidth="270.0" promptText="Выберите время" styleClass="JFXTimePicker" />
-            <CheckComboBox fx:id="checkComboBoxEmployee" layoutX="5.0" layoutY="40.0" prefHeight="30.0" prefWidth="270.0" styleClass="combo-box" />
+            <Pane layoutX="5.0" layoutY="40.0" styleClass="PaneCheckBox">
+               <children>
+                  <CheckComboBox fx:id="checkComboBoxEmployee" prefHeight="25.0" prefWidth="270.0" styleClass="combo-box" />
+               </children>
+            </Pane>
          </children>
       </Pane>
       <AnchorPane prefHeight="40.0" prefWidth="200.0" styleClass="AnchorPane2" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

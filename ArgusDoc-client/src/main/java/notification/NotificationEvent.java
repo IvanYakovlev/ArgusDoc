@@ -8,6 +8,7 @@ import tray.notification.TrayNotification;
 import java.util.ArrayList;
 
 public class NotificationEvent {
+    /*Показ уведомлений*/
     private ArrayList<Integer> listNewTask = new ArrayList<Integer>();
     private ArrayList<Integer> listNewFromEmpTask = new ArrayList<Integer>();
     private ArrayList<Integer> listNewLetter = new ArrayList<Integer>();

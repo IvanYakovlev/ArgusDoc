@@ -34,15 +34,12 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class AuthorizationController {
-
-
     @FXML
     private JFXPasswordField txtPasswordEnter;
     @FXML
     private JFXTextField txtIpAddress;
     @FXML
     private JFXTextField txtPort;
-
 
     private EmployeeService employeeService;
 
@@ -59,7 +56,7 @@ public class AuthorizationController {
         txtIpAddress.setText(properties.getProperty("ipAddress"));
         txtPort.setText(properties.getProperty("port"));
 
-        txtPort.textProperty().addListener(new ChangeListener<String>() {
+        txtPort.textProperty().addListener(new ChangeListener<String>() { //Проверка ввода txtPort
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue,
                                 String newValue) {
@@ -76,11 +73,8 @@ public class AuthorizationController {
 
     }
 
-
-
     public void enter() throws IOException {
-
-
+//Подключаемся к серверу
         ServiceRegistry.ipAddress=txtIpAddress.getText();
 
         ServiceRegistry.port= Integer.parseInt(txtPort.getText());
@@ -100,11 +94,9 @@ public class AuthorizationController {
                 Platform.exit();
             } else {
 
-
                 FXMLLoader fxmlLoader = new FXMLLoader();
 
                 fxmlLoader.setLocation(getClass().getResource("/viewFXML/Main_window.fxml"));
-
 
                 try {
 
@@ -120,7 +112,6 @@ public class AuthorizationController {
                     MainController mainController = fxmlLoader.getController();
                     mainController.initialize(authorizedUser,stage);
 
-
                     stage.show();
 // если успешно подключились сохраняем IP и Порт
                     properties.setProperty("ipAddress", txtIpAddress.getText());
@@ -131,9 +122,7 @@ public class AuthorizationController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
-
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -145,9 +134,6 @@ public class AuthorizationController {
             ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Не удалось соединиться с сервером!");
             Platform.exit();
         }
-
-
-
 
     }
 
@@ -167,10 +153,7 @@ public class AuthorizationController {
                 }
             }
         });
-
-
     }
-
 
     public void cancelButton(ActionEvent actionEvent) {
         Platform.exit();
