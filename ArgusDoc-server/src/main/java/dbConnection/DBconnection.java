@@ -1,9 +1,6 @@
 package dbConnection;
 
-import com.sun.security.ntlm.Server;
-import controller.ServerController;
 import dialog.ADInfo;
-import javafx.application.Platform;
 import javafx.scene.control.Alert;
 
 import java.sql.Connection;

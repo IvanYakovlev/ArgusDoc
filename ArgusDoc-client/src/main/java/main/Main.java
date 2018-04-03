@@ -1,9 +1,6 @@
 package main;
 
 
-import controller.AuthorizationController;
-import controller.DrawerMainMenuController;
-import controller.MainController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -14,10 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import service.*;
 
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 
 
 public class Main extends Application {

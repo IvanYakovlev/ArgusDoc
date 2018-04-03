@@ -256,7 +256,7 @@ public class MainController {
             System.out.println("Соединение с хранилищем установлено!");
         } else {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Хранилище недоступно! Обратитесь к системному администратору!");
-            Platform.exit();
+           System.exit(0);
 
         }
 

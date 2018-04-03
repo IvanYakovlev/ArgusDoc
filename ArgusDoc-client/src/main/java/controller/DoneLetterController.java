@@ -2,28 +2,18 @@ package controller;
 
 import argusDocSettings.FileManager;
 import com.jfoenix.controls.*;
-import dialog.ADInfo;
 import entity.Employee;
 import entity.Letter;
 import entity.TaskEntity;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.controlsfx.control.CheckComboBox;
 import service.*;
-
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.rmi.RemoteException;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
