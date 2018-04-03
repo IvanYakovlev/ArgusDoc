@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class DocumentServiceImpl implements DocumentService {
     DBconnection dBconnection;
-    Map<Integer, String> mapDocument = new HashMap<>();
+    Map<Integer, String> mapDocument = new HashMap<Integer, String>();
 
     public void addDocument(Document document) throws IOException, RemoteException, SQLException {
 

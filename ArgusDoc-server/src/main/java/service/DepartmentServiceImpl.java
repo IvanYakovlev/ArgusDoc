@@ -19,7 +19,7 @@ import java.util.Map;
 public class DepartmentServiceImpl implements DepartmentService {
 
     DBconnection dBconnection;
-    Map<Integer, String> mapDepartment = new HashMap<>();
+    Map<Integer, String> mapDepartment = new HashMap<Integer, String>();
 
     public Map<Integer, String> getMapDepartment() {
         return mapDepartment;
