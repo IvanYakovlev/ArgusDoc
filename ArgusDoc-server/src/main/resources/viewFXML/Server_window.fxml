@@ -7,7 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="286.0" prefWidth="437.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDocServer.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ServerController">
+<AnchorPane prefHeight="286.0" prefWidth="437.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDocServer.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ServerController">
    <children>
       <AnchorPane layoutY="6.0" prefHeight="40.0" prefWidth="200.0" styleClass="AnchorPane3" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -17,7 +17,6 @@
       </AnchorPane>
       <ButtonBar layoutX="367.0" layoutY="335.0" prefHeight="40.0" prefWidth="577.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <buttons>
-            <JFXButton fx:id="writeSettings" onAction="#writeSettings" styleClass="blue-btn" text="Запомнить" />
             <JFXButton fx:id="stopServerButton" onAction="#stopServerButton" styleClass="blue-btn" text="Остановить">
                <graphic>
                   <FontAwesomeIconView fill="RED" glyphName="CLOSE" size="20" />

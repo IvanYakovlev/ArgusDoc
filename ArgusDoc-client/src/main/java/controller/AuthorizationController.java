@@ -23,10 +23,8 @@ import javafx.stage.Stage;
 import entity.Employee;
 import service.*;
 
-
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
@@ -45,11 +43,11 @@ public class AuthorizationController {
     private double xOffset;
     private double yOffset;
     private Properties properties;
-    private FileInputStream in;
+    private InputStream in;
 
     public void initialize() throws IOException {
         properties = new Properties();
-        in = new FileInputStream("../ArgusDoc/ArgusDoc-client/src/main/resources/ArgusDocClient.properties");
+        in = getClass().getResourceAsStream("/ArgusDocClient.properties");
         properties.load(in);
 
         txtIpAddress.setText(properties.getProperty("ipAddress"));
@@ -112,11 +110,7 @@ public class AuthorizationController {
                     mainController.initialize(authorizedUser,stage);
 
                     stage.show();
-// если успешно подключились сохраняем IP и Порт
-                    properties.setProperty("ipAddress", txtIpAddress.getText());
-                    properties.setProperty("port", txtPort.getText());
-                    FileOutputStream outputStream = new FileOutputStream("../ArgusDoc/ArgusDoc-client/src/main/resources/ArgusDocClient.properties");
-                    properties.store(outputStream, "");
+
 
                 } catch (IOException e) {
                     e.printStackTrace();

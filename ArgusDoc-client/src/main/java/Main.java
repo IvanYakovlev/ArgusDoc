@@ -1,6 +1,3 @@
-package main;
-
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -24,7 +21,7 @@ public class Main extends Application {
 // не завершать приложение когда последнее окно закрыто
             Platform.setImplicitExit(false);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../viewFXML/Authorization_window.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/viewFXML/Authorization_window.fxml"));
 
 
             Parent root = loader.load();
@@ -33,7 +30,7 @@ public class Main extends Application {
             primaryStage.setMinHeight(120);
             primaryStage.setMinWidth(220);
             primaryStage.setResizable(false);
-            primaryStage.getIcons().add(new Image("images/1.jpg"));
+            primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(("images/1.jpg"))));
             primaryStage.initStyle(StageStyle.TRANSPARENT);
 
             root.setOnMousePressed(new EventHandler<MouseEvent>() {

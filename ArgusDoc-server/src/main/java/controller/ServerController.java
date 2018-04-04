@@ -90,8 +90,8 @@ public class ServerController {
     public static int serverPort;
 
     private Properties properties;
-    private FileInputStream in;
-    private OutputStream out;
+    private InputStream in;
+    private FileOutputStream out;
     public static java.awt.SystemTray tray;
     public static  java.awt.TrayIcon trayIcon;
 
@@ -109,7 +109,7 @@ public class ServerController {
 
             //создаем трей иконку
             tray = java.awt.SystemTray.getSystemTray();
-            trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().createImage("ArgusDoc-server/src/main/resources/images/trayIcon.jpg"));
+            trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().createImage(getClass().getResource("/images/trayIcon.jpg")));
 
             //двойное нажатие мыши - показываем stage
             trayIcon.addActionListener(event -> Platform.runLater(this::showStage));
@@ -191,13 +191,15 @@ public class ServerController {
         });
 
         properties = new Properties();
-        in = new FileInputStream("../ArgusDoc/ArgusDoc-server/src/main/resources/ArgusDocServer.properties");
+        System.out.println(getClass().getResourceAsStream("/ArgusDocServer.properties"));
+        in = getClass().getResourceAsStream("/ArgusDocServer.properties");
         properties.load(in);
 
         txtDBURL.setText(properties.getProperty("URL"));
         txtDBUser.setText(properties.getProperty("User"));
         txtDBPassword.setText(properties.getProperty("Password"));
         txtDBServerPort.setText(properties.getProperty("Port"));
+
 
         stopServerButton.setDisable(true);
         //startServer();
@@ -364,15 +366,5 @@ public class ServerController {
         stage.hide();
     }
 
-    public void writeSettings(ActionEvent actionEvent) throws IOException {
-        // если успешно подключились сохраняем IP и Порт
-        properties.setProperty("URL", txtDBURL.getText());
-        properties.setProperty("User", txtDBUser.getText());
-        properties.setProperty("Password", txtDBPassword.getText());
-        properties.setProperty("Port", txtDBServerPort.getText());
 
-        FileOutputStream outputStream = new FileOutputStream("../ArgusDoc/ArgusDoc-server/src/main/resources/ArgusDocServer.properties");
-        properties.store(outputStream, "");
-
-    }
 }
