@@ -27,7 +27,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.sql.Date;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -202,9 +202,7 @@ public class AddLetterController {
                 //Добавляем запись в БД
                 letterService.addLetter(letter);
 
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }catch (java.nio.file.NoSuchFileException ex) {
+            } catch (java.nio.file.NoSuchFileException ex) {
                 ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не удалось загрузить файл, Хранилище недоступно!");
                 ex.printStackTrace();
             }catch (IOException e) {
@@ -245,11 +243,7 @@ public class AddLetterController {
 
             System.out.println(listEmployeeNameForTask);
             int letterId =0;
-            try {
-                letterId = letterService.getMaxId();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            letterId = letterService.getMaxId();
             for (int i = 0; i < listEmployeeNameForTask.size(); i++) {
 //формируем задачи для исполнителей
                 TaskEntity taskEntity = new TaskEntity();
@@ -265,12 +259,7 @@ public class AddLetterController {
                 taskEntity.setLetterId(letterId);
 
 
-
-                try {
-                    taskService.addTask(taskEntity);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                taskService.addTask(taskEntity);
 
 
             }

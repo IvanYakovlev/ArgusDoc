@@ -6,15 +6,17 @@ import javafx.collections.ObservableList;
 import entity.Access;
 
 import java.rmi.RemoteException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class AccessServiceImpl implements AccessService {
-    DBconnection dBconnection;
+
     Map<Integer,String> mapAccess = new HashMap<>();
     @Override
     public void addAccess()throws RemoteException {
@@ -33,11 +35,14 @@ public class AccessServiceImpl implements AccessService {
 
     @Override
     public List<Access> listAccess() throws RemoteException{
-        dBconnection = new DBconnection();
         List<Access> listData = new ArrayList<Access>();
+        Statement statement = null;
+        String sql = "SELECT * FROM ACCESS";
         try {
-            String sql = "SELECT * FROM ACCESS";
-            ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
+            statement = DBconnection.getConnection().createStatement();
+
+            ResultSet resultSet = statement.executeQuery(sql);
+
             while (resultSet.next()){
                 Access access = new Access();
                 access.setAccessId(resultSet.getInt("Access_id"));
@@ -45,9 +50,18 @@ public class AccessServiceImpl implements AccessService {
                 mapAccess.put(access.getAccessId(),access.getAccesName());
                 listData.add(access);
             }
+            resultSet.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            if (statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return listData;
     }

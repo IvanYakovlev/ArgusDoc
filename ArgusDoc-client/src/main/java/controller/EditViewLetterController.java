@@ -30,7 +30,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.sql.Date;
-import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -304,9 +303,7 @@ public class EditViewLetterController {
                 File destFile = new File(letter.getLetterFilePath());
                 Files.copy(letter.getAttachmentFile().toPath(), destFile.toPath());
 
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }catch (IOException e) {
+            } catch (IOException e) {
                 //e.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
@@ -372,8 +369,6 @@ public class EditViewLetterController {
 
                 try {
                     taskService.addTask(taskEntity);
-                } catch (SQLException e) {
-                    e.printStackTrace();
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 } catch (IOException e) {

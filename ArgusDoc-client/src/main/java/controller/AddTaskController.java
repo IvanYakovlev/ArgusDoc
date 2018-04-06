@@ -25,7 +25,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.rmi.RemoteException;
-import java.sql.SQLException;
 import java.util.Optional;
 
 public class AddTaskController {
@@ -100,11 +99,7 @@ public class AddTaskController {
                 taskEntity.setLetterId(0);
 
 
-                try {
-                    taskService.addTask(taskEntity);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                taskService.addTask(taskEntity);
             }
 //загружаем файл
                 try {

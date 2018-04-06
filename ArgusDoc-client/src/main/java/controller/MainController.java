@@ -57,7 +57,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.rmi.RemoteException;
-import java.sql.SQLException;
+
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -511,30 +511,26 @@ Calendar tab
 
     public void removeEvent(ActionEvent actionEvent) throws RemoteException {
         if (event!=null){
-            try {
 
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image("/images/1.jpg"));
-                alert.setTitle("Удаление");
-                alert.setHeaderText("Вы действительно хотите удалить напоминание?");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/images/1.jpg"));
+            alert.setTitle("Удаление");
+            alert.setHeaderText("Вы действительно хотите удалить напоминание?");
 
-                // option != null.
-                Optional<ButtonType> option = alert.showAndWait();
+            // option != null.
+            Optional<ButtonType> option = alert.showAndWait();
 
-                if (option.get() == null) {
+            if (option.get() == null) {
 
-                } else if (option.get() == ButtonType.OK) {
-                    eventService.removeEvent(event);
+            } else if (option.get() == ButtonType.OK) {
+                eventService.removeEvent(event);
 
 
-                } else if (option.get() == ButtonType.CANCEL) {
+            } else if (option.get() == ButtonType.CANCEL) {
 
-                } else {
+            } else {
 
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
         }
 
@@ -574,12 +570,8 @@ Calendar tab
 
                 }
 
-            try {
-                eventService.addEvent(event);
-                System.out.println(event.toString());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            eventService.addEvent(event);
+            System.out.println(event.toString());
             clearEventText();
         }
         observableListSelectDayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), datesql));
@@ -617,14 +609,10 @@ Calendar tab
 
             }
 
-            try {
+
                 eventService.updateEvent(event);
                 System.out.println(event.toString());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
+
 
             clearEventText();
         }
@@ -637,8 +625,6 @@ Calendar tab
         try {
             eventService.doneEvent(event.getEventId());
         } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
             e.printStackTrace();
         }
         observableListSelectDayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), datesql));
@@ -1322,41 +1308,37 @@ Calendar tab
     public void removeTaskButton(ActionEvent actionEvent) throws RemoteException {
         if (taskEntity !=null){
 
-            try {
-                ////////////
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image("/images/1.jpg"));
-                alert.setTitle("Удаление");
-                alert.setHeaderText("Вы действительно хотите удалить задачу?");
+            ////////////
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/images/1.jpg"));
+            alert.setTitle("Удаление");
+            alert.setHeaderText("Вы действительно хотите удалить задачу?");
 
-                // option != null.
-                Optional<ButtonType> option = alert.showAndWait();
+            // option != null.
+            Optional<ButtonType> option = alert.showAndWait();
 
-                if (option.get() == null) {
+            if (option.get() == null) {
 
-                } else if (option.get() == ButtonType.OK) {
-                    taskService.removeTask(this.taskEntity);
+            } else if (option.get() == ButtonType.OK) {
+                taskService.removeTask(this.taskEntity);
 //удаляем файл с сервера, если это не письмо
-                    if (taskEntity.getTaskAttachment()!=null&& taskEntity.getTaskIsLetter()==0) {
-                        Path path = Paths.get(taskEntity.getTaskAttachment());
-                        try {
-                            Files.delete(path);
-                        } catch (IOException e) {
-                            System.out.println("файл уже удален");
-                            // ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "");
-                        }
+                if (taskEntity.getTaskAttachment()!=null&& taskEntity.getTaskIsLetter()==0) {
+                    Path path = Paths.get(taskEntity.getTaskAttachment());
+                    try {
+                        Files.delete(path);
+                    } catch (IOException e) {
+                        System.out.println("файл уже удален");
+                        // ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "");
                     }
-
-                } else if (option.get() == ButtonType.CANCEL) {
-
-                } else {
-
                 }
 
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } else if (option.get() == ButtonType.CANCEL) {
+
+            } else {
+
             }
+
         } else
         {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Задача не выбрана!");
@@ -1650,8 +1632,10 @@ Calendar tab
             if (option.get() == null) {
 
             } else if (option.get() == ButtonType.OK) {
-                letterService.removeLetter(letter.getLetterId(), letter.getLetterFilePath());
-
+                letterService.removeLetter(letter.getLetterId());
+                //удаляем файл с сервера
+                Path path = Paths.get(letter.getLetterFilePath());
+                Files.delete(path);
             } else if (option.get() == ButtonType.CANCEL) {
 
             } else {
@@ -1660,8 +1644,6 @@ Calendar tab
 
         } catch (IOException e) {
             System.out.println("Файл уже удален!");
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
         observableListLetter = FXCollections.observableArrayList(letterService.listLetter());
@@ -2199,11 +2181,7 @@ Calendar tab
                                     Event dailyEvent = observableListAllEvent.get(i);
                                     dailyEvent.setEventDate(today);
 
-                                    try {
-                                        eventService.updateEvent(dailyEvent);
-                                    } catch (SQLException e) {
-                                        e.printStackTrace();
-                                    }
+                                    eventService.updateEvent(dailyEvent);
                                     break;
                                 }
                                 case EventPeriodicity.WEEKLY:{
@@ -2216,11 +2194,7 @@ Calendar tab
                                         Event weeklyEvent = observableListAllEvent.get(i);
                                         weeklyEvent.setEventDate(today);
 
-                                        try {
-                                             eventService.updateEvent(weeklyEvent);
-                                        } catch (SQLException e) {
-                                            e.printStackTrace();
-                                        }
+                                        eventService.updateEvent(weeklyEvent);
                                     }
                                     break;
                                 }
@@ -2234,11 +2208,7 @@ Calendar tab
                                         Event monthlyEvent = observableListAllEvent.get(i);
                                         monthlyEvent.setEventDate(today);
 
-                                        try {
-                                            eventService.updateEvent(monthlyEvent);
-                                        } catch (SQLException e) {
-                                            e.printStackTrace();
-                                        }
+                                        eventService.updateEvent(monthlyEvent);
                                     }
                                     break;
                                 }

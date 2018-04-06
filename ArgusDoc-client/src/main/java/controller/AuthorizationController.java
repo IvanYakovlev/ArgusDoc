@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
-import java.sql.SQLException;
 import java.util.Properties;
 
 public class AuthorizationController {
@@ -117,10 +116,7 @@ public class AuthorizationController {
                 }
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        }catch (NoSuchObjectException e){
+        } catch (NoSuchObjectException e){
             e.printStackTrace();
         }catch (NullPointerException e){
             //e.printStackTrace();

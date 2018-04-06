@@ -11,6 +11,7 @@ import java.rmi.RemoteException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.Map;
 
 public class DepartmentServiceImpl implements DepartmentService {
 
-    DBconnection dBconnection;
+
     Map<Integer, String> mapDepartment = new HashMap<Integer, String>();
 
     public Map<Integer, String> getMapDepartment() {
@@ -29,26 +30,51 @@ public class DepartmentServiceImpl implements DepartmentService {
         this.mapDepartment = mapDepartment;
     }
 
-    public void addDepartment(Department department) throws RemoteException, SQLException {
-
-        this.dBconnection=new DBconnection();
-
-
-            PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("INSERT INTO Departments(Department_name) VALUES (?)");
+    public void addDepartment(Department department) throws RemoteException {
+        PreparedStatement preparedStatement = null;
+        String sql = "INSERT INTO Departments(Department_name) VALUES (?)";
+        try {
+            preparedStatement = DBconnection.getConnection().prepareStatement(sql);
             preparedStatement.setString(1,department.getDepartmentName());
             preparedStatement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if (preparedStatement!=null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
 
 
     }
 
     @Override
-    public void updateDepartment(Department department) throws RemoteException, SQLException {
-        this.dBconnection =new DBconnection();
-
-            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("UPDATE Departments SET Department_name=? WHERE Department_id=?");
+    public void updateDepartment(Department department) throws RemoteException {
+        PreparedStatement preparedStatement = null;
+        String sql = "UPDATE Departments SET Department_name=? WHERE Department_id=?";
+        try {
+            preparedStatement = DBconnection.getConnection().prepareStatement(sql);
             preparedStatement.setInt(2,department.getDepartmentId());
             preparedStatement.setString(1,department.getDepartmentName());
             preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if (preparedStatement!=null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
 
 
     }
@@ -56,22 +82,36 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 
 
-    public void removeDepartment(int id) throws RemoteException, SQLException {
-        dBconnection = new DBconnection();
-
-            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("DELETE FROM Departments WHERE Department_id = ?");
+    public void removeDepartment(int id) throws RemoteException {
+        PreparedStatement preparedStatement = null;
+        String sql = "DELETE FROM Departments WHERE Department_id = ?";
+        try {
+            preparedStatement = DBconnection.getConnection().prepareStatement(sql);
             preparedStatement.setInt(1,id);
             preparedStatement.execute();
             mapDepartment.remove(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if (preparedStatement!=null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
 
     }
 
     public List<Department> listDepartments() throws RemoteException{
-        dBconnection = new DBconnection();
         List<Department> listData = new ArrayList<Department>();
+        Statement statement = null;
+        String sql = "SELECT * FROM Departments";
         try {
-            String sql = "SELECT * FROM Departments";
-            ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
+            statement = DBconnection.getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 Department department = new Department();
                 department.setDepartmentId(resultSet.getInt("Department_id"));
@@ -79,8 +119,17 @@ public class DepartmentServiceImpl implements DepartmentService {
                 mapDepartment.put(department.getDepartmentId(),department.getDepartmentName());
                 listData.add(department);
             }
+            resultSet.close();
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            if (statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return listData;
 

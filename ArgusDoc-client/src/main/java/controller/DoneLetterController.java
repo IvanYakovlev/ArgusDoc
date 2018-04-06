@@ -12,9 +12,9 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import service.*;
 import java.io.File;
-import java.io.IOException;
+
 import java.rmi.RemoteException;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 
 public class DoneLetterController {
@@ -194,7 +194,7 @@ public class DoneLetterController {
         stage.close();
     }
 
-    public void doneLetterButton(ActionEvent actionEvent) throws IOException, SQLException {
+    public void doneLetterButton(ActionEvent actionEvent) {
         Letter letter = this.letter;
         TaskEntity taskEntity = new TaskEntity();
         letter.setLetterId(this.letter.getLetterId());
@@ -213,10 +213,18 @@ public class DoneLetterController {
                 }
 
                 letter.setLetterJuristDate(dateDone);
-                letterService.updateJuristLetter(letter);
+                try {
+                    letterService.updateJuristLetter(letter);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
 
                 taskEntity.setTaskId(taskId);
-                taskService.removeTask(taskEntity);
+                try {
+                    taskService.removeTask(taskEntity);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
                 break;
             }
             case "Технический отдел":{
@@ -232,10 +240,18 @@ public class DoneLetterController {
                     letter.setLetterTechnicalFio("null" + this.letter.getLetterTechnicalFio() + userDone + null);
                 }
                 letter.setLetterTechnicalDate(dateDone);
-                letterService.updateTechnicalLetter(letter);
+                try {
+                    letterService.updateTechnicalLetter(letter);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
 
                 taskEntity.setTaskId(taskId);
-                taskService.removeTask(taskEntity);
+                try {
+                    taskService.removeTask(taskEntity);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
                 break;
             }
             case "ОРиП":{
@@ -251,10 +267,18 @@ public class DoneLetterController {
                     letter.setLetterOripFio(null+this.letter.getLetterOripFio()+userDone+null);
                 }
                 letter.setLetterOripDate(dateDone);
-                letterService.updateOripLetter(letter);
+                try {
+                    letterService.updateOripLetter(letter);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
 
                 taskEntity.setTaskId(taskId);
-                taskService.removeTask(taskEntity);
+                try {
+                    taskService.removeTask(taskEntity);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
                 break;
             }
             case "Бухгалтерия":{
@@ -269,10 +293,18 @@ public class DoneLetterController {
                 }
 
                 letter.setLetterBookkeepingDate(dateDone);
-                letterService.updateBookkeepingLetter(letter);
+                try {
+                    letterService.updateBookkeepingLetter(letter);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
 
                 taskEntity.setTaskId(taskId);
-                taskService.removeTask(taskEntity);
+                try {
+                    taskService.removeTask(taskEntity);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
                 break;
             }
             default:{

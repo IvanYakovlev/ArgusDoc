@@ -10,9 +10,9 @@ import java.util.List;
 
 public interface EmployeeService extends Remote {
 
-    public void addEmployee(Employee employee) throws RemoteException, SQLException;
-    public void updateEmployee(Employee employee) throws RemoteException, SQLException;
-    public void removeEmployee(int id) throws RemoteException, SQLException;
+    public void addEmployee(Employee employee) throws RemoteException;
+    public void updateEmployee(Employee employee) throws RemoteException;
+    public void removeEmployee(int id) throws RemoteException;
     public List<Employee> listEmployees() throws RemoteException;
     public List<String> listEmployeesName() throws RemoteException;
     public List<String> listEmployeesNameJurist() throws RemoteException;
@@ -21,5 +21,5 @@ public interface EmployeeService extends Remote {
     public List<String> listEmployeesNameBookkeeping() throws RemoteException;
 
     public int getIdEmployeeByName(String value) throws RemoteException;
-    public Employee getEmployeeByPassword(String password) throws RemoteException, SQLException;
+    public Employee getEmployeeByPassword(String password) throws RemoteException;
 }

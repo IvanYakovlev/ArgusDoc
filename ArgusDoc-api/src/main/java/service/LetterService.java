@@ -11,16 +11,16 @@ import java.util.List;
 
 public interface LetterService extends Remote {
 
-    public void addLetter(Letter letter) throws IOException, RemoteException, SQLException;
-    public void updateLetter(Letter letter) throws IOException, RemoteException, SQLException;
-    public void updateJuristLetter(Letter letter) throws IOException, RemoteException, SQLException;
-    public void updateOripLetter(Letter letter) throws IOException, RemoteException, SQLException;
-    public void updateTechnicalLetter(Letter letter) throws IOException, RemoteException, SQLException;
-    public void updateBookkeepingLetter(Letter letter) throws IOException, RemoteException, SQLException;
+    public void addLetter(Letter letter) throws RemoteException;
+    public void updateLetter(Letter letter) throws  RemoteException;
+    public void updateJuristLetter(Letter letter) throws RemoteException;
+    public void updateOripLetter(Letter letter) throws RemoteException;
+    public void updateTechnicalLetter(Letter letter) throws RemoteException;
+    public void updateBookkeepingLetter(Letter letter) throws RemoteException;
 
 
-    public void removeLetter(int id, String filePath) throws IOException, SQLException;
+    public void removeLetter(int id) throws RemoteException;
     public List<Letter> listLetter() throws RemoteException;
     public Letter getLetterById(int id) throws RemoteException;
-    public int getMaxId() throws RemoteException, SQLException;
+    public int getMaxId() throws RemoteException;
 }

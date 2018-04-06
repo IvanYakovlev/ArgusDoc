@@ -9,6 +9,7 @@ import java.rmi.RemoteException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,28 +17,41 @@ import java.util.Map;
 
 public class EmployeeServiceImpl implements EmployeeService {
 
-    DBconnection dBconnection;
     Map<Integer, String> mapEmployee = new HashMap<Integer, String>();
     List<Employee> listEmployee = new ArrayList<Employee>();
 
-    public void addEmployee(Employee employee) throws RemoteException, SQLException {
-        this.dBconnection = new DBconnection();
-
-            PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("INSERT INTO Employees(Employee_name,Employee_password,Department_id,Access_id) VALUES (?,?,?,?)");
+    public void addEmployee(Employee employee) throws RemoteException {
+        PreparedStatement preparedStatement = null;
+        String sql = "INSERT INTO Employees(Employee_name,Employee_password,Department_id,Access_id) VALUES (?,?,?,?)";
+        try {
+            preparedStatement = DBconnection.getConnection().prepareStatement(sql);
             preparedStatement.setString(1,employee.getEmployeeName());
-
             preparedStatement.setString(2,employee.getEmployeePassword());
             preparedStatement.setInt(3,employee.getDepartmentId());
             preparedStatement.setInt(4,employee.getAccessId());
             preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if (preparedStatement!=null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
 
     }
 
     @Override
-    public void updateEmployee(Employee employee) throws RemoteException, SQLException {
-        this.dBconnection = new DBconnection();
+    public void updateEmployee(Employee employee) throws RemoteException {
+        PreparedStatement preparedStatement= null;
+        String sql = "UPDATE Employees SET Employee_name=?,Employee_password=?,Department_id=?,Access_id=? WHERE Employee_id=?";
 
-            PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("UPDATE Employees SET Employee_name=?,Employee_password=?,Department_id=?,Access_id=? WHERE Employee_id=?");
+        try {
+            preparedStatement = DBconnection.getConnection().prepareStatement(sql);
             preparedStatement.setString(1,employee.getEmployeeName());
 
             preparedStatement.setString(2,employee.getEmployeePassword());
@@ -45,25 +59,52 @@ public class EmployeeServiceImpl implements EmployeeService {
             preparedStatement.setInt(4,employee.getAccessId());
             preparedStatement.setInt(5,employee.getEmployeeId());
             preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if (preparedStatement!=null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
 
     }
 
-    public void removeEmployee(int id) throws RemoteException, SQLException {
-        this.dBconnection = new DBconnection();
+    public void removeEmployee(int id) throws RemoteException {
+        PreparedStatement preparedStatement = null;
 
-            PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("DELETE FROM Employees WHERE Employee_id=?");
+        try {
+            preparedStatement = DBconnection.getConnection().prepareStatement("DELETE FROM Employees WHERE Employee_id=?");
             preparedStatement.setInt(1,id);
             preparedStatement.execute();
-
-
-
-    }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if (preparedStatement!=null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+     }
 
     public List<Employee> listEmployees() throws RemoteException{
-        this.dBconnection = new DBconnection();
         List<Employee> listData = new ArrayList<Employee>();
+        Statement statement = null;
+        String sql = "SELECT * FROM Employees, Departments,Access " +
+                "WHERE Employees.Department_id=Departments.Department_id " +
+                "AND Access.Access_id=Employees.Access_id";
         try {
-            ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT * FROM Employees, Departments,Access WHERE Employees.Department_id=Departments.Department_id AND Access.Access_id=Employees.Access_id");
+            statement = DBconnection.getConnection().createStatement();
+
+            ResultSet resultSet = statement.executeQuery(sql);
+
             while (resultSet.next()){
                 Employee employee= new Employee();
                     employee.setEmployeeId(resultSet.getInt("Employee_id"));
@@ -77,8 +118,17 @@ public class EmployeeServiceImpl implements EmployeeService {
                     }
                 listData.add(employee);
             }
+            resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            if (statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return listData;
     }
@@ -145,12 +195,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee getEmployeeByPassword(String password) throws RemoteException, SQLException {
+    public Employee getEmployeeByPassword(String password) throws RemoteException {
+
         Employee employee= new Employee();
+        Statement statement = null;
+        String sql = "SELECT * FROM Employees, Departments,Access " +
+                "WHERE Employees.Department_id=Departments.Department_id " +
+                "AND Access.Access_id=Employees.Access_id " +
+                "AND Employee_password = '"+password+"'";
+        try {
+            statement = DBconnection.getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
 
-            this.dBconnection = new DBconnection();
-
-            ResultSet resultSet = this.dBconnection.connect().createStatement().executeQuery("SELECT * FROM Employees, Departments,Access WHERE Employees.Department_id=Departments.Department_id AND Access.Access_id=Employees.Access_id AND Employee_password = '"+password+"'");
             while (resultSet.next()) {
                 employee.setEmployeeId(resultSet.getInt("Employee_id"));
                 employee.setEmployeeName(resultSet.getString("Employee_name"));
@@ -160,11 +216,19 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employee.setDepartmentId(resultSet.getInt("Department_id"));
                 employee.setAccessId(resultSet.getInt("Access_id"));
                 employee.setEmployeeOnline(resultSet.getByte("Employee_online"));
-
-
             }
-
-
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if (statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return employee;
     }
 }

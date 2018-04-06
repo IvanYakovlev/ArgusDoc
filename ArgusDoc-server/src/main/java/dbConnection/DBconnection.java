@@ -17,14 +17,10 @@ public class DBconnection{
 
     public static String PASSWORD ;
 
-    private Connection connection;
+    private static Connection connection;
 
-    public DBconnection() {
-
-    }
-
-    public Connection connect(){
-        if (this.connection==null) {
+    public static Connection getConnection(){
+        if (connection==null) {
             try {
                 Driver driver = new com.microsoft.sqlserver.jdbc.SQLServerDriver();
                 DriverManager.registerDriver(driver);
@@ -39,9 +35,9 @@ public class DBconnection{
 
             }
         }
-        return this.connection;
+        return connection;
     }
-    public void close(){
+    public static void close(){
         try {
             connection.close();
             connection=null;

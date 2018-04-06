@@ -28,7 +28,7 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.rmi.RemoteException;
-import java.sql.SQLException;
+
 
 public class EditTaskController {
 
@@ -145,8 +145,6 @@ public class EditTaskController {
                     }
                     ADInfo.getAdInfo().dialog(Alert.AlertType.CONFIRMATION, "Файл обновлен!");
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }

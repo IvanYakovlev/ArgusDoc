@@ -423,7 +423,7 @@ private FontAwesomeIconView closeSettingWindow;
                 if (option.get() == null) {
 
                 } else if (option.get() == ButtonType.OK) {
-                    documentService.removeDocument(document.getDocumentId(), document.getDocumentFilePath());
+                    documentService.removeDocument(document.getDocumentId());
 //удаляем файл с сервера
                     if (document.getDocumentFilePath()!=null) {
                         Path path = Paths.get(document.getDocumentFilePath());

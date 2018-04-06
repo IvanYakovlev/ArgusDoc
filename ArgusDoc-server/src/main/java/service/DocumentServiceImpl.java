@@ -18,79 +18,71 @@ import java.util.List;
 import java.util.Map;
 
 public class DocumentServiceImpl implements DocumentService {
-    DBconnection dBconnection;
+
     Map<Integer, String> mapDocument = new HashMap<Integer, String>();
 
-    public void addDocument(Document document) throws IOException, RemoteException, SQLException {
-
-        this.dBconnection = new DBconnection();
-
-
+    public void addDocument(Document document) throws RemoteException {
                 //добавляем запись в таблицу Documents
-                PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("INSERT INTO Documents(Document_name,Document_filepath,Department_id) VALUES (?,?,?)");
-                preparedStatement.setString(1, document.getDocumentName());
-                preparedStatement.setString(2, document.getDocumentFilePath());
-                preparedStatement.setInt(3, document.getDepartmentId());
-                preparedStatement.execute();
-
-
-
-
+        PreparedStatement preparedStatement = null;
+        String sql = "INSERT INTO Documents(Document_name,Document_filepath,Department_id) VALUES (?,?,?)";
+        try {
+            preparedStatement = DBconnection.getConnection().prepareStatement(sql);
+            preparedStatement.setString(1, document.getDocumentName());
+            preparedStatement.setString(2, document.getDocumentFilePath());
+            preparedStatement.setInt(3, document.getDepartmentId());
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if (preparedStatement!=null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
 
     }
-           /* this.dBconnection = new DBconnection();
-            File file;
-            FileInputStream fileInputStream = null;
-            try {
-
-                file = document.getDocumentFile();
-                fileInputStream = new FileInputStream(file);
-                long length = file.length();
-                if (length>50000000){
-                    ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Размер загружаемого документа не должен превышать 50мб!");
-                }else {
-                    System.out.println(length);
-                    PreparedStatement preparedStatement = this.dBconnection.connect().prepareStatement("INSERT INTO Documents(Document_name,Document_filepath,Department_id) VALUES (?,?,?)");
-                    preparedStatement.setString(1, document.getDocumentName());
-                    preparedStatement.setBinaryStream(2, fileInputStream, length);
-                    preparedStatement.setInt(3, document.getDepartmentId());
-                    preparedStatement.execute();
-                }
-
-            } catch (SQLException e) {
-                ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Документ с таким названием уже существует!");
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    fileInputStream.close();
-                } catch (RuntimeException e) {
-                    e.printStackTrace();
-                }
-            }*/
 
 
-    public void removeDocument(int id, String filePath) throws IOException, SQLException {
-        dBconnection = new DBconnection();
 
-            //удаляем запись в таблице
-            PreparedStatement preparedStatement = dBconnection.connect().prepareStatement("DELETE FROM DOCUMENTS WHERE Document_id = ?");
+    public void removeDocument(int id) throws RemoteException {
+        //удаляем запись в таблице
+        PreparedStatement preparedStatement = null;
+        String sql = "DELETE FROM DOCUMENTS WHERE Document_id = ?";
+
+        try {
+            preparedStatement = DBconnection.getConnection().prepareStatement(sql);
             preparedStatement.setInt(1,id);
             preparedStatement.execute();
             mapDocument.remove(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if (preparedStatement!=null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
 
     }
 
     @Override
     public List<Document> listDocuments() throws RemoteException{
 
-
-        dBconnection = new DBconnection();
         List<Document> listData = new ArrayList<Document>();
+        Statement statement = null;
+        String sql = "SELECT * FROM DOCUMENTS, DEPARTMENTS WHERE DOCUMENTS.Department_id=DEPARTMENTS.Department_id ";
+
         try {
-            String sql = "SELECT * FROM DOCUMENTS, DEPARTMENTS WHERE DOCUMENTS.Department_id=DEPARTMENTS.Department_id ";
-            ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
+            statement = DBconnection.getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 Document document = new Document();
                 document.setDocumentId((resultSet.getInt("Document_id")));
@@ -101,8 +93,17 @@ public class DocumentServiceImpl implements DocumentService {
                 mapDocument.put(document.getDocumentId(),document.getDocumentName());
                 listData.add(document);
             }
+            resultSet.close();
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            if (statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return listData;
     }
@@ -131,23 +132,31 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public List<Document> listDocumentsByDepartment(String value) throws RemoteException{
-        dBconnection = new DBconnection();
+        Statement statement = null;
         List<Document> listData = new ArrayList<Document>();
+        String sql = "SELECT * FROM DOCUMENTS WHERE (Department_id =(SELECT Department_id FROM DEPARTMENTS WHERE (Department_name = '"+value+"')))";
         try {
-            String sql = "SELECT * FROM DOCUMENTS WHERE (Department_id =(SELECT Department_id FROM DEPARTMENTS WHERE (Department_name = '"+value+"')))";
-            ResultSet resultSet = dBconnection.connect().createStatement().executeQuery(sql);
+            statement = DBconnection.getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 Document document = new Document();
                 document.setDocumentId((resultSet.getInt("Document_id")));
                 document.setDocumentName((resultSet.getString("Document_name")));
                 document.setDepartmentId(resultSet.getInt("Department_id"));
                 document.setDocumentId((resultSet.getInt("Document_id")));
-
-
                 listData.add(document);
             }
+            resultSet.close();
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            if (statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return listData;
     }

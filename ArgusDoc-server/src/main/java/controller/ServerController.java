@@ -41,7 +41,6 @@ import java.util.*;
 
 
 public class ServerController {
-    DBconnection dBconnection;
 
     Registry registry;
     AccessServiceImpl accessServiceImpl;
@@ -251,8 +250,8 @@ public class ServerController {
 
 
 
-        dBconnection=new DBconnection();
-        dBconnection.connect();
+        DBconnection.getConnection();
+
         try {
             registry = LocateRegistry.createRegistry(serverPort);
         }catch (IllegalArgumentException e){
@@ -301,7 +300,6 @@ public class ServerController {
 
     public void stopServer(){
 
-        dBconnection.connect();
 
         try {
 
@@ -335,7 +333,7 @@ public class ServerController {
             UnicastRemoteObject.unexportObject(registry, true);
 
             registry=null;
-            dBconnection.close();
+            DBconnection.close();
 
         }   catch (NotBoundException e) {
             e.printStackTrace();

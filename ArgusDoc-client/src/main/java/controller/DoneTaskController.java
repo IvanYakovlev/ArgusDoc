@@ -24,7 +24,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.rmi.RemoteException;
-import java.sql.SQLException;
+
 
 public class DoneTaskController {
 
@@ -111,8 +111,6 @@ public class DoneTaskController {
 
                     }
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
