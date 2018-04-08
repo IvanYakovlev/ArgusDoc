@@ -25,6 +25,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class SettingController {
@@ -41,9 +43,7 @@ public class SettingController {
     private EmployeeService employeeService = ServiceRegistry.employeeService;
     private AccessService accessService = ServiceRegistry.accessService;
     private DocumentService documentService = ServiceRegistry.documentService;
-    private LetterService letterService = ServiceRegistry.letterService;
-    private TaskService taskService = ServiceRegistry.taskService;
-    private EventService eventService = ServiceRegistry.eventService;
+
 
     private ObservableList<Department> dataDepartment;
     private ObservableList<Employee> dataEmployee;
@@ -176,28 +176,47 @@ private FontAwesomeIconView closeSettingWindow;
     }
 
     public void addDepartmentButton(ActionEvent actionEvent) throws RemoteException {
-        if (txtDepartment.getText().isEmpty()) {
-            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Введите название отдела!");
-        } else {
-            Department department = new Department();
-            department.setDepartmentName(txtDepartment.getText());
 
-            try {
+            if (txtDepartment.getText().isEmpty()) {
+                ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Введите название отдела!");
+            } else {
+                if (departmentService.listDepartmentName().contains(txtDepartment.getText())) {
+                    ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Отдел с таким названием уже существует!");
+                }else {
+                Department department = new Department();
+                department.setDepartmentName(txtDepartment.getText());
+
                 departmentService.addDepartment(department);
-            }catch (SQLException e){
-                ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Отдел с таким названием уже существует!");
+
+                clearDepartmentText();
+                refreshTableDepartment();
+
             }
-
-            clearDepartmentText();
-            refreshTableDepartment();
-
         }
-
     }
 
     public void removeDepartmentButton(ActionEvent actionEvent) throws RemoteException {
 
-        try {
+        List<Employee> list = employeeService.listEmployees();
+        Boolean employeeInDepartment = false;
+        for (int i=0; i<list.size();i++){
+            if (list.get(i).getDepartmentId()==this.idDepartment){
+                employeeInDepartment=true;
+            }
+        }
+
+        Boolean documentInDepartment = false;
+        List<Document> listDoc = documentService.listDocuments();
+        for (int i=0; i<listDoc.size();i++){
+            if (listDoc.get(i).getDepartmentId()==this.idDepartment){
+                documentInDepartment=true;
+            }
+        }
+        if (employeeInDepartment==true){
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Удаление невозможно, так как есть пользователи в выбранном отделе!");
+        } else if (documentInDepartment==true){
+            ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Удаление невозможно, так как есть документы в выбранном отделе!");
+        }else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/images/1.jpg"));
@@ -218,13 +237,9 @@ private FontAwesomeIconView closeSettingWindow;
 
             }
 
-        }catch (SQLException e){
-
-          ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Удаление невозможно, так как есть пользователи или документы в выбранном отделе!");
+            clearDepartmentText();
+            refreshTableDepartment();
         }
-
-        clearDepartmentText();
-        refreshTableDepartment();
     }
 
     public void clickTableDepartment(MouseEvent mouseEvent) {
@@ -236,21 +251,22 @@ private FontAwesomeIconView closeSettingWindow;
     }
 
     public void updateDepartmentButton(ActionEvent actionEvent) throws RemoteException {
-        if (txtDepartment.getText().isEmpty()) {
-            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Введите название отдела!");
-        } else {
-            Department department = new Department();
-            department.setDepartmentName(txtDepartment.getText());
-            department.setDepartmentId(this.idDepartment);
 
-            try {
+            if (txtDepartment.getText().isEmpty()) {
+                ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Введите название отдела!");
+            } else {
+                if (departmentService.listDepartmentName().contains(txtDepartment.getText())) {
+                    ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Отдел с таким названием уже существует!");
+                } else {
+                Department department = new Department();
+                department.setDepartmentName(txtDepartment.getText());
+                department.setDepartmentId(this.idDepartment);
+
                 departmentService.updateDepartment(department);
-            }catch (SQLException e){
-                ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Отдел с таким названием уже существует!");
-            }
 
-            clearDepartmentText();
-            refreshTableDepartment();
+                clearDepartmentText();
+                refreshTableDepartment();
+            }
         }
     }
 
@@ -282,50 +298,46 @@ private FontAwesomeIconView closeSettingWindow;
     }
 
     public void updateEmployeeButton(ActionEvent actionEvent) throws RemoteException {
+
         if (txtFIOEmployee.getText().isEmpty() ||  txtPasswordEmployee.getText().isEmpty() || comboBoxEmployee_Department.getValue()==null || comboBoxEmployee_Access.getValue()==null) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
-            Employee employee = new Employee();
-            employee.setEmployeeName(txtFIOEmployee.getText());
-            employee.setEmployeePassword(txtPasswordEmployee.getText());
-            employee.setDepartmentId(departmentService.getIdDepartmentByName(comboBoxEmployee_Department.getValue()));
-            employee.setAccessId(accessService.getIdAccessByName(comboBoxEmployee_Access.getValue()));
-            employee.setEmployeeId(this.idEmployee);
-            try {
-                employeeService.updateEmployee(employee);
-            } catch (SQLException e) {
+            if (employeeService.listEmployeesName().contains(txtFIOEmployee.getText())){
                 ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Данный пользователь уже существует!");
-            }
+            } else {
+                Employee employee = new Employee();
+                employee.setEmployeeName(txtFIOEmployee.getText());
+                employee.setEmployeePassword(txtPasswordEmployee.getText());
+                employee.setDepartmentId(departmentService.getIdDepartmentByName(comboBoxEmployee_Department.getValue()));
+                employee.setAccessId(accessService.getIdAccessByName(comboBoxEmployee_Access.getValue()));
+                employee.setEmployeeId(this.idEmployee);
+                employeeService.updateEmployee(employee);
 
-            refreshTableEmployee();
+                refreshTableEmployee();
+            }
         }
     }
 
     public void removeEmployeeButton(ActionEvent actionEvent) throws RemoteException {
-        try {
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(new Image("/images/1.jpg"));
-            alert.setTitle("Удаление");
-            alert.setHeaderText("Вы действительно хотите удалить сотрудника?");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("/images/1.jpg"));
+        alert.setTitle("Удаление");
+        alert.setHeaderText("Вы действительно хотите удалить сотрудника?");
 
-            // option != null.
-            Optional<ButtonType> option = alert.showAndWait();
+        // option != null.
+        Optional<ButtonType> option = alert.showAndWait();
 
-            if (option.get() == null) {
+        if (option.get() == null) {
 
-            } else if (option.get() == ButtonType.OK) {
-                employeeService.removeEmployee(this.idEmployee);
+        } else if (option.get() == ButtonType.OK) {
+            employeeService.removeEmployee(this.idEmployee);
 
-            } else if (option.get() == ButtonType.CANCEL) {
+        } else if (option.get() == ButtonType.CANCEL) {
 
-            } else {
+        } else {
 
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
         clearEmployeeTab();
@@ -336,20 +348,18 @@ private FontAwesomeIconView closeSettingWindow;
         if (txtFIOEmployee.getText().isEmpty() ||  txtPasswordEmployee.getText().isEmpty() || comboBoxEmployee_Department.getValue()==null || comboBoxEmployee_Access.getValue()==null) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
-
-            Employee employee = new Employee();
-            employee.setEmployeeName(txtFIOEmployee.getText());
-            employee.setEmployeePassword(txtPasswordEmployee.getText());
-            employee.setDepartmentId(departmentService.getIdDepartmentByName(comboBoxEmployee_Department.getValue()));
-            employee.setAccessId(accessService.getIdAccessByName(comboBoxEmployee_Access.getValue()));
-            try {
-                employeeService.addEmployee(employee);
-            } catch (SQLException e) {
-
+            if (employeeService.listEmployeesName().contains(txtFIOEmployee.getText())){
                 ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Данный пользователь уже существует!");
+            }else {
+                Employee employee = new Employee();
+                employee.setEmployeeName(txtFIOEmployee.getText());
+                employee.setEmployeePassword(txtPasswordEmployee.getText());
+                employee.setDepartmentId(departmentService.getIdDepartmentByName(comboBoxEmployee_Department.getValue()));
+                employee.setAccessId(accessService.getIdAccessByName(comboBoxEmployee_Access.getValue()));
+                employeeService.addEmployee(employee);
+                clearEmployeeTab();
+                refreshTableEmployee();
             }
-            clearEmployeeTab();
-            refreshTableEmployee();
         }
     }
 
@@ -363,31 +373,28 @@ private FontAwesomeIconView closeSettingWindow;
             if (choseFile == null) {
                 ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Документ не загружен!");
             } else {
-                Document document = new Document();
-                document.setDocumentName(choseFile.getName());
-                document.setDocumentFile(choseFile);
-                document.setDocumentFilePath(ServerFilePath.DOCUMENTS_FILE_PATH+choseFile.getName());
-                document.setDepartmentId(departmentService.getIdDepartmentByName(comboBoxDocument_Department.getValue()));
-                try {
-                    documentService.addDocument(document);
-
-                } catch (SQLException e) {
-                    ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Документ с таким названием уже существует!");
-                }
                 try {
                     //Копируем файл на сервер
+                    String filePath = ServerFilePath.DOCUMENTS_FILE_PATH+choseFile.getName();
+                    File destFile = new File(filePath);
 
-                    File destFile = new File(document.getDocumentFilePath());
-                    System.out.println(document.getDocumentFile().toPath());
-                    System.out.println(destFile.toPath());
-                    Files.copy(document.getDocumentFile().toPath(), destFile.toPath());
+
+                    Files.copy(choseFile.toPath(), destFile.toPath());
+
+                    Document document = new Document();
+                    document.setDocumentName(choseFile.getName());
+                    document.setDocumentFile(choseFile);
+                    document.setDocumentFilePath(filePath);
+                    document.setDepartmentId(departmentService.getIdDepartmentByName(comboBoxDocument_Department.getValue()));
+                    documentService.addDocument(document);
+
+                    clearDocumentTab();
+                    refreshTableDocument();
+
                 }catch (FileAlreadyExistsException e){
                     ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Документ с таким названием уже существует!");
                 }
 
-
-                clearDocumentTab();
-                refreshTableDocument();
             }
         }
 
@@ -441,8 +448,6 @@ private FontAwesomeIconView closeSettingWindow;
 
                 }
 
-            } catch (SQLException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }

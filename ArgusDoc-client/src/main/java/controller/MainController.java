@@ -67,8 +67,8 @@ public class MainController {
 
 
     //создаем трей иконку
-    public static java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
-    public static java.awt.TrayIcon trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().createImage("ArgusDoc-client/src/main/resources/images/trayIcon.jpg"));
+    public  java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
+    public  java.awt.TrayIcon trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().createImage(getClass().getResource("/images/trayIcon.jpg")));
 
     Stage stage;
     NotificationEvent notificationEvent=new NotificationEvent();

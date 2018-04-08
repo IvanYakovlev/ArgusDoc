@@ -111,6 +111,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                     employee.setEmployeeName(resultSet.getString("Employee_name"));
                     employee.setEmployeePassword(resultSet.getString("Employee_password"));
                     employee.setDepartmentName(resultSet.getString("Department_name"));
+                    employee.setDepartmentId(resultSet.getInt("Department_id"));
                     employee.setAccessName(resultSet.getString("Access_name"));
                     mapEmployee.put(employee.getEmployeeId(),employee.getEmployeeName());
                     if (!listEmployee.contains(employee)) {

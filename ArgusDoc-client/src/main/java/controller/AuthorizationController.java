@@ -119,7 +119,7 @@ public class AuthorizationController {
         } catch (NoSuchObjectException e){
             e.printStackTrace();
         }catch (NullPointerException e){
-            //e.printStackTrace();
+            e.printStackTrace();
             ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Не удалось соединиться с сервером!");
             Platform.exit();
         }

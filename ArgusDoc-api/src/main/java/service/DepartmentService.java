@@ -14,6 +14,7 @@ public interface DepartmentService extends Remote {
     public void removeDepartment(int id) throws RemoteException;
     public List<Department> listDepartments() throws RemoteException;
     public List<String> listDepartmentName() throws RemoteException;
+    public List<Integer> listDepartmentId() throws RemoteException;
     public int getIdDepartmentByName(String value) throws RemoteException;
 
 }

@@ -37,16 +37,16 @@ public class DrawerMainMenuController {
         exitProgram.setFocusTraversable(false);
     }
     public void exitProgram(ActionEvent actionEvent) {
-        Platform.exit();
-        MainController.tray.remove(MainController.trayIcon);
+        System.exit(0);
     }
 
     public void changeUser(ActionEvent actionEvent) throws IOException {
 
         Stage stage = (Stage) changeUser.getScene().getWindow();
+
         stage.close();
 
-        MainController.tray.remove(MainController.trayIcon);
+
 
         FXMLLoader fxmlLoader = new FXMLLoader();
 

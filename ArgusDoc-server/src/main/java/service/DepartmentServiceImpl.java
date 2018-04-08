@@ -143,6 +143,14 @@ public class DepartmentServiceImpl implements DepartmentService {
         }
         return listData;
     }
+    @Override
+    public List<Integer> listDepartmentId() throws RemoteException{
+        List<Integer> listData = new ArrayList<Integer>();
+        for(Map.Entry<Integer, String> e : mapDepartment.entrySet()) {
+            listData.add(e.getKey());
+        }
+        return listData;
+    }
 
 
     @Override
