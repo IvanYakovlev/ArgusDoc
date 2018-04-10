@@ -271,7 +271,7 @@ public class MainController {
 
             //Проверка на поддержку в трее
             if (!java.awt.SystemTray.isSupported()) {
-                System.out.println("No system tray support, application exiting.");
+                System.out.println("ОС не поддерживает трей");
                 Platform.exit();
             }
 
@@ -303,7 +303,7 @@ public class MainController {
             // добавляем иконку в трей
             tray.add(trayIcon);
         } catch (AWTException e) {
-            System.out.println("Unable to init system tray");
+            System.out.println("Не удалось иницализировать иконку");
             e.printStackTrace();
         }
 
@@ -413,8 +413,7 @@ public class MainController {
                 int selectedMonth=calendar.get(Calendar.MONTH);
                 int selectedDay = calendar.get(Calendar.DAY_OF_MONTH);
                 int selectedYear = calendar.get(Calendar.YEAR);
-                System.out.println(year+" "+day+" "+month);
-                System.out.println(selectedYear+" "+selectedDay+" "+selectedMonth);
+
                 if (month==selectedMonth&&day==selectedDay&&year==selectedYear){
                     labelSelectedDate.setText("сегодня");
                 } else {
@@ -571,7 +570,7 @@ Calendar tab
                 }
 
             eventService.addEvent(event);
-            System.out.println(event.toString());
+
             clearEventText();
         }
         observableListSelectDayEvent = FXCollections.observableArrayList(eventService.listSelectedDayEvent(authorizedUser.getEmployeeId(), datesql));
@@ -611,7 +610,7 @@ Calendar tab
 
 
                 eventService.updateEvent(event);
-                System.out.println(event.toString());
+
 
 
             clearEventText();
@@ -1290,7 +1289,7 @@ Calendar tab
         TaskEntity taskEntity = tableTask.getSelectionModel().getSelectedItems().get(0);
         if (taskEntity !=null){
             this.taskEntity = taskEntity;
-            System.out.println(taskEntity.toString());
+
         }
 
     }
@@ -1511,7 +1510,7 @@ Calendar tab
 
     public void openViewEditLetterWindow(ActionEvent actionEvent) {
 
-        if (letter.getLetterName()!=null) {
+        if (letter!=null) {
             FXMLLoader fxmlLoader = new FXMLLoader();
 
             fxmlLoader.setLocation(getClass().getResource("/viewFXML/View-edit_letter_window.fxml"));
@@ -1561,6 +1560,7 @@ Calendar tab
         else {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Письмо не выбрано!");
         }
+        this.letter=null;
 
     }
 
@@ -1618,37 +1618,42 @@ Calendar tab
     }
 
     public void removeLetter(ActionEvent actionEvent) throws RemoteException {
-        try {
+        if (letter!=null) {
+            try {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image("/images/1.jpg"));
+                alert.setTitle("Удаление");
+                alert.setHeaderText("Вы действительно хотите удалить письмо?");
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(new Image("/images/1.jpg"));
-            alert.setTitle("Удаление");
-            alert.setHeaderText("Вы действительно хотите удалить письмо?");
+                // option != null.
+                Optional<ButtonType> option = alert.showAndWait();
 
-            // option != null.
-            Optional<ButtonType> option = alert.showAndWait();
+                if (option.get() == null) {
 
-            if (option.get() == null) {
+                } else if (option.get() == ButtonType.OK) {
+                    letterService.removeLetter(letter.getLetterId());
+                    //удаляем файл с сервера
+                    Path path = Paths.get(letter.getLetterFilePath());
+                    Files.delete(path);
+                } else if (option.get() == ButtonType.CANCEL) {
 
-            } else if (option.get() == ButtonType.OK) {
-                letterService.removeLetter(letter.getLetterId());
-                //удаляем файл с сервера
-                Path path = Paths.get(letter.getLetterFilePath());
-                Files.delete(path);
-            } else if (option.get() == ButtonType.CANCEL) {
+                } else {
 
-            } else {
+                }
 
+            } catch (IOException e) {
+                System.out.println("Файл уже удален!");
             }
 
-        } catch (IOException e) {
-            System.out.println("Файл уже удален!");
-        }
+            observableListLetter = FXCollections.observableArrayList(letterService.listLetter());
+            tableLetterRefresh(observableListLetter);
+            colorRow();
 
-        observableListLetter = FXCollections.observableArrayList(letterService.listLetter());
-        tableLetterRefresh(observableListLetter);
-        colorRow();
+        } else {
+            ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Письмо не выбрано!");
+        }
+        this.letter=null;
     }
 
     public void clickLetterTable(MouseEvent mouseEvent) {

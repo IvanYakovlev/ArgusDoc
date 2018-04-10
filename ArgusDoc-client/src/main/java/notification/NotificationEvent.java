@@ -33,7 +33,7 @@ public class NotificationEvent {
         }
     }
     public void overdueTask(String message){
-        if (countTask==0||countTask>30){
+     //   if (countTask==0||countTask>30){
             String title = "У вас есть просроченные задачи:";
             NotificationType notificationType = NotificationType.WARNING;
 
@@ -43,13 +43,13 @@ public class NotificationEvent {
             tray.setAnimationType(AnimationType.SLIDE);
             tray.setNotificationType(notificationType);
             tray.showAndDismiss(Duration.millis(5000));
-            countTask=0;
-        }
-        countTask++;
+          //  countTask=0;
+      //  }
+      //  countTask++;
 
     }
     public void overdueLetter(String message){
-        if (countLetter==0||countLetter>30){
+       // if (countLetter==0||countLetter>30){
             String title = "У вас есть необработанные письма:";
             NotificationType notificationType = NotificationType.WARNING;
 
@@ -60,9 +60,9 @@ public class NotificationEvent {
             tray.setNotificationType(notificationType);
             tray.showAndDismiss(Duration.millis(5000));
 
-            countLetter=0;
-        }
-        countLetter++;
+  //          countLetter=0;
+    //    }
+      //  countLetter++;
 
     }
 
@@ -100,7 +100,7 @@ public class NotificationEvent {
     }
 
     public void newEvent(String message) {
-        if (countEvent==0||countEvent>10){
+     //   if (countEvent==0||countEvent>10){
             String title = "Напоминание:";
             NotificationType notificationType = NotificationType.INFORMATION;
 
@@ -110,9 +110,9 @@ public class NotificationEvent {
             tray.setAnimationType(AnimationType.SLIDE);
             tray.setNotificationType(notificationType);
             tray.showAndDismiss(Duration.millis(5000));
-            countEvent=0;
-        }
-        countEvent++;
+     //       countEvent=0;
+    //    }
+    //    countEvent++;
 
     }
 }
