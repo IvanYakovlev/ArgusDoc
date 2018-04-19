@@ -302,9 +302,9 @@ private FontAwesomeIconView closeSettingWindow;
         if (txtFIOEmployee.getText().isEmpty() ||  txtPasswordEmployee.getText().isEmpty() || comboBoxEmployee_Department.getValue()==null || comboBoxEmployee_Access.getValue()==null) {
             ADInfo.getAdInfo().dialog(Alert.AlertType.WARNING, "Не все поля заполнены!");
         } else {
-            if (employeeService.listEmployeesName().contains(txtFIOEmployee.getText())){
+        /*    if (employeeService.listEmployeesName().contains(txtFIOEmployee.getText())){
                 ADInfo.getAdInfo().dialog(Alert.AlertType.ERROR, "Данный пользователь уже существует!");
-            } else {
+            } else {*/
                 Employee employee = new Employee();
                 employee.setEmployeeName(txtFIOEmployee.getText());
                 employee.setEmployeePassword(txtPasswordEmployee.getText());
@@ -314,7 +314,7 @@ private FontAwesomeIconView closeSettingWindow;
                 employeeService.updateEmployee(employee);
 
                 refreshTableEmployee();
-            }
+           // }
         }
     }
 

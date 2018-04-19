@@ -5,27 +5,28 @@
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
 <?import com.jfoenix.controls.JFXProgressBar?>
-<?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXTimePicker?>
-<?import com.jfoenix.controls.JFXToggleButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+
 <?import jfxtras.scene.control.CalendarPicker?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1000.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<?import javafx.scene.control.TableColumn?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXToggleButton?>
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import javafx.scene.control.Tooltip?>
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" styleClass="AnchorPane" stylesheets="@../styles/ArgusDoc.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
       <AnchorPane layoutX="171.0" prefHeight="500.0" prefWidth="630.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="170.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -181,39 +182,39 @@
             </AnchorPane>
             <VBox layoutY="75.0" prefHeight="625.0" prefWidth="170.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="140.0">
                <children>
-                  <JFXButton fx:id="myLetterButton" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#myLetterButton" prefWidth="170.0" styleClass="JFXButton" text="   Мои письма">
-                  <graphic>
+                  <Button fx:id="myLetterButton" alignment="BOTTOM_LEFT" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#myLetterButton" prefWidth="170.0" styleClass="JFXButton" text="   Мои письма">
+                     <graphic>
                      <FontAwesomeIconView fill="WHITE" glyphName="ENVELOPE" size="16" />
-                  </graphic>
-                  </JFXButton>
-                  <JFXButton fx:id="myTasksButton" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#myTasksButton" prefWidth="170.0" styleClass="JFXButton" text="   Мои задачи">
+                     </graphic>
+                  </Button>
+                  <Button fx:id="myTasksButton" alignment="BOTTOM_LEFT" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#myTasksButton" prefWidth="170.0" styleClass="JFXButton" text="   Мои задачи">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="TASKS" size="16" />
                      </graphic>
-                  </JFXButton>
-                  <JFXButton fx:id="myDoneTasksButton" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="30.0" onAction="#myDoneTasksButton" styleClass="JFXButton" text="         Выполненные" />
-                  <JFXButton fx:id="fromEmpTaskButton" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="30.0" onAction="#fromEmpTaskButton" styleClass="JFXButton" text="         Назначенные" />
-                  <JFXButton fx:id="archiveTasks" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="30.0" onAction="#archiveTasks" styleClass="JFXButton" text="         Архив" />
-                  <JFXButton fx:id="templateTabButton" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#templateTabButton" styleClass="JFXButton" text="   Шаблоны">
+                  </Button>
+                  <Button fx:id="myDoneTasksButton" alignment="BOTTOM_LEFT" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#myDoneTasksButton" prefWidth="170.0" styleClass="JFXButton" text="         Выполненные" />
+                  <Button fx:id="fromEmpTaskButton" alignment="BOTTOM_LEFT" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#fromEmpTaskButton" prefWidth="170.0" styleClass="JFXButton" text="         Назначенные" />
+                  <Button fx:id="archiveTasks" alignment="BOTTOM_LEFT" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#archiveTasks" prefWidth="170.0" styleClass="JFXButton" text="         Архив" />
+                  <Button fx:id="templateTabButton" alignment="BOTTOM_LEFT" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#templateTabButton" prefWidth="170.0" styleClass="JFXButton" text="   Шаблоны">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="BOOK" size="16" />
                      </graphic>
-                  </JFXButton>
-                  <JFXButton fx:id="calendarTabButton" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#calendarTabButton" styleClass="JFXButton" text="   Календарь">
+                  </Button>
+                  <Button fx:id="calendarTabButton" alignment="BOTTOM_LEFT" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#calendarTabButton" prefHeight="25.0" prefWidth="175.0" styleClass="JFXButton" text="   Календарь">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="CALENDAR" size="16" />
                      </graphic>
-                  </JFXButton>
-                  <JFXButton fx:id="letterTabButton" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#letterTabButton" styleClass="JFXButton" text="   Архив писем">
+                  </Button>
+                  <Button fx:id="letterTabButton" alignment="BOTTOM_LEFT" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#letterTabButton" prefWidth="170.0" styleClass="JFXButton" text="   Архив писем">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="ENVELOPE_SQUARE" size="16" />
                      </graphic>
-                  </JFXButton>
-                  <JFXButton fx:id="settingTabButton" alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" onAction="#settingTabButton" styleClass="JFXButton" text="   Настройки" visible="false">
+                  </Button>
+                  <Button fx:id="settingTabButton" alignment="BOTTOM_LEFT" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#settingTabButton" prefWidth="170.0" styleClass="JFXButton" text="   Настройки" visible="false">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="WRENCH" size="16" />
                      </graphic>
-                  </JFXButton>
+                  </Button>
                </children>
             </VBox>
             <FontAwesomeIconView fill="WHITE" glyphName="SHIELD" layoutX="45.0" layoutY="101.0" size="80" stroke="#bc2b2b" textAlignment="CENTER" wrappingWidth="102.00000607967377">

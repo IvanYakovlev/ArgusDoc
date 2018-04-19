@@ -135,29 +135,29 @@ public class MainController {
     @FXML
     private JFXDrawer drawer ;
     @FXML
-    private JFXButton myTasksButton = new JFXButton();
+    private Button myTasksButton = new Button();
     @FXML
-    private JFXButton templateTabButton = new JFXButton();
+    private Button templateTabButton = new Button();
 
     @FXML
-    private JFXButton myDoneTasksButton = new JFXButton();
+    private Button myDoneTasksButton = new Button();
     @FXML
-    private JFXButton archiveTasks = new JFXButton();
+    private Button archiveTasks = new Button();
 
     @FXML
-    private JFXButton myLetterButton = new JFXButton();
+    private Button myLetterButton = new Button();
     @FXML
-    private JFXButton fromEmpTaskButton = new JFXButton();
+    private Button fromEmpTaskButton = new Button();
     @FXML
-    private JFXButton calendarTabButton = new JFXButton();
+    private Button calendarTabButton = new Button();
 
     @FXML
     private JFXProgressBar progressBar = new JFXProgressBar();
 
     @FXML
-    private JFXButton settingTabButton = new JFXButton();
+    private Button settingTabButton = new Button();
     @FXML
-    private JFXButton letterTabButton = new JFXButton();
+    private Button letterTabButton = new Button();
     @FXML
     private ButtonBar myTaskBtnBar = new ButtonBar();
     @FXML
@@ -1392,8 +1392,8 @@ Calendar tab
     }
 
     public void calendarTabButton(ActionEvent actionEvent) {
-        clearButtonMenuSelected();
-        calendarTabButton.setStyle("-fx-font-weight: bold; -fx-font-size: 14");
+       clearButtonMenuSelected();
+       calendarTabButton.setStyle("-fx-font-weight: bold; -fx-font-size: 14");
 
         anchorCalendar.toFront();
         ObservableList<Event> list = observableListSelectDayEvent;
